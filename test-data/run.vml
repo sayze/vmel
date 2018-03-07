@@ -1,0 +1,7 @@
+# This is a comment
+# Another comment
+
+
+$vm_user = "sayed@root";#give root access##ddsdas
+$vm_pass = "124astroboy";
+
