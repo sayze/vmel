@@ -7,7 +7,7 @@ OUT  = vmel
 
 # Compiler generic flags.
 CC = gcc
-CFLAGS = -I$(SRCDIR) -Wall -Wextra
+CFLAGS = -I$(SRCDIR) -Wall -Werror -Wextra
 
 # Debug settings.
 DBGDIR = bin/debug

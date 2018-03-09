@@ -5,16 +5,9 @@
 File containing definition for vmel source.  
 
 
-\subsection*{Classes}
-\begin{DoxyCompactItemize}
-\item 
-struct \mbox{\hyperlink{structtoken}{token}}
-\begin{DoxyCompactList}\small\item\em Represent a single token read from input. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-char $\ast$ \mbox{\hyperlink{vmel_8h_afdfa43d6c585fecb2597a6551c1a9de5}{file\+\_\+to\+\_\+buffer}} (char filename\mbox{[}$\,$\mbox{]})
-\begin{DoxyCompactList}\small\item\em Read contents of file to buffer. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{vmel_8h_aa1187b70998f73cdb598833d6afaa30a}\label{vmel_8h_aa1187b70998f73cdb598833d6afaa30a}} 
 void \mbox{\hyperlink{vmel_8h_aa1187b70998f73cdb598833d6afaa30a}{print\+\_\+usage}} (void)
 \begin{DoxyCompactList}\small\item\em Print help to cli. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -26,34 +19,3 @@ File containing definition for vmel source.
 \begin{DoxyAuthor}{Author}
 Sayed Sadeed 
 \end{DoxyAuthor}
-
-
-\subsection{Function Documentation}
-\mbox{\Hypertarget{vmel_8h_afdfa43d6c585fecb2597a6551c1a9de5}\label{vmel_8h_afdfa43d6c585fecb2597a6551c1a9de5}} 
-\index{vmel.\+h@{vmel.\+h}!file\+\_\+to\+\_\+buffer@{file\+\_\+to\+\_\+buffer}}
-\index{file\+\_\+to\+\_\+buffer@{file\+\_\+to\+\_\+buffer}!vmel.\+h@{vmel.\+h}}
-\subsubsection{\texorpdfstring{file\+\_\+to\+\_\+buffer()}{file\_to\_buffer()}}
-{\footnotesize\ttfamily char$\ast$ file\+\_\+to\+\_\+buffer (\begin{DoxyParamCaption}\item[{char}]{filename\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
-
-
-
-Read contents of file to buffer. 
-
-This function will read the contents of a passed source file ($\ast$.vml). It will strip out the inline and external comments from the source and save the contents to a buffer. The buffer is created on heap so must be managed by caller. See below example
-
-
-\begin{DoxyCode}
-\textcolor{keywordtype}{char} *filename = \textcolor{stringliteral}{"~/Desktio/run.vml"};
-\textcolor{keywordtype}{char} *buffer = \mbox{\hyperlink{vmel_8h_afdfa43d6c585fecb2597a6551c1a9de5}{file\_to\_buffer}}(filename);
-free(buffer) \textcolor{comment}{// when done.}
-\end{DoxyCode}
-
-
-
-\begin{DoxyParams}{Parameters}
-{\em filename} & Path to source file. \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-Pointer to buffer containing contents of file. 
-\end{DoxyReturn}

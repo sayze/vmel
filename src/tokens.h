@@ -1,7 +1,7 @@
 /**
- * @file token.h
+ * @file tokens.h
  * @author Sayed Sadeed
- * @brief File containing token defitions.
+ * @brief File containing token definitions.
  */
 
 #ifndef TOKENS_H
@@ -59,6 +59,8 @@ int build_tokens(char *);
  * @brief Create token manager malloc'ed.
  * 
  * This function acts as a constructor for the Token manager.
+ * 
+ * @return newly created TokenMgr pointer.
  */
 TokenMgr *TokenMgr_new();
 
@@ -74,7 +76,7 @@ TokenMgr *TokenMgr_new();
 int TokenMgr_add(TokenMgr *tok_mgr, char tok_type[50], char tok_val[100]);
 
 /**
- * @brief Free tokens stored by token manager.
+ * @brief Free tokens stored by token manager as well as token manager.
  * 
  * @param tok_mgr Pointer to token manager.
  * 

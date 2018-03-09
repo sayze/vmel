@@ -1,0 +1,156 @@
+\hypertarget{tokens_8h}{}\section{src/tokens.h File Reference}
+\label{tokens_8h}\index{src/tokens.\+h@{src/tokens.\+h}}
+
+
+File containing token defitions.  
+
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_token}{Token}}
+\begin{DoxyCompactList}\small\item\em Represent a single token read from input. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{struct_token}{Token}} manager represents a pool of tokens. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ \mbox{\hyperlink{tokens_8h_afec8213f9a8c68f5fddcd254e9f02d86}{file\+\_\+to\+\_\+buffer}} (const char $\ast$)
+\begin{DoxyCompactList}\small\item\em Read contents of file to buffer. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{tokens_8h_a40bb9323da74a4fa837d60eda1c03b2b}{build\+\_\+tokens}} (char $\ast$)
+\begin{DoxyCompactList}\small\item\em Build tokens from buffer in. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$ \mbox{\hyperlink{tokens_8h_a8583e6f3a8e9ab1403387fb110e18302}{Token\+Mgr\+\_\+new}} ()
+\begin{DoxyCompactList}\small\item\em Create token manager malloc\textquotesingle{}ed. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{tokens_8h_a281ef13a99766bd9096e2c403f2c3f60}{Token\+Mgr\+\_\+add}} (\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$tok\+\_\+mgr, char tok\+\_\+type\mbox{[}50\mbox{]}, char tok\+\_\+val\mbox{[}100\mbox{]})
+\begin{DoxyCompactList}\small\item\em Add another token to token manager. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{tokens_8h_a7402a62420f576f7f1ce38d0da9bea41}{Token\+Mgr\+\_\+free}} (\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$tok\+\_\+mgr)
+\begin{DoxyCompactList}\small\item\em Free tokens stored by token manager as well as token manager. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{tokens_8h_a0bb266bca06cd42cfcfbf7da6de5b874}{Token\+Mgr\+\_\+print\+\_\+tokens}} (\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$tok\+\_\+mgr)
+\begin{DoxyCompactList}\small\item\em Print contents of token manager. Useful for debugging. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+File containing token defitions. 
+
+\begin{DoxyAuthor}{Author}
+Sayed Sadeed 
+\end{DoxyAuthor}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{tokens_8h_a40bb9323da74a4fa837d60eda1c03b2b}\label{tokens_8h_a40bb9323da74a4fa837d60eda1c03b2b}} 
+\index{tokens.\+h@{tokens.\+h}!build\+\_\+tokens@{build\+\_\+tokens}}
+\index{build\+\_\+tokens@{build\+\_\+tokens}!tokens.\+h@{tokens.\+h}}
+\subsubsection{\texorpdfstring{build\+\_\+tokens()}{build\_tokens()}}
+{\footnotesize\ttfamily int build\+\_\+tokens (\begin{DoxyParamCaption}\item[{char $\ast$}]{ }\end{DoxyParamCaption})}
+
+
+
+Build tokens from buffer in. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em buff} & the contents which should be tokinzed. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int signifying status. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{tokens_8h_afec8213f9a8c68f5fddcd254e9f02d86}\label{tokens_8h_afec8213f9a8c68f5fddcd254e9f02d86}} 
+\index{tokens.\+h@{tokens.\+h}!file\+\_\+to\+\_\+buffer@{file\+\_\+to\+\_\+buffer}}
+\index{file\+\_\+to\+\_\+buffer@{file\+\_\+to\+\_\+buffer}!tokens.\+h@{tokens.\+h}}
+\subsubsection{\texorpdfstring{file\+\_\+to\+\_\+buffer()}{file\_to\_buffer()}}
+{\footnotesize\ttfamily char$\ast$ file\+\_\+to\+\_\+buffer (\begin{DoxyParamCaption}\item[{const char $\ast$}]{ }\end{DoxyParamCaption})}
+
+
+
+Read contents of file to buffer. 
+
+This function will read the contents of a passed source file ($\ast$.vml). It will strip out the inline and external comments from the source and save the contents to a buffer. The buffer is created on heap so must be managed by caller. See below example
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{char} *filename = \textcolor{stringliteral}{"~/Desktio/run.vml"};
+\textcolor{keywordtype}{char} *buffer = \mbox{\hyperlink{tokens_8h_afec8213f9a8c68f5fddcd254e9f02d86}{file\_to\_buffer}}(filename);
+free(buffer) \textcolor{comment}{// when done.}
+\end{DoxyCode}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & Path to source file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to buffer containing contents of file. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{tokens_8h_a281ef13a99766bd9096e2c403f2c3f60}\label{tokens_8h_a281ef13a99766bd9096e2c403f2c3f60}} 
+\index{tokens.\+h@{tokens.\+h}!Token\+Mgr\+\_\+add@{Token\+Mgr\+\_\+add}}
+\index{Token\+Mgr\+\_\+add@{Token\+Mgr\+\_\+add}!tokens.\+h@{tokens.\+h}}
+\subsubsection{\texorpdfstring{Token\+Mgr\+\_\+add()}{TokenMgr\_add()}}
+{\footnotesize\ttfamily int Token\+Mgr\+\_\+add (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$}]{tok\+\_\+mgr,  }\item[{char}]{tok\+\_\+type\mbox{[}50\mbox{]},  }\item[{char}]{tok\+\_\+val\mbox{[}100\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Add another token to token manager. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tok\+\_\+mgr} & Pointer to token manager. \\
+\hline
+{\em tok\+\_\+type} & Type of token. \\
+\hline
+{\em tok\+\_\+value} & Value of token.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int signifying status. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{tokens_8h_a7402a62420f576f7f1ce38d0da9bea41}\label{tokens_8h_a7402a62420f576f7f1ce38d0da9bea41}} 
+\index{tokens.\+h@{tokens.\+h}!Token\+Mgr\+\_\+free@{Token\+Mgr\+\_\+free}}
+\index{Token\+Mgr\+\_\+free@{Token\+Mgr\+\_\+free}!tokens.\+h@{tokens.\+h}}
+\subsubsection{\texorpdfstring{Token\+Mgr\+\_\+free()}{TokenMgr\_free()}}
+{\footnotesize\ttfamily int Token\+Mgr\+\_\+free (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$}]{tok\+\_\+mgr }\end{DoxyParamCaption})}
+
+
+
+Free tokens stored by token manager as well as token manager. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tok\+\_\+mgr} & Pointer to token manager.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int signifying status. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{tokens_8h_a8583e6f3a8e9ab1403387fb110e18302}\label{tokens_8h_a8583e6f3a8e9ab1403387fb110e18302}} 
+\index{tokens.\+h@{tokens.\+h}!Token\+Mgr\+\_\+new@{Token\+Mgr\+\_\+new}}
+\index{Token\+Mgr\+\_\+new@{Token\+Mgr\+\_\+new}!tokens.\+h@{tokens.\+h}}
+\subsubsection{\texorpdfstring{Token\+Mgr\+\_\+new()}{TokenMgr\_new()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}}$\ast$ Token\+Mgr\+\_\+new (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create token manager malloc\textquotesingle{}ed. 
+
+This function acts as a constructor for the \mbox{\hyperlink{struct_token}{Token}} manager.
+
+\begin{DoxyReturn}{Returns}
+newly created \mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} pointer. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{tokens_8h_a0bb266bca06cd42cfcfbf7da6de5b874}\label{tokens_8h_a0bb266bca06cd42cfcfbf7da6de5b874}} 
+\index{tokens.\+h@{tokens.\+h}!Token\+Mgr\+\_\+print\+\_\+tokens@{Token\+Mgr\+\_\+print\+\_\+tokens}}
+\index{Token\+Mgr\+\_\+print\+\_\+tokens@{Token\+Mgr\+\_\+print\+\_\+tokens}!tokens.\+h@{tokens.\+h}}
+\subsubsection{\texorpdfstring{Token\+Mgr\+\_\+print\+\_\+tokens()}{TokenMgr\_print\_tokens()}}
+{\footnotesize\ttfamily void Token\+Mgr\+\_\+print\+\_\+tokens (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$}]{tok\+\_\+mgr }\end{DoxyParamCaption})}
+
+
+
+Print contents of token manager. Useful for debugging. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tok\+\_\+mgr} & Pointer to token manager. \\
+\hline
+\end{DoxyParams}
