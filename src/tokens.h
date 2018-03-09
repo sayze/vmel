@@ -38,7 +38,7 @@ typedef struct{
  * by caller. See below example
  *
  * @code
- * char *filename = "~/Desktio/run.vml";
+ * char *filename = "~/Desktop/run.vml";
  * char *buffer = file_to_buffer(filename);
  * free(buffer) // when done.
  * @endcode
@@ -50,7 +50,7 @@ char *file_to_buffer(const char *);
 
 /**
  * @brief Build tokens from buffer in.
- * @param buff the contents which should be tokinzed.
+ * @param buff the contents which should be tokenized.
  * @return int signifying status.
  */
 int build_tokens(char *);

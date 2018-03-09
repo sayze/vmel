@@ -8,9 +8,9 @@
 #define COMMENT '#'
 // Newline.
 #define NEWLINE '\n'
-// Quotes.
+// Double quotes.
 #define DQUOTE '"'
-// AssCOMMENTment operator.
+// Equals operator.
 #define EQUAL '='
 // End of statement.
 #define SEMI ';'
