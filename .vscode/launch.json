@@ -5,7 +5,7 @@
             "name": "Vmel Debug",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceRoot}/bin/vmel",
+            "program": "${workspaceRoot}/bin/debug/vmel",
             "preLaunchTask": "build",
             "internalConsoleOptions": "openOnSessionStart",
             "logging": {

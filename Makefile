@@ -1,13 +1,13 @@
 # Project Files.
 SRCDIR = src
-SRCFILES = vmel.c
+SRCFILES = tokens.c vmel.c 
 SRCS = $(addprefix $(SRCDIR)/, $(SRCFILES))
 OBJS = $(SRCFILES:.c=.o)
 OUT  = vmel
 
 # Compiler generic flags.
 CC = gcc
-CFLAGS = -I$(SRCDIR) -Wall -Werror -Wextra
+CFLAGS = -I$(SRCDIR) -Wall -Wextra
 
 # Debug settings.
 DBGDIR = bin/debug
