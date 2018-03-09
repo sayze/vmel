@@ -7,6 +7,17 @@
 #ifndef VMEL_H
 #define VMEL_H
 
+
+/**
+ * @brief Represent a single token read from input.
+ *
+ * Struct will hold every identified token meta data. Is needed for parsing.
+ */
+typedef struct{
+	char type[50]; /**< Type of token [INTEGER, STRING, KEYWORD...]. */
+	char value[100]; /**< Actual value stored against this token. */
+} token;
+
 /**
  * @brief Read contents of file to buffer.
  *
@@ -24,13 +35,14 @@
  * @param filename Path to source file.
  * @return Pointer to buffer containing contents of file.
  */
-char *file_to_buffer(char filename[]);
+char *file_to_buffer(const char *);
 
 /**
- * @brief Print a custom error message with formatting.
- * @param msg The contents of error message
+ * @brief Build tokens from buffer in.
+ * @param buff the contents which should be tokinzed.
+ * @return int signifying status.
  */
-void print_err(char msg[]);
+int build_tokens(char *);
 
 /**
  * @brief Print help to cli.

@@ -5,13 +5,16 @@
 File containing definition for vmel source.  
 
 
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structtoken}{token}}
+\begin{DoxyCompactList}\small\item\em Represent a single token read from input. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
 char $\ast$ \mbox{\hyperlink{vmel_8h_afdfa43d6c585fecb2597a6551c1a9de5}{file\+\_\+to\+\_\+buffer}} (char filename\mbox{[}$\,$\mbox{]})
 \begin{DoxyCompactList}\small\item\em Read contents of file to buffer. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{vmel_8h_a848e6f4b3150dff49899937a2a002459}{print\+\_\+err}} (char msg\mbox{[}$\,$\mbox{]})
-\begin{DoxyCompactList}\small\item\em Print a custom error message with formatting. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{vmel_8h_aa1187b70998f73cdb598833d6afaa30a}\label{vmel_8h_aa1187b70998f73cdb598833d6afaa30a}} 
 void \mbox{\hyperlink{vmel_8h_aa1187b70998f73cdb598833d6afaa30a}{print\+\_\+usage}} (void)
 \begin{DoxyCompactList}\small\item\em Print help to cli. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -54,18 +57,3 @@ free(buffer) \textcolor{comment}{// when done.}
 \begin{DoxyReturn}{Returns}
 Pointer to buffer containing contents of file. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{vmel_8h_a848e6f4b3150dff49899937a2a002459}\label{vmel_8h_a848e6f4b3150dff49899937a2a002459}} 
-\index{vmel.\+h@{vmel.\+h}!print\+\_\+err@{print\+\_\+err}}
-\index{print\+\_\+err@{print\+\_\+err}!vmel.\+h@{vmel.\+h}}
-\subsubsection{\texorpdfstring{print\+\_\+err()}{print\_err()}}
-{\footnotesize\ttfamily void print\+\_\+err (\begin{DoxyParamCaption}\item[{char}]{msg\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
-
-
-
-Print a custom error message with formatting. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em msg} & The contents of error message \\
-\hline
-\end{DoxyParams}
