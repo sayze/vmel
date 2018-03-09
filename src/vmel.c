@@ -69,7 +69,7 @@ char *file_to_buffer(const char *filename) {
 
 		// Iterate through all chars in "line".
 		// Strip out remaining inline comments and save to buffer.
-		for (int i = 0; i < strlen(line); i++) {
+		for (size_t i = 0; i < strlen(line); i++) {
 			c = line[i];
 			switch (c) {
 				case IGN:
