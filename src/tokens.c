@@ -19,12 +19,22 @@
 // Right brace.
 #define RBRACE '}'
 
-// Token Names.
-const char *TOKEN_NAMES[] = {
+// Token names.
+const char *TokenNames[] = {
 	"EQUAL", "SEMI", "COMMENT", "NEWLINE", "DQUOTE", "LBRACE", "RBRACE"
 };
 
 int build_tokens(char *buff, TokenMgr *tokmgr) {
+	if (buff == NULL) {
+		printf("**Error** Buffer invalid state cannot build tokens\n");
+		return 1;
+	}
+
+	if (tokmgr == NULL) {
+		printf("**Error** Invalid token manager passed to build token");
+		return 1;
+	}
+
 	// Each character in buffer.
 	char c;
 	// Reusable storage to hold strings. 
@@ -165,6 +175,11 @@ TokenMgr *TokenMgr_new() {
 }
 
 int TokenMgr_add(TokenMgr *tok_mgr, char tok_type[50], char tok_val[100]) {
+	if (tok_mgr == NULL) {
+		printf("**Error** Invalid token manager passed to TokenMgr_Add");
+		return 1;
+	}
+
 	Token *tmp = malloc(sizeof(Token));
 	strcpy(tmp->type, tok_type);
 	strcpy(tmp->value, tok_val);
@@ -180,6 +195,11 @@ void TokenMgr_print_tokens(TokenMgr *tok_mgr) {
 }
 
 int TokenMgr_free(TokenMgr *tok_mgr) {
+	if (tok_mgr == NULL) {
+		printf("**Error** Invalid token manager passed to TokenMgr_free");
+		return 1;
+	}
+
 	for (size_t i =0; i < tok_mgr->tok_ctr; i++) {
 		free(tok_mgr->toks[i]);
 	}
