@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['print_5fusage',['print_usage',['../vmel_8h.html#aa1187b70998f73cdb598833d6afaa30a',1,'vmel.h']]]
+  ['is_5fvalid_5fidentifier',['is_valid_identifier',['../tokens_8h.html#a8cae9f2a04943f06b1ac9074e3b8571f',1,'tokens.h']]]
 ];

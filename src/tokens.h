@@ -13,8 +13,8 @@
  * Struct will hold every identified token meta data. Is needed for parsing.
  */
 typedef struct{
-	char type[50]; /**< Type of token [INTEGER, STRING, KEYWORD...]. */
-	char value[100]; /**< Actual value stored against this token. */
+	char type[20]; //TODO safe to assume types will only ever be less than 20 ?
+	char value[100]; //TODO needs optimizing BAD. It is possible to have STRING more than 100 chars
 } Token;
 
 /**
@@ -25,7 +25,7 @@ typedef struct{
  * Struct will mantain all tokens and responsible for methods.
  */
 typedef struct{
-	Token *toks[1000]; // TODO needs optimizing BAD.
+	Token *toks[1000]; //TODO needs optimizing BAD.
 	size_t tok_ctr;
 } TokenMgr;
 
@@ -51,9 +51,10 @@ char *file_to_buffer(const char *);
 /**
  * @brief Build tokens from buffer in.
  * @param buff the contents which should be tokenized.
+ * @param tokmgr Token Manager to handle tokenization.
  * @return int signifying status.
  */
-int build_tokens(char *);
+int build_tokens(char *buff, TokenMgr *tokmgr);
 
 /**
  * @brief Create token manager malloc'ed.
@@ -91,5 +92,14 @@ int TokenMgr_free(TokenMgr *tok_mgr);
  * 
  */
 void TokenMgr_print_tokens(TokenMgr *tok_mgr);
-	
+
+/**
+ * @brief Utility function to determine if char is one of accepted identifiers.
+ * 
+ * @param id The char to get validated.
+ * 
+ * @return 1 If it matches accepted identifiers or return 0 if it doesn't.
+ */	
+int is_valid_identifier(char id);
+
 #endif

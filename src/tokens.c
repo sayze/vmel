@@ -4,7 +4,7 @@
 #include <ctype.h>
 #include "tokens.h"
 
-// Comment COMMENTore.
+// Comment.
 #define COMMENT '#'
 // Newline.
 #define NEWLINE '\n'
@@ -24,72 +24,76 @@ const char *TOKEN_NAMES[] = {
 	"EQUAL", "SEMI", "COMMENT", "NEWLINE", "DQUOTE", "LBRACE", "RBRACE"
 };
 
-int build_tokens(char *buff) {
+int build_tokens(char *buff, TokenMgr *tokmgr) {
 	// Each character in buffer.
 	char c;
 	// Reusable storage to hold strings. 
-	char store[30];
+	char store[100];
 	// Buff iterator.
-	int i = 0;
+	int bidx = 0;
 	// Track storage size.
 	int stctr = 0;
 	// Error code.
 	int error = 0;
-	// Hold tokens.	
-	TokenMgr *tokmgr = TokenMgr_new();
+	
 	// Iterate through all chars until terminator or error.
-	while (buff[i] != '\0' && !error) {
-		c = buff[i];
+	while (buff[bidx] != '\0' && !error) {
+		c = buff[bidx];
 
-		// Is spaces.
 		if (isspace(c)) {
-			i++;
+			bidx++;
 			continue;
 		}
 		else if (c == EQUAL) {
 			TokenMgr_add(tokmgr, "OPERATOR", "=");
-			i++;
+			bidx++;
 		}
 		else if (c == DQUOTE) {
-			do {
+			c = buff[++bidx];
+			while (c != DQUOTE) {
 				store[stctr++] = c;
-				c = buff[++i];
-			} while ((char) c != SEMI);
-			
+				c = buff[++bidx];
+			}
 			store[stctr] = '\0';
 			TokenMgr_add(tokmgr, "STRING", store);
 			stctr = 0;
-			i++;
+			bidx++;
 		}
-		else if (isalpha(c) || c == '_') {
-			while (isalpha(c) || c == '_') {
+		else if (is_valid_identifier(c)) {
+			while (is_valid_identifier(c)) {
 				store[stctr++] = c;
-				c = buff[++i];
+				c = buff[++bidx];
 			}
 			store[stctr] = '\0';
 			TokenMgr_add(tokmgr, "IDENTIFIER", store);
 			stctr = 0;
-			i++;
 		}
 		else if (isdigit( (int) c)) {
 			while (isdigit( (int) c)) {
 				store[stctr++] = c;
-				c = (int) buff[++i];
+				c = (int) buff[++bidx];
 			}
 			store[stctr] = '\0';
 			TokenMgr_add(tokmgr, "INTEGER", store);
 			stctr = 0;
-			i++;
+		}
+		else if (c == LBRACE) {
+			c = buff[++bidx];
+			while (is_valid_identifier(c)) {
+				store[stctr++] = c;
+				c = buff[++bidx];
+			}
+			store[stctr] = '\0';
+			TokenMgr_add(tokmgr, "GROUP", store);
+			stctr = 0;
+			bidx++;
 		}
 		else {
 			error = 1;
 			printf("Invalid syntax: unknown '%c'\n", c);
-			i++;
 		}
 	}
 
-	TokenMgr_print_tokens(tokmgr);
-	TokenMgr_free(tokmgr);
 	return error;
 }
 
@@ -145,6 +149,13 @@ char *file_to_buffer(const char *filename) {
 	buff[bidx] = '\0';
 	fclose(fptr);
 	return buff;
+}
+
+int is_valid_identifier(char id) {
+	if (isalpha(id) || id == '_')
+		return 1;
+	else
+		return 0;
 }
 
 TokenMgr *TokenMgr_new() {

@@ -10,7 +10,11 @@ int main(int argc, char *argv[]) {
 	}
 
 	char *b = file_to_buffer(argv[1]);
-	build_tokens(b);	
+	TokenMgr *tok_mgr = TokenMgr_new(); 
+	build_tokens(b, tok_mgr);
+	TokenMgr_print_tokens(tok_mgr);	
+	TokenMgr_free(tok_mgr);
+	free(b);
 }
 
 void print_usage(void) {

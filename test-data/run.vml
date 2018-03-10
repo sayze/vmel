@@ -1,6 +1,16 @@
-# This is a comment
-# Another comment
+# This is an example config which vmel interpreter can read and execute.
+# There are 2 distinct sections on for Variables and another define groups of actions.
 
-vm_user = "sayed@root";
-vm_pass = "124astroboy";
-number = 123242;
+# Variables
+vm_user = "sayed@root"
+vm_pass = "124astroboy"
+
+# Group
+{build_npm_packages}
+# Group Actions
+"cd ~/var/node_project/"
+"npm install"
+"npm run build"
+{update_repo}
+"cd ~/projects/vmel"
+"git checkout develop && git pull origin develop"

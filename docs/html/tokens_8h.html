@@ -75,7 +75,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>File containing token defitions.  
+<p>File containing token definitions.  
 <a href="#details">More...</a></p>
 
 <p><a href="tokens_8h_source.html">Go to the source code of this file.</a></p>
@@ -94,9 +94,9 @@ Functions</h2></td></tr>
 <tr class="memitem:afec8213f9a8c68f5fddcd254e9f02d86"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokens_8h.html#afec8213f9a8c68f5fddcd254e9f02d86">file_to_buffer</a> (const char *)</td></tr>
 <tr class="memdesc:afec8213f9a8c68f5fddcd254e9f02d86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read contents of file to buffer.  <a href="#afec8213f9a8c68f5fddcd254e9f02d86">More...</a><br /></td></tr>
 <tr class="separator:afec8213f9a8c68f5fddcd254e9f02d86"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a40bb9323da74a4fa837d60eda1c03b2b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokens_8h.html#a40bb9323da74a4fa837d60eda1c03b2b">build_tokens</a> (char *)</td></tr>
-<tr class="memdesc:a40bb9323da74a4fa837d60eda1c03b2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build tokens from buffer in.  <a href="#a40bb9323da74a4fa837d60eda1c03b2b">More...</a><br /></td></tr>
-<tr class="separator:a40bb9323da74a4fa837d60eda1c03b2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81195342113cfd2b791683fcb8f7c9de"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokens_8h.html#a81195342113cfd2b791683fcb8f7c9de">build_tokens</a> (char *buff, <a class="el" href="struct_token_mgr.html">TokenMgr</a> *tokmgr)</td></tr>
+<tr class="memdesc:a81195342113cfd2b791683fcb8f7c9de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build tokens from buffer in.  <a href="#a81195342113cfd2b791683fcb8f7c9de">More...</a><br /></td></tr>
+<tr class="separator:a81195342113cfd2b791683fcb8f7c9de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8583e6f3a8e9ab1403387fb110e18302"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_token_mgr.html">TokenMgr</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokens_8h.html#a8583e6f3a8e9ab1403387fb110e18302">TokenMgr_new</a> ()</td></tr>
 <tr class="memdesc:a8583e6f3a8e9ab1403387fb110e18302"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create token manager malloc'ed.  <a href="#a8583e6f3a8e9ab1403387fb110e18302">More...</a><br /></td></tr>
 <tr class="separator:a8583e6f3a8e9ab1403387fb110e18302"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -109,13 +109,16 @@ Functions</h2></td></tr>
 <tr class="memitem:a0bb266bca06cd42cfcfbf7da6de5b874"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokens_8h.html#a0bb266bca06cd42cfcfbf7da6de5b874">TokenMgr_print_tokens</a> (<a class="el" href="struct_token_mgr.html">TokenMgr</a> *tok_mgr)</td></tr>
 <tr class="memdesc:a0bb266bca06cd42cfcfbf7da6de5b874"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print contents of token manager. Useful for debugging.  <a href="#a0bb266bca06cd42cfcfbf7da6de5b874">More...</a><br /></td></tr>
 <tr class="separator:a0bb266bca06cd42cfcfbf7da6de5b874"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cae9f2a04943f06b1ac9074e3b8571f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokens_8h.html#a8cae9f2a04943f06b1ac9074e3b8571f">is_valid_identifier</a> (char id)</td></tr>
+<tr class="memdesc:a8cae9f2a04943f06b1ac9074e3b8571f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Utility function to determine if char is one of accepted identifiers.  <a href="#a8cae9f2a04943f06b1ac9074e3b8571f">More...</a><br /></td></tr>
+<tr class="separator:a8cae9f2a04943f06b1ac9074e3b8571f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>File containing token defitions. </p>
+<div class="textblock"><p>File containing token definitions. </p>
 <dl class="section author"><dt>Author</dt><dd>Sayed Sadeed </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a40bb9323da74a4fa837d60eda1c03b2b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a40bb9323da74a4fa837d60eda1c03b2b">&#9670;&nbsp;</a></span>build_tokens()</h2>
+<a id="a81195342113cfd2b791683fcb8f7c9de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a81195342113cfd2b791683fcb8f7c9de">&#9670;&nbsp;</a></span>build_tokens()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -124,8 +127,18 @@ Functions</h2></td></tr>
           <td class="memname">int build_tokens </td>
           <td>(</td>
           <td class="paramtype">char *&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramname"><em>buff</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="struct_token_mgr.html">TokenMgr</a> *&#160;</td>
+          <td class="paramname"><em>tokmgr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -133,7 +146,8 @@ Functions</h2></td></tr>
 <p>Build tokens from buffer in. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">buff</td><td>the contents which should be tokinzed. </td></tr>
+    <tr><td class="paramname">buff</td><td>the contents which should be tokenized. </td></tr>
+    <tr><td class="paramname">tokmgr</td><td><a class="el" href="struct_token.html" title="Represent a single token read from input. ">Token</a> Manager to handle tokenization. </td></tr>
   </table>
   </dd>
 </dl>
@@ -159,13 +173,40 @@ Functions</h2></td></tr>
 
 <p>Read contents of file to buffer. </p>
 <p>This function will read the contents of a passed source file (*.vml). It will strip out the inline and external comments from the source and save the contents to a buffer. The buffer is created on heap so must be managed by caller. See below example</p>
-<div class="fragment"><div class="line"><span class="keywordtype">char</span> *filename = <span class="stringliteral">&quot;~/Desktio/run.vml&quot;</span>;</div><div class="line"><span class="keywordtype">char</span> *buffer = <a class="code" href="tokens_8h.html#afec8213f9a8c68f5fddcd254e9f02d86">file_to_buffer</a>(filename);</div><div class="line">free(buffer) <span class="comment">// when done.</span></div></div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+<div class="fragment"><div class="line"><span class="keywordtype">char</span> *filename = <span class="stringliteral">&quot;~/Desktop/run.vml&quot;</span>;</div><div class="line"><span class="keywordtype">char</span> *buffer = <a class="code" href="tokens_8h.html#afec8213f9a8c68f5fddcd254e9f02d86">file_to_buffer</a>(filename);</div><div class="line">free(buffer) <span class="comment">// when done.</span></div></div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">filename</td><td>Path to source file. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Pointer to buffer containing contents of file. </dd></dl>
+
+</div>
+</div>
+<a id="a8cae9f2a04943f06b1ac9074e3b8571f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8cae9f2a04943f06b1ac9074e3b8571f">&#9670;&nbsp;</a></span>is_valid_identifier()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int is_valid_identifier </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Utility function to determine if char is one of accepted identifiers. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>The char to get validated.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>1 If it matches accepted identifiers or return 0 if it doesn't. </dd></dl>
 
 </div>
 </div>

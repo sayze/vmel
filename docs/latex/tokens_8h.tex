@@ -2,7 +2,7 @@
 \label{tokens_8h}\index{src/tokens.\+h@{src/tokens.\+h}}
 
 
-File containing token defitions.  
+File containing token definitions.  
 
 
 \subsection*{Classes}
@@ -17,7 +17,7 @@ struct \mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}}
 \item 
 char $\ast$ \mbox{\hyperlink{tokens_8h_afec8213f9a8c68f5fddcd254e9f02d86}{file\+\_\+to\+\_\+buffer}} (const char $\ast$)
 \begin{DoxyCompactList}\small\item\em Read contents of file to buffer. \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{tokens_8h_a40bb9323da74a4fa837d60eda1c03b2b}{build\+\_\+tokens}} (char $\ast$)
+int \mbox{\hyperlink{tokens_8h_a81195342113cfd2b791683fcb8f7c9de}{build\+\_\+tokens}} (char $\ast$buff, \mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$tokmgr)
 \begin{DoxyCompactList}\small\item\em Build tokens from buffer in. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$ \mbox{\hyperlink{tokens_8h_a8583e6f3a8e9ab1403387fb110e18302}{Token\+Mgr\+\_\+new}} ()
 \begin{DoxyCompactList}\small\item\em Create token manager malloc\textquotesingle{}ed. \end{DoxyCompactList}\item 
@@ -26,11 +26,13 @@ int \mbox{\hyperlink{tokens_8h_a281ef13a99766bd9096e2c403f2c3f60}{Token\+Mgr\+\_
 int \mbox{\hyperlink{tokens_8h_a7402a62420f576f7f1ce38d0da9bea41}{Token\+Mgr\+\_\+free}} (\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$tok\+\_\+mgr)
 \begin{DoxyCompactList}\small\item\em Free tokens stored by token manager as well as token manager. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{tokens_8h_a0bb266bca06cd42cfcfbf7da6de5b874}{Token\+Mgr\+\_\+print\+\_\+tokens}} (\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$tok\+\_\+mgr)
-\begin{DoxyCompactList}\small\item\em Print contents of token manager. Useful for debugging. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Print contents of token manager. Useful for debugging. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{tokens_8h_a8cae9f2a04943f06b1ac9074e3b8571f}{is\+\_\+valid\+\_\+identifier}} (char id)
+\begin{DoxyCompactList}\small\item\em Utility function to determine if char is one of accepted identifiers. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-File containing token defitions. 
+File containing token definitions. 
 
 \begin{DoxyAuthor}{Author}
 Sayed Sadeed 
@@ -38,11 +40,11 @@ Sayed Sadeed
 
 
 \subsection{Function Documentation}
-\mbox{\Hypertarget{tokens_8h_a40bb9323da74a4fa837d60eda1c03b2b}\label{tokens_8h_a40bb9323da74a4fa837d60eda1c03b2b}} 
+\mbox{\Hypertarget{tokens_8h_a81195342113cfd2b791683fcb8f7c9de}\label{tokens_8h_a81195342113cfd2b791683fcb8f7c9de}} 
 \index{tokens.\+h@{tokens.\+h}!build\+\_\+tokens@{build\+\_\+tokens}}
 \index{build\+\_\+tokens@{build\+\_\+tokens}!tokens.\+h@{tokens.\+h}}
 \subsubsection{\texorpdfstring{build\+\_\+tokens()}{build\_tokens()}}
-{\footnotesize\ttfamily int build\+\_\+tokens (\begin{DoxyParamCaption}\item[{char $\ast$}]{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int build\+\_\+tokens (\begin{DoxyParamCaption}\item[{char $\ast$}]{buff,  }\item[{\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$}]{tokmgr }\end{DoxyParamCaption})}
 
 
 
@@ -50,7 +52,9 @@ Build tokens from buffer in.
 
 
 \begin{DoxyParams}{Parameters}
-{\em buff} & the contents which should be tokinzed. \\
+{\em buff} & the contents which should be tokenized. \\
+\hline
+{\em tokmgr} & \mbox{\hyperlink{struct_token}{Token}} Manager to handle tokenization. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -70,7 +74,7 @@ This function will read the contents of a passed source file ($\ast$.vml). It wi
 
 
 \begin{DoxyCode}
-\textcolor{keywordtype}{char} *filename = \textcolor{stringliteral}{"~/Desktio/run.vml"};
+\textcolor{keywordtype}{char} *filename = \textcolor{stringliteral}{"~/Desktop/run.vml"};
 \textcolor{keywordtype}{char} *buffer = \mbox{\hyperlink{tokens_8h_afec8213f9a8c68f5fddcd254e9f02d86}{file\_to\_buffer}}(filename);
 free(buffer) \textcolor{comment}{// when done.}
 \end{DoxyCode}
@@ -83,6 +87,24 @@ free(buffer) \textcolor{comment}{// when done.}
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 Pointer to buffer containing contents of file. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{tokens_8h_a8cae9f2a04943f06b1ac9074e3b8571f}\label{tokens_8h_a8cae9f2a04943f06b1ac9074e3b8571f}} 
+\index{tokens.\+h@{tokens.\+h}!is\+\_\+valid\+\_\+identifier@{is\+\_\+valid\+\_\+identifier}}
+\index{is\+\_\+valid\+\_\+identifier@{is\+\_\+valid\+\_\+identifier}!tokens.\+h@{tokens.\+h}}
+\subsubsection{\texorpdfstring{is\+\_\+valid\+\_\+identifier()}{is\_valid\_identifier()}}
+{\footnotesize\ttfamily int is\+\_\+valid\+\_\+identifier (\begin{DoxyParamCaption}\item[{char}]{id }\end{DoxyParamCaption})}
+
+
+
+Utility function to determine if char is one of accepted identifiers. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The char to get validated.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 If it matches accepted identifiers or return 0 if it doesn\textquotesingle{}t. 
 \end{DoxyReturn}
 \mbox{\Hypertarget{tokens_8h_a281ef13a99766bd9096e2c403f2c3f60}\label{tokens_8h_a281ef13a99766bd9096e2c403f2c3f60}} 
 \index{tokens.\+h@{tokens.\+h}!Token\+Mgr\+\_\+add@{Token\+Mgr\+\_\+add}}
