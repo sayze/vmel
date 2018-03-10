@@ -19,7 +19,7 @@
 // Right brace.
 #define RBRACE '}'
 
-// Token Names
+// Token Names.
 const char *TOKEN_NAMES[] = {
 	"EQUAL", "SEMI", "COMMENT", "NEWLINE", "DQUOTE", "LBRACE", "RBRACE"
 };
