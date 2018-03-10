@@ -1,16 +1,31 @@
 # This is an example config which vmel interpreter can read and execute.
 # There are 2 distinct sections on for Variables and another define groups of actions.
 
-# Variables
-vm_user = "sayed@root"
-vm_pass = "124astroboy"
+# ---------------------------------- # 
+#            Variables               #
+# ---------------------------------- #
+# Variables must be prefixed with a dollar sign... yes I do like PHP.
+# Such as the below
 
-# Group
+$vm_user = "sayed@root"
+$vm_pass = "124astroboy"
+
+# ---------------------------------- # 
+#            Groups                  #
+# ---------------------------------- #
+# Groups as the name suggests are a collection or "group" of related tasks.
+# Each group must contain a unique name, most likely a name that describes the tasks.
+# Each Group may have a variable amount of tasks to be performed. Refer to the below.
+
 {build_npm_packages}
-# Group Actions
 "cd ~/var/node_project/"
 "npm install"
 "npm run build"
-{update_repo}
+
+{update_local_repo}
 "cd ~/projects/vmel"
 "git checkout develop && git pull origin develop"
+
+{run_make}
+"cd ~/var/exec/"
+"make -dDebug1"

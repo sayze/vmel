@@ -18,6 +18,8 @@
 #define LBRACE '{'
 // Right brace.
 #define RBRACE '}'
+// Var identifier.
+#define VAR '$'
 
 int build_tokens(char *buff, TokenMgr *tokmgr) {
 	if (buff == NULL) {
@@ -64,7 +66,8 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 			stctr = 0;
 			bidx++;
 		}
-		else if (is_valid_identifier(c)) {
+		else if (c == VAR) {
+			c = buff[++bidx];
 			while (is_valid_identifier(c)) {
 				store[stctr++] = c;
 				c = buff[++bidx];
@@ -157,7 +160,7 @@ char *file_to_buffer(const char *filename) {
 }
 
 int is_valid_identifier(char id) {
-	if (isalpha(id) || id == '_')
+	if (isalpha(id) || id == '_' || id == '-' )
 		return 1;
 	else
 		return 0;
