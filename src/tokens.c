@@ -19,11 +19,6 @@
 // Right brace.
 #define RBRACE '}'
 
-// Token names.
-const char *TokenNames[] = {
-	"EQUAL", "SEMI", "COMMENT", "NEWLINE", "DQUOTE", "LBRACE", "RBRACE"
-};
-
 int build_tokens(char *buff, TokenMgr *tokmgr) {
 	if (buff == NULL) {
 		printf("**Error** Buffer invalid state cannot build tokens\n");
