@@ -25,6 +25,7 @@ typedef struct{
  * Struct will mantain all tokens and responsible for methods.
  */
 typedef struct{
+	Token **curr_tok;
 	Token *toks[1000]; //TODO needs optimizing BAD.
 	size_t tok_ctr;
 } TokenMgr;
@@ -92,6 +93,48 @@ int TokenMgr_free(TokenMgr *tok_mgr);
  * 
  */
 void TokenMgr_print_tokens(TokenMgr *tok_mgr);
+
+/**
+ * @brief Retrieve the next token from Tokens.
+ * 
+ * Function will return the next token stored inside Token Mgr.
+ * Note that it returns based on the current token.
+ * 
+ * @param tok_mgr Pointer to token manager instance.
+ * @return next Token in manager.
+ */
+Token *TokenMgr_next_token(TokenMgr *tok_mgr);
+
+/**
+ * @brief Retrieve the previous token from Tokens.
+ * 
+ * Function will return the previous token stored inside Token Mgr.
+ * Note that it returns based on the current token.
+ * 
+ * @param tok_mgr Pointer to token manager instance.
+ * @return previous Token in manager.
+ */
+Token *TokenMgr_prev_token(TokenMgr *tok_mgr);
+
+/**
+ * @brief Get last token in token manager.
+ *
+ * @param tok_mgr Pointer to token manager instance.
+ * @return Token pointer to final token.
+ */
+Token *TokenMgr_last_token(TokenMgr *tok_mgr);
+
+/**
+ * @brief Get first token in token manager.
+ *
+ * @param tok_mgr Pointer to token manager instance.
+ * @return Token pointer to first token.
+ */
+Token *TokenMgr_first_token(TokenMgr *tok_mgr);
+
+// ---------------------------------------
+// Below are utility functions for tokens
+// ---------------------------------------
 
 /**
  * @brief Utility function to determine if char is one of accepted identifiers.

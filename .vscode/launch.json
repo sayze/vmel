@@ -3,7 +3,7 @@
     "configurations": [
         {
             "name": "Vmel Debug",
-            "type": "cppdbg",
+            "type": "lldb",
             "request": "launch",
             "program": "${workspaceRoot}/bin/debug/vmel",
             "preLaunchTask": "build",

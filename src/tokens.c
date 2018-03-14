@@ -169,6 +169,7 @@ int is_valid_identifier(char id) {
 TokenMgr *TokenMgr_new() {
 	TokenMgr *tok_mgr = malloc(sizeof(TokenMgr));
 	tok_mgr->tok_ctr = 0;
+	tok_mgr->curr_tok = NULL;
 	return tok_mgr;
 }
 
@@ -201,6 +202,63 @@ int TokenMgr_free(TokenMgr *tok_mgr) {
 	for (size_t i =0; i < tok_mgr->tok_ctr; i++) {
 		free(tok_mgr->toks[i]);
 	}
+	tok_mgr->curr_tok = NULL;
 	free(tok_mgr);
 	return 0;
+}
+
+Token *TokenMgr_next_token(TokenMgr *tok_mgr) {
+	if (tok_mgr == NULL)
+		return NULL;
+
+	if (tok_mgr->curr_tok == NULL) {
+		tok_mgr->curr_tok = tok_mgr->toks;
+	} 
+	else {
+
+		// Don't surpass final token.
+		if (*tok_mgr->curr_tok == tok_mgr->toks[tok_mgr->tok_ctr-1]) {
+			return NULL;
+		}
+		
+		tok_mgr->curr_tok++;	
+	}
+	return *tok_mgr->curr_tok;
+}
+
+Token *TokenMgr_prev_token(TokenMgr *tok_mgr) {
+	if (tok_mgr == NULL)
+		return NULL;
+
+	if (tok_mgr->curr_tok == NULL) {
+		tok_mgr->curr_tok = &tok_mgr->toks[tok_mgr->tok_ctr];
+	} 
+	else {
+
+		// Don't surpass first token.
+		if (*tok_mgr->curr_tok == tok_mgr->toks[0]) {
+			return NULL;
+		}
+			
+		tok_mgr->curr_tok--;	
+	}
+	return *tok_mgr->curr_tok;
+}
+
+
+Token *TokenMgr_first_token(TokenMgr *tok_mgr) {
+	if (tok_mgr == NULL || tok_mgr->tok_ctr < 1) {
+		return NULL;
+	}
+	
+	return tok_mgr->toks[0];
+}
+
+Token *TokenMgr_last_token(TokenMgr *tok_mgr) {
+	if (tok_mgr == NULL || tok_mgr->tok_ctr < 1) {
+		return NULL;
+	}
+
+	return tok_mgr->toks[tok_mgr->tok_ctr-1];
+
 }
