@@ -9,21 +9,14 @@ int main(int argc, char *argv[]) {
 		exit(1);
 	}
 
+	// Read source file to buffer.
 	char *b = file_to_buffer(argv[1]);
+	// Instantiate new token manager.
 	TokenMgr *tok_mgr = TokenMgr_new(); 
-	Token *tok;
+	// Attempt to fill token manager with tokens.
+	int stat = build_tokens(b, tok_mgr);
 
-	build_tokens(b, tok_mgr);
-	
-	// Testing token iteration
-	while ((tok = TokenMgr_next_token(tok_mgr)) != NULL) {
-		printf("Printing with next token: %s : %s\n", tok->type, tok->value);
-	}
-	TokenMgr_reset_token(tok_mgr);
-	printf("Back to start \n");
-	while ((tok = TokenMgr_next_token(tok_mgr)) != NULL) {
-		printf("Printing with next token: %s : %s\n", tok->type, tok->value);
-	}
+	// Free resources.
 	TokenMgr_free(tok_mgr);
 	free(b);
 }
