@@ -3,6 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 #include "tokens.h"
+#include "utils.h"
 
 // Comment.
 #define COMMENT '#'
@@ -52,7 +53,7 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 			continue;
 		}
 		else if (c == EQUAL) {
-			TokenMgr_add(tokmgr, "OPERATOR", "=");
+			TokenMgr_add_token(tokmgr, "OPERATOR", "=");
 			bidx++;
 		}
 		else if (c == DQUOTE) {
@@ -62,7 +63,7 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 				c = buff[++bidx];
 			}
 			store[stctr] = '\0';
-			TokenMgr_add(tokmgr, "STRING", store);
+			TokenMgr_add_token(tokmgr, "STRING", store);
 			stctr = 0;
 			bidx++;
 		}
@@ -73,7 +74,7 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 				c = buff[++bidx];
 			}
 			store[stctr] = '\0';
-			TokenMgr_add(tokmgr, "IDENTIFIER", store);
+			TokenMgr_add_token(tokmgr, "IDENTIFIER", store);
 			stctr = 0;
 		}
 		else if (isdigit( (int) c)) {
@@ -82,7 +83,7 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 				c = (int) buff[++bidx];
 			}
 			store[stctr] = '\0';
-			TokenMgr_add(tokmgr, "INTEGER", store);
+			TokenMgr_add_token(tokmgr, "INTEGER", store);
 			stctr = 0;
 		}
 		else if (c == LBRACE) {
@@ -92,7 +93,7 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 				c = buff[++bidx];
 			}
 			store[stctr] = '\0';
-			TokenMgr_add(tokmgr, "GROUP", store);
+			TokenMgr_add_token(tokmgr, "GROUP", store);
 			stctr = 0;
 			bidx++;
 		}
@@ -159,13 +160,6 @@ char *file_to_buffer(const char *filename) {
 	return buff;
 }
 
-int is_valid_identifier(char id) {
-	if (isalpha(id) || id == '_' || id == '-' )
-		return 1;
-	else
-		return 0;
-}
-
 TokenMgr *TokenMgr_new() {
 	TokenMgr *tok_mgr = malloc(sizeof(TokenMgr));
 	tok_mgr->tok_ctr = 0;
@@ -173,9 +167,9 @@ TokenMgr *TokenMgr_new() {
 	return tok_mgr;
 }
 
-int TokenMgr_add(TokenMgr *tok_mgr, char tok_type[50], char tok_val[100]) {
+int TokenMgr_add_token(TokenMgr *tok_mgr, char tok_type[50], char tok_val[100]) {
 	if (tok_mgr == NULL) {
-		printf("**Error** Invalid token manager passed to TokenMgr_Add");
+		printf("**Error** Invalid token manager passed to TokenMgr_add_token");
 		return 1;
 	}
 
@@ -192,6 +186,8 @@ void TokenMgr_print_tokens(TokenMgr *tok_mgr) {
 		printf("%s %s \n", tok_mgr->toks[i]->type, tok_mgr->toks[i]->value);
 	}
 }
+
+
 
 int TokenMgr_free(TokenMgr *tok_mgr) {
 	if (tok_mgr == NULL) {
@@ -245,20 +241,22 @@ Token *TokenMgr_prev_token(TokenMgr *tok_mgr) {
 	return *tok_mgr->curr_tok;
 }
 
+void TokenMgr_reset_token(TokenMgr *tok_mgr) {
+	if (tok_mgr == NULL)
+		return;
+	tok_mgr->curr_tok = NULL;
+}
 
-Token *TokenMgr_first_token(TokenMgr *tok_mgr) {
-	if (tok_mgr == NULL || tok_mgr->tok_ctr < 1) {
+Token *get_first_token(TokenMgr *tok_mgr) {
+	if (tok_mgr == NULL || tok_mgr->tok_ctr < 1)
 		return NULL;
-	}
 	
 	return tok_mgr->toks[0];
 }
 
-Token *TokenMgr_last_token(TokenMgr *tok_mgr) {
-	if (tok_mgr == NULL || tok_mgr->tok_ctr < 1) {
+Token *get_last_token(TokenMgr *tok_mgr) {
+	if (tok_mgr == NULL || tok_mgr->tok_ctr < 1)
 		return NULL;
-	}
 
 	return tok_mgr->toks[tok_mgr->tok_ctr-1];
-
 }

@@ -72,16 +72,14 @@ TokenMgr *TokenMgr_new();
  * @param tok_mgr Pointer to token manager.
  * @param tok_type Type of token.
  * @param tok_value Value of token.
- * 
  * @return int signifying status.
  */
-int TokenMgr_add(TokenMgr *tok_mgr, char tok_type[50], char tok_val[100]);
+int TokenMgr_add_token(TokenMgr *tok_mgr, char tok_type[50], char tok_val[100]);
 
 /**
  * @brief Free tokens stored by token manager as well as token manager.
  * 
  * @param tok_mgr Pointer to token manager.
- * 
  * @return int signifying status.
  */
 int TokenMgr_free(TokenMgr *tok_mgr);
@@ -90,7 +88,6 @@ int TokenMgr_free(TokenMgr *tok_mgr);
  * @brief Print contents of token manager. Useful for debugging.
  * 
  * @param tok_mgr Pointer to token manager.
- * 
  */
 void TokenMgr_print_tokens(TokenMgr *tok_mgr);
 
@@ -98,7 +95,9 @@ void TokenMgr_print_tokens(TokenMgr *tok_mgr);
  * @brief Retrieve the next token from Tokens.
  * 
  * Function will return the next token stored inside Token Mgr.
- * Note that it returns based on the current token.
+ * Note that it returns based on the current token. Once the last 
+ * token is reached the internal state must be reset. Otherwise the value
+ * returned will continue to be null. See TokenMgr_reset_token().
  * 
  * @param tok_mgr Pointer to token manager instance.
  * @return next Token in manager.
@@ -109,40 +108,49 @@ Token *TokenMgr_next_token(TokenMgr *tok_mgr);
  * @brief Retrieve the previous token from Tokens.
  * 
  * Function will return the previous token stored inside Token Mgr.
- * Note that it returns based on the current token.
- * 
+ * Note that it returns based on the current token. Once the first 
+ * token is reached the internal state must be reset. Otherwise the value
+ * returned will continue to be null. See TokenMgr_reset_token().
+ *
  * @param tok_mgr Pointer to token manager instance.
  * @return previous Token in manager.
  */
 Token *TokenMgr_prev_token(TokenMgr *tok_mgr);
 
 /**
+ * @brief Reset the internal token to NULL.
+ *
+ * This function operates on the internal token incrementer
+ * of the token manager. It will nullify the internal pointer so that
+ * collection can be incremented through again.
+ * See TokenMgr_next_token() and TokenMgr_prev_token().
+ *
+ * @param tok_mgr Pointer to token manager instance.
+ */
+void TokenMgr_reset_token(TokenMgr *tok_mgr);
+
+/**
  * @brief Get last token in token manager.
+ * 
+ * Unlike the "TokenMgr" prefixed functions this doesn't operate
+ * on the internal pointer incrementer. This simply returns a pointer
+ * to the last token in the collection.
  *
  * @param tok_mgr Pointer to token manager instance.
  * @return Token pointer to final token.
  */
-Token *TokenMgr_last_token(TokenMgr *tok_mgr);
+Token *get_last_token(TokenMgr *tok_mgr);
 
 /**
  * @brief Get first token in token manager.
- *
+
+ * Unlike the "TokenMgr" prefixed functions this doesn't operate
+ * on the internal pointer incrementer. This simply returns a pointer
+ * to the first token in the collection.
+
  * @param tok_mgr Pointer to token manager instance.
  * @return Token pointer to first token.
  */
-Token *TokenMgr_first_token(TokenMgr *tok_mgr);
-
-// ---------------------------------------
-// Below are utility functions for tokens
-// ---------------------------------------
-
-/**
- * @brief Utility function to determine if char is one of accepted identifiers.
- * 
- * @param id The char to get validated.
- * 
- * @return 1 If it matches accepted identifiers or return 0 if it doesn't.
- */	
-int is_valid_identifier(char id);
+Token *get_first_token(TokenMgr *tok_mgr);
 
 #endif

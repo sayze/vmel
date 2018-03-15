@@ -12,22 +12,18 @@ int main(int argc, char *argv[]) {
 	char *b = file_to_buffer(argv[1]);
 	TokenMgr *tok_mgr = TokenMgr_new(); 
 	Token *tok;
-	Token *last;
 
 	build_tokens(b, tok_mgr);
-	last = TokenMgr_last_token(tok_mgr);
+	
 	// Testing token iteration
-	do {
-		tok = TokenMgr_next_token(tok_mgr);
+	while ((tok = TokenMgr_next_token(tok_mgr)) != NULL) {
 		printf("Printing with next token: %s : %s\n", tok->type, tok->value);
-	} while(tok != last);
-
-	tok = TokenMgr_first_token(tok_mgr);
+	}
+	TokenMgr_reset_token(tok_mgr);
 	printf("Back to start \n");
-	do {
-		tok = TokenMgr_next_token(tok_mgr);
+	while ((tok = TokenMgr_next_token(tok_mgr)) != NULL) {
 		printf("Printing with next token: %s : %s\n", tok->type, tok->value);
-	} while(tok != last);
+	}
 	TokenMgr_free(tok_mgr);
 	free(b);
 }

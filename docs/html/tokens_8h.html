@@ -100,9 +100,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a8583e6f3a8e9ab1403387fb110e18302"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_token_mgr.html">TokenMgr</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokens_8h.html#a8583e6f3a8e9ab1403387fb110e18302">TokenMgr_new</a> ()</td></tr>
 <tr class="memdesc:a8583e6f3a8e9ab1403387fb110e18302"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create token manager malloc'ed.  <a href="#a8583e6f3a8e9ab1403387fb110e18302">More...</a><br /></td></tr>
 <tr class="separator:a8583e6f3a8e9ab1403387fb110e18302"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a281ef13a99766bd9096e2c403f2c3f60"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokens_8h.html#a281ef13a99766bd9096e2c403f2c3f60">TokenMgr_add</a> (<a class="el" href="struct_token_mgr.html">TokenMgr</a> *tok_mgr, char tok_type[50], char tok_val[100])</td></tr>
-<tr class="memdesc:a281ef13a99766bd9096e2c403f2c3f60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add another token to token manager.  <a href="#a281ef13a99766bd9096e2c403f2c3f60">More...</a><br /></td></tr>
-<tr class="separator:a281ef13a99766bd9096e2c403f2c3f60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aceaa0e8f3b1cd5fb03b4dd0dc5814f93"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokens_8h.html#aceaa0e8f3b1cd5fb03b4dd0dc5814f93">TokenMgr_add_token</a> (<a class="el" href="struct_token_mgr.html">TokenMgr</a> *tok_mgr, char tok_type[50], char tok_val[100])</td></tr>
+<tr class="memdesc:aceaa0e8f3b1cd5fb03b4dd0dc5814f93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add another token to token manager.  <a href="#aceaa0e8f3b1cd5fb03b4dd0dc5814f93">More...</a><br /></td></tr>
+<tr class="separator:aceaa0e8f3b1cd5fb03b4dd0dc5814f93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7402a62420f576f7f1ce38d0da9bea41"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokens_8h.html#a7402a62420f576f7f1ce38d0da9bea41">TokenMgr_free</a> (<a class="el" href="struct_token_mgr.html">TokenMgr</a> *tok_mgr)</td></tr>
 <tr class="memdesc:a7402a62420f576f7f1ce38d0da9bea41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free tokens stored by token manager as well as token manager.  <a href="#a7402a62420f576f7f1ce38d0da9bea41">More...</a><br /></td></tr>
 <tr class="separator:a7402a62420f576f7f1ce38d0da9bea41"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -115,15 +115,15 @@ Functions</h2></td></tr>
 <tr class="memitem:aab2ffb25ab0ad755354661c3d07836a3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_token.html">Token</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokens_8h.html#aab2ffb25ab0ad755354661c3d07836a3">TokenMgr_prev_token</a> (<a class="el" href="struct_token_mgr.html">TokenMgr</a> *tok_mgr)</td></tr>
 <tr class="memdesc:aab2ffb25ab0ad755354661c3d07836a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the previous token from Tokens.  <a href="#aab2ffb25ab0ad755354661c3d07836a3">More...</a><br /></td></tr>
 <tr class="separator:aab2ffb25ab0ad755354661c3d07836a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09eddb1fdcf73f26cf71f589b0b831c5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_token.html">Token</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokens_8h.html#a09eddb1fdcf73f26cf71f589b0b831c5">TokenMgr_last_token</a> (<a class="el" href="struct_token_mgr.html">TokenMgr</a> *tok_mgr)</td></tr>
-<tr class="memdesc:a09eddb1fdcf73f26cf71f589b0b831c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get last token in token manager.  <a href="#a09eddb1fdcf73f26cf71f589b0b831c5">More...</a><br /></td></tr>
-<tr class="separator:a09eddb1fdcf73f26cf71f589b0b831c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca40d3c1454484d6fba15d498810e779"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_token.html">Token</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokens_8h.html#aca40d3c1454484d6fba15d498810e779">TokenMgr_first_token</a> (<a class="el" href="struct_token_mgr.html">TokenMgr</a> *tok_mgr)</td></tr>
-<tr class="memdesc:aca40d3c1454484d6fba15d498810e779"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get first token in token manager.  <a href="#aca40d3c1454484d6fba15d498810e779">More...</a><br /></td></tr>
-<tr class="separator:aca40d3c1454484d6fba15d498810e779"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8cae9f2a04943f06b1ac9074e3b8571f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokens_8h.html#a8cae9f2a04943f06b1ac9074e3b8571f">is_valid_identifier</a> (char id)</td></tr>
-<tr class="memdesc:a8cae9f2a04943f06b1ac9074e3b8571f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Utility function to determine if char is one of accepted identifiers.  <a href="#a8cae9f2a04943f06b1ac9074e3b8571f">More...</a><br /></td></tr>
-<tr class="separator:a8cae9f2a04943f06b1ac9074e3b8571f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63988158a1868f7eae2322374c85ce54"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokens_8h.html#a63988158a1868f7eae2322374c85ce54">TokenMgr_reset_token</a> (<a class="el" href="struct_token_mgr.html">TokenMgr</a> *tok_mgr)</td></tr>
+<tr class="memdesc:a63988158a1868f7eae2322374c85ce54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the internal token to NULL.  <a href="#a63988158a1868f7eae2322374c85ce54">More...</a><br /></td></tr>
+<tr class="separator:a63988158a1868f7eae2322374c85ce54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24d4b7b7d0361e2bb1146300d406ea70"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_token.html">Token</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokens_8h.html#a24d4b7b7d0361e2bb1146300d406ea70">get_last_token</a> (<a class="el" href="struct_token_mgr.html">TokenMgr</a> *tok_mgr)</td></tr>
+<tr class="memdesc:a24d4b7b7d0361e2bb1146300d406ea70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get last token in token manager.  <a href="#a24d4b7b7d0361e2bb1146300d406ea70">More...</a><br /></td></tr>
+<tr class="separator:a24d4b7b7d0361e2bb1146300d406ea70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d93ec75b58f6ee589c4a9af0fa8fc26"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_token.html">Token</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokens_8h.html#a2d93ec75b58f6ee589c4a9af0fa8fc26">get_first_token</a> (<a class="el" href="struct_token_mgr.html">TokenMgr</a> *tok_mgr)</td></tr>
+<tr class="memdesc:a2d93ec75b58f6ee589c4a9af0fa8fc26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get first token in token manager.  <a href="#a2d93ec75b58f6ee589c4a9af0fa8fc26">More...</a><br /></td></tr>
+<tr class="separator:a2d93ec75b58f6ee589c4a9af0fa8fc26"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>File containing token definitions. </p>
@@ -195,41 +195,70 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a8cae9f2a04943f06b1ac9074e3b8571f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8cae9f2a04943f06b1ac9074e3b8571f">&#9670;&nbsp;</a></span>is_valid_identifier()</h2>
+<a id="a2d93ec75b58f6ee589c4a9af0fa8fc26"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d93ec75b58f6ee589c4a9af0fa8fc26">&#9670;&nbsp;</a></span>get_first_token()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int is_valid_identifier </td>
+          <td class="memname"><a class="el" href="struct_token.html">Token</a>* get_first_token </td>
           <td>(</td>
-          <td class="paramtype">char&#160;</td>
-          <td class="paramname"><em>id</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="struct_token_mgr.html">TokenMgr</a> *&#160;</td>
+          <td class="paramname"><em>tok_mgr</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Utility function to determine if char is one of accepted identifiers. </p>
+<p>Get first token in token manager. </p>
+<p>Unlike the "TokenMgr" prefixed functions this doesn't operate on the internal pointer incrementer. This simply returns a pointer to the first token in the collection.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">id</td><td>The char to get validated.</td></tr>
+    <tr><td class="paramname">tok_mgr</td><td>Pointer to token manager instance. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>1 If it matches accepted identifiers or return 0 if it doesn't. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_token.html" title="Represent a single token read from input. ">Token</a> pointer to first token. </dd></dl>
 
 </div>
 </div>
-<a id="a281ef13a99766bd9096e2c403f2c3f60"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a281ef13a99766bd9096e2c403f2c3f60">&#9670;&nbsp;</a></span>TokenMgr_add()</h2>
+<a id="a24d4b7b7d0361e2bb1146300d406ea70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24d4b7b7d0361e2bb1146300d406ea70">&#9670;&nbsp;</a></span>get_last_token()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int TokenMgr_add </td>
+          <td class="memname"><a class="el" href="struct_token.html">Token</a>* get_last_token </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_token_mgr.html">TokenMgr</a> *&#160;</td>
+          <td class="paramname"><em>tok_mgr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get last token in token manager. </p>
+<p>Unlike the "TokenMgr" prefixed functions this doesn't operate on the internal pointer incrementer. This simply returns a pointer to the last token in the collection.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tok_mgr</td><td>Pointer to token manager instance. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_token.html" title="Represent a single token read from input. ">Token</a> pointer to final token. </dd></dl>
+
+</div>
+</div>
+<a id="aceaa0e8f3b1cd5fb03b4dd0dc5814f93"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aceaa0e8f3b1cd5fb03b4dd0dc5814f93">&#9670;&nbsp;</a></span>TokenMgr_add_token()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int TokenMgr_add_token </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="struct_token_mgr.html">TokenMgr</a> *&#160;</td>
           <td class="paramname"><em>tok_mgr</em>, </td>
@@ -259,38 +288,11 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">tok_mgr</td><td>Pointer to token manager. </td></tr>
     <tr><td class="paramname">tok_type</td><td>Type of token. </td></tr>
-    <tr><td class="paramname">tok_value</td><td>Value of token.</td></tr>
+    <tr><td class="paramname">tok_value</td><td>Value of token. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>int signifying status. </dd></dl>
-
-</div>
-</div>
-<a id="aca40d3c1454484d6fba15d498810e779"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aca40d3c1454484d6fba15d498810e779">&#9670;&nbsp;</a></span>TokenMgr_first_token()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="struct_token.html">Token</a>* TokenMgr_first_token </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_token_mgr.html">TokenMgr</a> *&#160;</td>
-          <td class="paramname"><em>tok_mgr</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Get first token in token manager. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">tok_mgr</td><td>Pointer to token manager instance. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_token.html" title="Represent a single token read from input. ">Token</a> pointer to first token. </dd></dl>
 
 </div>
 </div>
@@ -313,38 +315,11 @@ Functions</h2></td></tr>
 <p>Free tokens stored by token manager as well as token manager. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">tok_mgr</td><td>Pointer to token manager.</td></tr>
+    <tr><td class="paramname">tok_mgr</td><td>Pointer to token manager. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>int signifying status. </dd></dl>
-
-</div>
-</div>
-<a id="a09eddb1fdcf73f26cf71f589b0b831c5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a09eddb1fdcf73f26cf71f589b0b831c5">&#9670;&nbsp;</a></span>TokenMgr_last_token()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="struct_token.html">Token</a>* TokenMgr_last_token </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_token_mgr.html">TokenMgr</a> *&#160;</td>
-          <td class="paramname"><em>tok_mgr</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Get last token in token manager. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">tok_mgr</td><td>Pointer to token manager instance. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_token.html" title="Represent a single token read from input. ">Token</a> pointer to final token. </dd></dl>
 
 </div>
 </div>
@@ -386,7 +361,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Retrieve the next token from Tokens. </p>
-<p>Function will return the next token stored inside <a class="el" href="struct_token.html" title="Represent a single token read from input. ">Token</a> Mgr. Note that it returns based on the current token.</p>
+<p>Function will return the next token stored inside <a class="el" href="struct_token.html" title="Represent a single token read from input. ">Token</a> Mgr. Note that it returns based on the current token. Once the last token is reached the internal state must be reset. Otherwise the value returned will continue to be null. See <a class="el" href="tokens_8h.html#a63988158a1868f7eae2322374c85ce54" title="Reset the internal token to NULL. ">TokenMgr_reset_token()</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">tok_mgr</td><td>Pointer to token manager instance. </td></tr>
@@ -414,7 +389,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Retrieve the previous token from Tokens. </p>
-<p>Function will return the previous token stored inside <a class="el" href="struct_token.html" title="Represent a single token read from input. ">Token</a> Mgr. Note that it returns based on the current token.</p>
+<p>Function will return the previous token stored inside <a class="el" href="struct_token.html" title="Represent a single token read from input. ">Token</a> Mgr. Note that it returns based on the current token. Once the first token is reached the internal state must be reset. Otherwise the value returned will continue to be null. See <a class="el" href="tokens_8h.html#a63988158a1868f7eae2322374c85ce54" title="Reset the internal token to NULL. ">TokenMgr_reset_token()</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">tok_mgr</td><td>Pointer to token manager instance. </td></tr>
@@ -445,6 +420,33 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">tok_mgr</td><td>Pointer to token manager. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a63988158a1868f7eae2322374c85ce54"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63988158a1868f7eae2322374c85ce54">&#9670;&nbsp;</a></span>TokenMgr_reset_token()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void TokenMgr_reset_token </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_token_mgr.html">TokenMgr</a> *&#160;</td>
+          <td class="paramname"><em>tok_mgr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reset the internal token to NULL. </p>
+<p>This function operates on the internal token incrementer of the token manager. It will nullify the internal pointer so that collection can be incremented through again. See <a class="el" href="tokens_8h.html#abba7a2527fb5684453e62db37cc232cc" title="Retrieve the next token from Tokens. ">TokenMgr_next_token()</a> and <a class="el" href="tokens_8h.html#aab2ffb25ab0ad755354661c3d07836a3" title="Retrieve the previous token from Tokens. ">TokenMgr_prev_token()</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tok_mgr</td><td>Pointer to token manager instance. </td></tr>
   </table>
   </dd>
 </dl>

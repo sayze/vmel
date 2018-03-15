@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Virtual Machine Execution Language (Vmel): src Directory Reference</title>
+<title>Virtual Machine Execution Language (Vmel): src/utils.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -67,23 +67,60 @@ $(function() {
 </div>
 </div><!-- top -->
 <div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
-<div class="title">src Directory Reference</div>  </div>
+<div class="title">utils.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>File containing collection of helper functions.  
+<a href="#details">More...</a></p>
+
+<p><a href="utils_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
-Files</h2></td></tr>
-<tr class="memitem:parser_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html">parser.h</a> <a href="parser_8h_source.html">[code]</a></td></tr>
-<tr class="memdesc:parser_8h"><td class="mdescLeft">&#160;</td><td class="mdescRight">File containing all definitions for parser module. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:tokens_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokens_8h.html">tokens.h</a> <a href="tokens_8h_source.html">[code]</a></td></tr>
-<tr class="memdesc:tokens_8h"><td class="mdescLeft">&#160;</td><td class="mdescRight">File containing token definitions. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:utils_8h"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html">utils.h</a> <a href="utils_8h_source.html">[code]</a></td></tr>
-<tr class="memdesc:utils_8h"><td class="mdescLeft">&#160;</td><td class="mdescRight">File containing collection of helper functions. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:aa1187b70998f73cdb598833d6afaa30a"><td class="memItemLeft" align="right" valign="top"><a id="aa1187b70998f73cdb598833d6afaa30a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#aa1187b70998f73cdb598833d6afaa30a">print_usage</a> (void)</td></tr>
+<tr class="memdesc:aa1187b70998f73cdb598833d6afaa30a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print help to cli. <br /></td></tr>
+<tr class="separator:aa1187b70998f73cdb598833d6afaa30a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cae9f2a04943f06b1ac9074e3b8571f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a8cae9f2a04943f06b1ac9074e3b8571f">is_valid_identifier</a> (char id)</td></tr>
+<tr class="memdesc:a8cae9f2a04943f06b1ac9074e3b8571f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Utility function to determine if char is one of accepted identifiers.  <a href="#a8cae9f2a04943f06b1ac9074e3b8571f">More...</a><br /></td></tr>
+<tr class="separator:a8cae9f2a04943f06b1ac9074e3b8571f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>File containing collection of helper functions. </p>
+<dl class="section author"><dt>Author</dt><dd>Sayed Sadeed </dd></dl>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="a8cae9f2a04943f06b1ac9074e3b8571f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8cae9f2a04943f06b1ac9074e3b8571f">&#9670;&nbsp;</a></span>is_valid_identifier()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int is_valid_identifier </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Utility function to determine if char is one of accepted identifiers. </p>
+<p>Check to see if a character is deemed valid in the language syntax.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>The char to get validated. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>1 If it matches accepted identifiers or return 0 if it doesn't. </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

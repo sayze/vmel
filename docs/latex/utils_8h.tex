@@ -1,0 +1,46 @@
+\hypertarget{utils_8h}{}\section{src/utils.h File Reference}
+\label{utils_8h}\index{src/utils.\+h@{src/utils.\+h}}
+
+
+File containing collection of helper functions.  
+
+
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{utils_8h_aa1187b70998f73cdb598833d6afaa30a}\label{utils_8h_aa1187b70998f73cdb598833d6afaa30a}} 
+void \mbox{\hyperlink{utils_8h_aa1187b70998f73cdb598833d6afaa30a}{print\+\_\+usage}} (void)
+\begin{DoxyCompactList}\small\item\em Print help to cli. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{utils_8h_a8cae9f2a04943f06b1ac9074e3b8571f}{is\+\_\+valid\+\_\+identifier}} (char id)
+\begin{DoxyCompactList}\small\item\em Utility function to determine if char is one of accepted identifiers. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+File containing collection of helper functions. 
+
+\begin{DoxyAuthor}{Author}
+Sayed Sadeed 
+\end{DoxyAuthor}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{utils_8h_a8cae9f2a04943f06b1ac9074e3b8571f}\label{utils_8h_a8cae9f2a04943f06b1ac9074e3b8571f}} 
+\index{utils.\+h@{utils.\+h}!is\+\_\+valid\+\_\+identifier@{is\+\_\+valid\+\_\+identifier}}
+\index{is\+\_\+valid\+\_\+identifier@{is\+\_\+valid\+\_\+identifier}!utils.\+h@{utils.\+h}}
+\subsubsection{\texorpdfstring{is\+\_\+valid\+\_\+identifier()}{is\_valid\_identifier()}}
+{\footnotesize\ttfamily int is\+\_\+valid\+\_\+identifier (\begin{DoxyParamCaption}\item[{char}]{id }\end{DoxyParamCaption})}
+
+
+
+Utility function to determine if char is one of accepted identifiers. 
+
+Check to see if a character is deemed valid in the language syntax.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The char to get validated. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 If it matches accepted identifiers or return 0 if it doesn\textquotesingle{}t. 
+\end{DoxyReturn}
