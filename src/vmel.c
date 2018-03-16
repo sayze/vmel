@@ -6,7 +6,7 @@
 int main(int argc, char *argv[]) {
 	if (argc < 2) {
 		print_usage();
-		exit(1);
+		exit(2);
 	}
 
 	// Read source file to buffer.
@@ -14,7 +14,10 @@ int main(int argc, char *argv[]) {
 	// Instantiate new token manager.
 	TokenMgr *tok_mgr = TokenMgr_new(); 
 	// Attempt to fill token manager with tokens.
-	int stat = build_tokens(b, tok_mgr);
+	build_tokens(b, tok_mgr);
+
+	// Parse tokens.
+	TokenMgr_print_tokens(tok_mgr);
 
 	// Free resources.
 	TokenMgr_free(tok_mgr);

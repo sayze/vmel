@@ -52,6 +52,10 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 			bidx++;
 			continue;
 		}
+		else if (c == SEMI) {
+			TokenMgr_add_token(tokmgr, "EOS", ":");
+			bidx++;
+		}
 		else if (c == EQUAL) {
 			TokenMgr_add_token(tokmgr, "OPERATOR", "=");
 			bidx++;
