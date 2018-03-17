@@ -22,5 +22,22 @@ void print_usage(void);
  */	
 int is_valid_identifier(char id);
 
+/**
+ * @brief Read contents of file to buffer.
+ *
+ * This function will read the contents of a passed source file (*.vml).
+ * It will simply dump the contents of a file to a buffer.
+ * The buffer is created on heap so must be managed by caller. See below example
+ *
+ * @code
+ * char *filename = "~/Desktop/run.vml";
+ * char *buffer = file_to_buffer(filename);
+ * free(buffer) // when done.
+ * @endcode
+ *
+ * @param filename Path to source file.
+ * @return Pointer to buffer containing contents of file.
+ */
+char *file_to_buffer(const char *);
 
 #endif

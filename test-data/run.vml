@@ -7,8 +7,8 @@
 # Variables must be prefixed with a dollar sign... yes I do like PHP.
 # Such as the below
 
-$vm_user = "sayed@root";
-$vm_pass = "124astroboy";
+$vm_user = "sayed@root"
+$vm_pass = "124astroboy"
 
 # ---------------------------------- # 
 #            Groups                  #
@@ -18,14 +18,14 @@ $vm_pass = "124astroboy";
 # Each Group may have a variable amount of tasks to be performed. Refer to the below.
 
 {build_npm_packages}
-"cd ~/var/node_project/";
-"npm install";
-"npm run build";
+"cd ~/var/node_project/"
+"npm install"
+"npm run build"
 
 {update_local_repo}
-"cd ~/projects/vmel";
-"git checkout develop && git pull origin develop";
+"cd ~/projects/vmel"
+"git checkout develop && git pull origin develop"
 
 {run_make}
-"cd ~/var/exec/";
-"make -dDebug1";
+"cd ~/var/exec/"
+"make -dDebug1"

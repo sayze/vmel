@@ -12,3 +12,28 @@ int is_valid_identifier(char id) {
 	else
 		return 0;
 }
+
+char *file_to_buffer(const char *filename) {
+	// File pointer.
+	FILE *fptr = fopen(filename, "r");
+	// Output buffer.
+	char *buff;
+
+	if (fptr == NULL) {
+		printf("Invalid file provided %s\n", filename);
+		exit(1);
+	}
+
+	fseek(fptr, 0, SEEK_END);
+	
+	long f_size = ftell(fptr);
+	
+	fseek(fptr, 0, SEEK_SET);
+	
+	buff = calloc(1, f_size);
+	
+	fread(buff, f_size, 1, fptr);
+	
+	fclose(fptr);
+	return buff;
+}

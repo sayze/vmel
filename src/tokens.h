@@ -31,25 +31,6 @@ typedef struct{
 } TokenMgr;
 
 /**
- * @brief Read contents of file to buffer.
- *
- * This function will read the contents of a passed source file (*.vml).
- * It will strip out the inline and external comments from the source and
- * save the contents to a buffer. The buffer is created on heap so must be managed
- * by caller. See below example
- *
- * @code
- * char *filename = "~/Desktop/run.vml";
- * char *buffer = file_to_buffer(filename);
- * free(buffer) // when done.
- * @endcode
- *
- * @param filename Path to source file.
- * @return Pointer to buffer containing contents of file.
- */
-char *file_to_buffer(const char *);
-
-/**
  * @brief Build tokens from buffer in.
  * @param buff the contents which should be tokenized.
  * @param tokmgr Token Manager to handle tokenization.

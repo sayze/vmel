@@ -13,8 +13,6 @@
 #define DQUOTE '"'
 // Equals operator.
 #define EQUAL '='
-// End of statement.
-#define SEMI ';'
 // Left brace.
 #define LBRACE '{'
 // Right brace.
@@ -51,10 +49,6 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 		if (isspace(c)) {
 			bidx++;
 			continue;
-		}
-		else if (c == SEMI) {
-			TokenMgr_add_token(tokmgr, "EOS", ":");
-			bidx++;
 		}
 		else if (c == EQUAL) {
 			TokenMgr_add_token(tokmgr, "OPERATOR", "=");
@@ -108,60 +102,6 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 	}
 
 	return error;
-}
-
-char *file_to_buffer(const char *filename) {
-	// File pointer.
-	FILE *fptr = fopen(filename, "r");
-	// Store each line read from file.
-	char line[1024];
-	// Output buffer.
-	char *buff;
-	// Each character read in line,
-	char c;
-	// Read lock to prevent store of comments.
-	int rlock = 0;
-	// Track index of buffer.
-	int bidx = 0;
-
-	if (fptr == NULL) {
-		printf("Invalid file provided %s\n", filename);
-		exit(1);
-	}
-
-	fseek(fptr, 0, SEEK_END);
-	long f_size = ftell(fptr);
-	fseek(fptr, 0, SEEK_SET);
-	buff = calloc(1, f_size);
-
-	while (fgets(line, sizeof(line), fptr)) {
-		// Line starts with comment don't bother processing.
-		if (line[0] == COMMENT)
-			continue;
-
-		// Iterate through all chars in "line".
-		// Strip out remaining inline comments and save to buffer.
-		for (size_t i = 0; i < strlen(line); i++) {
-			c = line[i];
-			switch (c) {
-				case COMMENT:
-					rlock = 1;
-					break;
-				case NEWLINE:
-					rlock = 0;
-					break;
-				default:
-					if (rlock == 0) {
-						buff[bidx++] = c;
-					}
-					break;
-			}
-		}
-	}
-
-	buff[bidx] = '\0';
-	fclose(fptr);
-	return buff;
 }
 
 TokenMgr *TokenMgr_new() {
