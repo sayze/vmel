@@ -41,15 +41,31 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 	int stctr = 0;
 	// Error code.
 	int error = 0;
+	// Track line no.
+	int lineno = 1;
 	
 	// Iterate through all chars until terminator or error.
 	while (buff[bidx] != '\0' && !error) {
 		c = buff[bidx];
 
-		if (isspace(c)) {
+		if (c == COMMENT) {
+			while (c != NEWLINE) {
+				c = buff[++bidx];
+			}
+			continue;
+
+		} 
+		else if (c == NEWLINE) {
+			lineno++;
 			bidx++;
 			continue;
-		}
+
+		} 
+		else if (isspace(c)) {
+			bidx++;
+			continue;
+
+		} 
 		else if (c == EQUAL) {
 			TokenMgr_add_token(tokmgr, "OPERATOR", "=");
 			bidx++;
@@ -97,7 +113,7 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 		}
 		else {
 			error = 1;
-			printf("Invalid syntax: unknown '%c'\n", c);
+			printf("** Invalid syntax: unknown '%c' found in line %d\n", c, lineno);
 		}
 	}
 

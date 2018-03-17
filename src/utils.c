@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <ctype.h>
 #include "utils.h"
 
@@ -20,8 +21,8 @@ char *file_to_buffer(const char *filename) {
 	char *buff;
 
 	if (fptr == NULL) {
-		printf("Invalid file provided %s\n", filename);
-		exit(1);
+		perror("Error: ");
+		exit(-1);
 	}
 
 	fseek(fptr, 0, SEEK_END);

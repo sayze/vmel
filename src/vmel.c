@@ -17,10 +17,10 @@ int main(int argc, char *argv[]) {
 
 	// buffer is null then switch to cli mode.
 	if (buff_in == NULL) {
-		char input[100]; // TODO bad ! A line might consist more than 100 chars.
-		while () {
+		// char input[100]; // TODO bad ! A line might consist more than 100 chars.
+		// while () {
 
-		}
+		// }
 	}
 
 
