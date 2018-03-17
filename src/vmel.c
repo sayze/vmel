@@ -8,7 +8,7 @@
 #define CLI_BUFFER_LIMIT 50
 
 int main(int argc, char *argv[]) {
-	
+		
 	// Input stream used for file or cli.
 	char *buff_in = NULL;
 

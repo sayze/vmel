@@ -1,11 +1,11 @@
 /**
  * @file tokens.h
  * @author Sayed Sadeed
- * @brief File containing token definitions.
+ * @brief File containing token management.
  */
 
-#ifndef TOKENS_H
-#define TOKENS_H
+#ifndef TOKENIZER_H
+#define TOKENIZER_H
 
 #include <string.h>
 

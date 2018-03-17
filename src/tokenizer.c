@@ -4,23 +4,7 @@
 #include <ctype.h>
 #include "utils.h"
 #include "tokenizer.h"
-
-// Comment.
-#define COMMENT '#'
-// Newline.
-#define NEWLINE '\n'
-// Double quotes.
-#define DQUOTE '"'
-// Equals operator.
-#define EQUAL '='
-// Left brace.
-#define LBRACE '{'
-// Right brace.
-#define RBRACE '}'
-// Var identifier.
-#define VAR '$'
-// Plus symbol.
-#define PLUS '+'
+#include "tokens.h"
 
 int build_tokens(char *buff, TokenMgr *tokmgr) {
 	if (buff == NULL) {
@@ -68,12 +52,24 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 			continue;
 
 		}
+		else if (c ==  EQUAL) {
+			TokenMgr_add_token(tokmgr, "OPERATOR", "EQUAL");
+			bidx++;
+		}
 		else if (c == PLUS) {
 			TokenMgr_add_token(tokmgr, "OPERATOR", "PLUS");
 			bidx++;
 		} 
-		else if (c == EQUAL) {
-			TokenMgr_add_token(tokmgr, "OPERATOR", "=");
+		else if (c ==  MINUS) {
+			TokenMgr_add_token(tokmgr, "OPERATOR", "MINUS");
+			bidx++;
+		} 
+		else if (c ==  ASTERISK) {
+			TokenMgr_add_token(tokmgr, "OPERATOR", "ASTERISK");
+			bidx++;
+		} 
+		else if (c == FSLASH) {
+			TokenMgr_add_token(tokmgr, "OPERATOR", "FSLASH");
 			bidx++;
 		}
 		else if (c == DQUOTE) {

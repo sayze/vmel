@@ -17,7 +17,7 @@
  * @param tok is a pointer to the token being compared.
  * @param type the type we are expecting it to be. 
  */
-int can_consume(Token *tok, char *type);
+int can_consume(char *tok_type, char *type);
 
 /**
  * @brief parse an expression.
