@@ -22,12 +22,12 @@
 
 int build_tokens(char *buff, TokenMgr *tokmgr) {
 	if (buff == NULL) {
-		printf("**Error** Buffer invalid state cannot build tokens\n");
+		printf("** Error Buffer invalid state cannot build tokens\n");
 		return 1;
 	}
 
 	if (tokmgr == NULL) {
-		printf("**Error** Invalid token manager passed to build token");
+		printf("** Error Invalid token manager passed to build token");
 		return 1;
 	}
 

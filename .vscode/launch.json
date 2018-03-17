@@ -14,7 +14,7 @@
                 "trace": false
             },
             "showDisplayString": false,
-            "args": ["test-data/run.vml"],
+            // "args": ["test-data/run.vml"],
             "stopAtEntry": false,
             "cwd": "${workspaceRoot}",
             "environment": [],

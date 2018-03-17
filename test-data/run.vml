@@ -29,3 +29,4 @@ $vm_pass = "124astroboy"
 {run_make}
 "cd ~/var/exec/"
 "make -dDebug1"
+dsdasdsd;;

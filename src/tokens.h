@@ -13,8 +13,8 @@
  * Struct will hold every identified token meta data. Is needed for parsing.
  */
 typedef struct{
-	char type[20]; //TODO safe to assume types will only ever be less than 20 ?
-	char value[100]; //TODO needs optimizing BAD. It is possible to have STRING more than 100 chars
+	char type[20]; //TODO: safe to assume types will only ever be less than 20 ???
+	char value[100]; //TODO: needs optimizing BAD. It is possible to have STRING more than 100 chars
 } Token;
 
 /**
@@ -26,7 +26,7 @@ typedef struct{
  */
 typedef struct{
 	Token **curr_tok;
-	Token *toks[1000]; //TODO needs optimizing BAD.
+	Token *toks[1000]; // TODO: needs optimizing BAD. Use realloc here
 	size_t tok_ctr;
 } TokenMgr;
 

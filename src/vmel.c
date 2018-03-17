@@ -1,10 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "tokens.h"
 #include "utils.h"
 
+#define CLI_BUFFER_LIMIT 50
+
 int main(int argc, char *argv[]) {
-	// Input stream can be file content or stdin.
+	
+	// Input stream used for file or cli.
 	char *buff_in = NULL;
 
 	// Source file has been provided then write into buffer.
@@ -14,22 +18,29 @@ int main(int argc, char *argv[]) {
 
 	// Instantiate new token manager.
 	TokenMgr *tok_mgr = TokenMgr_new(); 
+	// Store error status.
+	int err = 0;
 
-	// buffer is null then switch to cli mode.
+	// Buffer is null then switch to cli mode.
+	// Otherwise build token with file stream;
 	if (buff_in == NULL) {
-		// char input[100]; // TODO bad ! A line might consist more than 100 chars.
-		// while () {
-
-		// }
+		buff_in = calloc(CLI_BUFFER_LIMIT, sizeof(char)); // TODO: bad ! A line might consist more than 100 chars.
+		printf("Enter quit to terminate cli\n");
+		while (1) {
+			fputs("> ", stdout);
+			fgets(buff_in, CLI_BUFFER_LIMIT, stdin);
+			if (!strncmp(buff_in, "quit", 4)) {
+				break;
+			}
+			err = build_tokens(buff_in, tok_mgr);
+		}
+	}
+	else {
+		err = build_tokens(buff_in, tok_mgr);
 	}
 
-
-
-	// Attempt to fill token manager with tokens.
-	build_tokens(buff_in, tok_mgr);
-
-	// Parse tokens.
-	TokenMgr_print_tokens(tok_mgr);
+	if (!err)
+		TokenMgr_print_tokens(tok_mgr);
 
 	// Free resources.
 	TokenMgr_free(tok_mgr);
