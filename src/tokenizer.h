@@ -7,6 +7,8 @@
 #ifndef TOKENS_H
 #define TOKENS_H
 
+#include <string.h>
+
 /**
  * @brief Represent a single token read from input.
  *
@@ -15,6 +17,7 @@
 typedef struct{
 	char type[20]; //TODO: safe to assume types will only ever be less than 20 ???
 	char value[100]; //TODO: needs optimizing BAD. It is possible to have STRING more than 100 chars
+	size_t val_length;
 } Token;
 
 /**
@@ -32,6 +35,7 @@ typedef struct{
 
 /**
  * @brief Build tokens from buffer in.
+ * 
  * @param buff the contents which should be tokenized.
  * @param tokmgr Token Manager to handle tokenization.
  * @return int signifying status.
@@ -99,9 +103,21 @@ Token *TokenMgr_next_token(TokenMgr *tok_mgr);
 Token *TokenMgr_prev_token(TokenMgr *tok_mgr);
 
 /**
+ * @brief set the internal counter back to start.
+ * 
+ * Unlike TokenMgr_reset_token() this function will set the TokenMgr counter
+ * back to 0. This recycles the existing memory for inclusion of new tokens.
+ * A common use case for this is in the cli (command line interface) where each time a statement
+ * is evaluated we don't want to evaluate those same tokens again on the next statement.
+ *
+ * @param tok_mgr Pointer to token manager. 
+ */
+void TokenMgr_clear_tokens(TokenMgr *tok_mgr);
+
+/**
  * @brief Reset the internal token to NULL.
  *
- * This function operates on the internal token incrementer
+ * This function operates on the internal curr token pointer
  * of the token manager. It will nullify the internal pointer so that
  * collection can be incremented through again.
  * See TokenMgr_next_token() and TokenMgr_prev_token().

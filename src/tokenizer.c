@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include "tokens.h"
 #include "utils.h"
+#include "tokenizer.h"
 
 // Comment.
 #define COMMENT '#'
@@ -19,6 +19,8 @@
 #define RBRACE '}'
 // Var identifier.
 #define VAR '$'
+// Plus symbol.
+#define PLUS '+'
 
 int build_tokens(char *buff, TokenMgr *tokmgr) {
 	if (buff == NULL) {
@@ -49,7 +51,7 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 		c = buff[bidx];
 
 		if (c == COMMENT) {
-			while (c != NEWLINE) {
+			while (c != NEWLINE && c != '\0') {
 				c = buff[++bidx];
 			}
 			continue;
@@ -65,6 +67,10 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 			bidx++;
 			continue;
 
+		}
+		else if (c == PLUS) {
+			TokenMgr_add_token(tokmgr, "OPERATOR", "PLUS");
+			bidx++;
 		} 
 		else if (c == EQUAL) {
 			TokenMgr_add_token(tokmgr, "OPERATOR", "=");
@@ -72,11 +78,17 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 		}
 		else if (c == DQUOTE) {
 			c = buff[++bidx];
-			while (c != DQUOTE) {
+			while (c != DQUOTE && c != '\0' && c != NEWLINE) {
 				store[stctr++] = c;
 				c = buff[++bidx];
 			}
 			store[stctr] = '\0';
+			
+			// Ensure last read char is closing quote.
+			if (c != DQUOTE) {
+				error = 1;
+				continue;
+			}
 			TokenMgr_add_token(tokmgr, "STRING", store);
 			stctr = 0;
 			bidx++;
@@ -102,20 +114,46 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 		}
 		else if (c == LBRACE) {
 			c = buff[++bidx];
+			
+			// Catch use cases where { NON-ALPHA }  
+			if (!is_valid_identifier(c)) {
+				store[stctr++] = c;
+				store[stctr] = '\0';
+				error = 1;
+				continue;
+			}
+
 			while (is_valid_identifier(c)) {
 				store[stctr++] = c;
 				c = buff[++bidx];
 			}
+
 			store[stctr] = '\0';
+			// Ensure last read char is right brace.
+			if (c != RBRACE) {
+				error = 1;
+				continue;
+			}
+
 			TokenMgr_add_token(tokmgr, "GROUP", store);
 			stctr = 0;
 			bidx++;
 		}
 		else {
+			store[stctr++] = c;
+			c = buff[++bidx];
+			while (c != COMMENT && c != LBRACE && c != RBRACE \
+				&& c != DQUOTE && c != VAR & c != NEWLINE && c!= EQUAL) {
+				store[stctr++] = c;
+				c = buff[++bidx];
+			}
+			store[stctr] = '\0';
 			error = 1;
-			printf("** Invalid syntax: unknown '%c' found in line %d\n", c, lineno);
 		}
 	}
+
+	if (error)
+		printf("** Invalid syntax: unknown '%s' found in line %d\n", store, lineno);
 
 	return error;
 }
@@ -136,6 +174,7 @@ int TokenMgr_add_token(TokenMgr *tok_mgr, char tok_type[50], char tok_val[100]) 
 	Token *tmp = malloc(sizeof(Token));
 	strcpy(tmp->type, tok_type);
 	strcpy(tmp->value, tok_val);
+	tmp->val_length = strlen(tmp->value);
 	tok_mgr->toks[tok_mgr->tok_ctr] = tmp;
 	tok_mgr->tok_ctr += 1;
 	return 0;
@@ -147,15 +186,13 @@ void TokenMgr_print_tokens(TokenMgr *tok_mgr) {
 	}
 }
 
-
-
 int TokenMgr_free(TokenMgr *tok_mgr) {
 	if (tok_mgr == NULL) {
 		printf("**Error** Invalid token manager passed to TokenMgr_free");
 		return 1;
 	}
 
-	for (size_t i =0; i < tok_mgr->tok_ctr; i++) {
+	for (size_t i = 0; i < tok_mgr->tok_ctr; i++) {
 		free(tok_mgr->toks[i]);
 	}
 	tok_mgr->curr_tok = NULL;
@@ -187,7 +224,7 @@ Token *TokenMgr_prev_token(TokenMgr *tok_mgr) {
 		return NULL;
 
 	if (tok_mgr->curr_tok == NULL) {
-		tok_mgr->curr_tok = &tok_mgr->toks[tok_mgr->tok_ctr];
+		tok_mgr->curr_tok = &tok_mgr->toks[tok_mgr->tok_ctr-1];
 	} 
 	else {
 
@@ -219,4 +256,13 @@ Token *get_last_token(TokenMgr *tok_mgr) {
 		return NULL;
 
 	return tok_mgr->toks[tok_mgr->tok_ctr-1];
+}
+
+void TokenMgr_clear_tokens(TokenMgr *tok_mgr) {
+	if (tok_mgr == NULL) {
+		printf("**Error** Invalid token manager passed to TokenMgr_free");
+		return;
+	}
+	tok_mgr->curr_tok = NULL;
+	tok_mgr->tok_ctr = 0;
 }

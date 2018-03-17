@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "tokens.h"
+#include "tokenizer.h"
+#include "parser.h"
 #include "utils.h"
 
 #define CLI_BUFFER_LIMIT 50
@@ -33,16 +34,29 @@ int main(int argc, char *argv[]) {
 				break;
 			}
 			err = build_tokens(buff_in, tok_mgr);
+
+			if (!err) {
+				int ret = parse_expr(tok_mgr);
+				if (ret  >= 0)
+					printf("Output is %d\n", ret);
+				else
+					printf("Error calculating expression\n");
+			}
+
+			// discard the built up collection of tokens.
+			TokenMgr_clear_tokens(tok_mgr);
 		}
 	}
 	else {
 		err = build_tokens(buff_in, tok_mgr);
+		parse_expr(tok_mgr);
 	}
 
-	if (!err)
-		TokenMgr_print_tokens(tok_mgr);
+	// TokenMgr_print_tokens(tok_mgr);
 
 	// Free resources.
 	TokenMgr_free(tok_mgr);
 	free(buff_in);
 }
+
+

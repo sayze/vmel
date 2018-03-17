@@ -7,6 +7,8 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+#include <string.h>
+
 /**
  * @brief Print help to cli.
  */
@@ -39,5 +41,14 @@ int is_valid_identifier(char id);
  * @return Pointer to buffer containing contents of file.
  */
 char *file_to_buffer(const char *);
+
+/**
+ * @brief convert a string of numbers to integer.
+ * 
+ * @param str string to be converted.
+ * @param len the length of the string.
+ * @return converted integer if successful or 0.
+ */
+int string_to_int(char *str, size_t len);
 
 #endif

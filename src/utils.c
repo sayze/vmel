@@ -38,3 +38,14 @@ char *file_to_buffer(const char *filename) {
 	fclose(fptr);
 	return buff;
 }
+
+int string_to_int(char *str, size_t len) {
+	if (str == NULL)
+		return 0;
+		
+	int dec = 0;
+	for(size_t i =0; i<len; i++){
+		dec = dec * 10 + ( str[i] - '0' );
+	}
+	return dec;
+}
