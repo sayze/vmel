@@ -5,15 +5,31 @@
 #include "tokens.h"
 #include "tokenizer.h"   
 
+Token *tok_mgr_ptr;
+
 int can_consume(char *tok_type, char *type) {
 	return strcmp(tok_type, type);
 }
 
 int parse_factor(TokenMgr *tok_mgr) {
-	Token *temp_tok = *tok_mgr->curr_tok;
-	 if (can_consume(temp_tok->type, "INTEGER") == 0) {
+	tok_mgr_ptr = TokenMgr_current_token(tok_mgr);
+	int 	result = 0;
+
+	 if (can_consume(tok_mgr_ptr->type, "INTEGER") == 0) {
 		 TokenMgr_next_token(tok_mgr);
-		 return string_to_int(temp_tok->value, temp_tok->val_length);
+		 return string_to_int(tok_mgr_ptr->value, tok_mgr_ptr->val_length);
+	 }
+	 else if (can_consume(tok_mgr_ptr->type, "LPAREN") == 0) {
+		 TokenMgr_next_token(tok_mgr);
+		 result = parse_expr(tok_mgr);
+		 tok_mgr_ptr = TokenMgr_current_token(tok_mgr);
+		 if (can_consume(tok_mgr_ptr->type, "RPAREN") == 0) {
+			TokenMgr_next_token(tok_mgr); 
+		 }else{
+			 return -1;
+		 }
+		// Return final result.
+		return result;
 	 }
 	 else {
 		 return -1;
@@ -22,47 +38,50 @@ int parse_factor(TokenMgr *tok_mgr) {
 
 int parse_term(TokenMgr *tok_mgr) {
 	int res = parse_factor(tok_mgr);
-	Token *curr = *tok_mgr->curr_tok;
+	tok_mgr_ptr = TokenMgr_current_token(tok_mgr);
 	
-	while (strncmp(curr->value, "ASTERISK", curr->val_length) == 0 || 
-		strncmp(curr->value, "FSLASH", curr->val_length) == 0) {
+	while (strncmp(tok_mgr_ptr->value, "ASTERISK", tok_mgr_ptr->val_length) == 0 || 
+		strncmp(tok_mgr_ptr->value, "FSLASH", tok_mgr_ptr->val_length) == 0) {
 	
 		// Determine which operation to execute.
-		if (strncmp(curr->value, "ASTERISK", curr->val_length) == 0 && 
-			can_consume(curr->value, "ASTERISK") == 0) {
-			curr = TokenMgr_next_token(tok_mgr);
+		if (strncmp(tok_mgr_ptr->value, "ASTERISK", tok_mgr_ptr->val_length) == 0 && 
+			can_consume(tok_mgr_ptr->value, "ASTERISK") == 0) {
+			tok_mgr_ptr = TokenMgr_next_token(tok_mgr);
 			res = res * parse_factor(tok_mgr);
 		}
-		else if (strncmp(curr->value, "FSLASH", curr->val_length) == 0 && 
-			can_consume(curr->value, "FSLASH") == 0) {
-			curr = TokenMgr_next_token(tok_mgr);
+		else if (strncmp(tok_mgr_ptr->value, "FSLASH", tok_mgr_ptr->val_length) == 0 && 
+			can_consume(tok_mgr_ptr->value, "FSLASH") == 0) {
+			tok_mgr_ptr = TokenMgr_next_token(tok_mgr);
 			res = res / parse_factor(tok_mgr);
 		}
-		curr = *tok_mgr->curr_tok;
+		tok_mgr_ptr = TokenMgr_current_token(tok_mgr);
 	}
 	return res;
 }
 
 
 int parse_expr(TokenMgr *tok_mgr) {
-	TokenMgr_next_token(tok_mgr);
+	if (tok_mgr->curr_tok == NULL) {
+		TokenMgr_next_token(tok_mgr);
+	}
+
 	int res = parse_term(tok_mgr);
-	Token *curr = *tok_mgr->curr_tok;
-	while (strncmp(curr->value, "MINUS", curr->val_length) == 0 || 
-		strncmp(curr->value, "PLUS", curr->val_length) == 0) {
+	tok_mgr_ptr = TokenMgr_current_token(tok_mgr);
+	while (strncmp(tok_mgr_ptr->value, "MINUS", tok_mgr_ptr->val_length) == 0 || 
+		strncmp(tok_mgr_ptr->value, "PLUS", tok_mgr_ptr->val_length) == 0) {
 	
 		// Determine which operation to execute.
-		if (strncmp(curr->value, "MINUS", curr->val_length) == 0 && 
-			can_consume(curr->value, "MINUS") == 0) {
-			curr = TokenMgr_next_token(tok_mgr);
+		if (strncmp(tok_mgr_ptr->value, "MINUS", tok_mgr_ptr->val_length) == 0 && 
+			can_consume(tok_mgr_ptr->value, "MINUS") == 0) {
+			tok_mgr_ptr = TokenMgr_next_token(tok_mgr);
 			res = res - parse_term(tok_mgr);
 		}
-		else if (strncmp(curr->value, "PLUS", curr->val_length) == 0 && 
-			can_consume(curr->value, "PLUS") == 0) {
-			curr = TokenMgr_next_token(tok_mgr);
+		else if (strncmp(tok_mgr_ptr->value, "PLUS", tok_mgr_ptr->val_length) == 0 && 
+			can_consume(tok_mgr_ptr->value, "PLUS") == 0) {
+			tok_mgr_ptr = TokenMgr_next_token(tok_mgr);
 			res = res + parse_term(tok_mgr);
 		}
-		curr = *tok_mgr->curr_tok;
+		tok_mgr_ptr = TokenMgr_current_token(tok_mgr);
 	}
   
 

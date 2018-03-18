@@ -27,7 +27,11 @@
 #define MINUS '-'
 // Asterisk symbol.
 #define ASTERISK '*'
-// Forward Slash/Div character.
+// Forward slash/divide.
 #define FSLASH '/'
+// Left paranthesis.
+#define LPAREN '('
+// Right paranthesis.
+#define RPAREN ')'
 
 #endif

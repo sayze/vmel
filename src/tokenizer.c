@@ -170,6 +170,13 @@ TokenMgr *TokenMgr_new() {
 	return tok_mgr;
 }
 
+Token *TokenMgr_current_token(TokenMgr *tok_mgr) {
+	if (tok_mgr == NULL) {
+		return NULL;
+		
+	return *tok_mgr->curr_tok;
+}
+
 int TokenMgr_add_token(TokenMgr *tok_mgr, char tok_type[50], char tok_val[100]) {
 	if (tok_mgr == NULL) {
 		printf("**Error** Invalid token manager passed to TokenMgr_add_token");

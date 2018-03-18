@@ -127,6 +127,19 @@ void TokenMgr_clear_tokens(TokenMgr *tok_mgr);
 void TokenMgr_reset_token(TokenMgr *tok_mgr);
 
 /**
+ * @brief Get the Token currently being pointed to by Token Manager 
+ * internal token pointer.
+ *
+ * This function will give access to the token being stored by TokenMgr **curr_token.
+ * It will save having to dereference the pointer each time. Also it will encapsulate
+ * the internal structure of the TokenMgr struct.
+ *
+ * @param tok_mgr Pointer to token manager instance.
+ * @return Token pointer currently pointed to by **cur_token.
+ */
+Token *TokenMgr_current_token(TokenMgr *tok_mgr);
+
+/**
  * @brief Get last token in token manager.
  * 
  * Unlike the "TokenMgr" prefixed functions this doesn't operate
