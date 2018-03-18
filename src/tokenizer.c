@@ -52,6 +52,15 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 			continue;
 
 		}
+		else if (c == LPAREN) {
+			TokenMgr_add_token(tokmgr, "LPAREN", "(");
+			bidx++;
+
+		}
+		else if (c == RPAREN) {
+			TokenMgr_add_token(tokmgr, "RPAREN", ")");
+			bidx++;
+		}
 		else if (c ==  EQUAL) {
 			TokenMgr_add_token(tokmgr, "OPERATOR", "EQUAL");
 			bidx++;
