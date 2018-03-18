@@ -34,7 +34,10 @@ typedef struct{
 } TokenMgr;
 
 /**
- * @brief Build tokens from buffer in.
+ * @brief Build tokens from steam of input.
+ * 
+ * Provides a decoupled implementation for building tokens from
+ * any source stream. Can be contents of file or stdin.
  * 
  * @param buff the contents which should be tokenized.
  * @param tokmgr Token Manager to handle tokenization.
@@ -79,7 +82,7 @@ void TokenMgr_print_tokens(TokenMgr *tok_mgr);
 /**
  * @brief Retrieve the next token from Tokens.
  * 
- * Function will return the next token stored inside Token Mgr.
+ * Function will return the next token stored inside TokenMgr.
  * Note that it returns based on the current token. Once the last 
  * token is reached the internal state must be reset. Otherwise the value
  * returned will continue to be null. See TokenMgr_reset_token().
@@ -92,7 +95,7 @@ Token *TokenMgr_next_token(TokenMgr *tok_mgr);
 /**
  * @brief Retrieve the previous token from Tokens.
  * 
- * Function will return the previous token stored inside Token Mgr.
+ * Function will return the previous token stored inside TokenMgr.
  * Note that it returns based on the current token. Once the first 
  * token is reached the internal state must be reset. Otherwise the value
  * returned will continue to be null. See TokenMgr_reset_token().
@@ -103,12 +106,12 @@ Token *TokenMgr_next_token(TokenMgr *tok_mgr);
 Token *TokenMgr_prev_token(TokenMgr *tok_mgr);
 
 /**
- * @brief set the internal counter back to start.
+ * @brief Set the internal counter back to start.
  * 
  * Unlike TokenMgr_reset_token() this function will set the TokenMgr counter
- * back to 0. This recycles the existing memory for inclusion of new tokens.
+ * back to 0. This recycles the existing memory for addition of new tokens.
  * A common use case for this is in the cli (command line interface) where each time a statement
- * is evaluated we don't want to evaluate those same tokens again on the next statement.
+ * is evaluated we don't want to evaluate those same tokens again on the execution.
  *
  * @param tok_mgr Pointer to token manager. 
  */
@@ -117,8 +120,8 @@ void TokenMgr_clear_tokens(TokenMgr *tok_mgr);
 /**
  * @brief Reset the internal token to NULL.
  *
- * This function operates on the internal curr token pointer
- * of the token manager. It will nullify the internal pointer so that
+ * This function operates on the internal curr token
+ * of the token manager. It will nullify the internal pointer so that the
  * collection can be incremented through again.
  * See TokenMgr_next_token() and TokenMgr_prev_token().
  *
@@ -143,7 +146,7 @@ Token *TokenMgr_current_token(TokenMgr *tok_mgr);
  * @brief Get last token in token manager.
  * 
  * Unlike the "TokenMgr" prefixed functions this doesn't operate
- * on the internal pointer incrementer. This simply returns a pointer
+ * on the internal pointer. This simply returns a pointer
  * to the last token in the collection.
  *
  * @param tok_mgr Pointer to token manager instance.
@@ -155,7 +158,7 @@ Token *get_last_token(TokenMgr *tok_mgr);
  * @brief Get first token in token manager.
 
  * Unlike the "TokenMgr" prefixed functions this doesn't operate
- * on the internal pointer incrementer. This simply returns a pointer
+ * on the internal pointer. This simply returns a pointer
  * to the first token in the collection.
 
  * @param tok_mgr Pointer to token manager instance.

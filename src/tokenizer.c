@@ -46,7 +46,17 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 			bidx++;
 			continue;
 
-		} 
+		}
+		else if (c == EXMARK) {
+			if (buff[bidx+1] == EQUAL) {
+				TokenMgr_add_token(tokmgr, "OPERATOR", "NOTEQUALTO");
+				bidx++;
+			}
+			else {
+				TokenMgr_add_token(tokmgr, "OPERATOR", "NOT");
+			}
+			bidx++;
+		}
 		else if (isspace(c)) {
 			bidx++;
 			continue;
@@ -61,8 +71,39 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 			TokenMgr_add_token(tokmgr, "RPAREN", ")");
 			bidx++;
 		}
+		else if (c == LESSTHAN) {
+			if (buff[bidx+1] == EQUAL) {
+				TokenMgr_add_token(tokmgr, "OPERATOR", "LTEQTO");
+				bidx++;
+			}
+			else {
+				TokenMgr_add_token(tokmgr, "OPERATOR", "LESSTHAN");
+			}
+			bidx++;
+		}
+		else if (c == GREATERTHAN) {
+			switch(buff[++bidx]) {
+				case EQUAL:
+					TokenMgr_add_token(tokmgr, "OPERATOR", "GTEQTO");
+					break;
+				case LESSTHAN:
+					TokenMgr_add_token(tokmgr, "OPERATOR", "BETWEEN");
+					break;
+				default:
+					bidx--;
+					TokenMgr_add_token(tokmgr, "OPERATOR", "GREATERTHAN");
+					break;
+			}
+			bidx++;
+		}
 		else if (c ==  EQUAL) {
-			TokenMgr_add_token(tokmgr, "OPERATOR", "EQUAL");
+			if (buff[bidx+1] == EQUAL) {
+				TokenMgr_add_token(tokmgr, "OPERATOR", "EQUALTO");
+				bidx++;
+			}
+			else {
+				TokenMgr_add_token(tokmgr, "OPERATOR", "EQUAL");
+			}	
 			bidx++;
 		}
 		else if (c == PLUS) {
@@ -171,9 +212,9 @@ TokenMgr *TokenMgr_new() {
 }
 
 Token *TokenMgr_current_token(TokenMgr *tok_mgr) {
-	if (tok_mgr == NULL) {
+	if (tok_mgr == NULL)
 		return NULL;
-		
+
 	return *tok_mgr->curr_tok;
 }
 
@@ -256,6 +297,15 @@ void TokenMgr_reset_token(TokenMgr *tok_mgr) {
 	tok_mgr->curr_tok = NULL;
 }
 
+void TokenMgr_clear_tokens(TokenMgr *tok_mgr) {
+	if (tok_mgr == NULL) {
+		printf("**Error** Invalid token manager passed to TokenMgr_free");
+		return;
+	}
+	tok_mgr->curr_tok = NULL;
+	tok_mgr->tok_ctr = 0;
+}
+
 Token *get_first_token(TokenMgr *tok_mgr) {
 	if (tok_mgr == NULL || tok_mgr->tok_ctr < 1)
 		return NULL;
@@ -268,13 +318,4 @@ Token *get_last_token(TokenMgr *tok_mgr) {
 		return NULL;
 
 	return tok_mgr->toks[tok_mgr->tok_ctr-1];
-}
-
-void TokenMgr_clear_tokens(TokenMgr *tok_mgr) {
-	if (tok_mgr == NULL) {
-		printf("**Error** Invalid token manager passed to TokenMgr_free");
-		return;
-	}
-	tok_mgr->curr_tok = NULL;
-	tok_mgr->tok_ctr = 0;
 }

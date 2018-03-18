@@ -33,5 +33,11 @@
 #define LPAREN '('
 // Right paranthesis.
 #define RPAREN ')'
+// Less than.
+#define LESSTHAN '<'
+// Greater than.
+#define GREATERTHAN '>'
+// Exclamation.
+#define EXMARK '!'
 
 #endif

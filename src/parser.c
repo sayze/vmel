@@ -5,6 +5,7 @@
 #include "tokens.h"
 #include "tokenizer.h"   
 
+// Global pointer to current token.
 Token *tok_mgr_ptr;
 
 int can_consume(char *tok_type, char *type) {
@@ -13,7 +14,7 @@ int can_consume(char *tok_type, char *type) {
 
 int parse_factor(TokenMgr *tok_mgr) {
 	tok_mgr_ptr = TokenMgr_current_token(tok_mgr);
-	int 	result = 0;
+	int result = 0;
 
 	 if (can_consume(tok_mgr_ptr->type, "INTEGER") == 0) {
 		 TokenMgr_next_token(tok_mgr);
@@ -40,10 +41,9 @@ int parse_term(TokenMgr *tok_mgr) {
 	int res = parse_factor(tok_mgr);
 	tok_mgr_ptr = TokenMgr_current_token(tok_mgr);
 	
+	// Handle expression calculation.
 	while (strncmp(tok_mgr_ptr->value, "ASTERISK", tok_mgr_ptr->val_length) == 0 || 
 		strncmp(tok_mgr_ptr->value, "FSLASH", tok_mgr_ptr->val_length) == 0) {
-	
-		// Determine which operation to execute.
 		if (strncmp(tok_mgr_ptr->value, "ASTERISK", tok_mgr_ptr->val_length) == 0 && 
 			can_consume(tok_mgr_ptr->value, "ASTERISK") == 0) {
 			tok_mgr_ptr = TokenMgr_next_token(tok_mgr);
@@ -61,16 +61,17 @@ int parse_term(TokenMgr *tok_mgr) {
 
 
 int parse_expr(TokenMgr *tok_mgr) {
-	if (tok_mgr->curr_tok == NULL) {
+	
+	// Only retrieve next token on initial entry.
+	if (tok_mgr->curr_tok == NULL)
 		TokenMgr_next_token(tok_mgr);
-	}
 
 	int res = parse_term(tok_mgr);
 	tok_mgr_ptr = TokenMgr_current_token(tok_mgr);
+	
+	// Handle expression calculation.
 	while (strncmp(tok_mgr_ptr->value, "MINUS", tok_mgr_ptr->val_length) == 0 || 
 		strncmp(tok_mgr_ptr->value, "PLUS", tok_mgr_ptr->val_length) == 0) {
-	
-		// Determine which operation to execute.
 		if (strncmp(tok_mgr_ptr->value, "MINUS", tok_mgr_ptr->val_length) == 0 && 
 			can_consume(tok_mgr_ptr->value, "MINUS") == 0) {
 			tok_mgr_ptr = TokenMgr_next_token(tok_mgr);
