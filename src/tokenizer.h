@@ -167,16 +167,4 @@ Token *get_last_token(TokenMgr *tok_mgr);
  */
 Token *get_first_token(TokenMgr *tok_mgr);
 
-/**
- * @brief Determine if a string is a valid keyword.
- * 
- * This function checks against R_Keywords inside tokens.h
- * to determine if it is a valid keyword or not.
- * 
- * @param str the string to check for.
- * @return 1 if it is valid keyword otherwise return 0.
- */
-
-int is_valid_keyword(char *str);
-
 #endif

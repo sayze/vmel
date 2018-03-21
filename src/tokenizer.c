@@ -6,12 +6,6 @@
 #include "tokenizer.h"
 #include "tokens.h"
 
-// Below are reserved keywords.
-// TODO: Move this to tokens.h ? or better manage this.
-static const char *R_Keywords[KWORDS_SIZE] = {
-    "print", "if", "else"
-};
-
 int build_tokens(char *buff, TokenMgr *tokmgr) {
 	if (buff == NULL) {
 		printf("** Error Buffer invalid state cannot build tokens\n");
@@ -191,20 +185,6 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 			stctr = 0;
 			bidx++;
 		}
-		else if (isalpha(c)) {
-			while (is_valid_identifier(c)) {
-				store[stctr++] = c;
-				c = (int) buff[++bidx];
-			}
-			store[stctr] = '\0';
-			if (is_valid_keyword(store)) {
-				TokenMgr_add_token(tokmgr, "KEYWORD", store);
-			}
-			else {
-				error = 1;
-			}
-			stctr = 0;
-		}
 		else {
 			store[stctr++] = c;
 			c = buff[++bidx];
@@ -338,20 +318,4 @@ Token *get_last_token(TokenMgr *tok_mgr) {
 		return NULL;
 
 	return tok_mgr->toks[tok_mgr->tok_ctr-1];
-}
-
-int is_valid_keyword(char *str) {
-	int ret = 0;
-	
-	if (str == NULL)
-		return ret;
-	
-	for (int x = 0; x < KWORDS_SIZE; x++) {
-		const char *t = R_Keywords[x];
-		if (strcmp(t, str) == 0) {
-			ret = 1;
-			break;
-		}
-	}
-	return ret;
 }
