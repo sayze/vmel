@@ -4,6 +4,7 @@
 * Initial release only consisting of the ability to perform arithmetic operations.
 * Ability to run from source file or cli.
 * Will successfully tokenize majority of standard language literals.
+* Print errors when unrecognized character formations are encountered.
 
 ### Issues
 * Still need to clean up fixed memory allocations for `char[]` to use realloc's.
