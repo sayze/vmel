@@ -4,6 +4,9 @@
  * @brief The Node module represents a "node" inside an AST.
  */
 
+
+enum NodeType_E {LEAF, ROOT};
+
 /**
  * @brief Node correlates to a node within a tree.
  * 
@@ -14,6 +17,7 @@ struct Node {
     struct Node *left;
     char *value;
     struct Node *right;
+    enum NodeType_E type;
 };
 
 /**
@@ -24,8 +28,8 @@ struct Node {
  * Struct will mantain all nodes and provide functions to interface with tree.
  */
 typedef struct {
-    struct Node **curr_node;
-    struct Node nodes[100];
+    struct Node *root_node;
+    struct Node *curr_node; 
     int node_ctr;
 } NodeMgr;
 
