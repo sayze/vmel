@@ -35,18 +35,8 @@ int main(int argc, char *argv[]) {
 			}
 			err = build_tokens(buff_in, tok_mgr);
 
-			#ifndef DEBUG
-				if (!err) {
-					int ret = parse_expr(tok_mgr);
-					if (ret  >= 0)
-						printf("Output is %d\n", ret);
-					else
-						printf("Error calculating expression\n");
-				}
-
-				// discard the built up collection of tokens.
-				TokenMgr_clear_tokens(tok_mgr);
-			#endif
+			// discard the built up collection of tokens.
+			TokenMgr_clear_tokens(tok_mgr);
 		}
 	}
 	else {
@@ -55,7 +45,8 @@ int main(int argc, char *argv[]) {
 	}
 
 	#ifdef DEBUG
-		TokenMgr_print_tokens(tok_mgr);
+		if (!err)
+			TokenMgr_print_tokens(tok_mgr);
 	#endif
 
 	// Free resources.
