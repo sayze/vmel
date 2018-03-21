@@ -9,6 +9,11 @@
 
 #include "tokenizer.h"
 
+// ------------------------------------------------------------
+// TODO: Clean up definitions to match source file. 
+// There are inconsistencies at the moment.
+// ------------------------------------------------------------
+
 /**
  * Used to access the current token within parsing module.
  */
