@@ -6,6 +6,12 @@
 #include "tokenizer.h"
 #include "tokens.h"
 
+// Below are reserved keywords.
+// TODO: Move this to tokens.h ? or better manage this.
+static const char *R_Keywords[KWORDS_SIZE] = {
+    "print", "if", "else"
+};
+
 int build_tokens(char *buff, TokenMgr *tokmgr) {
 	if (buff == NULL) {
 		printf("** Error Buffer invalid state cannot build tokens\n");

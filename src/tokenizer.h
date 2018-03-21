@@ -6,6 +6,7 @@
 
 #ifndef TOKENIZER_H
 #define TOKENIZER_H
+#define KWORDS_SIZE 3
 
 #include <string.h>
 
