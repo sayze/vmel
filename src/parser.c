@@ -56,7 +56,6 @@ int parse_term(TokenMgr *tok_mgr) {
 	return res;
 }
 
-
 int parse_expr(TokenMgr *tok_mgr) {
 	
 	// Only retrieve next token on initial entry.
