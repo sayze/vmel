@@ -4,7 +4,7 @@
  * @brief The Node module represents a "node" inside an AST.
  */
 
-
+// TODO: is there better way to use this ?
 enum NodeType_E {LEAF, ROOT};
 
 /**

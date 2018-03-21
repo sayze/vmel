@@ -1,6 +1,7 @@
 # Project Files.
 SRCDIR = src
-SRCFILES = tokenizer.c utils.c parser.c vmel.c 
+INCDIR = include
+SRCFILES = node.c tokenizer.c utils.c parser.c vmel.c 
 SRCS = $(addprefix $(SRCDIR)/, $(SRCFILES))
 OBJS = $(SRCFILES:.c=.o)
 OUT  = vmel
