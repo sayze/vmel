@@ -5,9 +5,6 @@
 #include "tokens.h"
 #include "tokenizer.h"   
 
-// Global pointer to current token.
-Token *tok_mgr_ptr;
-
 int can_consume(char *tok_type, char *type) {
 	return strcmp(tok_type, type);
 }

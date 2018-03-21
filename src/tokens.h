@@ -38,6 +38,13 @@
 // Greater than.
 #define GREATERTHAN '>'
 // Exclamation.
-#define EXMARK '!'
+#define BANG '!'
+
+#define KWORDS_SIZE 3
+
+// Below are reserved keywords.
+const char *R_Keywords[KWORDS_SIZE] = {
+    "print", "if", "else"
+};
 
 #endif

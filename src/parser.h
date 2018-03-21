@@ -10,6 +10,11 @@
 #include "tokenizer.h"
 
 /**
+ * Used to access the current token within parsing module.
+ */
+static Token *tok_mgr_ptr;
+
+/**
  * @brief Can token be consumed based on expected type.
  * 
  * This function is used to determine if a token matches expected type.

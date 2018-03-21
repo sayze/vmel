@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
 	}
 	else {
 		err = build_tokens(buff_in, tok_mgr);
-		parse_expr(tok_mgr);
+		//parse_expr(tok_mgr);
 	}
 
 	TokenMgr_print_tokens(tok_mgr);

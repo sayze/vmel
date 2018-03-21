@@ -47,7 +47,7 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 			continue;
 
 		}
-		else if (c == EXMARK) {
+		else if (c == BANG) {
 			if (buff[bidx+1] == EQUAL) {
 				TokenMgr_add_token(tokmgr, "OPERATOR", "NOTEQUALTO");
 				bidx++;
@@ -149,8 +149,8 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 			TokenMgr_add_token(tokmgr, "IDENTIFIER", store);
 			stctr = 0;
 		}
-		else if (isdigit( (int) c)) {
-			while (isdigit( (int) c)) {
+		else if (isdigit((int) c)) {
+			while (isdigit((int) c)) {
 				store[stctr++] = c;
 				c = (int) buff[++bidx];
 			}
@@ -184,6 +184,20 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 			TokenMgr_add_token(tokmgr, "GROUP", store);
 			stctr = 0;
 			bidx++;
+		}
+		else if (isalpha(c)) {
+			while (is_valid_identifier(c)) {
+				store[stctr++] = c;
+				c = (int) buff[++bidx];
+			}
+			store[stctr] = '\0';
+			if (is_valid_keyword(store)) {
+				TokenMgr_add_token(tokmgr, "KEYWORD", store);
+			}
+			else {
+				error = 1;
+			}
+			stctr = 0;
 		}
 		else {
 			store[stctr++] = c;
@@ -318,4 +332,20 @@ Token *get_last_token(TokenMgr *tok_mgr) {
 		return NULL;
 
 	return tok_mgr->toks[tok_mgr->tok_ctr-1];
+}
+
+int is_valid_keyword(char *str) {
+	int ret = 0;
+	
+	if (str == NULL)
+		return ret;
+	
+	for (int x = 0; x < KWORDS_SIZE; x++) {
+		const char *t = R_Keywords[x];
+		if (strcmp(t, str) == 0) {
+			ret = 1;
+			break;
+		}
+	}
+	return ret;
 }

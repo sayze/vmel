@@ -48,4 +48,5 @@ int string_to_int(char *str, size_t len) {
 		dec = dec * 10 + ( str[i] - '0' );
 	}
 	return dec;
+
 }
