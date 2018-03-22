@@ -55,11 +55,11 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 		}
 		else if (c == BANG) {
 			if (buff[bidx+1] == EQUAL) {
-				TokenMgr_add_token(tokmgr, "OPERATOR", "NOTEQUALTO");
+				TokenMgr_add_token(tokmgr, "OPERATOR", "NOTEQUALTO", lineno);
 				bidx++;
 			}
 			else {
-				TokenMgr_add_token(tokmgr, "OPERATOR", "NOT");
+				TokenMgr_add_token(tokmgr, "OPERATOR", "NOT", lineno);
 			}
 			bidx++;
 		}
@@ -69,63 +69,63 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 
 		}
 		else if (c == LPAREN) {
-			TokenMgr_add_token(tokmgr, "LPAREN", "(");
+			TokenMgr_add_token(tokmgr, "LPAREN", "(", lineno);
 			bidx++;
 
 		}
 		else if (c == RPAREN) {
-			TokenMgr_add_token(tokmgr, "RPAREN", ")");
+			TokenMgr_add_token(tokmgr, "RPAREN", ")", lineno);
 			bidx++;
 		}
 		else if (c == LESSTHAN) {
 			if (buff[bidx+1] == EQUAL) {
-				TokenMgr_add_token(tokmgr, "OPERATOR", "LTEQTO");
+				TokenMgr_add_token(tokmgr, "OPERATOR", "LTEQTO", lineno);
 				bidx++;
 			}
 			else {
-				TokenMgr_add_token(tokmgr, "OPERATOR", "LESSTHAN");
+				TokenMgr_add_token(tokmgr, "OPERATOR", "LESSTHAN", lineno);
 			}
 			bidx++;
 		}
 		else if (c == GREATERTHAN) {
 			switch(buff[++bidx]) {
 				case EQUAL:
-					TokenMgr_add_token(tokmgr, "OPERATOR", "GTEQTO");
+					TokenMgr_add_token(tokmgr, "OPERATOR", "GTEQTO", lineno);
 					break;
 				case LESSTHAN:
-					TokenMgr_add_token(tokmgr, "OPERATOR", "BETWEEN");
+					TokenMgr_add_token(tokmgr, "OPERATOR", "BETWEEN", lineno);
 					break;
 				default:
 					bidx--;
-					TokenMgr_add_token(tokmgr, "OPERATOR", "GREATERTHAN");
+					TokenMgr_add_token(tokmgr, "OPERATOR", "GREATERTHAN", lineno);
 					break;
 			}
 			bidx++;
 		}
 		else if (c ==  EQUAL) {
 			if (buff[bidx+1] == EQUAL) {
-				TokenMgr_add_token(tokmgr, "OPERATOR", "EQUALTO");
+				TokenMgr_add_token(tokmgr, "OPERATOR", "EQUALTO", lineno);
 				bidx++;
 			}
 			else {
-				TokenMgr_add_token(tokmgr, "OPERATOR", "EQUAL");
+				TokenMgr_add_token(tokmgr, "OPERATOR", "EQUAL", lineno);
 			}	
 			bidx++;
 		}
 		else if (c == PLUS) {
-			TokenMgr_add_token(tokmgr, "OPERATOR", "PLUS");
+			TokenMgr_add_token(tokmgr, "OPERATOR", "PLUS", lineno);
 			bidx++;
 		} 
 		else if (c ==  MINUS) {
-			TokenMgr_add_token(tokmgr, "OPERATOR", "MINUS");
+			TokenMgr_add_token(tokmgr, "OPERATOR", "MINUS", lineno);
 			bidx++;
 		} 
 		else if (c ==  ASTERISK) {
-			TokenMgr_add_token(tokmgr, "OPERATOR", "ASTERISK");
+			TokenMgr_add_token(tokmgr, "OPERATOR", "ASTERISK", lineno);
 			bidx++;
 		} 
 		else if (c == FSLASH) {
-			TokenMgr_add_token(tokmgr, "OPERATOR", "FSLASH");
+			TokenMgr_add_token(tokmgr, "OPERATOR", "FSLASH", lineno);
 			bidx++;
 		}
 		else if (c == DQUOTE) {
@@ -141,7 +141,7 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 				error = 1;
 				continue;
 			}
-			TokenMgr_add_token(tokmgr, "STRING", store);
+			TokenMgr_add_token(tokmgr, "STRING", store, lineno);
 			stctr = 0;
 			bidx++;
 		}
@@ -152,7 +152,7 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 				c = buff[++bidx];
 			}
 			store[stctr] = '\0';
-			TokenMgr_add_token(tokmgr, "IDENTIFIER", store);
+			TokenMgr_add_token(tokmgr, "IDENTIFIER", store, lineno);
 			stctr = 0;
 		}
 		else if (isdigit((int) c)) {
@@ -161,7 +161,7 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 				c = (int) buff[++bidx];
 			}
 			store[stctr] = '\0';
-			TokenMgr_add_token(tokmgr, "INTEGER", store);
+			TokenMgr_add_token(tokmgr, "INTEGER", store, lineno);
 			stctr = 0;
 		}
 		else if (c == LBRACE) {
@@ -187,7 +187,7 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 				continue;
 			}
 
-			TokenMgr_add_token(tokmgr, "GROUP", store);
+			TokenMgr_add_token(tokmgr, "GROUP", store, lineno);
 			stctr = 0;
 			bidx++;
 		}
@@ -198,7 +198,7 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 			}
 			store[stctr] = '\0';
 			if (is_valid_keyword(store)) {
-				TokenMgr_add_token(tokmgr, "KEYWORD", store);
+				TokenMgr_add_token(tokmgr, "KEYWORD", store, lineno);
 			}
 			else {
 				error = 1;
@@ -208,7 +208,7 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 		else {
 			store[stctr++] = c;
 			c = buff[++bidx];
-			while (c != COMMENT && c != LBRACE && c != RBRACE \
+			while (c != COMMENT && c != LBRACE && c != RBRACE && c != '\0' \
 				&& c != DQUOTE && c != VAR & c != NEWLINE && c!= EQUAL) {
 				store[stctr++] = c;
 				c = buff[++bidx];
@@ -238,7 +238,7 @@ Token *TokenMgr_current_token(TokenMgr *tok_mgr) {
 	return *tok_mgr->curr_tok;
 }
 
-int TokenMgr_add_token(TokenMgr *tok_mgr, char tok_type[50], char tok_val[100]) {
+int TokenMgr_add_token(TokenMgr *tok_mgr, char tok_type[50], char tok_val[100], int tok_lineno) {
 	if (tok_mgr == NULL) {
 		printf("**Error** Invalid token manager passed to TokenMgr_add_token");
 		return 1;
@@ -248,6 +248,7 @@ int TokenMgr_add_token(TokenMgr *tok_mgr, char tok_type[50], char tok_val[100]) 
 	strcpy(tmp->type, tok_type);
 	strcpy(tmp->value, tok_val);
 	tmp->val_length = strlen(tmp->value);
+	tmp->lineno = tok_lineno;
 	tok_mgr->toks[tok_mgr->tok_ctr] = tmp;
 	tok_mgr->tok_ctr += 1;
 	return 0;

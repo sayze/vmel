@@ -19,6 +19,7 @@ typedef struct{
 	char type[20]; //TODO: safe to assume types will only ever be less than 20 ???
 	char value[100]; //TODO: needs optimizing BAD. It is possible to have STRING more than 100 chars
 	size_t val_length;
+	int lineno;
 } Token;
 
 /**
@@ -61,9 +62,10 @@ TokenMgr *TokenMgr_new();
  * @param tok_mgr Pointer to token manager.
  * @param tok_type Type of token.
  * @param tok_value Value of token.
+ * @param tok_lineno Line number in source file where token occurs.
  * @return int signifying status.
  */
-int TokenMgr_add_token(TokenMgr *tok_mgr, char tok_type[50], char tok_val[100]);
+int TokenMgr_add_token(TokenMgr *tok_mgr, char tok_type[50], char tok_val[100], int tok_lineno);
 
 /**
  * @brief Free tokens stored by token manager as well as token manager.

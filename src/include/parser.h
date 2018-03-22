@@ -10,9 +10,20 @@
 #include "tokenizer.h"
 
 /**
- * Used to access the current token within parsing module.
+ * Global access to the current token within parsing module.
  */
-static Token *tok_mgr_ptr;
+static Token *tok_curr_ptr;
+
+/**
+ * Helper pointer to help "peek" token.
+ * TODO: implement peek function in token manager.
+ */
+static Token *tok_peek_ptr;
+
+/**
+ * Global access to passed token manager.
+ */
+static TokenMgr *tok_mgr_ptr;
 
 /**
  * @brief Can token be consumed based on expected type.
@@ -23,5 +34,7 @@ static Token *tok_mgr_ptr;
  * @param type the type we are expecting it to be. 
  */
 int can_consume(char *tok_type, char *type);
+
+void parser_init(TokenMgr *tok_mgr);
 
 #endif
