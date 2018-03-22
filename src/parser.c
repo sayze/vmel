@@ -64,7 +64,7 @@ int parse_group() {
 	//TODO: Should probably have a dedicated error buffer to store all messages.
 	// This way they all get aggregated and printed in the end.
 	if (match != NULL) {
-		printf("** Syntax error: Group %s already defined in %d", tok_curr_ptr->value, tok_curr_ptr->lineno);
+		printf("** Error: Duplicate group %s already defined in line %d\n", tok_curr_ptr->value, tok_curr_ptr->lineno);
 		return -1;
 	}
 
@@ -126,6 +126,7 @@ void parser_init(TokenMgr *tok_mgr) {
 	// Initialise global token manager to point to correct reference.
 	tok_mgr_ptr = tok_mgr;
 	tok_curr_ptr = TokenMgr_next_token(tok_mgr);
+	int stat = 0;
 	// Assign curr global token pointer to the next token from token manager.
 	// Start iteration over token collection until no more tokens remaining. 
 	while (tok_curr_ptr != NULL) {
@@ -134,12 +135,18 @@ void parser_init(TokenMgr *tok_mgr) {
 			tok_curr_ptr = TokenMgr_next_token(tok_mgr);
 		}
 		else if (strcmp(tok_curr_ptr->type, "GROUP") == 0) {
-			parse_group();
+			stat = parse_group();
+			if (stat != 0)
+				tok_curr_ptr = NULL;
 		}
 		else {
 			printf ("Unexpected \"%s\" found in line %d\n", tok_curr_ptr->value, tok_curr_ptr->lineno);
 		}
 	}
+
+	if (stat != 0)
+		return;
+
 	printf("-------------------------------------\n");
 	printf("	Variable Stack\n");
 	printf("-------------------------------------\n");
@@ -156,8 +163,9 @@ void parser_init(TokenMgr *tok_mgr) {
 	for (int x = 0; x < grpstackct; x++) {
 		printf("{%s}\n", vgstack[x]->name);
 		for (int c = 0; c < vgstack[x]->command_ct; c++) {
-			printf("----> %s\n", vgstack[x]->commands[c]);
+			printf("--> %s\n", vgstack[x]->commands[c]);
 		}
+		printf("\n");
 		free(vgstack[x]);
 	}
 }
