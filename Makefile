@@ -1,6 +1,6 @@
 # Project Files.
 SRCDIR = src
-INCDIR = include
+INCDIR = $(SRCDIR)/include
 SRCFILES = node.c tokenizer.c utils.c parser.c vmel.c 
 SRCS = $(addprefix $(SRCDIR)/, $(SRCFILES))
 OBJS = $(SRCFILES:.c=.o)
@@ -8,7 +8,7 @@ OUT  = vmel
 
 # Compiler generic flags.
 CC = gcc
-CFLAGS = -I$(SRCDIR) -Wall -Werror -Wextra
+CFLAGS = -I$(INCDIR) -Wall -Werror -Wextra
 
 # Debug settings.
 DBGDIR = bin/debug
@@ -23,8 +23,6 @@ RELOBJS = $(addprefix $(RELDIR)/, $(OBJS))
 RELCFLAGS = -O3 -DNDEBUG
 
 # Debug Rules.
-debug: $(DBGOUT)
-
 $(DBGOUT): $(DBGOBJS)
 	$(CC) $(CFLAGS) $(DBGCFLAGS) -o $(DBGOUT) $^
 
@@ -32,8 +30,6 @@ $(DBGDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) -c $(CFLAGS) $(DBGCFLAGS) -o $@ $<
 
 # Release Rules.
-release: $(RELOUT)
-
 $(RELOUT): $(RELOBJS)
 	$(CC) $(CFLAGS) $(RELCFLAGS) -o $(RELOUT) $^
 
@@ -53,3 +49,5 @@ clean:
 
 # builds.
 all: prep release	
+debug: $(DBGOUT)
+release: $(RELOUT)

@@ -34,19 +34,14 @@ int main(int argc, char *argv[]) {
 				break;
 			}
 			err = build_tokens(buff_in, tok_mgr);
-
-			// discard the built up collection of tokens.
-			TokenMgr_clear_tokens(tok_mgr);
 		}
 	}
 	else {
 		err = build_tokens(buff_in, tok_mgr);
-		parse_expr(tok_mgr);
 	}
 
 	#ifdef DEBUG
-		if (!err)
-			TokenMgr_print_tokens(tok_mgr);
+		TokenMgr_print_tokens(tok_mgr);
 	#endif
 
 	// Free resources.
