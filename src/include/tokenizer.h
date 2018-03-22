@@ -6,7 +6,9 @@
 
 #ifndef TOKENIZER_H
 #define TOKENIZER_H
-#define KWORDS_SIZE 3
+
+#define KWORDS_SIZE 5
+#define TOKENTYPE_SIZE 20
 
 #include <string.h>
 
@@ -15,9 +17,9 @@
  *
  * Struct will hold every identified token meta data. Is needed for parsing.
  */
-typedef struct{
-	char type[20]; //TODO: safe to assume types will only ever be less than 20 ???
-	char value[100]; //TODO: needs optimizing BAD. It is possible to have STRING more than 100 chars
+typedef struct {
+	char type[TOKENTYPE_SIZE];
+	char *value;
 	size_t val_length;
 	int lineno;
 } Token;
@@ -29,11 +31,16 @@ typedef struct{
  * for anything token related as it manages internal memory allocs and deallocs.
  * Struct will mantain all tokens and responsible for methods.
  */
-typedef struct{
-	Token **curr_tok;
-	Token *toks[1000]; // TODO: needs optimizing BAD. Use realloc here
+typedef struct {
+	Token **tok_curr;
 	size_t tok_ctr;
+	size_t tok_cap;
 } TokenMgr;
+
+/**
+ * @brief Allocate more resources for TokenMgr *toks array.
+ */
+Token **TokenMgr_realloc_toks();
 
 /**
  * @brief Build tokens from steam of input.
@@ -59,13 +66,15 @@ TokenMgr *TokenMgr_new();
 /**
  * @brief Add another token to token manager.
  * 
+ * Important to note that the tok_val is expected to be null terminated string ptr.
+ * 
  * @param tok_mgr Pointer to token manager.
  * @param tok_type Type of token.
  * @param tok_value Value of token.
  * @param tok_lineno Line number in source file where token occurs.
  * @return int signifying status.
  */
-int TokenMgr_add_token(TokenMgr *tok_mgr, char tok_type[50], char tok_val[100], int tok_lineno);
+int TokenMgr_add_token(TokenMgr *tok_mgr, char tok_type[20], char *tok_val, int tok_lineno);
 
 /**
  * @brief Free tokens stored by token manager as well as token manager.

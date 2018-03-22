@@ -51,4 +51,12 @@ char *file_to_buffer(const char *);
  */
 int string_to_int(char *str, size_t len);
 
+/**
+ * @brief Increase size of string by using realloc.
+ * 
+ * @param curr_size Existing size 
+ * @param str pointer to the string.
+ * @return newly created string.
+ */
+char  *increase_string(size_t curr_size, char *str);
 #endif

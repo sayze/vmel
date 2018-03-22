@@ -8,7 +8,7 @@
 #define CLI_BUFFER_LIMIT 50
 
 int main(int argc, char *argv[]) {
-		
+	
 	// Input stream used for file or cli.
 	char *buff_in = NULL;
 
@@ -35,15 +35,13 @@ int main(int argc, char *argv[]) {
 			}
 			err = build_tokens(buff_in, tok_mgr);
 		}
-		parser_init(tok_mgr);
+		// parser_init(tok_mgr);
 	}
 	else {
 		err = build_tokens(buff_in, tok_mgr);
-		if (!err) {
-			parser_init(tok_mgr);
-		}
+		parser_init(tok_mgr);
 	}
-
+	
 	// Free resources.
 	TokenMgr_free(tok_mgr);
 	free(buff_in);

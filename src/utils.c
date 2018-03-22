@@ -50,3 +50,8 @@ int string_to_int(char *str, size_t len) {
 	return dec;
 
 }
+
+char *increase_string(size_t curr_size, char *str) {
+	char *new_str = realloc(str, sizeof(char) * (curr_size * 2));
+	return new_str;
+}

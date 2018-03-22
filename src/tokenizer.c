@@ -9,12 +9,12 @@
 // Below are reserved keywords.
 // TODO: Move this to tokens.h ? or better manage this.
 static const char *R_Keywords[KWORDS_SIZE] = {
-    "print", "connect", "release"
+    "print", "connect", "release", "input"
 };
 
 int build_tokens(char *buff, TokenMgr *tokmgr) {
 	if (buff == NULL) {
-		printf("** Error Buffer invalid state cannot bugco devel	ild tokens\n");
+		printf("** Error Buffer invalid state cannot build tokens\n");
 		return 1;
 	}
 
@@ -227,7 +227,8 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 TokenMgr *TokenMgr_new() {
 	TokenMgr *tok_mgr = malloc(sizeof(TokenMgr));
 	tok_mgr->tok_ctr = 0;
-	tok_mgr->curr_tok = NULL;
+	tok_mgr->tok_cap = 50;
+	tok_mgr->tok_curr = malloc(tok_mgr->tok_cap * sizeof(Token *));
 	return tok_mgr;
 }
 
@@ -235,28 +236,42 @@ Token *TokenMgr_current_token(TokenMgr *tok_mgr) {
 	if (tok_mgr == NULL)
 		return NULL;
 
-	return *tok_mgr->curr_tok;
+	return *tok_mgr->tok_curr;
 }
 
-int TokenMgr_add_token(TokenMgr *tok_mgr, char tok_type[50], char tok_val[100], int tok_lineno) {
+int TokenMgr_add_token(TokenMgr *tok_mgr, char tok_type[20], char *tok_val, int tok_lineno) {
 	if (tok_mgr == NULL) {
 		printf("**Error** Invalid token manager passed to TokenMgr_add_token");
 		return 1;
 	}
 
-	Token *tmp = malloc(sizeof(Token));
+	// Get string length of value.
+	size_t tok_val_length = strlen(tok_val);
+	
+	// Create temp token on heap.
+	Token *tmp = malloc(sizeof(Token));	
+	tmp->value = calloc(tok_val_length+1, sizeof(char));
 	strcpy(tmp->type, tok_type);
 	strcpy(tmp->value, tok_val);
 	tmp->val_length = strlen(tmp->value);
 	tmp->lineno = tok_lineno;
-	tok_mgr->toks[tok_mgr->tok_ctr] = tmp;
-	tok_mgr->tok_ctr += 1;
+
+	// Determine if we need more room in toks.
+	if (tok_mgr->tok_cap - tok_mgr->tok_ctr <= 5) {
+		tok_mgr->tok_cap *= 2;
+		tok_mgr->tok_curr = realloc(tok_mgr->tok_curr, sizeof(Token *) * (tok_mgr->tok_cap));		
+	}
+	else {
+		tok_mgr->tok_curr[tok_mgr->tok_ctr] = tmp;
+	}
+	
+	tok_mgr->tok_ctr++;
 	return 0;
 }
 
 void TokenMgr_print_tokens(TokenMgr *tok_mgr) {
 	for (size_t i =0; i < tok_mgr->tok_ctr; i++) {
-		printf("%s %s \n", tok_mgr->toks[i]->type, tok_mgr->toks[i]->value);
+		printf("%s %s \n", tok_mgr->tok_curr[i]->type, tok_mgr->tok_curr[i]->value);
 	}
 }
 
@@ -267,9 +282,10 @@ int TokenMgr_free(TokenMgr *tok_mgr) {
 	}
 
 	for (size_t i = 0; i < tok_mgr->tok_ctr; i++) {
-		free(tok_mgr->toks[i]);
+		free(tok_mgr->tok_curr[i]->value);
+		free(tok_mgr->tok_curr[i]);
 	}
-	tok_mgr->curr_tok = NULL;
+
 	free(tok_mgr);
 	return 0;
 }
@@ -278,44 +294,27 @@ Token *TokenMgr_next_token(TokenMgr *tok_mgr) {
 	if (tok_mgr == NULL)
 		return NULL;
 
-	if (tok_mgr->curr_tok == NULL) {
-		tok_mgr->curr_tok = tok_mgr->toks;
-	} 
-	else {
+	// Don't surpass final token.
+	if (*tok_mgr->tok_curr == tok_mgr->tok_curr[tok_mgr->tok_ctr-1])
+		return NULL;		
 
-		// Don't surpass final token.
-		if (*tok_mgr->curr_tok == tok_mgr->toks[tok_mgr->tok_ctr-1]) {
-			return NULL;
-		}
-		
-		tok_mgr->curr_tok++;	
-	}
-	return *tok_mgr->curr_tok;
+	tok_mgr->tok_curr++;	
+	return *tok_mgr->tok_curr;
 }
 
 Token *TokenMgr_prev_token(TokenMgr *tok_mgr) {
-	if (tok_mgr == NULL)
+	// Ensure is initialised or don't surpass first token.
+	if (tok_mgr == NULL || *tok_mgr->tok_curr == tok_mgr->tok_curr[0])
 		return NULL;
 
-	if (tok_mgr->curr_tok == NULL) {
-		tok_mgr->curr_tok = &tok_mgr->toks[tok_mgr->tok_ctr-1];
-	} 
-	else {
-
-		// Don't surpass first token.
-		if (*tok_mgr->curr_tok == tok_mgr->toks[0]) {
-			return NULL;
-		}
-			
-		tok_mgr->curr_tok--;	
-	}
-	return *tok_mgr->curr_tok;
+	tok_mgr->tok_curr--;
+	return *tok_mgr->tok_curr;
 }
 
 void TokenMgr_reset_token(TokenMgr *tok_mgr) {
 	if (tok_mgr == NULL)
 		return;
-	tok_mgr->curr_tok = NULL;
+	tok_mgr->tok_curr = NULL;
 }
 
 void TokenMgr_clear_tokens(TokenMgr *tok_mgr) {
@@ -323,7 +322,7 @@ void TokenMgr_clear_tokens(TokenMgr *tok_mgr) {
 		printf("**Error** Invalid token manager passed to TokenMgr_free");
 		return;
 	}
-	tok_mgr->curr_tok = NULL;
+	tok_mgr->tok_curr = NULL;
 	tok_mgr->tok_ctr = 0;
 }
 
