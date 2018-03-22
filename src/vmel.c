@@ -35,6 +35,7 @@ int main(int argc, char *argv[]) {
 			}
 			err = build_tokens(buff_in, tok_mgr);
 		}
+		parser_init(tok_mgr);
 	}
 	else {
 		err = build_tokens(buff_in, tok_mgr);

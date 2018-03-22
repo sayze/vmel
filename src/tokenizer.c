@@ -327,20 +327,6 @@ void TokenMgr_clear_tokens(TokenMgr *tok_mgr) {
 	tok_mgr->tok_ctr = 0;
 }
 
-Token *get_first_token(TokenMgr *tok_mgr) {
-	if (tok_mgr == NULL || tok_mgr->tok_ctr < 1)
-		return NULL;
-	
-	return tok_mgr->toks[0];
-}
-
-Token *get_last_token(TokenMgr *tok_mgr) {
-	if (tok_mgr == NULL || tok_mgr->tok_ctr < 1)
-		return NULL;
-
-	return tok_mgr->toks[tok_mgr->tok_ctr-1];
-}
-
 int is_valid_keyword(char *str) {
 	int ret = 0;
 	
