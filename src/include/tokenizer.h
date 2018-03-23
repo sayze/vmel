@@ -9,6 +9,7 @@
 
 #define KWORDS_SIZE 5
 #define TOKENTYPE_SIZE 20
+#define TOKMGR_TOKS_INIT_SIZE 50
 
 #include <string.h>
 #include "tokens.h"
