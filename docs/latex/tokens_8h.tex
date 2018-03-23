@@ -1,265 +1,68 @@
-\hypertarget{tokens_8h}{}\section{src/tokens.h File Reference}
-\label{tokens_8h}\index{src/tokens.\+h@{src/tokens.\+h}}
+\hypertarget{tokens_8h}{}\section{src/include/tokens.h File Reference}
+\label{tokens_8h}\index{src/include/tokens.\+h@{src/include/tokens.\+h}}
 
 
-File containing token definitions.  
+File containing token management.  
 
 
-\subsection*{Classes}
+\subsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
-struct \mbox{\hyperlink{struct_token}{Token}}
-\begin{DoxyCompactList}\small\item\em Represent a single token read from input. \end{DoxyCompactList}\item 
-struct \mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}}
-\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{struct_token}{Token}} manager represents a pool of tokens. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\subsection*{Functions}
-\begin{DoxyCompactItemize}
+\mbox{\Hypertarget{tokens_8h_a180f5b3835bdbfc11b353fd2af5c8659}\label{tokens_8h_a180f5b3835bdbfc11b353fd2af5c8659}} 
+\#define {\bfseries C\+O\+M\+M\+E\+NT}~\textquotesingle{}\#\textquotesingle{}
 \item 
-char $\ast$ \mbox{\hyperlink{tokens_8h_afec8213f9a8c68f5fddcd254e9f02d86}{file\+\_\+to\+\_\+buffer}} (const char $\ast$)
-\begin{DoxyCompactList}\small\item\em Read contents of file to buffer. \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{tokens_8h_a81195342113cfd2b791683fcb8f7c9de}{build\+\_\+tokens}} (char $\ast$buff, \mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$tokmgr)
-\begin{DoxyCompactList}\small\item\em Build tokens from buffer in. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$ \mbox{\hyperlink{tokens_8h_a8583e6f3a8e9ab1403387fb110e18302}{Token\+Mgr\+\_\+new}} ()
-\begin{DoxyCompactList}\small\item\em Create token manager malloc\textquotesingle{}ed. \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{tokens_8h_aceaa0e8f3b1cd5fb03b4dd0dc5814f93}{Token\+Mgr\+\_\+add\+\_\+token}} (\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$tok\+\_\+mgr, char tok\+\_\+type\mbox{[}50\mbox{]}, char tok\+\_\+val\mbox{[}100\mbox{]})
-\begin{DoxyCompactList}\small\item\em Add another token to token manager. \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{tokens_8h_a7402a62420f576f7f1ce38d0da9bea41}{Token\+Mgr\+\_\+free}} (\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$tok\+\_\+mgr)
-\begin{DoxyCompactList}\small\item\em Free tokens stored by token manager as well as token manager. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{tokens_8h_a0bb266bca06cd42cfcfbf7da6de5b874}{Token\+Mgr\+\_\+print\+\_\+tokens}} (\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$tok\+\_\+mgr)
-\begin{DoxyCompactList}\small\item\em Print contents of token manager. Useful for debugging. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{struct_token}{Token}} $\ast$ \mbox{\hyperlink{tokens_8h_abba7a2527fb5684453e62db37cc232cc}{Token\+Mgr\+\_\+next\+\_\+token}} (\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$tok\+\_\+mgr)
-\begin{DoxyCompactList}\small\item\em Retrieve the next token from Tokens. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{struct_token}{Token}} $\ast$ \mbox{\hyperlink{tokens_8h_aab2ffb25ab0ad755354661c3d07836a3}{Token\+Mgr\+\_\+prev\+\_\+token}} (\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$tok\+\_\+mgr)
-\begin{DoxyCompactList}\small\item\em Retrieve the previous token from Tokens. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{tokens_8h_a63988158a1868f7eae2322374c85ce54}{Token\+Mgr\+\_\+reset\+\_\+token}} (\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$tok\+\_\+mgr)
-\begin{DoxyCompactList}\small\item\em Reset the internal token to N\+U\+LL. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{struct_token}{Token}} $\ast$ \mbox{\hyperlink{tokens_8h_a24d4b7b7d0361e2bb1146300d406ea70}{get\+\_\+last\+\_\+token}} (\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$tok\+\_\+mgr)
-\begin{DoxyCompactList}\small\item\em Get last token in token manager. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{struct_token}{Token}} $\ast$ \mbox{\hyperlink{tokens_8h_a2d93ec75b58f6ee589c4a9af0fa8fc26}{get\+\_\+first\+\_\+token}} (\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$tok\+\_\+mgr)
-\begin{DoxyCompactList}\small\item\em Get first token in token manager. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\mbox{\Hypertarget{tokens_8h_a806511f4930171733227c99101dc0606}\label{tokens_8h_a806511f4930171733227c99101dc0606}} 
+\#define {\bfseries N\+E\+W\+L\+I\+NE}~\textquotesingle{}\textbackslash{}n\textquotesingle{}
+\item 
+\mbox{\Hypertarget{tokens_8h_a44a9fd35b74885ac82584c7927214c7a}\label{tokens_8h_a44a9fd35b74885ac82584c7927214c7a}} 
+\#define {\bfseries D\+Q\+U\+O\+TE}~\textquotesingle{}\char`\"{}\textquotesingle{}
+\item 
+\mbox{\Hypertarget{tokens_8h_a214c717b2e51e1993a749ac99df7de58}\label{tokens_8h_a214c717b2e51e1993a749ac99df7de58}} 
+\#define {\bfseries E\+Q\+U\+AL}~\textquotesingle{}=\textquotesingle{}
+\item 
+\mbox{\Hypertarget{tokens_8h_af078bec81516d407fe17fc7cb8b355ac}\label{tokens_8h_af078bec81516d407fe17fc7cb8b355ac}} 
+\#define {\bfseries L\+B\+R\+A\+CE}~\textquotesingle{}\{\textquotesingle{}
+\item 
+\mbox{\Hypertarget{tokens_8h_a301875c1e1858bdc810760f25fcd02d2}\label{tokens_8h_a301875c1e1858bdc810760f25fcd02d2}} 
+\#define {\bfseries R\+B\+R\+A\+CE}~\textquotesingle{}\}\textquotesingle{}
+\item 
+\mbox{\Hypertarget{tokens_8h_abca8dfa78652bc61165262af4fade766}\label{tokens_8h_abca8dfa78652bc61165262af4fade766}} 
+\#define {\bfseries V\+AR}~\textquotesingle{}\$\textquotesingle{}
+\item 
+\mbox{\Hypertarget{tokens_8h_a0ea7ff5947c5f5430a29fdd98391eb2a}\label{tokens_8h_a0ea7ff5947c5f5430a29fdd98391eb2a}} 
+\#define {\bfseries P\+L\+US}~\textquotesingle{}+\textquotesingle{}
+\item 
+\mbox{\Hypertarget{tokens_8h_a5381a445a1e4bdc36460151d82eed95a}\label{tokens_8h_a5381a445a1e4bdc36460151d82eed95a}} 
+\#define {\bfseries M\+I\+N\+US}~\textquotesingle{}-\/\textquotesingle{}
+\item 
+\mbox{\Hypertarget{tokens_8h_a0ff582e3a0d6ebcd685ffdcbe8f16aa3}\label{tokens_8h_a0ff582e3a0d6ebcd685ffdcbe8f16aa3}} 
+\#define {\bfseries A\+S\+T\+E\+R\+I\+SK}~\textquotesingle{}$\ast$\textquotesingle{}
+\item 
+\mbox{\Hypertarget{tokens_8h_a136d4add82aa4b386892fdfd64631514}\label{tokens_8h_a136d4add82aa4b386892fdfd64631514}} 
+\#define {\bfseries F\+S\+L\+A\+SH}~\textquotesingle{}/\textquotesingle{}
+\item 
+\mbox{\Hypertarget{tokens_8h_abe30756b10aa77b095a8737a0d0b63ef}\label{tokens_8h_abe30756b10aa77b095a8737a0d0b63ef}} 
+\#define {\bfseries L\+P\+A\+R\+EN}~\textquotesingle{}(\textquotesingle{}
+\item 
+\mbox{\Hypertarget{tokens_8h_a61df4d037757ddf4c87aaa6405438cb2}\label{tokens_8h_a61df4d037757ddf4c87aaa6405438cb2}} 
+\#define {\bfseries R\+P\+A\+R\+EN}~\textquotesingle{})\textquotesingle{}
+\item 
+\mbox{\Hypertarget{tokens_8h_acbb241fcbc6b66fbde19ed25b7902e63}\label{tokens_8h_acbb241fcbc6b66fbde19ed25b7902e63}} 
+\#define {\bfseries L\+E\+S\+S\+T\+H\+AN}~\textquotesingle{}$<$\textquotesingle{}
+\item 
+\mbox{\Hypertarget{tokens_8h_a1717ee4d9274bbd291cdfdba724c2cda}\label{tokens_8h_a1717ee4d9274bbd291cdfdba724c2cda}} 
+\#define {\bfseries G\+R\+E\+A\+T\+E\+R\+T\+H\+AN}~\textquotesingle{}$>$\textquotesingle{}
+\item 
+\mbox{\Hypertarget{tokens_8h_a4b540d252558bbfc6963934c5c871477}\label{tokens_8h_a4b540d252558bbfc6963934c5c871477}} 
+\#define {\bfseries B\+A\+NG}~\textquotesingle{}!\textquotesingle{}
+\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-File containing token definitions. 
+File containing token management. 
+
+File containing token definitions and enum types.
 
 \begin{DoxyAuthor}{Author}
 Sayed Sadeed 
 \end{DoxyAuthor}
-
-
-\subsection{Function Documentation}
-\mbox{\Hypertarget{tokens_8h_a81195342113cfd2b791683fcb8f7c9de}\label{tokens_8h_a81195342113cfd2b791683fcb8f7c9de}} 
-\index{tokens.\+h@{tokens.\+h}!build\+\_\+tokens@{build\+\_\+tokens}}
-\index{build\+\_\+tokens@{build\+\_\+tokens}!tokens.\+h@{tokens.\+h}}
-\subsubsection{\texorpdfstring{build\+\_\+tokens()}{build\_tokens()}}
-{\footnotesize\ttfamily int build\+\_\+tokens (\begin{DoxyParamCaption}\item[{char $\ast$}]{buff,  }\item[{\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$}]{tokmgr }\end{DoxyParamCaption})}
-
-
-
-Build tokens from buffer in. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em buff} & the contents which should be tokenized. \\
-\hline
-{\em tokmgr} & \mbox{\hyperlink{struct_token}{Token}} Manager to handle tokenization. \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-int signifying status. 
-\end{DoxyReturn}
-\mbox{\Hypertarget{tokens_8h_afec8213f9a8c68f5fddcd254e9f02d86}\label{tokens_8h_afec8213f9a8c68f5fddcd254e9f02d86}} 
-\index{tokens.\+h@{tokens.\+h}!file\+\_\+to\+\_\+buffer@{file\+\_\+to\+\_\+buffer}}
-\index{file\+\_\+to\+\_\+buffer@{file\+\_\+to\+\_\+buffer}!tokens.\+h@{tokens.\+h}}
-\subsubsection{\texorpdfstring{file\+\_\+to\+\_\+buffer()}{file\_to\_buffer()}}
-{\footnotesize\ttfamily char$\ast$ file\+\_\+to\+\_\+buffer (\begin{DoxyParamCaption}\item[{const char $\ast$}]{ }\end{DoxyParamCaption})}
-
-
-
-Read contents of file to buffer. 
-
-This function will read the contents of a passed source file ($\ast$.vml). It will strip out the inline and external comments from the source and save the contents to a buffer. The buffer is created on heap so must be managed by caller. See below example
-
-
-\begin{DoxyCode}
-\textcolor{keywordtype}{char} *filename = \textcolor{stringliteral}{"~/Desktop/run.vml"};
-\textcolor{keywordtype}{char} *buffer = \mbox{\hyperlink{tokens_8h_afec8213f9a8c68f5fddcd254e9f02d86}{file\_to\_buffer}}(filename);
-free(buffer) \textcolor{comment}{// when done.}
-\end{DoxyCode}
-
-
-
-\begin{DoxyParams}{Parameters}
-{\em filename} & Path to source file. \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-Pointer to buffer containing contents of file. 
-\end{DoxyReturn}
-\mbox{\Hypertarget{tokens_8h_a2d93ec75b58f6ee589c4a9af0fa8fc26}\label{tokens_8h_a2d93ec75b58f6ee589c4a9af0fa8fc26}} 
-\index{tokens.\+h@{tokens.\+h}!get\+\_\+first\+\_\+token@{get\+\_\+first\+\_\+token}}
-\index{get\+\_\+first\+\_\+token@{get\+\_\+first\+\_\+token}!tokens.\+h@{tokens.\+h}}
-\subsubsection{\texorpdfstring{get\+\_\+first\+\_\+token()}{get\_first\_token()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{struct_token}{Token}}$\ast$ get\+\_\+first\+\_\+token (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$}]{tok\+\_\+mgr }\end{DoxyParamCaption})}
-
-
-
-Get first token in token manager. 
-
-Unlike the \char`\"{}\+Token\+Mgr\char`\"{} prefixed functions this doesn\textquotesingle{}t operate on the internal pointer incrementer. This simply returns a pointer to the first token in the collection.
-
-
-\begin{DoxyParams}{Parameters}
-{\em tok\+\_\+mgr} & Pointer to token manager instance. \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-\mbox{\hyperlink{struct_token}{Token}} pointer to first token. 
-\end{DoxyReturn}
-\mbox{\Hypertarget{tokens_8h_a24d4b7b7d0361e2bb1146300d406ea70}\label{tokens_8h_a24d4b7b7d0361e2bb1146300d406ea70}} 
-\index{tokens.\+h@{tokens.\+h}!get\+\_\+last\+\_\+token@{get\+\_\+last\+\_\+token}}
-\index{get\+\_\+last\+\_\+token@{get\+\_\+last\+\_\+token}!tokens.\+h@{tokens.\+h}}
-\subsubsection{\texorpdfstring{get\+\_\+last\+\_\+token()}{get\_last\_token()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{struct_token}{Token}}$\ast$ get\+\_\+last\+\_\+token (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$}]{tok\+\_\+mgr }\end{DoxyParamCaption})}
-
-
-
-Get last token in token manager. 
-
-Unlike the \char`\"{}\+Token\+Mgr\char`\"{} prefixed functions this doesn\textquotesingle{}t operate on the internal pointer incrementer. This simply returns a pointer to the last token in the collection.
-
-
-\begin{DoxyParams}{Parameters}
-{\em tok\+\_\+mgr} & Pointer to token manager instance. \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-\mbox{\hyperlink{struct_token}{Token}} pointer to final token. 
-\end{DoxyReturn}
-\mbox{\Hypertarget{tokens_8h_aceaa0e8f3b1cd5fb03b4dd0dc5814f93}\label{tokens_8h_aceaa0e8f3b1cd5fb03b4dd0dc5814f93}} 
-\index{tokens.\+h@{tokens.\+h}!Token\+Mgr\+\_\+add\+\_\+token@{Token\+Mgr\+\_\+add\+\_\+token}}
-\index{Token\+Mgr\+\_\+add\+\_\+token@{Token\+Mgr\+\_\+add\+\_\+token}!tokens.\+h@{tokens.\+h}}
-\subsubsection{\texorpdfstring{Token\+Mgr\+\_\+add\+\_\+token()}{TokenMgr\_add\_token()}}
-{\footnotesize\ttfamily int Token\+Mgr\+\_\+add\+\_\+token (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$}]{tok\+\_\+mgr,  }\item[{char}]{tok\+\_\+type\mbox{[}50\mbox{]},  }\item[{char}]{tok\+\_\+val\mbox{[}100\mbox{]} }\end{DoxyParamCaption})}
-
-
-
-Add another token to token manager. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em tok\+\_\+mgr} & Pointer to token manager. \\
-\hline
-{\em tok\+\_\+type} & Type of token. \\
-\hline
-{\em tok\+\_\+value} & Value of token. \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-int signifying status. 
-\end{DoxyReturn}
-\mbox{\Hypertarget{tokens_8h_a7402a62420f576f7f1ce38d0da9bea41}\label{tokens_8h_a7402a62420f576f7f1ce38d0da9bea41}} 
-\index{tokens.\+h@{tokens.\+h}!Token\+Mgr\+\_\+free@{Token\+Mgr\+\_\+free}}
-\index{Token\+Mgr\+\_\+free@{Token\+Mgr\+\_\+free}!tokens.\+h@{tokens.\+h}}
-\subsubsection{\texorpdfstring{Token\+Mgr\+\_\+free()}{TokenMgr\_free()}}
-{\footnotesize\ttfamily int Token\+Mgr\+\_\+free (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$}]{tok\+\_\+mgr }\end{DoxyParamCaption})}
-
-
-
-Free tokens stored by token manager as well as token manager. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em tok\+\_\+mgr} & Pointer to token manager. \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-int signifying status. 
-\end{DoxyReturn}
-\mbox{\Hypertarget{tokens_8h_a8583e6f3a8e9ab1403387fb110e18302}\label{tokens_8h_a8583e6f3a8e9ab1403387fb110e18302}} 
-\index{tokens.\+h@{tokens.\+h}!Token\+Mgr\+\_\+new@{Token\+Mgr\+\_\+new}}
-\index{Token\+Mgr\+\_\+new@{Token\+Mgr\+\_\+new}!tokens.\+h@{tokens.\+h}}
-\subsubsection{\texorpdfstring{Token\+Mgr\+\_\+new()}{TokenMgr\_new()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}}$\ast$ Token\+Mgr\+\_\+new (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
-
-
-
-Create token manager malloc\textquotesingle{}ed. 
-
-This function acts as a constructor for the \mbox{\hyperlink{struct_token}{Token}} manager.
-
-\begin{DoxyReturn}{Returns}
-newly created \mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} pointer. 
-\end{DoxyReturn}
-\mbox{\Hypertarget{tokens_8h_abba7a2527fb5684453e62db37cc232cc}\label{tokens_8h_abba7a2527fb5684453e62db37cc232cc}} 
-\index{tokens.\+h@{tokens.\+h}!Token\+Mgr\+\_\+next\+\_\+token@{Token\+Mgr\+\_\+next\+\_\+token}}
-\index{Token\+Mgr\+\_\+next\+\_\+token@{Token\+Mgr\+\_\+next\+\_\+token}!tokens.\+h@{tokens.\+h}}
-\subsubsection{\texorpdfstring{Token\+Mgr\+\_\+next\+\_\+token()}{TokenMgr\_next\_token()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{struct_token}{Token}}$\ast$ Token\+Mgr\+\_\+next\+\_\+token (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$}]{tok\+\_\+mgr }\end{DoxyParamCaption})}
-
-
-
-Retrieve the next token from Tokens. 
-
-Function will return the next token stored inside \mbox{\hyperlink{struct_token}{Token}} Mgr. Note that it returns based on the current token. Once the last token is reached the internal state must be reset. Otherwise the value returned will continue to be null. See \mbox{\hyperlink{tokens_8h_a63988158a1868f7eae2322374c85ce54}{Token\+Mgr\+\_\+reset\+\_\+token()}}.
-
-
-\begin{DoxyParams}{Parameters}
-{\em tok\+\_\+mgr} & Pointer to token manager instance. \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-next \mbox{\hyperlink{struct_token}{Token}} in manager. 
-\end{DoxyReturn}
-\mbox{\Hypertarget{tokens_8h_aab2ffb25ab0ad755354661c3d07836a3}\label{tokens_8h_aab2ffb25ab0ad755354661c3d07836a3}} 
-\index{tokens.\+h@{tokens.\+h}!Token\+Mgr\+\_\+prev\+\_\+token@{Token\+Mgr\+\_\+prev\+\_\+token}}
-\index{Token\+Mgr\+\_\+prev\+\_\+token@{Token\+Mgr\+\_\+prev\+\_\+token}!tokens.\+h@{tokens.\+h}}
-\subsubsection{\texorpdfstring{Token\+Mgr\+\_\+prev\+\_\+token()}{TokenMgr\_prev\_token()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{struct_token}{Token}}$\ast$ Token\+Mgr\+\_\+prev\+\_\+token (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$}]{tok\+\_\+mgr }\end{DoxyParamCaption})}
-
-
-
-Retrieve the previous token from Tokens. 
-
-Function will return the previous token stored inside \mbox{\hyperlink{struct_token}{Token}} Mgr. Note that it returns based on the current token. Once the first token is reached the internal state must be reset. Otherwise the value returned will continue to be null. See \mbox{\hyperlink{tokens_8h_a63988158a1868f7eae2322374c85ce54}{Token\+Mgr\+\_\+reset\+\_\+token()}}.
-
-
-\begin{DoxyParams}{Parameters}
-{\em tok\+\_\+mgr} & Pointer to token manager instance. \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-previous \mbox{\hyperlink{struct_token}{Token}} in manager. 
-\end{DoxyReturn}
-\mbox{\Hypertarget{tokens_8h_a0bb266bca06cd42cfcfbf7da6de5b874}\label{tokens_8h_a0bb266bca06cd42cfcfbf7da6de5b874}} 
-\index{tokens.\+h@{tokens.\+h}!Token\+Mgr\+\_\+print\+\_\+tokens@{Token\+Mgr\+\_\+print\+\_\+tokens}}
-\index{Token\+Mgr\+\_\+print\+\_\+tokens@{Token\+Mgr\+\_\+print\+\_\+tokens}!tokens.\+h@{tokens.\+h}}
-\subsubsection{\texorpdfstring{Token\+Mgr\+\_\+print\+\_\+tokens()}{TokenMgr\_print\_tokens()}}
-{\footnotesize\ttfamily void Token\+Mgr\+\_\+print\+\_\+tokens (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$}]{tok\+\_\+mgr }\end{DoxyParamCaption})}
-
-
-
-Print contents of token manager. Useful for debugging. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em tok\+\_\+mgr} & Pointer to token manager. \\
-\hline
-\end{DoxyParams}
-\mbox{\Hypertarget{tokens_8h_a63988158a1868f7eae2322374c85ce54}\label{tokens_8h_a63988158a1868f7eae2322374c85ce54}} 
-\index{tokens.\+h@{tokens.\+h}!Token\+Mgr\+\_\+reset\+\_\+token@{Token\+Mgr\+\_\+reset\+\_\+token}}
-\index{Token\+Mgr\+\_\+reset\+\_\+token@{Token\+Mgr\+\_\+reset\+\_\+token}!tokens.\+h@{tokens.\+h}}
-\subsubsection{\texorpdfstring{Token\+Mgr\+\_\+reset\+\_\+token()}{TokenMgr\_reset\_token()}}
-{\footnotesize\ttfamily void Token\+Mgr\+\_\+reset\+\_\+token (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$}]{tok\+\_\+mgr }\end{DoxyParamCaption})}
-
-
-
-Reset the internal token to N\+U\+LL. 
-
-This function operates on the internal token incrementer of the token manager. It will nullify the internal pointer so that collection can be incremented through again. See \mbox{\hyperlink{tokens_8h_abba7a2527fb5684453e62db37cc232cc}{Token\+Mgr\+\_\+next\+\_\+token()}} and \mbox{\hyperlink{tokens_8h_aab2ffb25ab0ad755354661c3d07836a3}{Token\+Mgr\+\_\+prev\+\_\+token()}}.
-
-
-\begin{DoxyParams}{Parameters}
-{\em tok\+\_\+mgr} & Pointer to token manager instance. \\
-\hline
-\end{DoxyParams}

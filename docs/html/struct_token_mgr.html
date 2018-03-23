@@ -74,25 +74,31 @@ $(function() {
 <p><a class="el" href="struct_token.html" title="Represent a single token read from input. ">Token</a> manager represents a pool of tokens.  
  <a href="struct_token_mgr.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="tokens_8h_source.html">tokens.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="tokenizer_8h_source.html">tokenizer.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a7f5a58a2f7ba83078262f1c5509c7dca"><td class="memItemLeft" align="right" valign="top"><a id="a7f5a58a2f7ba83078262f1c5509c7dca"></a>
-<a class="el" href="struct_token.html">Token</a> **&#160;</td><td class="memItemRight" valign="bottom"><b>curr_tok</b></td></tr>
-<tr class="separator:a7f5a58a2f7ba83078262f1c5509c7dca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0863848afa7874307f5ed4d46c1a22e5"><td class="memItemLeft" align="right" valign="top"><a id="a0863848afa7874307f5ed4d46c1a22e5"></a>
-<a class="el" href="struct_token.html">Token</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>toks</b> [1000]</td></tr>
-<tr class="separator:a0863848afa7874307f5ed4d46c1a22e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee9bee2443af37eae9fa475620873646"><td class="memItemLeft" align="right" valign="top"><a id="aee9bee2443af37eae9fa475620873646"></a>
+<a class="el" href="struct_token.html">Token</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>toks_head</b></td></tr>
+<tr class="separator:aee9bee2443af37eae9fa475620873646"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d36fd3a48a52dbd497fa83eea77bbb8"><td class="memItemLeft" align="right" valign="top"><a id="a3d36fd3a48a52dbd497fa83eea77bbb8"></a>
+<a class="el" href="struct_token.html">Token</a> **&#160;</td><td class="memItemRight" valign="bottom"><b>toks_curr</b></td></tr>
+<tr class="separator:a3d36fd3a48a52dbd497fa83eea77bbb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9416707c973324743b48586e20c7bee"><td class="memItemLeft" align="right" valign="top"><a id="ad9416707c973324743b48586e20c7bee"></a>
+<a class="el" href="struct_token.html">Token</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>toks_tail</b></td></tr>
+<tr class="separator:ad9416707c973324743b48586e20c7bee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a764c0f04ff55f5e23b727b1c7de8003e"><td class="memItemLeft" align="right" valign="top"><a id="a764c0f04ff55f5e23b727b1c7de8003e"></a>
 size_t&#160;</td><td class="memItemRight" valign="bottom"><b>tok_ctr</b></td></tr>
 <tr class="separator:a764c0f04ff55f5e23b727b1c7de8003e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c51c54b6a2a05ad7f54a6e33c63e5fb"><td class="memItemLeft" align="right" valign="top"><a id="a6c51c54b6a2a05ad7f54a6e33c63e5fb"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>tok_cap</b></td></tr>
+<tr class="separator:a6c51c54b6a2a05ad7f54a6e33c63e5fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="struct_token.html" title="Represent a single token read from input. ">Token</a> manager represents a pool of tokens. </p>
 <p>This provides a high level interfacing for token management. It is preferred to use this for anything token related as it manages internal memory allocs and deallocs. Struct will mantain all tokens and responsible for methods. </p>
 </div><hr/>The documentation for this struct was generated from the following file:<ul>
-<li>src/<a class="el" href="tokens_8h_source.html">tokens.h</a></li>
+<li>src/include/<a class="el" href="tokenizer_8h_source.html">tokenizer.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

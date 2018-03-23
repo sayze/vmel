@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Virtual Machine Execution Language (Vmel): src/parser.h File Reference</title>
+<title>Virtual Machine Execution Language (Vmel): src/include/parser.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -63,10 +63,12 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_b0856f6b0d80ccb263b2f415c91f9e17.html">include</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">parser.h File Reference</div>  </div>
 </div><!--header-->
@@ -74,12 +76,144 @@ $(function() {
 
 <p>File containing all definitions for parser module.  
 <a href="#details">More...</a></p>
-
+<div class="textblock"><code>#include &quot;tokenizer.h&quot;</code><br />
+</div>
 <p><a href="parser_8h_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a7de22b91daa2ad3da70fd4c2fe917efb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a7de22b91daa2ad3da70fd4c2fe917efb">can_consume</a> (char *tok_type, char *type)</td></tr>
+<tr class="memdesc:a7de22b91daa2ad3da70fd4c2fe917efb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Can token be consumed based on expected type.  <a href="#a7de22b91daa2ad3da70fd4c2fe917efb">More...</a><br /></td></tr>
+<tr class="separator:a7de22b91daa2ad3da70fd4c2fe917efb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14ef3264a0a943a0d97287065cef9f99"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a14ef3264a0a943a0d97287065cef9f99">parse_group</a> (<a class="el" href="struct_token_mgr.html">TokenMgr</a> *tok_mgr)</td></tr>
+<tr class="memdesc:a14ef3264a0a943a0d97287065cef9f99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Will consume a group based on grammar defintion.  <a href="#a14ef3264a0a943a0d97287065cef9f99">More...</a><br /></td></tr>
+<tr class="separator:a14ef3264a0a943a0d97287065cef9f99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2b57d92b567d06e79a929450c2944c4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#af2b57d92b567d06e79a929450c2944c4">parse_assignment</a> (<a class="el" href="struct_token_mgr.html">TokenMgr</a> *tok_mgr)</td></tr>
+<tr class="memdesc:af2b57d92b567d06e79a929450c2944c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Will consume assignment based on grammar.  <a href="#af2b57d92b567d06e79a929450c2944c4">More...</a><br /></td></tr>
+<tr class="separator:af2b57d92b567d06e79a929450c2944c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ed0c289eb82241a3e41acc50b296356"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a7ed0c289eb82241a3e41acc50b296356">parser_init</a> (<a class="el" href="struct_token_mgr.html">TokenMgr</a> *tok_mgr)</td></tr>
+<tr class="memdesc:a7ed0c289eb82241a3e41acc50b296356"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initial entry for parser.  <a href="#a7ed0c289eb82241a3e41acc50b296356">More...</a><br /></td></tr>
+<tr class="separator:a7ed0c289eb82241a3e41acc50b296356"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>File containing all definitions for parser module. </p>
 <dl class="section author"><dt>Author</dt><dd>Sayed Sadeed </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="a7de22b91daa2ad3da70fd4c2fe917efb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7de22b91daa2ad3da70fd4c2fe917efb">&#9670;&nbsp;</a></span>can_consume()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int can_consume </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>tok_type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>type</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Can token be consumed based on expected type. </p>
+<p>This function is used to determine if a token matches expected type.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tok</td><td>is a pointer to the token being compared. </td></tr>
+    <tr><td class="paramname">type</td><td>the type we are expecting it to be. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af2b57d92b567d06e79a929450c2944c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af2b57d92b567d06e79a929450c2944c4">&#9670;&nbsp;</a></span>parse_assignment()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void parse_assignment </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_token_mgr.html">TokenMgr</a> *&#160;</td>
+          <td class="paramname"><em>tok_mgr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Will consume assignment based on grammar. </p>
+<p>identifier = INTEGER | STRING </p>
+
+</div>
+</div>
+<a id="a14ef3264a0a943a0d97287065cef9f99"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14ef3264a0a943a0d97287065cef9f99">&#9670;&nbsp;</a></span>parse_group()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void parse_group </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_token_mgr.html">TokenMgr</a> *&#160;</td>
+          <td class="paramname"><em>tok_mgr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Will consume a group based on grammar defintion. </p>
+<p>Group = string | string_list</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tok</td><td>is a pointer to the token being compared. </td></tr>
+    <tr><td class="paramname">type</td><td>the type we are expecting it to be. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7ed0c289eb82241a3e41acc50b296356"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ed0c289eb82241a3e41acc50b296356">&#9670;&nbsp;</a></span>parser_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int parser_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_token_mgr.html">TokenMgr</a> *&#160;</td>
+          <td class="paramname"><em>tok_mgr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initial entry for parser. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tok_mgr</td><td><a class="el" href="struct_token_mgr.html" title="Token manager represents a pool of tokens. ">TokenMgr</a> containing all token information. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if parser was successful or return 1 if issue occurred. </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

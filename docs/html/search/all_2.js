@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['get_5ffirst_5ftoken',['get_first_token',['../tokens_8h.html#a2d93ec75b58f6ee589c4a9af0fa8fc26',1,'tokens.h']]],
-  ['get_5flast_5ftoken',['get_last_token',['../tokens_8h.html#a24d4b7b7d0361e2bb1146300d406ea70',1,'tokens.h']]]
+  ['increase_5fstring',['increase_string',['../utils_8h.html#a4263d61e835d73c42e52f7e20d182314',1,'utils.h']]],
+  ['is_5fvalid_5fidentifier',['is_valid_identifier',['../utils_8h.html#a8cae9f2a04943f06b1ac9074e3b8571f',1,'utils.h']]]
 ];

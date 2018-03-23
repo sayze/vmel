@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['build_5ftokens',['build_tokens',['../tokens_8h.html#a81195342113cfd2b791683fcb8f7c9de',1,'tokens.h']]]
+  ['can_5fconsume',['can_consume',['../parser_8h.html#a7de22b91daa2ad3da70fd4c2fe917efb',1,'parser.h']]]
 ];

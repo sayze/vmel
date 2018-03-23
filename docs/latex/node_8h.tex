@@ -1,0 +1,73 @@
+\hypertarget{node_8h}{}\section{src/include/node.h File Reference}
+\label{node_8h}\index{src/include/node.\+h@{src/include/node.\+h}}
+
+
+The \mbox{\hyperlink{struct_node}{Node}} module represents a \char`\"{}node\char`\"{} inside an A\+ST.  
+
+
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_node}{Node}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{struct_node}{Node}} correlates to a node within a tree. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}} manages the Nodes at a higher level. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{node_8h_a86c05c2101de342cc02056e12e62c247}\label{node_8h_a86c05c2101de342cc02056e12e62c247}} 
+enum {\bfseries Node\+Type\+\_\+E} \{ {\bfseries L\+E\+AF}, 
+{\bfseries R\+O\+OT}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{node_8h_a25a6d59673585e033763a1a26037c0e1}{Node\+Mgr\+\_\+free}} (\mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}} $\ast$node\+\_\+mgr)
+\begin{DoxyCompactList}\small\item\em Free all resources creates by node manager. Including node manager itself. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}} $\ast$ \mbox{\hyperlink{node_8h_a57a63acc76b0f06814ad3ab1436e85ff}{Node\+Mgr\+\_\+new}} ()
+\begin{DoxyCompactList}\small\item\em Create node manager malloc\textquotesingle{}ed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The \mbox{\hyperlink{struct_node}{Node}} module represents a \char`\"{}node\char`\"{} inside an A\+ST. 
+
+\begin{DoxyAuthor}{Author}
+Sayed Sadeed 
+\end{DoxyAuthor}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{node_8h_a25a6d59673585e033763a1a26037c0e1}\label{node_8h_a25a6d59673585e033763a1a26037c0e1}} 
+\index{node.\+h@{node.\+h}!Node\+Mgr\+\_\+free@{Node\+Mgr\+\_\+free}}
+\index{Node\+Mgr\+\_\+free@{Node\+Mgr\+\_\+free}!node.\+h@{node.\+h}}
+\subsubsection{\texorpdfstring{Node\+Mgr\+\_\+free()}{NodeMgr\_free()}}
+{\footnotesize\ttfamily int Node\+Mgr\+\_\+free (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}} $\ast$}]{node\+\_\+mgr }\end{DoxyParamCaption})}
+
+
+
+Free all resources creates by node manager. Including node manager itself. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+\_\+mgr} & Pointer to the \mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}} instance. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if anything went wrong other return 0. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{node_8h_a57a63acc76b0f06814ad3ab1436e85ff}\label{node_8h_a57a63acc76b0f06814ad3ab1436e85ff}} 
+\index{node.\+h@{node.\+h}!Node\+Mgr\+\_\+new@{Node\+Mgr\+\_\+new}}
+\index{Node\+Mgr\+\_\+new@{Node\+Mgr\+\_\+new}!node.\+h@{node.\+h}}
+\subsubsection{\texorpdfstring{Node\+Mgr\+\_\+new()}{NodeMgr\_new()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}}$\ast$ Node\+Mgr\+\_\+new (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create node manager malloc\textquotesingle{}ed. 
+
+This function acts as a constructor for the \mbox{\hyperlink{struct_node}{Node}} manager.
+
+\begin{DoxyReturn}{Returns}
+newly created \mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}} pointer. 
+\end{DoxyReturn}
