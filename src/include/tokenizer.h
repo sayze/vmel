@@ -11,6 +11,7 @@
 #define TOKENTYPE_SIZE 20
 
 #include <string.h>
+#include "tokens.h"
 
 /**
  * @brief Represent a single token read from input.

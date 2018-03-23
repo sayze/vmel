@@ -40,4 +40,16 @@
 // Exclamation.
 #define BANG '!'
 
+// Possible token types.
+enum TokTypes {
+    INTEGER, 
+    STRING, 
+    OPERATOR, 
+    KEYWORD, 
+    GROUP, 
+    IDENTIFIER,
+    LPARENS,
+    RPARENS,
+};
+
 #endif
