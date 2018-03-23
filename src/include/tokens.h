@@ -40,16 +40,32 @@
 // Exclamation.
 #define BANG '!'
 
+
+/// TODO: Use enums told types and have function that returns string representation of it.
 // Possible token types.
-enum TokTypes {
-    INTEGER, 
-    STRING, 
-    OPERATOR, 
-    KEYWORD, 
-    GROUP, 
-    IDENTIFIER,
-    LPARENS,
-    RPARENS,
-};
+/*
+enum TokType {
+    INTEGER_T, 
+    STRING_T, 
+    PLUSOP_T,
+    MINUSOP_T,
+    FSLASH_T,
+    DIVOP_T,
+    ASTERISK_T,
+    NOTEQUAL_T,
+    EQUAL_T,
+    EQEQUAL_T,
+    LESSEQUAL_T,
+    LESS_T,
+    GREATER_T,
+    GREATEREQUAL_T,
+    NOT_T,
+    KEYWORD_T, 
+    GROUP_T, 
+    IDENTIFIER_T,
+    LPAREN_T,
+    RPAREN_T,
+    BETWEEN_T,
+};*/
 
 #endif

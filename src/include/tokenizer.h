@@ -7,7 +7,7 @@
 #ifndef TOKENIZER_H
 #define TOKENIZER_H
 
-#define KWORDS_SIZE 5
+#define KWORDS_SIZE 4
 #define TOKENTYPE_SIZE 20
 #define TOKMGR_TOKS_INIT_SIZE 50
 
@@ -34,7 +34,9 @@ typedef struct {
  * Struct will mantain all tokens and responsible for methods.
  */
 typedef struct {
-	Token **tok_curr;
+	Token *toks_head;
+	Token **toks_curr;
+	Token *toks_tail;
 	size_t tok_ctr;
 	size_t tok_cap;
 } TokenMgr;
@@ -107,6 +109,17 @@ void TokenMgr_print_tokens(TokenMgr *tok_mgr);
 Token *TokenMgr_next_token(TokenMgr *tok_mgr);
 
 /**
+ * @brief Check to see if current token in manager is the last.
+ * 
+ * This function provides high level interface for determining if the
+ * current token stored inside the manager is the last one.
+ * 
+ * @param tok_mgr Pointer to token manager instance.
+ * @return 0 if not last token otherwise return 1.
+ */
+int TokenMgr_is_last_token(TokenMgr *tok_mgr);
+
+/**
  * @brief Retrieve the previous token from Tokens.
  * 
  * Function will return the previous token stored inside TokenMgr.
@@ -120,28 +133,15 @@ Token *TokenMgr_next_token(TokenMgr *tok_mgr);
 Token *TokenMgr_prev_token(TokenMgr *tok_mgr);
 
 /**
- * @brief Set the internal counter back to start.
- * 
- * Unlike TokenMgr_reset_token() this function will set the TokenMgr counter
- * back to 0. This recycles the existing memory for addition of new tokens.
- * A common use case for this is in the cli (command line interface) where each time a statement
- * is evaluated we don't want to evaluate those same tokens again on the execution.
- *
- * @param tok_mgr Pointer to token manager. 
- */
-void TokenMgr_clear_tokens(TokenMgr *tok_mgr);
-
-/**
- * @brief Reset the internal token to NULL.
+ * @brief Reset the internal token back to start of array.
  *
  * This function operates on the internal curr token
- * of the token manager. It will nullify the internal pointer so that the
- * collection can be incremented through again.
+ * of the token manager. It will position the tokens pointer pointer back to the HEAD.
  * See TokenMgr_next_token() and TokenMgr_prev_token().
  *
  * @param tok_mgr Pointer to token manager instance.
  */
-void TokenMgr_reset_token(TokenMgr *tok_mgr);
+void TokenMgr_reset_curr(TokenMgr *tok_mgr);
 
 /**
  * @brief Get the Token currently being pointed to by Token Manager 
@@ -152,7 +152,7 @@ void TokenMgr_reset_token(TokenMgr *tok_mgr);
  * the internal structure of the TokenMgr struct.
  *
  * @param tok_mgr Pointer to token manager instance.
- * @return Token pointer currently pointed to by **cur_token.
+ * @return Token pointer currently pointed to by **tok_curr.
  */
 Token *TokenMgr_current_token(TokenMgr *tok_mgr);
 

@@ -22,6 +22,8 @@ struct VGroupDec {
 	int command_ct;
 };
 
+char errors[20];
+
 // Below is not ideal because we are using 2 stacks to track variables and groups.
 // Groups should be treated similar to variables since type information should not produce different data sets.
 // Also we are making assumptions about stack sizes which is also not good.
@@ -51,9 +53,9 @@ struct VDec *var_in_stack(char *name) {
 	return NULL;
 }
 
-int parse_group() {
+void parse_group(TokenMgr *tok_mgr) {
 	struct VGroupDec *match = NULL;
-	
+	Token *tok_curr_ptr = TokenMgr_current_token(tok_mgr);
 	// Manual iteration instead of helper function.
 	for (int i = 0; i < grpstackct; i++) {
 		if ((strcmp(tok_curr_ptr->value, vgstack[i]->name) == 0)) {
@@ -65,87 +67,91 @@ int parse_group() {
 	// This way they all get aggregated and printed in the end.
 	if (match != NULL) {
 		printf("** Error: Duplicate group %s already defined in line %d\n", tok_curr_ptr->value, tok_curr_ptr->lineno);
-		return -1;
+		error_stat = 1;
+		return;
 	}
 
 	match = malloc(sizeof(struct VGroupDec));
 	match->command_ct = 0;
 	strcpy(match->name, tok_curr_ptr->value);
-	tok_peek_ptr = TokenMgr_next_token(tok_mgr_ptr);
-	
-	while (strcmp(tok_peek_ptr->type, "STRING") == 0) {
-		strcpy(&match->commands[match->command_ct][0], tok_peek_ptr->value);
+	tok_curr_ptr = TokenMgr_next_token(tok_mgr);
+	while (tok_curr_ptr != NULL && strcmp(tok_curr_ptr->type, "STRING") == 0) {
+		strcpy(&match->commands[match->command_ct][0], tok_curr_ptr->value);
 		match->command_ct++;
-		tok_peek_ptr = TokenMgr_next_token(tok_mgr_ptr);
-		if (tok_peek_ptr == NULL)
-			break;
+		tok_curr_ptr = TokenMgr_next_token(tok_mgr);
 	}
+
 	vgstack[grpstackct++] = match;
-	tok_curr_ptr = tok_peek_ptr;
-	return 0;
 }
 
-int parse_assignment() {
-	tok_peek_ptr = TokenMgr_next_token(tok_mgr_ptr);
-	if (can_consume(tok_peek_ptr->value, "EQUAL")) {
-		tok_peek_ptr = TokenMgr_next_token(tok_mgr_ptr);
-		if (can_consume(tok_peek_ptr->type, "STRING") || can_consume(tok_peek_ptr->type, "INTEGER")) {
+void parse_assignment(TokenMgr *tok_mgr) {
+	// Store pointer to actual vairable name.
+	Token *tok_start_ptr = TokenMgr_current_token(tok_mgr);
+
+	// Store pointer to subsequent tokens.
+	Token *tok_curr_ptr = TokenMgr_next_token(tok_mgr);
+	
+	// Assert we can "eat" a EQUAL.
+	if (can_consume(tok_curr_ptr->value, "EQUAL")) {
+		tok_curr_ptr = TokenMgr_next_token(tok_mgr);
+		if (can_consume(tok_curr_ptr->type, "STRING") || can_consume(tok_curr_ptr->type, "INTEGER")) {
 			struct VDec *match = var_in_stack(tok_curr_ptr->value);
 
 			// Variable already in stack just update value.
 			// Otherwise create another VDec instance.
 			if (match != NULL) {
-				strcpy(match->value, tok_peek_ptr->value);
-				strcpy(match->type, tok_peek_ptr->type);
+				strcpy(match->value, tok_curr_ptr->value);
+				strcpy(match->type, tok_curr_ptr->type);
 			}
 			else {
 				struct VDec *var = malloc(sizeof(struct VDec));
-				strcpy(var->name, tok_curr_ptr->value);
-				strcpy(var->value, tok_peek_ptr->value);
-				strcpy(var->type, tok_peek_ptr->type);
+				strcpy(var->name, tok_start_ptr->value);
+				strcpy(var->value, tok_curr_ptr->value);
+				strcpy(var->type, tok_curr_ptr->type);
 				vstack[stackct++] = var;
 			}
-			tok_curr_ptr = tok_peek_ptr;
-			return 0;
 		}
 		else {
-			return -1;
+			error_stat = 1;
 		}
 	}
 	else {
-		return -1;
+		error_stat = 1;
 	}
+
+	// Iterate to next token.
+	TokenMgr_next_token(tok_mgr);
 }
 
 
-void parser_init(TokenMgr *tok_mgr) {
+int parser_init(TokenMgr *tok_mgr) {
 	if (tok_mgr == NULL) {
-		return;
+		return 1;
 	}
 
-	// Initialise global token manager to point to correct reference.
-	tok_mgr_ptr = tok_mgr;
-	tok_curr_ptr = TokenMgr_next_token(tok_mgr);
-	int stat = 0;
-	// Assign curr global token pointer to the next token from token manager.
-	// Start iteration over token collection until no more tokens remaining. 
-	while (tok_curr_ptr != NULL) {
+	// Shorthand pointer to current token.
+	Token *tok_curr_ptr = TokenMgr_next_token(tok_mgr);
+	
+	while (!TokenMgr_is_last_token(tok_mgr)) {
 		if (strcmp(tok_curr_ptr->type, "IDENTIFIER") == 0) {
-			parse_assignment();
-			tok_curr_ptr = TokenMgr_next_token(tok_mgr);
+			parse_assignment(tok_mgr);
 		}
 		else if (strcmp(tok_curr_ptr->type, "GROUP") == 0) {
-			stat = parse_group();
-			if (stat != 0)
+			parse_group(tok_mgr);
+			if (error_stat != 0)
 				tok_curr_ptr = NULL;
 		}
 		else {
-			printf ("Unexpected \"%s\" found in line %d\n", tok_curr_ptr->value, tok_curr_ptr->lineno);
+			printf ("**Error: unexpected \"%s\" found in line %d\n", tok_curr_ptr->value, tok_curr_ptr->lineno);
+			TokenMgr_next_token(tok_mgr);
 		}
+
+		// Set current pointer to tok_mgr current token.
+		tok_curr_ptr = TokenMgr_current_token(tok_mgr);
 	}
 
-	if (stat != 0)
-		return;
+	if (error_stat != 0)
+		return 1;
 
 	printf("-------------------------------------\n");
 	printf("	Variable Stack\n");
@@ -168,4 +174,5 @@ void parser_init(TokenMgr *tok_mgr) {
 		printf("\n");
 		free(vgstack[x]);
 	}
+	return 0;
 }

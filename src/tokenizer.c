@@ -219,7 +219,7 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 	}
 
 	if (error)
-		printf("** Invalid syntax: unknown '%s' found in line %d\n", store, lineno);
+		printf("**Invalid syntax: unknown '%s' found in line %d\n", store, lineno);
 
 	return error;
 }
@@ -227,16 +227,15 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 TokenMgr *TokenMgr_new() {
 	TokenMgr *tok_mgr = malloc(sizeof(TokenMgr));
 	tok_mgr->tok_ctr = 0;
-	tok_mgr->tok_cap = 50;
-	tok_mgr->tok_curr = malloc(tok_mgr->tok_cap * sizeof(Token *));
+	tok_mgr->tok_cap = TOKMGR_TOKS_INIT_SIZE;
+	tok_mgr->toks_curr = malloc(tok_mgr->tok_cap * sizeof(Token *));
+	
+	// Add a head token as padding and to help with pointer arithmetic.
+	TokenMgr_add_token(tok_mgr, "HEAD", "HEAD", 0);
+	
+	// Point the head to first HEAD token.
+	tok_mgr->toks_head = *tok_mgr->toks_curr;
 	return tok_mgr;
-}
-
-Token *TokenMgr_current_token(TokenMgr *tok_mgr) {
-	if (tok_mgr == NULL)
-		return NULL;
-
-	return *tok_mgr->tok_curr;
 }
 
 int TokenMgr_add_token(TokenMgr *tok_mgr, char tok_type[20], char *tok_val, int tok_lineno) {
@@ -259,19 +258,20 @@ int TokenMgr_add_token(TokenMgr *tok_mgr, char tok_type[20], char *tok_val, int 
 	// Determine if we need more room in toks.
 	if (tok_mgr->tok_cap - tok_mgr->tok_ctr <= 5) {
 		tok_mgr->tok_cap *= 2;
-		tok_mgr->tok_curr = realloc(tok_mgr->tok_curr, sizeof(Token *) * (tok_mgr->tok_cap));		
+		tok_mgr->toks_curr = realloc(tok_mgr->toks_curr, sizeof(Token *) * (tok_mgr->tok_cap));		
 	}
 	else {
-		tok_mgr->tok_curr[tok_mgr->tok_ctr] = tmp;
+		tok_mgr->toks_curr[tok_mgr->tok_ctr] = tmp;
 	}
 	
 	tok_mgr->tok_ctr++;
+	tok_mgr->toks_tail = tmp;
 	return 0;
 }
 
 void TokenMgr_print_tokens(TokenMgr *tok_mgr) {
 	for (size_t i =0; i < tok_mgr->tok_ctr; i++) {
-		printf("%s %s \n", tok_mgr->tok_curr[i]->type, tok_mgr->tok_curr[i]->value);
+		printf("%s %s \n", tok_mgr->toks_curr[i]->type, tok_mgr->toks_curr[i]->value);
 	}
 }
 
@@ -280,10 +280,12 @@ int TokenMgr_free(TokenMgr *tok_mgr) {
 		printf("**Error** Invalid token manager passed to TokenMgr_free");
 		return 1;
 	}
+	
+	TokenMgr_reset_curr(tok_mgr);
 
 	for (size_t i = 0; i < tok_mgr->tok_ctr; i++) {
-		free(tok_mgr->tok_curr[i]->value);
-		free(tok_mgr->tok_curr[i]);
+		free(tok_mgr->toks_curr[i]->value);
+		free(tok_mgr->toks_curr[i]);
 	}
 
 	free(tok_mgr);
@@ -293,37 +295,45 @@ int TokenMgr_free(TokenMgr *tok_mgr) {
 Token *TokenMgr_next_token(TokenMgr *tok_mgr) {
 	if (tok_mgr == NULL)
 		return NULL;
-
+	
 	// Don't surpass final token.
-	if (*tok_mgr->tok_curr == tok_mgr->tok_curr[tok_mgr->tok_ctr-1])
+	if (TokenMgr_is_last_token(tok_mgr))
 		return NULL;		
 
-	tok_mgr->tok_curr++;	
-	return *tok_mgr->tok_curr;
+	tok_mgr->toks_curr++;	
+	return *tok_mgr->toks_curr;
 }
 
 Token *TokenMgr_prev_token(TokenMgr *tok_mgr) {
 	// Ensure is initialised or don't surpass first token.
-	if (tok_mgr == NULL || *tok_mgr->tok_curr == tok_mgr->tok_curr[0])
+	if (tok_mgr == NULL || *tok_mgr->toks_curr == tok_mgr->toks_head)
 		return NULL;
 
-	tok_mgr->tok_curr--;
-	return *tok_mgr->tok_curr;
+	tok_mgr->toks_curr--;
+	return *tok_mgr->toks_curr;
 }
 
-void TokenMgr_reset_token(TokenMgr *tok_mgr) {
+int TokenMgr_is_last_token(TokenMgr *tok_mgr) {
+	if (tok_mgr == NULL)
+		return -1;
+
+	return *tok_mgr->toks_curr == tok_mgr->toks_tail;
+}
+
+Token *TokenMgr_current_token(TokenMgr *tok_mgr) {
+	if (tok_mgr == NULL)
+		return NULL;
+
+	return *tok_mgr->toks_curr;
+}
+
+void TokenMgr_reset_curr(TokenMgr *tok_mgr) {
 	if (tok_mgr == NULL)
 		return;
-	tok_mgr->tok_curr = NULL;
-}
-
-void TokenMgr_clear_tokens(TokenMgr *tok_mgr) {
-	if (tok_mgr == NULL) {
-		printf("**Error** Invalid token manager passed to TokenMgr_free");
-		return;
+	
+	while (*tok_mgr->toks_curr != tok_mgr->toks_head) {
+		tok_mgr->toks_curr--;
 	}
-	tok_mgr->tok_curr = NULL;
-	tok_mgr->tok_ctr = 0;
 }
 
 int is_valid_keyword(char *str) {
@@ -332,7 +342,7 @@ int is_valid_keyword(char *str) {
 	if (str == NULL)
 		return ret;
 	
-	for (int x = 0; x < KWORDS_SIZE; x++) {
+	for (int x = 0; x < KWORDS_SIZE-1; x++) {
 		const char *t = R_Keywords[x];
 		if (strcmp(t, str) == 0) {
 			ret = 1;

@@ -39,7 +39,8 @@ int main(int argc, char *argv[]) {
 	}
 	else {
 		err = build_tokens(buff_in, tok_mgr);
-		parser_init(tok_mgr);
+		if (!err)
+			parser_init(tok_mgr);
 	}
 	
 	// Free resources.
