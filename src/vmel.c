@@ -43,6 +43,10 @@ int main(int argc, char *argv[]) {
 			parser_init(tok_mgr);
 	}
 	
+	#ifdef DEBUG
+		TokenMgr_print_tokens(tok_mgr);
+	#endif
+
 	// Free resources.
 	TokenMgr_free(tok_mgr);
 	free(buff_in);

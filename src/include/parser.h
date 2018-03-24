@@ -45,7 +45,7 @@ int parser_can_consume(char *tok_type, char *type);
  * @param tok is a pointer to the token being compared.
  * @param type the type we are expecting it to be. 
  */
-void parse_group(TokenMgr *tok_mgr, PErrors *err_hdl);
+// void parse_group(TokenMgr *tok_mgr, PErrors *err_hdl);
 
 
 /**
@@ -53,7 +53,7 @@ void parse_group(TokenMgr *tok_mgr, PErrors *err_hdl);
  * 
  * identifier = INTEGER | STRING 
  */
-void parse_assignment(TokenMgr *tok_mgr, PErrors *err_hdl);
+// void parse_assignment(TokenMgr *tok_mgr, PErrors *err_hdl);
 
 
 /**

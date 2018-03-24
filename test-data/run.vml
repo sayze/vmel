@@ -7,19 +7,7 @@
 # Variables must be prefixed with a dollar sign... yes I do like PHP.
 # Such as the below
 
-$vm_user = "sayed@root"/
-$vm_pass = "124astroboy"/
-$vm_host = "'127.0.1.1'"/
-$vm_port = 4444/
-$vm_user = "sayed@root"/
-$vm_pass = "124astroboy"/
-$vm_host = "'127.0.1.1'"
-$vm_port = 4444
-$vm_user = "sayed@root"
-$vm_pass = "124astroboy"
-$vm_host = "'127.0.1.1'"
-$vm_port = 4444
-$vm_user = "sayed@root"
+
 
 
 # ---------------------------------- # 
@@ -28,6 +16,8 @@ $vm_user = "sayed@root"
 # Groups as the name suggests are a collection or "group" of related tasks.
 # Each group must contain a unique name, most likely a name that describes the tasks.
 # Each Group may have a variable amount of tasks to be performed. Refer to the below.
+
+$name = "sayed"
 
 {build_npm_packages}
 "cd ~/var/node_project/"

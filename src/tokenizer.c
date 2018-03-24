@@ -273,7 +273,8 @@ int TokenMgr_add_token(TokenMgr *tok_mgr, char tok_type[20], char *tok_val, int 
 }
 
 void TokenMgr_print_tokens(TokenMgr *tok_mgr) {
-	for (size_t i =0; i < tok_mgr->tok_ctr; i++) {
+	TokenMgr_reset_curr(tok_mgr);
+	for (size_t i =1; i < tok_mgr->tok_ctr; i++) {
 		printf("%s %s \n", tok_mgr->toks_curr[i]->type, tok_mgr->toks_curr[i]->value);
 	}
 }
