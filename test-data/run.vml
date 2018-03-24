@@ -7,10 +7,20 @@
 # Variables must be prefixed with a dollar sign... yes I do like PHP.
 # Such as the below
 
+$vm_user = "sayed@root"/
+$vm_pass = "124astroboy"/
+$vm_host = "'127.0.1.1'"/
+$vm_port = 4444/
+$vm_user = "sayed@root"/
+$vm_pass = "124astroboy"/
+$vm_host = "'127.0.1.1'"
+$vm_port = 4444
 $vm_user = "sayed@root"
 $vm_pass = "124astroboy"
-$vm_host = "127.0.1.1"
+$vm_host = "'127.0.1.1'"
 $vm_port = 4444
+$vm_user = "sayed@root"
+
 
 # ---------------------------------- # 
 #            Groups                  #

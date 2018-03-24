@@ -5,6 +5,7 @@
         "utils.h": "c",
         "parser.h": "c",
         "tokenizer.h": "c",
-        "node.h": "c"
+        "node.h": "c",
+        "tokens.h": "c"
     }
 }

@@ -12,7 +12,7 @@ static const char *R_Keywords[KWORDS_SIZE] = {
     "print", "connect", "release", "input"
 };
 
-int build_tokens(char *buff, TokenMgr *tokmgr) {
+int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr) {
 	if (buff == NULL) {
 		printf("** Error Buffer invalid state cannot build tokens\n");
 		return 1;
@@ -35,7 +35,11 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 	int error = 0;
 	// Track line no.
 	int lineno = 1;
-	
+
+	// Add a head token as padding to help with pointer arithmetic.
+	TokenMgr_add_token(tokmgr, "HEAD", "HEAD", 0);
+	tokmgr->toks_head = *tokmgr->toks_curr;
+
 	// Iterate through all chars until terminator or error.
 	while (buff[bidx] != '\0' && !error) {
 		c = buff[bidx];
@@ -55,11 +59,11 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 		}
 		else if (c == BANG) {
 			if (buff[bidx+1] == EQUAL) {
-				TokenMgr_add_token(tokmgr, "OPERATOR", "NOTEQUALTO", lineno);
+				TokenMgr_add_token(tokmgr, "OPERATOR", "!=", lineno);
 				bidx++;
 			}
 			else {
-				TokenMgr_add_token(tokmgr, "OPERATOR", "NOT", lineno);
+				TokenMgr_add_token(tokmgr, "OPERATOR", "!", lineno);
 			}
 			bidx++;
 		}
@@ -79,53 +83,53 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 		}
 		else if (c == LESSTHAN) {
 			if (buff[bidx+1] == EQUAL) {
-				TokenMgr_add_token(tokmgr, "OPERATOR", "LTEQTO", lineno);
+				TokenMgr_add_token(tokmgr, "OPERATOR", "<=", lineno);
 				bidx++;
 			}
 			else {
-				TokenMgr_add_token(tokmgr, "OPERATOR", "LESSTHAN", lineno);
+				TokenMgr_add_token(tokmgr, "OPERATOR", "<", lineno);
 			}
 			bidx++;
 		}
 		else if (c == GREATERTHAN) {
 			switch(buff[++bidx]) {
 				case EQUAL:
-					TokenMgr_add_token(tokmgr, "OPERATOR", "GTEQTO", lineno);
+					TokenMgr_add_token(tokmgr, "OPERATOR", ">=", lineno);
 					break;
 				case LESSTHAN:
-					TokenMgr_add_token(tokmgr, "OPERATOR", "BETWEEN", lineno);
+					TokenMgr_add_token(tokmgr, "OPERATOR", "><", lineno);
 					break;
 				default:
 					bidx--;
-					TokenMgr_add_token(tokmgr, "OPERATOR", "GREATERTHAN", lineno);
+					TokenMgr_add_token(tokmgr, "OPERATOR", ">", lineno);
 					break;
 			}
 			bidx++;
 		}
 		else if (c ==  EQUAL) {
 			if (buff[bidx+1] == EQUAL) {
-				TokenMgr_add_token(tokmgr, "OPERATOR", "EQUALTO", lineno);
+				TokenMgr_add_token(tokmgr, "OPERATOR", "==", lineno);
 				bidx++;
 			}
 			else {
-				TokenMgr_add_token(tokmgr, "OPERATOR", "EQUAL", lineno);
+				TokenMgr_add_token(tokmgr, "OPERATOR", "=", lineno);
 			}	
 			bidx++;
 		}
 		else if (c == PLUS) {
-			TokenMgr_add_token(tokmgr, "OPERATOR", "PLUS", lineno);
+			TokenMgr_add_token(tokmgr, "OPERATOR", "+", lineno);
 			bidx++;
 		} 
 		else if (c ==  MINUS) {
-			TokenMgr_add_token(tokmgr, "OPERATOR", "MINUS", lineno);
+			TokenMgr_add_token(tokmgr, "OPERATOR", "-", lineno);
 			bidx++;
 		} 
 		else if (c ==  ASTERISK) {
-			TokenMgr_add_token(tokmgr, "OPERATOR", "ASTERISK", lineno);
+			TokenMgr_add_token(tokmgr, "OPERATOR", "*", lineno);
 			bidx++;
 		} 
 		else if (c == FSLASH) {
-			TokenMgr_add_token(tokmgr, "OPERATOR", "FSLASH", lineno);
+			TokenMgr_add_token(tokmgr, "OPERATOR", "/", lineno);
 			bidx++;
 		}
 		else if (c == DQUOTE) {
@@ -219,7 +223,7 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 	}
 
 	if (error)
-		printf("**Invalid syntax: unknown '%s' found in line %d\n", store, lineno);
+		printf("Invalid syntax: unknown '%s' found in line %d\n", store, lineno);
 
 	return error;
 }
@@ -229,12 +233,6 @@ TokenMgr *TokenMgr_new() {
 	tok_mgr->tok_ctr = 0;
 	tok_mgr->tok_cap = TOKMGR_TOKS_INIT_SIZE;
 	tok_mgr->toks_curr = malloc(tok_mgr->tok_cap * sizeof(Token *));
-	
-	// Add a head token as padding and to help with pointer arithmetic.
-	TokenMgr_add_token(tok_mgr, "HEAD", "HEAD", 0);
-	
-	// Point the head to first HEAD token.
-	tok_mgr->toks_head = *tok_mgr->toks_curr;
 	return tok_mgr;
 }
 
@@ -257,15 +255,16 @@ int TokenMgr_add_token(TokenMgr *tok_mgr, char tok_type[20], char *tok_val, int 
 
 	// Determine if we need more room in toks.
 	if (tok_mgr->tok_cap - tok_mgr->tok_ctr <= 5) {
-		tok_mgr->tok_cap *= 2;
-		tok_mgr->toks_curr = realloc(tok_mgr->toks_curr, sizeof(Token *) * (tok_mgr->tok_cap));		
-	}
-	else {
-		tok_mgr->toks_curr[tok_mgr->tok_ctr] = tmp;
-	}
+		tok_mgr->toks_curr = grow_curr_tokens(tok_mgr);
+
+		// Make sure grow was succesful.
+		if (tok_mgr->toks_curr == NULL)
+			return 1;
+	}	
 	
-	tok_mgr->tok_ctr++;
+	tok_mgr->toks_curr[tok_mgr->tok_ctr++] = tmp;
 	tok_mgr->toks_tail = tmp;
+
 	return 0;
 }
 
@@ -350,4 +349,13 @@ int is_valid_keyword(char *str) {
 		}
 	}
 	return ret;
+}
+
+Token **grow_curr_tokens(TokenMgr *tok_mgr) {
+	if (tok_mgr == NULL)
+		return NULL;
+		
+	tok_mgr->tok_cap *= 2;
+	Token **toks_curr_new = realloc(tok_mgr->toks_curr, sizeof(Token *) * tok_mgr->tok_cap);		
+	return toks_curr_new;
 }

@@ -33,12 +33,12 @@ int main(int argc, char *argv[]) {
 			if (!strncmp(buff_in, "quit", 4)) {
 				break;
 			}
-			err = build_tokens(buff_in, tok_mgr);
+			err = TokenMgr_build_tokens(buff_in, tok_mgr);
 		}
-		// parser_init(tok_mgr);
+		parser_init(tok_mgr);
 	}
 	else {
-		err = build_tokens(buff_in, tok_mgr);
+		err = TokenMgr_build_tokens(buff_in, tok_mgr);
 		if (!err)
 			parser_init(tok_mgr);
 	}

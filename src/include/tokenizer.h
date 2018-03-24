@@ -1,5 +1,5 @@
 /**
- * @file tokens.h
+ * @file tokenizer.h
  * @author Sayed Sadeed
  * @brief File containing token management.
  */
@@ -41,10 +41,17 @@ typedef struct {
 	size_t tok_cap;
 } TokenMgr;
 
+
 /**
- * @brief Allocate more resources for TokenMgr *toks array.
+ * @brief Perform relloc on array of of tokens.
+ * 
+ * This is an internal function used to allocate more space
+ * for storage of tokens.
+ * 
+ * @param tok_mgr TokenMgr instance which being applied to.
+ * @return Newly allocated Token**.
  */
-Token **TokenMgr_realloc_toks();
+Token **grow_curr_tokens();
 
 /**
  * @brief Build tokens from steam of input.
@@ -56,7 +63,7 @@ Token **TokenMgr_realloc_toks();
  * @param tokmgr Token Manager to handle tokenization.
  * @return int signifying status.
  */
-int build_tokens(char *buff, TokenMgr *tokmgr);
+int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr);
 
 /**
  * @brief Create token manager malloc'ed.

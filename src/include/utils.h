@@ -52,11 +52,34 @@ char *file_to_buffer(const char *);
 int string_to_int(char *str, size_t len);
 
 /**
- * @brief Increase size of string by using realloc.
+ * @brief wrapper around sprintf to convert an integer to a string.
  * 
- * @param curr_size Existing size 
- * @param str pointer to the string.
- * @return newly created string.
+ * @param out Pointer to char where converted int is stored.
+ * @para src Integer being converted.
+ * @returns number of chars (exl NULL) if went successfully otherwise return negative;
  */
-char  *increase_string(size_t curr_size, char *str);
+int int_to_string(char *out, int src);
+
+/**
+ * @brief Replace all the variables in string with corresponding values.
+ * 
+ * Function is useful for a linear string replace. Note that the placeholder values will be replaced
+ * based on position of string in vars. 
+ * @code
+ * char **replace = {"sayed", "24"};
+ * char *src = "Hello my name is @0 and I am @1 years old";
+ * 
+ * char *new = string_map_vars(src, replace, strlen(src), 2);
+ * // new will be equal to
+ * "Hello my name is sayed and I am 24 years old"
+ * @endcode 
+ * 
+ * @param src A constant string which contains the variable placeholders.
+ * @param vars Array of all the string which serve as replacement values.
+ * @param src_len Length of src.
+ * @param vars_len Number of string inside vars.
+ * @return A malloc'ed char pointer containing the final mapped string. Will return NULL if error occurred.
+ */
+char *string_map_vars(const char *src, char **vars, size_t src_len, size_t vars_len);
+
 #endif
