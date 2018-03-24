@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
 				break;
 			}
 			err = TokenMgr_build_tokens(buff_in, tok_mgr);
-		}
+		}	
 		parser_init(tok_mgr);
 	}
 	else {

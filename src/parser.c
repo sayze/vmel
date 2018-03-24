@@ -185,7 +185,6 @@ int parser_init(TokenMgr *tok_mgr) {
 
 	// Shorthand pointer to current token.
 	Token *tok_curr_ptr = TokenMgr_next_token(tok_mgr);
-	
 	while (!TokenMgr_is_last_token(tok_mgr)) {
 		if (strcmp(tok_curr_ptr->type, "IDENTIFIER") == 0) {
 			parse_assignment(tok_mgr, err_handle);

@@ -37,8 +37,10 @@ int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr) {
 	int lineno = 1;
 
 	// Add a head token as padding to help with pointer arithmetic.
-	TokenMgr_add_token(tokmgr, "HEAD", "HEAD", 0);
-	tokmgr->toks_head = *tokmgr->toks_curr;
+	if (tokmgr->toks_head == NULL) {
+		TokenMgr_add_token(tokmgr, "HEAD", "HEAD", 0);
+		tokmgr->toks_head = *tokmgr->toks_curr;
+	}
 
 	// Iterate through all chars until terminator or error.
 	while (buff[bidx] != '\0' && !error) {
@@ -230,6 +232,8 @@ int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr) {
 
 TokenMgr *TokenMgr_new() {
 	TokenMgr *tok_mgr = malloc(sizeof(TokenMgr));
+	tok_mgr->toks_tail = NULL;
+	tok_mgr->toks_head = NULL;
 	tok_mgr->tok_ctr = 0;
 	tok_mgr->tok_cap = TOKMGR_TOKS_INIT_SIZE;
 	tok_mgr->toks_curr = malloc(tok_mgr->tok_cap * sizeof(Token *));
