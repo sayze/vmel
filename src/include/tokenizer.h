@@ -116,6 +116,17 @@ void TokenMgr_print_tokens(TokenMgr *tok_mgr);
 Token *TokenMgr_next_token(TokenMgr *tok_mgr);
 
 /**
+ * @brief Peek at the next token.
+ * 
+ * Function will return the next token without altering the
+ * internal pointer.
+ * 
+ * @param tok_mgr Pointer to token manager instance.
+ * @return next Token in manager.
+ */
+Token *TokenMgr_peek_token(TokenMgr *tok_mgr);
+
+/**
  * @brief Check to see if current token in manager is the last.
  * 
  * This function provides high level interface for determining if the

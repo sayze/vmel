@@ -28,6 +28,9 @@ $name = "sayed"
 "cd ~/projects/vmel"
 "git checkout develop && git pull origin develop"
 
+{sss}
+{ddd}
+
 {run_make}
 "cd ~/var/exec"
 "make -dDebug1"

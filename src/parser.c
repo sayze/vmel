@@ -8,6 +8,7 @@
 // Below are the errors which map to Error_Templates.
 #define ERR_UNEXPECTED 0
 #define ERR_GROUP_EXIST 1
+#define ERR_EMPTY_GROUP 2
 
 // Initial amount of errors stored.
 #define INIT_MAX_ERRORS 20
@@ -30,10 +31,11 @@ struct Node *new_node() {
 	return n;
 }
 
-// These are the errors a parser may generate. They are mapped to the #DEFINE in parser.h.
+// These are the errors a parser may generate. They are mapped to the #DEFINE above.
 static const char *Error_Templates[] = {
 	"unexpected @0 found in line @1",
 	"duplicate definition {@0} already defined in line @1",
+	"empty group {@0} must contain commands in line @1"
 };
 
 void parser_add_error(PErrors *err_handle, Token *offender, int err_type) {
@@ -75,9 +77,14 @@ int parser_can_consume(char *tok_type, char *type) {
 }
 
 struct Node *parse_group(TokenMgr *tok_mgr, PErrors *err_handle) {
-	if (err_handle == NULL || !parser_can_consume(TokenMgr_next_token(tok_mgr)->type, "STRING"))
+	Token *tok_peek = TokenMgr_peek_token(tok_mgr);
+	// If string isn't next then store error and move to next token.
+	if (!parser_can_consume(tok_peek->type, "STRING")) {
+		parser_add_error(err_handle, TokenMgr_current_token(tok_mgr), ERR_EMPTY_GROUP);
+		TokenMgr_next_token(tok_mgr);
 		return NULL;
-	
+	}
+
 	struct Node *group_root = new_node();
 	struct Node *prev = NULL;
 	struct Node *cmd_node = NULL;
