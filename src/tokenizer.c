@@ -26,7 +26,7 @@ int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr) {
 	// Each character in buffer.
 	char c;
 	// Reusable storage to hold strings. 
-	char store[100];
+	char store[100]; // TODO: Make dynamic incase someone has string longer than 100 chars.
 	// Buff iterator.
 	int bidx = 0;
 	// Track storage size.
@@ -57,7 +57,6 @@ int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr) {
 			lineno++;
 			bidx++;
 			continue;
-
 		}
 		else if (c == BANG) {
 			if (buff[bidx+1] == EQUAL) {

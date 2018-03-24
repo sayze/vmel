@@ -13,10 +13,6 @@
 // Initial amount of errors stored.
 #define INIT_MAX_ERRORS 20
 
-// --------------------------------------------------------------------------
-//   BEGIN EXPERIMENTAL CODE
-// --------------------------------------------------------------------------
-
 struct Node {
 	struct Node *left;
 	char *name;
