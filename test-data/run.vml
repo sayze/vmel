@@ -7,7 +7,10 @@
 # Variables must be prefixed with a dollar sign... yes I do like PHP.
 # Such as the below
 
-
+$name = "sayed" # String
+$age = 44 # Integer
+$hobbies = "fishing", "surfing", "sports" # Array of Strings
+$fav_years = 1993, 1912, 2005 # Array of Integers
 
 
 # ---------------------------------- # 
@@ -16,12 +19,6 @@
 # Groups as the name suggests are a collection or "group" of related tasks.
 # Each group must contain a unique name, most likely a name that describes the tasks.
 # Each Group may have a variable amount of tasks to be performed. Refer to the below.
-
-$name = "sayed"
-
-$age = 22
-
-$dob = "12/2/1994/
 
 {build_npm_packages}
 "cd ~/var/node_project/"
