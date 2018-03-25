@@ -51,7 +51,7 @@ typedef struct {
  * @param tok_mgr TokenMgr instance which being applied to.
  * @return Newly allocated Token**.
  */
-Token **grow_curr_tokens();
+Token **grow_curr_tokens(TokenMgr *tok_mgr);
 
 /**
  * @brief Build tokens from steam of input.
@@ -72,7 +72,7 @@ int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr);
  * 
  * @return newly created TokenMgr pointer.
  */
-TokenMgr *TokenMgr_new();
+TokenMgr *TokenMgr_new(void);
 
 /**
  * @brief Add another token to token manager.

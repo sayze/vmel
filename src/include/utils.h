@@ -54,6 +54,9 @@ int string_to_int(char *str, size_t len);
 /**
  * @brief wrapper around sprintf to convert an integer to a string.
  * 
+ * Function take a input source and saves its contents in string format to
+ * specified out char.
+ * 
  * @param out Pointer to char where converted int is stored.
  * @para src Integer being converted.
  * @returns number of chars (exl NULL) if went successfully otherwise return negative;

@@ -8,6 +8,7 @@
 #define PARSER_H
 
 #include "tokenizer.h"
+#include "node.h"
 
 /**
  * @brief Store all the errors related to parsing process.
@@ -18,6 +19,21 @@ typedef struct {
     int error_cap;
 } PErrors;
 
+
+/**
+ * @brief Create new malloced PErrors instance.
+ * 
+ * @return New instance of PErrors or Null if failed.
+ */
+PErrors *parser_new_perrors(void);
+
+/**
+ * Instruct error handler to release all of its stored errors.
+ * 
+ * @param err_handle PErrors instance.
+ */
+void parser_free_perrors(PErrors *err_handle, int print_mode);
+
 /**
  * @brief Add a error string to the list of errors stored in PErrors.
  * 
@@ -25,7 +41,7 @@ typedef struct {
  * @param offender Token which triggered the error.
  * @param err_type Index of error string in the array of errors in parser.c.
  */
-void parser_add_error(PErrors *err_handle, Token *offender, int err_type);
+void parser_add_perror(PErrors *err_handle, Token *offender, int err_type);
 
 /**
  * @brief Can token be consumed based on expected type.
@@ -42,18 +58,23 @@ int parser_can_consume(char *tok_type, char *type);
  * 
  * Group = string | string_list
  * 
- * @param tok is a pointer to the token being compared.
- * @param type the type we are expecting it to be. 
+ * @param tok_mgr TokenMgr instance.
+ * @param err_handle Error handler to capture any parsing errors.
+ * @return Node generated from production.
  */
-// void parse_group(TokenMgr *tok_mgr, PErrors *err_hdl);
+struct Node *parse_group(TokenMgr *tok_mgr, PErrors *err_handle);
 
 
 /**
  * @brief Will consume assignment based on grammar.
  * 
  * identifier = INTEGER | STRING 
+ * 
+ * @param tok_mgr TokenMgr instance.
+ * @param err_handle Error handler to capture any parsing errors.
+ * @return Node generated from production.
  */
-// void parse_assignment(TokenMgr *tok_mgr, PErrors *err_hdl);
+struct Node *parse_assignment(TokenMgr *tok_mgr, PErrors *err_handle);
 
 
 /**

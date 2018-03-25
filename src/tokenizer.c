@@ -229,7 +229,7 @@ int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr) {
 	return error;
 }
 
-TokenMgr *TokenMgr_new() {
+TokenMgr *TokenMgr_new(void) {
 	TokenMgr *tok_mgr = malloc(sizeof(TokenMgr));
 	tok_mgr->toks_tail = NULL;
 	tok_mgr->toks_head = NULL;
