@@ -106,16 +106,15 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ae081e3c037a306324a2369e16c208086"><td class="memItemLeft" align="right" valign="top"><a id="ae081e3c037a306324a2369e16c208086"></a>
-<a class="el" href="struct_token.html">Token</a> **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokenizer_8h.html#ae081e3c037a306324a2369e16c208086">TokenMgr_realloc_toks</a> ()</td></tr>
-<tr class="memdesc:ae081e3c037a306324a2369e16c208086"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocate more resources for <a class="el" href="struct_token_mgr.html" title="Token manager represents a pool of tokens. ">TokenMgr</a> *toks array. <br /></td></tr>
-<tr class="separator:ae081e3c037a306324a2369e16c208086"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a81195342113cfd2b791683fcb8f7c9de"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokenizer_8h.html#a81195342113cfd2b791683fcb8f7c9de">build_tokens</a> (char *buff, <a class="el" href="struct_token_mgr.html">TokenMgr</a> *tokmgr)</td></tr>
-<tr class="memdesc:a81195342113cfd2b791683fcb8f7c9de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build tokens from steam of input.  <a href="#a81195342113cfd2b791683fcb8f7c9de">More...</a><br /></td></tr>
-<tr class="separator:a81195342113cfd2b791683fcb8f7c9de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8583e6f3a8e9ab1403387fb110e18302"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_token_mgr.html">TokenMgr</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokenizer_8h.html#a8583e6f3a8e9ab1403387fb110e18302">TokenMgr_new</a> ()</td></tr>
-<tr class="memdesc:a8583e6f3a8e9ab1403387fb110e18302"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create token manager malloc'ed.  <a href="#a8583e6f3a8e9ab1403387fb110e18302">More...</a><br /></td></tr>
-<tr class="separator:a8583e6f3a8e9ab1403387fb110e18302"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75669d9d1bca4a680834f6e79a3ba026"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_token.html">Token</a> **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokenizer_8h.html#a75669d9d1bca4a680834f6e79a3ba026">grow_curr_tokens</a> (<a class="el" href="struct_token_mgr.html">TokenMgr</a> *tok_mgr)</td></tr>
+<tr class="memdesc:a75669d9d1bca4a680834f6e79a3ba026"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform relloc on array of of tokens.  <a href="#a75669d9d1bca4a680834f6e79a3ba026">More...</a><br /></td></tr>
+<tr class="separator:a75669d9d1bca4a680834f6e79a3ba026"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34846b1e406c0e3d3161609e720bcce7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokenizer_8h.html#a34846b1e406c0e3d3161609e720bcce7">TokenMgr_build_tokens</a> (char *buff, <a class="el" href="struct_token_mgr.html">TokenMgr</a> *tokmgr)</td></tr>
+<tr class="memdesc:a34846b1e406c0e3d3161609e720bcce7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build tokens from steam of input.  <a href="#a34846b1e406c0e3d3161609e720bcce7">More...</a><br /></td></tr>
+<tr class="separator:a34846b1e406c0e3d3161609e720bcce7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbe8a4df3ff596ab9cdd1d5c98a3b164"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_token_mgr.html">TokenMgr</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokenizer_8h.html#acbe8a4df3ff596ab9cdd1d5c98a3b164">TokenMgr_new</a> (void)</td></tr>
+<tr class="memdesc:acbe8a4df3ff596ab9cdd1d5c98a3b164"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create token manager malloc'ed.  <a href="#acbe8a4df3ff596ab9cdd1d5c98a3b164">More...</a><br /></td></tr>
+<tr class="separator:acbe8a4df3ff596ab9cdd1d5c98a3b164"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4c05973002b30488d79414bce6246a75"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokenizer_8h.html#a4c05973002b30488d79414bce6246a75">TokenMgr_add_token</a> (<a class="el" href="struct_token_mgr.html">TokenMgr</a> *tok_mgr, char tok_type[20], char *tok_val, int tok_lineno)</td></tr>
 <tr class="memdesc:a4c05973002b30488d79414bce6246a75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add another token to token manager.  <a href="#a4c05973002b30488d79414bce6246a75">More...</a><br /></td></tr>
 <tr class="separator:a4c05973002b30488d79414bce6246a75"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -128,6 +127,9 @@ Functions</h2></td></tr>
 <tr class="memitem:abba7a2527fb5684453e62db37cc232cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_token.html">Token</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokenizer_8h.html#abba7a2527fb5684453e62db37cc232cc">TokenMgr_next_token</a> (<a class="el" href="struct_token_mgr.html">TokenMgr</a> *tok_mgr)</td></tr>
 <tr class="memdesc:abba7a2527fb5684453e62db37cc232cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the next token from Tokens.  <a href="#abba7a2527fb5684453e62db37cc232cc">More...</a><br /></td></tr>
 <tr class="separator:abba7a2527fb5684453e62db37cc232cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2407312dcaa531b20893a50988b11f86"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_token.html">Token</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokenizer_8h.html#a2407312dcaa531b20893a50988b11f86">TokenMgr_peek_token</a> (<a class="el" href="struct_token_mgr.html">TokenMgr</a> *tok_mgr)</td></tr>
+<tr class="memdesc:a2407312dcaa531b20893a50988b11f86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Peek at the next token.  <a href="#a2407312dcaa531b20893a50988b11f86">More...</a><br /></td></tr>
+<tr class="separator:a2407312dcaa531b20893a50988b11f86"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afcd3f0223bd4124d7ca0db9a2d6ba69e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokenizer_8h.html#afcd3f0223bd4124d7ca0db9a2d6ba69e">TokenMgr_is_last_token</a> (<a class="el" href="struct_token_mgr.html">TokenMgr</a> *tok_mgr)</td></tr>
 <tr class="memdesc:afcd3f0223bd4124d7ca0db9a2d6ba69e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check to see if current token in manager is the last.  <a href="#afcd3f0223bd4124d7ca0db9a2d6ba69e">More...</a><br /></td></tr>
 <tr class="separator:afcd3f0223bd4124d7ca0db9a2d6ba69e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -148,42 +150,31 @@ Functions</h2></td></tr>
 <div class="textblock"><p>File containing token management. </p>
 <dl class="section author"><dt>Author</dt><dd>Sayed Sadeed </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a81195342113cfd2b791683fcb8f7c9de"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a81195342113cfd2b791683fcb8f7c9de">&#9670;&nbsp;</a></span>build_tokens()</h2>
+<a id="a75669d9d1bca4a680834f6e79a3ba026"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75669d9d1bca4a680834f6e79a3ba026">&#9670;&nbsp;</a></span>grow_curr_tokens()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int build_tokens </td>
+          <td class="memname"><a class="el" href="struct_token.html">Token</a>** grow_curr_tokens </td>
           <td>(</td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>buff</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype"><a class="el" href="struct_token_mgr.html">TokenMgr</a> *&#160;</td>
-          <td class="paramname"><em>tokmgr</em>&#160;</td>
-        </tr>
-        <tr>
+          <td class="paramname"><em>tok_mgr</em></td><td>)</td>
           <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Build tokens from steam of input. </p>
-<p>Provides a decoupled implementation for building tokens from any source stream. Can be contents of file or stdin.</p>
+<p>Perform relloc on array of of tokens. </p>
+<p>This is an internal function used to allocate more space for storage of tokens.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">buff</td><td>the contents which should be tokenized. </td></tr>
-    <tr><td class="paramname">tokmgr</td><td><a class="el" href="struct_token.html" title="Represent a single token read from input. ">Token</a> Manager to handle tokenization. </td></tr>
+    <tr><td class="paramname">tok_mgr</td><td><a class="el" href="struct_token_mgr.html" title="Token manager represents a pool of tokens. ">TokenMgr</a> instance which being applied to. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>int signifying status. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Newly allocated Token**. </dd></dl>
 
 </div>
 </div>
@@ -261,6 +252,45 @@ Functions</h2></td></tr>
     <tr><td class="paramname">tok_type</td><td>Type of token. </td></tr>
     <tr><td class="paramname">tok_value</td><td>Value of token. </td></tr>
     <tr><td class="paramname">tok_lineno</td><td>Line number in source file where token occurs. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>int signifying status. </dd></dl>
+
+</div>
+</div>
+<a id="a34846b1e406c0e3d3161609e720bcce7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34846b1e406c0e3d3161609e720bcce7">&#9670;&nbsp;</a></span>TokenMgr_build_tokens()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int TokenMgr_build_tokens </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>buff</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_token_mgr.html">TokenMgr</a> *&#160;</td>
+          <td class="paramname"><em>tokmgr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Build tokens from steam of input. </p>
+<p>Provides a decoupled implementation for building tokens from any source stream. Can be contents of file or stdin.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buff</td><td>the contents which should be tokenized. </td></tr>
+    <tr><td class="paramname">tokmgr</td><td><a class="el" href="struct_token.html" title="Represent a single token read from input. ">Token</a> Manager to handle tokenization. </td></tr>
   </table>
   </dd>
 </dl>
@@ -351,8 +381,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a8583e6f3a8e9ab1403387fb110e18302"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8583e6f3a8e9ab1403387fb110e18302">&#9670;&nbsp;</a></span>TokenMgr_new()</h2>
+<a id="acbe8a4df3ff596ab9cdd1d5c98a3b164"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbe8a4df3ff596ab9cdd1d5c98a3b164">&#9670;&nbsp;</a></span>TokenMgr_new()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -360,6 +390,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="struct_token_mgr.html">TokenMgr</a>* TokenMgr_new </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -390,6 +421,34 @@ Functions</h2></td></tr>
 
 <p>Retrieve the next token from Tokens. </p>
 <p>Function will return the next token stored inside <a class="el" href="struct_token_mgr.html" title="Token manager represents a pool of tokens. ">TokenMgr</a>. Note that it returns based on the current token. Once the last token is reached the internal state must be reset. Otherwise the value returned will continue to be null. See TokenMgr_reset_token().</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tok_mgr</td><td>Pointer to token manager instance. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>next <a class="el" href="struct_token.html" title="Represent a single token read from input. ">Token</a> in manager. </dd></dl>
+
+</div>
+</div>
+<a id="a2407312dcaa531b20893a50988b11f86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2407312dcaa531b20893a50988b11f86">&#9670;&nbsp;</a></span>TokenMgr_peek_token()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_token.html">Token</a>* TokenMgr_peek_token </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_token_mgr.html">TokenMgr</a> *&#160;</td>
+          <td class="paramname"><em>tok_mgr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Peek at the next token. </p>
+<p>Function will return the next token without altering the internal pointer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">tok_mgr</td><td>Pointer to token manager instance. </td></tr>

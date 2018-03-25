@@ -68,6 +68,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">parser.h File Reference</div>  </div>
@@ -77,20 +78,35 @@ $(function() {
 <p>File containing all definitions for parser module.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="tokenizer_8h_source.html">tokenizer.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="node_8h_source.html">node.h</a>&quot;</code><br />
 </div>
 <p><a href="parser_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_p_errors.html">PErrors</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store all the errors related to parsing process.  <a href="struct_p_errors.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a7de22b91daa2ad3da70fd4c2fe917efb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a7de22b91daa2ad3da70fd4c2fe917efb">can_consume</a> (char *tok_type, char *type)</td></tr>
-<tr class="memdesc:a7de22b91daa2ad3da70fd4c2fe917efb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Can token be consumed based on expected type.  <a href="#a7de22b91daa2ad3da70fd4c2fe917efb">More...</a><br /></td></tr>
-<tr class="separator:a7de22b91daa2ad3da70fd4c2fe917efb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a14ef3264a0a943a0d97287065cef9f99"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a14ef3264a0a943a0d97287065cef9f99">parse_group</a> (<a class="el" href="struct_token_mgr.html">TokenMgr</a> *tok_mgr)</td></tr>
-<tr class="memdesc:a14ef3264a0a943a0d97287065cef9f99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Will consume a group based on grammar defintion.  <a href="#a14ef3264a0a943a0d97287065cef9f99">More...</a><br /></td></tr>
-<tr class="separator:a14ef3264a0a943a0d97287065cef9f99"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af2b57d92b567d06e79a929450c2944c4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#af2b57d92b567d06e79a929450c2944c4">parse_assignment</a> (<a class="el" href="struct_token_mgr.html">TokenMgr</a> *tok_mgr)</td></tr>
-<tr class="memdesc:af2b57d92b567d06e79a929450c2944c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Will consume assignment based on grammar.  <a href="#af2b57d92b567d06e79a929450c2944c4">More...</a><br /></td></tr>
-<tr class="separator:af2b57d92b567d06e79a929450c2944c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a326a8ed28fff0b54e19beb5486638167"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_p_errors.html">PErrors</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a326a8ed28fff0b54e19beb5486638167">parser_new_perrors</a> (void)</td></tr>
+<tr class="memdesc:a326a8ed28fff0b54e19beb5486638167"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create new malloced <a class="el" href="struct_p_errors.html" title="Store all the errors related to parsing process. ">PErrors</a> instance.  <a href="#a326a8ed28fff0b54e19beb5486638167">More...</a><br /></td></tr>
+<tr class="separator:a326a8ed28fff0b54e19beb5486638167"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ba132e08ed1110f51fb3962e264df78"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a6ba132e08ed1110f51fb3962e264df78">parser_free_perrors</a> (<a class="el" href="struct_p_errors.html">PErrors</a> *err_handle, int print_mode)</td></tr>
+<tr class="separator:a6ba132e08ed1110f51fb3962e264df78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64ec77acb899570c72d484e07a0aa17a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a64ec77acb899570c72d484e07a0aa17a">parser_add_perror</a> (<a class="el" href="struct_p_errors.html">PErrors</a> *err_handle, <a class="el" href="struct_token.html">Token</a> *offender, int err_type)</td></tr>
+<tr class="memdesc:a64ec77acb899570c72d484e07a0aa17a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a error string to the list of errors stored in <a class="el" href="struct_p_errors.html" title="Store all the errors related to parsing process. ">PErrors</a>.  <a href="#a64ec77acb899570c72d484e07a0aa17a">More...</a><br /></td></tr>
+<tr class="separator:a64ec77acb899570c72d484e07a0aa17a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afecccd0d2c4a9a250c8c5b7f00721325"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#afecccd0d2c4a9a250c8c5b7f00721325">parser_can_consume</a> (char *tok_type, char *type)</td></tr>
+<tr class="memdesc:afecccd0d2c4a9a250c8c5b7f00721325"><td class="mdescLeft">&#160;</td><td class="mdescRight">Can token be consumed based on expected type.  <a href="#afecccd0d2c4a9a250c8c5b7f00721325">More...</a><br /></td></tr>
+<tr class="separator:afecccd0d2c4a9a250c8c5b7f00721325"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9afe22b860279cc2062083b5a8c0b6f2"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="struct_node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a9afe22b860279cc2062083b5a8c0b6f2">parse_group</a> (<a class="el" href="struct_token_mgr.html">TokenMgr</a> *tok_mgr, <a class="el" href="struct_p_errors.html">PErrors</a> *err_handle)</td></tr>
+<tr class="memdesc:a9afe22b860279cc2062083b5a8c0b6f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Will consume a group based on grammar defintion.  <a href="#a9afe22b860279cc2062083b5a8c0b6f2">More...</a><br /></td></tr>
+<tr class="separator:a9afe22b860279cc2062083b5a8c0b6f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50ffa061427a805697a7f32fb3f9c94f"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="struct_node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a50ffa061427a805697a7f32fb3f9c94f">parse_assignment</a> (<a class="el" href="struct_token_mgr.html">TokenMgr</a> *tok_mgr, <a class="el" href="struct_p_errors.html">PErrors</a> *err_handle)</td></tr>
+<tr class="memdesc:a50ffa061427a805697a7f32fb3f9c94f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Will consume assignment based on grammar.  <a href="#a50ffa061427a805697a7f32fb3f9c94f">More...</a><br /></td></tr>
+<tr class="separator:a50ffa061427a805697a7f32fb3f9c94f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7ed0c289eb82241a3e41acc50b296356"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a7ed0c289eb82241a3e41acc50b296356">parser_init</a> (<a class="el" href="struct_token_mgr.html">TokenMgr</a> *tok_mgr)</td></tr>
 <tr class="memdesc:a7ed0c289eb82241a3e41acc50b296356"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initial entry for parser.  <a href="#a7ed0c289eb82241a3e41acc50b296356">More...</a><br /></td></tr>
 <tr class="separator:a7ed0c289eb82241a3e41acc50b296356"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -99,14 +115,136 @@ Functions</h2></td></tr>
 <div class="textblock"><p>File containing all definitions for parser module. </p>
 <dl class="section author"><dt>Author</dt><dd>Sayed Sadeed </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a7de22b91daa2ad3da70fd4c2fe917efb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7de22b91daa2ad3da70fd4c2fe917efb">&#9670;&nbsp;</a></span>can_consume()</h2>
+<a id="a50ffa061427a805697a7f32fb3f9c94f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50ffa061427a805697a7f32fb3f9c94f">&#9670;&nbsp;</a></span>parse_assignment()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int can_consume </td>
+          <td class="memname">struct <a class="el" href="struct_node.html">Node</a>* parse_assignment </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_token_mgr.html">TokenMgr</a> *&#160;</td>
+          <td class="paramname"><em>tok_mgr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_p_errors.html">PErrors</a> *&#160;</td>
+          <td class="paramname"><em>err_handle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Will consume assignment based on grammar. </p>
+<p>identifier = INTEGER | STRING</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tok_mgr</td><td><a class="el" href="struct_token_mgr.html" title="Token manager represents a pool of tokens. ">TokenMgr</a> instance. </td></tr>
+    <tr><td class="paramname">err_handle</td><td>Error handler to capture any parsing errors. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_node.html" title="Node correlates to a node within a tree. ">Node</a> generated from production. </dd></dl>
+
+</div>
+</div>
+<a id="a9afe22b860279cc2062083b5a8c0b6f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9afe22b860279cc2062083b5a8c0b6f2">&#9670;&nbsp;</a></span>parse_group()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct <a class="el" href="struct_node.html">Node</a>* parse_group </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_token_mgr.html">TokenMgr</a> *&#160;</td>
+          <td class="paramname"><em>tok_mgr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_p_errors.html">PErrors</a> *&#160;</td>
+          <td class="paramname"><em>err_handle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Will consume a group based on grammar defintion. </p>
+<p>Group = string | string_list</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tok_mgr</td><td><a class="el" href="struct_token_mgr.html" title="Token manager represents a pool of tokens. ">TokenMgr</a> instance. </td></tr>
+    <tr><td class="paramname">err_handle</td><td>Error handler to capture any parsing errors. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_node.html" title="Node correlates to a node within a tree. ">Node</a> generated from production. </dd></dl>
+
+</div>
+</div>
+<a id="a64ec77acb899570c72d484e07a0aa17a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64ec77acb899570c72d484e07a0aa17a">&#9670;&nbsp;</a></span>parser_add_perror()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void parser_add_perror </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_p_errors.html">PErrors</a> *&#160;</td>
+          <td class="paramname"><em>err_handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_token.html">Token</a> *&#160;</td>
+          <td class="paramname"><em>offender</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>err_type</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add a error string to the list of errors stored in <a class="el" href="struct_p_errors.html" title="Store all the errors related to parsing process. ">PErrors</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p_error</td><td>Instance of <a class="el" href="struct_p_errors.html" title="Store all the errors related to parsing process. ">PErrors</a>. </td></tr>
+    <tr><td class="paramname">offender</td><td><a class="el" href="struct_token.html" title="Represent a single token read from input. ">Token</a> which triggered the error. </td></tr>
+    <tr><td class="paramname">err_type</td><td>Index of error string in the array of errors in parser.c. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="afecccd0d2c4a9a250c8c5b7f00721325"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afecccd0d2c4a9a250c8c5b7f00721325">&#9670;&nbsp;</a></span>parser_can_consume()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int parser_can_consume </td>
           <td>(</td>
           <td class="paramtype">char *&#160;</td>
           <td class="paramname"><em>tok_type</em>, </td>
@@ -137,49 +275,35 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="af2b57d92b567d06e79a929450c2944c4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af2b57d92b567d06e79a929450c2944c4">&#9670;&nbsp;</a></span>parse_assignment()</h2>
+<a id="a6ba132e08ed1110f51fb3962e264df78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ba132e08ed1110f51fb3962e264df78">&#9670;&nbsp;</a></span>parser_free_perrors()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void parse_assignment </td>
+          <td class="memname">void parser_free_perrors </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_token_mgr.html">TokenMgr</a> *&#160;</td>
-          <td class="paramname"><em>tok_mgr</em></td><td>)</td>
-          <td></td>
+          <td class="paramtype"><a class="el" href="struct_p_errors.html">PErrors</a> *&#160;</td>
+          <td class="paramname"><em>err_handle</em>, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Will consume assignment based on grammar. </p>
-<p>identifier = INTEGER | STRING </p>
-
-</div>
-</div>
-<a id="a14ef3264a0a943a0d97287065cef9f99"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a14ef3264a0a943a0d97287065cef9f99">&#9670;&nbsp;</a></span>parse_group()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname">void parse_group </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_token_mgr.html">TokenMgr</a> *&#160;</td>
-          <td class="paramname"><em>tok_mgr</em></td><td>)</td>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>print_mode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Will consume a group based on grammar defintion. </p>
-<p>Group = string | string_list</p>
+<p>Instruct error handler to release all of its stored errors.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">tok</td><td>is a pointer to the token being compared. </td></tr>
-    <tr><td class="paramname">type</td><td>the type we are expecting it to be. </td></tr>
+    <tr><td class="paramname">err_handle</td><td><a class="el" href="struct_p_errors.html" title="Store all the errors related to parsing process. ">PErrors</a> instance. </td></tr>
   </table>
   </dd>
 </dl>
@@ -210,6 +334,27 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>0 if parser was successful or return 1 if issue occurred. </dd></dl>
+
+</div>
+</div>
+<a id="a326a8ed28fff0b54e19beb5486638167"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a326a8ed28fff0b54e19beb5486638167">&#9670;&nbsp;</a></span>parser_new_perrors()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_p_errors.html">PErrors</a>* parser_new_perrors </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create new malloced <a class="el" href="struct_p_errors.html" title="Store all the errors related to parsing process. ">PErrors</a> instance. </p>
+<dl class="section return"><dt>Returns</dt><dd>New instance of <a class="el" href="struct_p_errors.html" title="Store all the errors related to parsing process. ">PErrors</a> or Null if failed. </dd></dl>
 
 </div>
 </div>

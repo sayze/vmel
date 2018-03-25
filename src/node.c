@@ -62,7 +62,7 @@ int NodeMgr_add_node(NodeMgr *node_mgr, struct Node *node) {
     if (node_mgr == NULL)
         return 1;
 
-    if (node_mgr->nodes_ctr - node_mgr->nodes_cap <= 4)
+    if (node_mgr->nodes_cap - node_mgr->nodes_ctr == 4)
         node_mgr->nodes = grow_nodes(node_mgr);   
 
         if (node_mgr->nodes == NULL)

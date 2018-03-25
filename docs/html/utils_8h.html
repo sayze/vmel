@@ -95,9 +95,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util
 <tr class="memitem:a1b3d227bb361e0377f47e04db658fdb7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a1b3d227bb361e0377f47e04db658fdb7">string_to_int</a> (char *str, size_t len)</td></tr>
 <tr class="memdesc:a1b3d227bb361e0377f47e04db658fdb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">convert a string of numbers to integer.  <a href="#a1b3d227bb361e0377f47e04db658fdb7">More...</a><br /></td></tr>
 <tr class="separator:a1b3d227bb361e0377f47e04db658fdb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4263d61e835d73c42e52f7e20d182314"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a4263d61e835d73c42e52f7e20d182314">increase_string</a> (size_t curr_size, char *str)</td></tr>
-<tr class="memdesc:a4263d61e835d73c42e52f7e20d182314"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increase size of string by using realloc.  <a href="#a4263d61e835d73c42e52f7e20d182314">More...</a><br /></td></tr>
-<tr class="separator:a4263d61e835d73c42e52f7e20d182314"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fc6a14a15a7932942d42a6132390f0d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a3fc6a14a15a7932942d42a6132390f0d">int_to_string</a> (char *out, int src)</td></tr>
+<tr class="memdesc:a3fc6a14a15a7932942d42a6132390f0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">wrapper around sprintf to convert an integer to a string.  <a href="#a3fc6a14a15a7932942d42a6132390f0d">More...</a><br /></td></tr>
+<tr class="separator:a3fc6a14a15a7932942d42a6132390f0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a735abe73549c0fe822cdf2ec566187a2"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a735abe73549c0fe822cdf2ec566187a2">string_map_vars</a> (const char *src, char **vars, size_t src_len, size_t vars_len)</td></tr>
+<tr class="memdesc:a735abe73549c0fe822cdf2ec566187a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replace all the variables in string with corresponding values.  <a href="#a735abe73549c0fe822cdf2ec566187a2">More...</a><br /></td></tr>
+<tr class="separator:a735abe73549c0fe822cdf2ec566187a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>File containing collection of helper functions. </p>
@@ -131,23 +134,23 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util
 
 </div>
 </div>
-<a id="a4263d61e835d73c42e52f7e20d182314"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4263d61e835d73c42e52f7e20d182314">&#9670;&nbsp;</a></span>increase_string()</h2>
+<a id="a3fc6a14a15a7932942d42a6132390f0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3fc6a14a15a7932942d42a6132390f0d">&#9670;&nbsp;</a></span>int_to_string()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">char* increase_string </td>
+          <td class="memname">int int_to_string </td>
           <td>(</td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>curr_size</em>, </td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>out</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>str</em>&#160;</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>src</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -157,15 +160,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util
       </table>
 </div><div class="memdoc">
 
-<p>Increase size of string by using realloc. </p>
+<p>wrapper around sprintf to convert an integer to a string. </p>
+<p>Function take a input source and saves its contents in string format to specified out char.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">curr_size</td><td>Existing size </td></tr>
-    <tr><td class="paramname">str</td><td>pointer to the string. </td></tr>
+    <tr><td class="paramname">out</td><td>Pointer to char where converted int is stored.  src Integer being converted. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>newly created string. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>number of chars (exl NULL) if went successfully otherwise return negative; </dd></dl>
 
 </div>
 </div>
@@ -194,6 +197,58 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>1 If it matches accepted identifiers or return 0 if it doesn't. </dd></dl>
+
+</div>
+</div>
+<a id="a735abe73549c0fe822cdf2ec566187a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a735abe73549c0fe822cdf2ec566187a2">&#9670;&nbsp;</a></span>string_map_vars()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* string_map_vars </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char **&#160;</td>
+          <td class="paramname"><em>vars</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>src_len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>vars_len</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Replace all the variables in string with corresponding values. </p>
+<p>Function is useful for a linear string replace. Note that the placeholder values will be replaced based on position of string in vars. </p><div class="fragment"><div class="line"><span class="keywordtype">char</span> **replace = {<span class="stringliteral">&quot;sayed&quot;</span>, <span class="stringliteral">&quot;24&quot;</span>};</div><div class="line"><span class="keywordtype">char</span> *src = <span class="stringliteral">&quot;Hello my name is @0 and I am @1 years old&quot;</span>;</div><div class="line"></div><div class="line"><span class="keywordtype">char</span> *<span class="keyword">new</span> = <a class="code" href="utils_8h.html#a735abe73549c0fe822cdf2ec566187a2">string_map_vars</a>(src, replace, strlen(src), 2);</div><div class="line"><span class="comment">// new will be equal to</span></div><div class="line"><span class="stringliteral">&quot;Hello my name is sayed and I am 24 years old&quot;</span></div></div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">src</td><td>A constant string which contains the variable placeholders. </td></tr>
+    <tr><td class="paramname">vars</td><td>Array of all the string which serve as replacement values. </td></tr>
+    <tr><td class="paramname">src_len</td><td>Length of src. </td></tr>
+    <tr><td class="paramname">vars_len</td><td>Number of string inside vars. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A malloc'ed char pointer containing the final mapped string. Will return NULL if error occurred. </dd></dl>
 
 </div>
 </div>

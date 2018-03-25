@@ -29,12 +29,11 @@ struct \mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{tokenizer_8h_ae081e3c037a306324a2369e16c208086}\label{tokenizer_8h_ae081e3c037a306324a2369e16c208086}} 
-\mbox{\hyperlink{struct_token}{Token}} $\ast$$\ast$ \mbox{\hyperlink{tokenizer_8h_ae081e3c037a306324a2369e16c208086}{Token\+Mgr\+\_\+realloc\+\_\+toks}} ()
-\begin{DoxyCompactList}\small\item\em Allocate more resources for \mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$toks array. \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{tokenizer_8h_a81195342113cfd2b791683fcb8f7c9de}{build\+\_\+tokens}} (char $\ast$buff, \mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$tokmgr)
+\mbox{\hyperlink{struct_token}{Token}} $\ast$$\ast$ \mbox{\hyperlink{tokenizer_8h_a75669d9d1bca4a680834f6e79a3ba026}{grow\+\_\+curr\+\_\+tokens}} (\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$tok\+\_\+mgr)
+\begin{DoxyCompactList}\small\item\em Perform relloc on array of of tokens. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{tokenizer_8h_a34846b1e406c0e3d3161609e720bcce7}{Token\+Mgr\+\_\+build\+\_\+tokens}} (char $\ast$buff, \mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$tokmgr)
 \begin{DoxyCompactList}\small\item\em Build tokens from steam of input. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$ \mbox{\hyperlink{tokenizer_8h_a8583e6f3a8e9ab1403387fb110e18302}{Token\+Mgr\+\_\+new}} ()
+\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$ \mbox{\hyperlink{tokenizer_8h_acbe8a4df3ff596ab9cdd1d5c98a3b164}{Token\+Mgr\+\_\+new}} (void)
 \begin{DoxyCompactList}\small\item\em Create token manager malloc\textquotesingle{}ed. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{tokenizer_8h_a4c05973002b30488d79414bce6246a75}{Token\+Mgr\+\_\+add\+\_\+token}} (\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$tok\+\_\+mgr, char tok\+\_\+type\mbox{[}20\mbox{]}, char $\ast$tok\+\_\+val, int tok\+\_\+lineno)
 \begin{DoxyCompactList}\small\item\em Add another token to token manager. \end{DoxyCompactList}\item 
@@ -44,6 +43,8 @@ void \mbox{\hyperlink{tokenizer_8h_a0bb266bca06cd42cfcfbf7da6de5b874}{Token\+Mgr
 \begin{DoxyCompactList}\small\item\em Print contents of token manager. Useful for debugging. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{struct_token}{Token}} $\ast$ \mbox{\hyperlink{tokenizer_8h_abba7a2527fb5684453e62db37cc232cc}{Token\+Mgr\+\_\+next\+\_\+token}} (\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$tok\+\_\+mgr)
 \begin{DoxyCompactList}\small\item\em Retrieve the next token from Tokens. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_token}{Token}} $\ast$ \mbox{\hyperlink{tokenizer_8h_a2407312dcaa531b20893a50988b11f86}{Token\+Mgr\+\_\+peek\+\_\+token}} (\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$tok\+\_\+mgr)
+\begin{DoxyCompactList}\small\item\em Peek at the next token. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{tokenizer_8h_afcd3f0223bd4124d7ca0db9a2d6ba69e}{Token\+Mgr\+\_\+is\+\_\+last\+\_\+token}} (\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$tok\+\_\+mgr)
 \begin{DoxyCompactList}\small\item\em Check to see if current token in manager is the last. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{struct_token}{Token}} $\ast$ \mbox{\hyperlink{tokenizer_8h_aab2ffb25ab0ad755354661c3d07836a3}{Token\+Mgr\+\_\+prev\+\_\+token}} (\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$tok\+\_\+mgr)
@@ -65,27 +66,25 @@ Sayed Sadeed
 
 
 \subsection{Function Documentation}
-\mbox{\Hypertarget{tokenizer_8h_a81195342113cfd2b791683fcb8f7c9de}\label{tokenizer_8h_a81195342113cfd2b791683fcb8f7c9de}} 
-\index{tokenizer.\+h@{tokenizer.\+h}!build\+\_\+tokens@{build\+\_\+tokens}}
-\index{build\+\_\+tokens@{build\+\_\+tokens}!tokenizer.\+h@{tokenizer.\+h}}
-\subsubsection{\texorpdfstring{build\+\_\+tokens()}{build\_tokens()}}
-{\footnotesize\ttfamily int build\+\_\+tokens (\begin{DoxyParamCaption}\item[{char $\ast$}]{buff,  }\item[{\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$}]{tokmgr }\end{DoxyParamCaption})}
+\mbox{\Hypertarget{tokenizer_8h_a75669d9d1bca4a680834f6e79a3ba026}\label{tokenizer_8h_a75669d9d1bca4a680834f6e79a3ba026}} 
+\index{tokenizer.\+h@{tokenizer.\+h}!grow\+\_\+curr\+\_\+tokens@{grow\+\_\+curr\+\_\+tokens}}
+\index{grow\+\_\+curr\+\_\+tokens@{grow\+\_\+curr\+\_\+tokens}!tokenizer.\+h@{tokenizer.\+h}}
+\subsubsection{\texorpdfstring{grow\+\_\+curr\+\_\+tokens()}{grow\_curr\_tokens()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_token}{Token}}$\ast$$\ast$ grow\+\_\+curr\+\_\+tokens (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$}]{tok\+\_\+mgr }\end{DoxyParamCaption})}
 
 
 
-Build tokens from steam of input. 
+Perform relloc on array of of tokens. 
 
-Provides a decoupled implementation for building tokens from any source stream. Can be contents of file or stdin.
+This is an internal function used to allocate more space for storage of tokens.
 
 
 \begin{DoxyParams}{Parameters}
-{\em buff} & the contents which should be tokenized. \\
-\hline
-{\em tokmgr} & \mbox{\hyperlink{struct_token}{Token}} Manager to handle tokenization. \\
+{\em tok\+\_\+mgr} & \mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} instance which being applied to. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-int signifying status. 
+Newly allocated Token$\ast$$\ast$. 
 \end{DoxyReturn}
 \mbox{\Hypertarget{tokenizer_8h_af6ea6657e58ee1f05e71a7be6ec7ca90}\label{tokenizer_8h_af6ea6657e58ee1f05e71a7be6ec7ca90}} 
 \index{tokenizer.\+h@{tokenizer.\+h}!is\+\_\+valid\+\_\+keyword@{is\+\_\+valid\+\_\+keyword}}
@@ -128,6 +127,28 @@ Important to note that the tok\+\_\+val is expected to be null terminated string
 {\em tok\+\_\+value} & Value of token. \\
 \hline
 {\em tok\+\_\+lineno} & Line number in source file where token occurs. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int signifying status. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{tokenizer_8h_a34846b1e406c0e3d3161609e720bcce7}\label{tokenizer_8h_a34846b1e406c0e3d3161609e720bcce7}} 
+\index{tokenizer.\+h@{tokenizer.\+h}!Token\+Mgr\+\_\+build\+\_\+tokens@{Token\+Mgr\+\_\+build\+\_\+tokens}}
+\index{Token\+Mgr\+\_\+build\+\_\+tokens@{Token\+Mgr\+\_\+build\+\_\+tokens}!tokenizer.\+h@{tokenizer.\+h}}
+\subsubsection{\texorpdfstring{Token\+Mgr\+\_\+build\+\_\+tokens()}{TokenMgr\_build\_tokens()}}
+{\footnotesize\ttfamily int Token\+Mgr\+\_\+build\+\_\+tokens (\begin{DoxyParamCaption}\item[{char $\ast$}]{buff,  }\item[{\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$}]{tokmgr }\end{DoxyParamCaption})}
+
+
+
+Build tokens from steam of input. 
+
+Provides a decoupled implementation for building tokens from any source stream. Can be contents of file or stdin.
+
+
+\begin{DoxyParams}{Parameters}
+{\em buff} & the contents which should be tokenized. \\
+\hline
+{\em tokmgr} & \mbox{\hyperlink{struct_token}{Token}} Manager to handle tokenization. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -191,11 +212,11 @@ This function provides high level interface for determining if the current token
 \begin{DoxyReturn}{Returns}
 0 if not last token otherwise return 1. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{tokenizer_8h_a8583e6f3a8e9ab1403387fb110e18302}\label{tokenizer_8h_a8583e6f3a8e9ab1403387fb110e18302}} 
+\mbox{\Hypertarget{tokenizer_8h_acbe8a4df3ff596ab9cdd1d5c98a3b164}\label{tokenizer_8h_acbe8a4df3ff596ab9cdd1d5c98a3b164}} 
 \index{tokenizer.\+h@{tokenizer.\+h}!Token\+Mgr\+\_\+new@{Token\+Mgr\+\_\+new}}
 \index{Token\+Mgr\+\_\+new@{Token\+Mgr\+\_\+new}!tokenizer.\+h@{tokenizer.\+h}}
 \subsubsection{\texorpdfstring{Token\+Mgr\+\_\+new()}{TokenMgr\_new()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}}$\ast$ Token\+Mgr\+\_\+new (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}}$\ast$ Token\+Mgr\+\_\+new (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
 
 
 
@@ -217,6 +238,26 @@ newly created \mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} pointer.
 Retrieve the next token from Tokens. 
 
 Function will return the next token stored inside \mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}}. Note that it returns based on the current token. Once the last token is reached the internal state must be reset. Otherwise the value returned will continue to be null. See Token\+Mgr\+\_\+reset\+\_\+token().
+
+
+\begin{DoxyParams}{Parameters}
+{\em tok\+\_\+mgr} & Pointer to token manager instance. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+next \mbox{\hyperlink{struct_token}{Token}} in manager. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{tokenizer_8h_a2407312dcaa531b20893a50988b11f86}\label{tokenizer_8h_a2407312dcaa531b20893a50988b11f86}} 
+\index{tokenizer.\+h@{tokenizer.\+h}!Token\+Mgr\+\_\+peek\+\_\+token@{Token\+Mgr\+\_\+peek\+\_\+token}}
+\index{Token\+Mgr\+\_\+peek\+\_\+token@{Token\+Mgr\+\_\+peek\+\_\+token}!tokenizer.\+h@{tokenizer.\+h}}
+\subsubsection{\texorpdfstring{Token\+Mgr\+\_\+peek\+\_\+token()}{TokenMgr\_peek\_token()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_token}{Token}}$\ast$ Token\+Mgr\+\_\+peek\+\_\+token (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$}]{tok\+\_\+mgr }\end{DoxyParamCaption})}
+
+
+
+Peek at the next token. 
+
+Function will return the next token without altering the internal pointer.
 
 
 \begin{DoxyParams}{Parameters}

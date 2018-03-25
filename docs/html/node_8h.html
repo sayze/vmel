@@ -78,7 +78,8 @@ $(function() {
 
 <p>The <a class="el" href="struct_node.html" title="Node correlates to a node within a tree. ">Node</a> module represents a "node" inside an AST.  
 <a href="#details">More...</a></p>
-
+<div class="textblock"><code>#include &lt;string.h&gt;</code><br />
+</div>
 <p><a href="node_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
@@ -87,29 +88,129 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="struct_node.html" title="Node correlates to a node within a tree. ">Node</a> correlates to a node within a tree.  <a href="struct_node.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_node_mgr.html">NodeMgr</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="struct_node_mgr.html" title="NodeMgr manages the Nodes at a higher level. ">NodeMgr</a> manages the Nodes at a higher level.  <a href="struct_node_mgr.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="struct_node_mgr.html" title="NodeMgr manages holds all the nodes at the root level. ">NodeMgr</a> manages holds all the nodes at the root level.  <a href="struct_node_mgr.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:a86c05c2101de342cc02056e12e62c247"><td class="memItemLeft" align="right" valign="top"><a id="a86c05c2101de342cc02056e12e62c247"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>NodeType_E</b> { <b>LEAF</b>, 
-<b>ROOT</b>
+<tr class="memitem:acac9cbaeea226ed297804c012dc12b16"><td class="memItemLeft" align="right" valign="top"><a id="acac9cbaeea226ed297804c012dc12b16"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="node_8h.html#acac9cbaeea226ed297804c012dc12b16">NodeType</a> { <b>E_EOF_NODE</b>, 
+<b>E_ASSIGNMENT_NODE</b>, 
+<b>E_GROUP_NODE</b>
  }</td></tr>
-<tr class="separator:a86c05c2101de342cc02056e12e62c247"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:acac9cbaeea226ed297804c012dc12b16"><td class="mdescLeft">&#160;</td><td class="mdescRight">We may have different types of Nodes. Each one corresponds to the unique production in the grammar. <br /></td></tr>
+<tr class="separator:acac9cbaeea226ed297804c012dc12b16"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:ac994cd0293f19ae4670fde35146dee26"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="struct_node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="node_8h.html#ac994cd0293f19ae4670fde35146dee26">Node_new</a> (void)</td></tr>
+<tr class="memdesc:ac994cd0293f19ae4670fde35146dee26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create new node instance.  <a href="#ac994cd0293f19ae4670fde35146dee26">More...</a><br /></td></tr>
+<tr class="separator:ac994cd0293f19ae4670fde35146dee26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0d6bf52e9ff11327bba1a46bb67d729"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="node_8h.html#ad0d6bf52e9ff11327bba1a46bb67d729">NodeMgr_add_node</a> (<a class="el" href="struct_node_mgr.html">NodeMgr</a> *node_mgr, struct <a class="el" href="struct_node.html">Node</a> *node)</td></tr>
+<tr class="memdesc:ad0d6bf52e9ff11327bba1a46bb67d729"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add an existing <a class="el" href="struct_node.html" title="Node correlates to a node within a tree. ">Node</a> to the internal <a class="el" href="struct_node_mgr.html" title="NodeMgr manages holds all the nodes at the root level. ">NodeMgr</a> store.  <a href="#ad0d6bf52e9ff11327bba1a46bb67d729">More...</a><br /></td></tr>
+<tr class="separator:ad0d6bf52e9ff11327bba1a46bb67d729"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a25a6d59673585e033763a1a26037c0e1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="node_8h.html#a25a6d59673585e033763a1a26037c0e1">NodeMgr_free</a> (<a class="el" href="struct_node_mgr.html">NodeMgr</a> *node_mgr)</td></tr>
 <tr class="memdesc:a25a6d59673585e033763a1a26037c0e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free all resources creates by node manager. Including node manager itself.  <a href="#a25a6d59673585e033763a1a26037c0e1">More...</a><br /></td></tr>
 <tr class="separator:a25a6d59673585e033763a1a26037c0e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a57a63acc76b0f06814ad3ab1436e85ff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_node_mgr.html">NodeMgr</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="node_8h.html#a57a63acc76b0f06814ad3ab1436e85ff">NodeMgr_new</a> ()</td></tr>
-<tr class="memdesc:a57a63acc76b0f06814ad3ab1436e85ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create node manager malloc'ed.  <a href="#a57a63acc76b0f06814ad3ab1436e85ff">More...</a><br /></td></tr>
-<tr class="separator:a57a63acc76b0f06814ad3ab1436e85ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c58c981a0f17e2851519bf8bfca335a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_node_mgr.html">NodeMgr</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="node_8h.html#a6c58c981a0f17e2851519bf8bfca335a">NodeMgr_new</a> (void)</td></tr>
+<tr class="memdesc:a6c58c981a0f17e2851519bf8bfca335a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create node manager malloc'ed.  <a href="#a6c58c981a0f17e2851519bf8bfca335a">More...</a><br /></td></tr>
+<tr class="separator:a6c58c981a0f17e2851519bf8bfca335a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7f8ce092b66294da6139c7f81391880"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="struct_node.html">Node</a> **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="node_8h.html#ab7f8ce092b66294da6139c7f81391880">grow_nodes</a> (<a class="el" href="struct_node_mgr.html">NodeMgr</a> *node_mgr)</td></tr>
+<tr class="memdesc:ab7f8ce092b66294da6139c7f81391880"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform relloc on array of of nodes in Manager.  <a href="#ab7f8ce092b66294da6139c7f81391880">More...</a><br /></td></tr>
+<tr class="separator:ab7f8ce092b66294da6139c7f81391880"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The <a class="el" href="struct_node.html" title="Node correlates to a node within a tree. ">Node</a> module represents a "node" inside an AST. </p>
 <dl class="section author"><dt>Author</dt><dd>Sayed Sadeed </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
+<a id="ab7f8ce092b66294da6139c7f81391880"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7f8ce092b66294da6139c7f81391880">&#9670;&nbsp;</a></span>grow_nodes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct <a class="el" href="struct_node.html">Node</a>** grow_nodes </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_node_mgr.html">NodeMgr</a> *&#160;</td>
+          <td class="paramname"><em>node_mgr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Perform relloc on array of of nodes in Manager. </p>
+<p>This function is to be used internally by NodeMg to allocate more room if need be for node storage.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">node_mgr</td><td>Instance of <a class="el" href="struct_node_mgr.html" title="NodeMgr manages holds all the nodes at the root level. ">NodeMgr</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Newly allocated Node**. </dd></dl>
+
+</div>
+</div>
+<a id="ac994cd0293f19ae4670fde35146dee26"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac994cd0293f19ae4670fde35146dee26">&#9670;&nbsp;</a></span>Node_new()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct <a class="el" href="struct_node.html">Node</a>* Node_new </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create new node instance. </p>
+<p>Will create a new node instance irrespective of <a class="el" href="struct_node_mgr.html" title="NodeMgr manages holds all the nodes at the root level. ">NodeMgr</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to newly created node or null ptr if something went wrong. </dd></dl>
+
+</div>
+</div>
+<a id="ad0d6bf52e9ff11327bba1a46bb67d729"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0d6bf52e9ff11327bba1a46bb67d729">&#9670;&nbsp;</a></span>NodeMgr_add_node()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int NodeMgr_add_node </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_node_mgr.html">NodeMgr</a> *&#160;</td>
+          <td class="paramname"><em>node_mgr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">struct <a class="el" href="struct_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>node</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add an existing <a class="el" href="struct_node.html" title="Node correlates to a node within a tree. ">Node</a> to the internal <a class="el" href="struct_node_mgr.html" title="NodeMgr manages holds all the nodes at the root level. ">NodeMgr</a> store. </p>
+<p>This will allow the addition of externally created <a class="el" href="struct_node.html" title="Node correlates to a node within a tree. ">Node</a> into the <a class="el" href="struct_node_mgr.html" title="NodeMgr manages holds all the nodes at the root level. ">NodeMgr</a>. Please note that it is expected *node will be a pointer to <a class="el" href="struct_node.html" title="Node correlates to a node within a tree. ">Node</a> created on heap. To avoid unexpected behavior it is recommended to use <a class="el" href="node_8h.html#ac994cd0293f19ae4670fde35146dee26" title="Create new node instance. ">Node_new()</a> then add the returned pointer using this function.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">node_mgr</td><td><a class="el" href="struct_node_mgr.html" title="NodeMgr manages holds all the nodes at the root level. ">NodeMgr</a> instance. </td></tr>
+    <tr><td class="paramname">node</td><td><a class="el" href="struct_node.html" title="Node correlates to a node within a tree. ">Node</a> instance to be added. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if successful otherwise 1. </dd></dl>
+
+</div>
+</div>
 <a id="a25a6d59673585e033763a1a26037c0e1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a25a6d59673585e033763a1a26037c0e1">&#9670;&nbsp;</a></span>NodeMgr_free()</h2>
 
@@ -129,7 +230,7 @@ Functions</h2></td></tr>
 <p>Free all resources creates by node manager. Including node manager itself. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">node_mgr</td><td>Pointer to the <a class="el" href="struct_node_mgr.html" title="NodeMgr manages the Nodes at a higher level. ">NodeMgr</a> instance. </td></tr>
+    <tr><td class="paramname">node_mgr</td><td>Pointer to the <a class="el" href="struct_node_mgr.html" title="NodeMgr manages holds all the nodes at the root level. ">NodeMgr</a> instance. </td></tr>
   </table>
   </dd>
 </dl>
@@ -137,8 +238,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a57a63acc76b0f06814ad3ab1436e85ff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a57a63acc76b0f06814ad3ab1436e85ff">&#9670;&nbsp;</a></span>NodeMgr_new()</h2>
+<a id="a6c58c981a0f17e2851519bf8bfca335a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c58c981a0f17e2851519bf8bfca335a">&#9670;&nbsp;</a></span>NodeMgr_new()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -146,6 +247,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="struct_node_mgr.html">NodeMgr</a>* NodeMgr_new </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -154,7 +256,7 @@ Functions</h2></td></tr>
 
 <p>Create node manager malloc'ed. </p>
 <p>This function acts as a constructor for the <a class="el" href="struct_node.html" title="Node correlates to a node within a tree. ">Node</a> manager.</p>
-<dl class="section return"><dt>Returns</dt><dd>newly created <a class="el" href="struct_node_mgr.html" title="NodeMgr manages the Nodes at a higher level. ">NodeMgr</a> pointer. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>newly created <a class="el" href="struct_node_mgr.html" title="NodeMgr manages holds all the nodes at the root level. ">NodeMgr</a> pointer. </dd></dl>
 
 </div>
 </div>

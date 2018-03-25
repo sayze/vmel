@@ -19,6 +19,10 @@
 
 $name = "sayed"
 
+$age = 22
+
+$dob = "12/2/1994/
+
 {build_npm_packages}
 "cd ~/var/node_project/"
 "npm install"
@@ -27,9 +31,6 @@ $name = "sayed"
 {update_local_repo}
 "cd ~/projects/vmel"
 "git checkout develop && git pull origin develop"
-
-{sss}
-{ddd}
 
 {run_make}
 "cd ~/var/exec"

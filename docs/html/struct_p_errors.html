@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Virtual Machine Execution Language (Vmel): NodeMgr Struct Reference</title>
+<title>Virtual Machine Execution Language (Vmel): PErrors Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -65,34 +65,33 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="struct_node_mgr-members.html">List of all members</a>  </div>
+<a href="struct_p_errors-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">NodeMgr Struct Reference</div>  </div>
+<div class="title">PErrors Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><a class="el" href="struct_node_mgr.html" title="NodeMgr manages holds all the nodes at the root level. ">NodeMgr</a> manages holds all the nodes at the root level.  
- <a href="struct_node_mgr.html#details">More...</a></p>
+<p>Store all the errors related to parsing process.  
+ <a href="struct_p_errors.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="node_8h_source.html">node.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="parser_8h_source.html">parser.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a14d0d825168ce49b403d3f780751b4bd"><td class="memItemLeft" align="right" valign="top"><a id="a14d0d825168ce49b403d3f780751b4bd"></a>
-struct <a class="el" href="struct_node.html">Node</a> **&#160;</td><td class="memItemRight" valign="bottom"><b>nodes</b></td></tr>
-<tr class="separator:a14d0d825168ce49b403d3f780751b4bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2be1be7c4f3c0b6aa1bd82aae15a5df6"><td class="memItemLeft" align="right" valign="top"><a id="a2be1be7c4f3c0b6aa1bd82aae15a5df6"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>nodes_ctr</b></td></tr>
-<tr class="separator:a2be1be7c4f3c0b6aa1bd82aae15a5df6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6afaf081b697ff8e8f8a670804fa9d7c"><td class="memItemLeft" align="right" valign="top"><a id="a6afaf081b697ff8e8f8a670804fa9d7c"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>nodes_cap</b></td></tr>
-<tr class="separator:a6afaf081b697ff8e8f8a670804fa9d7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74b55645ec9d07d6ea3a070bb815ef5f"><td class="memItemLeft" align="right" valign="top"><a id="a74b55645ec9d07d6ea3a070bb815ef5f"></a>
+char **&#160;</td><td class="memItemRight" valign="bottom"><b>errors</b></td></tr>
+<tr class="separator:a74b55645ec9d07d6ea3a070bb815ef5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2d1ba532705f2e7b62c2f9cd6c5d694"><td class="memItemLeft" align="right" valign="top"><a id="af2d1ba532705f2e7b62c2f9cd6c5d694"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>error_ctr</b></td></tr>
+<tr class="separator:af2d1ba532705f2e7b62c2f9cd6c5d694"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8df3e4bfd3b12b93a16069ca24116ca3"><td class="memItemLeft" align="right" valign="top"><a id="a8df3e4bfd3b12b93a16069ca24116ca3"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>error_cap</b></td></tr>
+<tr class="separator:a8df3e4bfd3b12b93a16069ca24116ca3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><a class="el" href="struct_node_mgr.html" title="NodeMgr manages holds all the nodes at the root level. ">NodeMgr</a> manages holds all the nodes at the root level. </p>
-<p>This provides a high level interfacing for the syntax tree. It is preferred to use this for anything node related as it manages internal memory allocs and deallocs. </p>
+<div class="textblock"><p>Store all the errors related to parsing process. </p>
 </div><hr/>The documentation for this struct was generated from the following file:<ul>
-<li>src/include/<a class="el" href="node_8h_source.html">node.h</a></li>
+<li>src/include/<a class="el" href="parser_8h_source.html">parser.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
