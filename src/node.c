@@ -86,10 +86,13 @@ int NodeMgr_free(NodeMgr *node_mgr) {
 
 struct Node *Node_new(int wdata) {
     struct Node *n = malloc(sizeof(struct Node));
+    
+    // Malloc data if needed.
     if (wdata)
         n->data = malloc(sizeof(union SyntaxNode));
     else
         n->data = NULL;
+    
     n->depth = 0;
 	n->type = E_EOF_NODE;
 	return n;
