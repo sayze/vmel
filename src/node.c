@@ -94,14 +94,14 @@ struct Node *Node_new(int wdata) {
         n->data = NULL;
     
     n->depth = 0;
-	n->type = E_EOF_NODE;
-	return n;
+    n->type = E_EOF_NODE;
+    return n;
 }
 
 struct Node **grow_nodes(NodeMgr *node_mgr) {
     if (node_mgr == NULL)
-		return NULL;
-		
+        return NULL;
+
 	node_mgr->nodes_cap *= 2;
 	struct Node **nodes_new = realloc(node_mgr->nodes, sizeof(struct Node *) * node_mgr->nodes_cap);		
 	return nodes_new;
@@ -114,8 +114,8 @@ int NodeMgr_add_node(NodeMgr *node_mgr, struct Node *node) {
     if (node_mgr->nodes_cap - node_mgr->nodes_ctr == 4)
         node_mgr->nodes = grow_nodes(node_mgr);   
 
-        if (node_mgr->nodes == NULL)
-            return 1;
+    if (node_mgr->nodes == NULL)
+        return 1;
     
     node_mgr->nodes[node_mgr->nodes_ctr++] = node;
     return 0;
