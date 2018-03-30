@@ -6,7 +6,7 @@
 #define INIT_NODEMGR_SIZE 100
 
 NodeMgr *NodeMgr_new(void) {
-    NodeMgr *node_mgr = malloc(sizeof(NodeMgr)) ;  
+	NodeMgr *node_mgr = malloc(sizeof(NodeMgr)) ;  
     node_mgr->nodes_ctr = 0;
     node_mgr->nodes_cap = INIT_NODEMGR_SIZE;
     node_mgr->nodes = malloc(node_mgr->nodes_cap * sizeof(struct Node*));
