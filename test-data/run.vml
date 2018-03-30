@@ -9,8 +9,9 @@
 
 $name = "sayed" # String
 $age = 44 # Integer
-$hobbies = "fishing", "surfing", "sports" # Array of Strings
-$fav_years = 1993, 1912, 2005 # Array of Integers
+$total = 34 + 55 - 12 # Expression assignment
+# $$hobbies = ["fishing", "surfing", "sports"] # Array of Strings
+# #$fav_years = [1993, 1912, 2005] # Array of Integers
 
 
 # ---------------------------------- # 
@@ -29,6 +30,6 @@ $fav_years = 1993, 1912, 2005 # Array of Integers
 "cd ~/projects/vmel"
 "git checkout develop && git pull origin develop"
 
-{run_make}
-"cd ~/var/exec"
-"make -dDebug1"
+#{run_make}
+#"cd ~/var/exec"
+#"make -dDebug1"

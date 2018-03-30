@@ -18,7 +18,7 @@
 static const char *Error_Templates[] = {
 	"unexpected @0 found in line @1",
 	"duplicate definition {@0} already defined in line @1",
-	"empty group {@0} must contain commands in line @1"
+	"empty group {@0} must contain commands in line @1",
 };
 
 PErrors *parser_new_perrors(void) {
@@ -78,92 +78,205 @@ int parser_can_consume(char *tok_type, char *type) {
 	return 1;
 }
 
-struct Node *parse_group(TokenMgr *tok_mgr, PErrors *err_handle) {
-	Token *tok_peek = TokenMgr_peek_token(tok_mgr);
-	// If string isn't next then store error and move to next token.
-	if (!parser_can_consume(tok_peek->type, "STRING")) {
-		parser_add_perror(err_handle, TokenMgr_current_token(tok_mgr), ERR_EMPTY_GROUP);
+struct Node *parse_string(TokenMgr *tok_mgr) {
+	struct Node *str = NULL;
+	Token *tok_curr_ptr = TokenMgr_current_token(tok_mgr);
+	if (parser_can_consume(tok_curr_ptr->type, "STRING")) {
+		str = Node_new(0);
+		str->type = E_STRING_NODE;
+		str->value = tok_curr_ptr->value;
+		// Iterate to next token.
 		TokenMgr_next_token(tok_mgr);
-		return NULL;
 	}
+	return str;
+}
 
-	struct Node *group_root = Node_new();
-	struct Node *prev = NULL;
-	struct Node *cmd_node = NULL;
+struct Node *parse_factor(TokenMgr *tok_mgr) {
+	Token *tok_curr_ptr = TokenMgr_current_token(tok_mgr);
+	struct Node *res = NULL;
+	 if (parser_can_consume(tok_curr_ptr->type, "INTEGER")) {
+		 res = Node_new(0);
+		 res->type = E_INTERGER_NODE;
+		 res->value = tok_curr_ptr->value; 
+		 TokenMgr_next_token(tok_mgr);
+	 }
+	//  else if (can_consume(tok_curr_ptr->type, "LPAREN") == 0) {
+	// 	 TokenMgr_next_token(tok_mgr);
+	// 	 res = parse_expr(tok_mgr);
+	// 	 tok_curr_ptr = TokenMgr_current_token(tok_mgr);
+	// 	 if (can_consume(tok_curr_ptr->type, "RPAREN") == 0) {
+	// 		TokenMgr_next_token(tok_mgr); 
+	// 	 }
+	//  }
+	 return res;
+}
+
+// struct Node *parse_term(TokenMgr *tok_mgr) {
+// 	struct Node *res = parse_factor(tok_mgr);
+// 	Token *tok_curr_ptr = TokenMgr_current_token(tok_mgr);
 	
-	// Setup root node data.
-	group_root->value = TokenMgr_current_token(tok_mgr)->value;
-	Token *tok_curr_ptr =  TokenMgr_next_token(tok_mgr);
+// 	// Handle expression calculation.
+// 	while (strncmp(tok_curr_ptr->value, "ASTERISK", tok_curr_ptr->val_length) == 0 || 
+// 		strncmp(tok_curr_ptr->value, "FSLASH", tok_curr_ptr->val_length) == 0) {
+// 		if (strncmp(tok_curr_ptr->value, "ASTERISK", tok_curr_ptr->val_length) == 0 && 
+// 			can_consume(tok_curr_ptr->value, "ASTERISK") == 0) {
+// 			tok_curr_ptr = TokenMgr_next_token(tok_mgr);
+// 			res = res * parse_factor(tok_mgr);
+// 		}
+// 		else if (strncmp(tok_curr_ptr->value, "FSLASH", tok_curr_ptr->val_length) == 0 && 
+// 			can_consume(tok_curr_ptr->value, "FSLASH") == 0) {
+// 			tok_curr_ptr = TokenMgr_next_token(tok_mgr);
+// 			res = res / parse_factor(tok_mgr);
+// 		}
+// 		tok_curr_ptr = TokenMgr_current_token(tok_mgr);
+// 	}
+// 	return res;
+// }
 
-	// Initialise nodes.
-	while (tok_curr_ptr != NULL && strcmp(tok_curr_ptr->type, "STRING") == 0) {
-		cmd_node = Node_new();
-		cmd_node->value = tok_curr_ptr->value;
-		if (prev == NULL) {
-			cmd_node->left = group_root;
-			group_root->right = cmd_node;
+struct Node *parse_expr(TokenMgr *tok_mgr) {
+	// Build integer node with first number.
+	struct Node *res = parse_factor(tok_mgr);
+	// Pointer to the most recent expression ast.
+	struct Node *curr_expr = NULL;
+	// Pointer to the root/first expression ast.
+	struct Node *root_expr = NULL;
+	// Pointer to track intermediary expressions.
+	struct Node *expr_itr = NULL;
+	// How deep the right hand nodes are.
+	unsigned int expr_depth = 0;
+
+	// Track current token in tok_mgr.
+	Token *tok_curr_ptr = TokenMgr_current_token(tok_mgr);
+	
+	while (!TokenMgr_is_last_token(tok_mgr) && 
+			(parser_can_consume(tok_curr_ptr->value, "-") || parser_can_consume(tok_curr_ptr->value, "+"))
+			&& res != NULL) {
+
+		// Create expression node foreach iteration.
+		curr_expr = Node_new(1);
+
+		// Set node type.
+		if (strncmp(tok_curr_ptr->value, "+", 1) == 0) {
+			curr_expr->type = E_ADD_NODE;
 		}
-		else {
-			cmd_node->left = prev;
-			prev->right = cmd_node;
+		else if (strncmp(tok_curr_ptr->value, "-", 1) == 0) {
+			curr_expr->type = E_MINUS_NODE;
 		}
-		prev = cmd_node;
+		
+		// Set left value of expression node. 
+		// 1 + 5 -> left value = 1.
+		curr_expr->data->BinExpNode.left = res;
+
+		// Parse next token.
+		// Should be number.
 		tok_curr_ptr = TokenMgr_next_token(tok_mgr);
+		res = parse_factor(tok_mgr);
+
+		// Set right value of expression node.
+		// 1 + 5 -> right value = 5
+		curr_expr->data->BinExpNode.right = res;
+		
+		// Is it a tree more than 1 nesting of arithmetics.
+		if (root_expr != NULL)
+			expr_itr->data->BinExpNode.right = curr_expr;
+		else
+			root_expr = curr_expr;
+		
+		expr_depth++;
+		expr_itr = curr_expr;
+		tok_curr_ptr = TokenMgr_current_token(tok_mgr);
 	}
 
-	// Add padding. Useful for freeing and access.
-	cmd_node = Node_new();
-	cmd_node->value = "EOF";
-	cmd_node->left = prev;
-	prev->right = cmd_node;
+	expr_itr = NULL;
+	curr_expr = NULL;
 
-	return group_root;
+	if (root_expr != NULL) {
+		root_expr->depth = expr_depth;
+		res = root_expr;
+		root_expr = NULL;
+	}
+	
+	return res;
+		
 }
 
 struct Node *parse_assignment(TokenMgr *tok_mgr, PErrors *err_handle) {
 	// Store pointer to actual variable name.
 	Token *tok_start_ptr = TokenMgr_current_token(tok_mgr);
-	// Center node.
-	struct Node *assign_node = Node_new();
-	// Left node.
-	struct Node *left_node = NULL;
-	// Right Node.
-	struct Node *right_node = NULL;
-
 	// Store pointer to subsequent tokens.
 	Token *tok_curr_ptr = TokenMgr_next_token(tok_mgr);
 	
-	// Assert we can "eat" an EQUAL.
+	// Final ast build by entire assignment.
+	struct Node *ast = NULL;
+	// Returned by each recursive handle.
+	struct Node *expr = NULL;	
+	// Leftmost node of root ast. 
+	struct Node *lhand = NULL;
+
+	// Assert we can consume an EQUAL.
 	if (parser_can_consume(tok_curr_ptr->value, "=")) {
-		assign_node->value = "=";
 		tok_curr_ptr = TokenMgr_next_token(tok_mgr);
-		if (parser_can_consume(tok_curr_ptr->type, "STRING") || parser_can_consume(tok_curr_ptr->type, "INTEGER")) {
-			// Identifier node. $name
-			left_node = Node_new();
-			left_node->value = tok_start_ptr->value;
+		if ((expr = parse_expr(tok_mgr)) != NULL || (expr = parse_string(tok_mgr)) != NULL) {
+			// Identifier.
+			lhand = Node_new(0); 
+			lhand->type = E_IDENTIFIER_NODE;
+			lhand->value = tok_start_ptr->value;
 
-			// Value node. "sam"
-			right_node = Node_new();
-			right_node->value = tok_curr_ptr->value;
-
-			// Middle glue.
-			assign_node->left = left_node;
-			assign_node->right = right_node;
+			// Join to return ast from expression.
+			ast = Node_new(1); 
+			ast->type = E_EQUAL_NODE;
+			ast->data->AsnStmtNode.left = lhand;
+			ast->data->AsnStmtNode.right = expr;
+			ast->depth = expr->depth + 1;
 		}
 		else {
 			parser_add_perror(err_handle, tok_curr_ptr, ERR_UNEXPECTED);
+			TokenMgr_next_token(tok_mgr);
 		}
 	}
 	else {
 		parser_add_perror(err_handle, tok_curr_ptr, ERR_UNEXPECTED);
+		TokenMgr_next_token(tok_mgr);
 	}
 
-	// Iterate to next token.
-	TokenMgr_next_token(tok_mgr);
-
-	return assign_node;
+	return ast;
 }
 
+struct Node *parse_group(TokenMgr *tok_mgr, PErrors *err_handle) {
+	// If string isn't next then store error and move to next token.
+	if (strcmp(TokenMgr_peek_token(tok_mgr)->type, "STRING") != 0) {
+		parser_add_perror(err_handle, TokenMgr_current_token(tok_mgr), ERR_EMPTY_GROUP);
+		TokenMgr_next_token(tok_mgr);
+		return NULL;
+	}
+
+	struct Node *group_root = Node_new(1);
+	struct Node *prev = NULL;
+	struct Node *curr = NULL;
+	
+	// Setup root node data.
+	group_root->value = TokenMgr_current_token(tok_mgr)->value;
+	group_root->type = E_GROUP_NODE;
+	Token *tok_curr_ptr =  TokenMgr_next_token(tok_mgr);
+
+	// Initialise nodes.
+	while (!TokenMgr_is_last_token(tok_mgr) && parser_can_consume(tok_curr_ptr->type, "STRING")) {
+		curr = parse_string(tok_mgr);
+		curr->data = malloc(sizeof(union SyntaxNode));
+		if (prev == NULL)
+			group_root->data->GroupNode.next = curr;
+		else
+			prev->data->GroupNode.next = curr;
+		prev = curr;
+		tok_curr_ptr = TokenMgr_current_token(tok_mgr);
+	}
+
+	// Point final command to root.
+	// Creates circular list.
+	curr->data->GroupNode.next = group_root;
+
+	return group_root;
+}
 
 int parser_init(TokenMgr *tok_mgr) {
 	if (tok_mgr == NULL) {
@@ -175,10 +288,9 @@ int parser_init(TokenMgr *tok_mgr) {
 	if (err_handle == NULL)
 		return -1;
 
-	// Instantiate NodeMgr.
 	NodeMgr *node_mgr = NodeMgr_new();
-	// Create Node ptr.
-	struct Node *ret_node = Node_new();
+	struct Node *ret_node = NULL; 
+
 	// Shorthand pointer to current token.
 	Token *tok_curr_ptr = TokenMgr_next_token(tok_mgr);
 	
@@ -193,7 +305,7 @@ int parser_init(TokenMgr *tok_mgr) {
 			parser_add_perror(err_handle, tok_curr_ptr, ERR_UNEXPECTED);
 			TokenMgr_next_token(tok_mgr);
 		}
-
+		
 		if (ret_node != NULL)
 			NodeMgr_add_node(node_mgr, ret_node);
 	

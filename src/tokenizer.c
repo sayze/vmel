@@ -73,10 +73,17 @@ int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr) {
 			continue;
 
 		}
+		else if (c == LBRACKET) {
+			TokenMgr_add_token(tokmgr, "LBRACKET", "[", lineno);
+			bidx++;
+		}
+		else if (c == RBRACKET) {
+			TokenMgr_add_token(tokmgr, "LPAREN", "]", lineno);
+			bidx++;
+		}
 		else if (c == LPAREN) {
 			TokenMgr_add_token(tokmgr, "LPAREN", "(", lineno);
 			bidx++;
-
 		}
 		else if (c == RPAREN) {
 			TokenMgr_add_token(tokmgr, "RPAREN", ")", lineno);
@@ -133,6 +140,10 @@ int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr) {
 			TokenMgr_add_token(tokmgr, "OPERATOR", "/", lineno);
 			bidx++;
 		}
+		else if (c == COMMA) {
+			TokenMgr_add_token(tokmgr, "COMMA", ",", lineno);
+			bidx++;
+		}
 		else if (c == DQUOTE) {
 			c = buff[++bidx];
 			while (c != DQUOTE && c != '\0' && c != NEWLINE) {
@@ -160,10 +171,10 @@ int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr) {
 			TokenMgr_add_token(tokmgr, "IDENTIFIER", store, lineno);
 			stctr = 0;
 		}
-		else if (isdigit((int) c)) {
-			while (isdigit((int) c)) {
+		else if (isdigit(c)) {
+			while (isdigit(c)) {
 				store[stctr++] = c;
-				c = (int) buff[++bidx];
+				c = buff[++bidx];
 			}
 			store[stctr] = '\0';
 			TokenMgr_add_token(tokmgr, "INTEGER", store, lineno);
@@ -222,6 +233,9 @@ int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr) {
 			error = 1;
 		}
 	}
+
+	// Add tail token.
+	TokenMgr_add_token(tokmgr, "EOT", "EOT", 0);
 
 	if (error)
 		printf("Invalid syntax: unknown '%s' found in line %d\n", store, lineno);
@@ -283,7 +297,7 @@ Token *TokenMgr_peek_token(TokenMgr *tok_mgr) {
 
 void TokenMgr_print_tokens(TokenMgr *tok_mgr) {
 	TokenMgr_reset_curr(tok_mgr);
-	for (size_t i =1; i < tok_mgr->tok_ctr; i++) {
+	for (size_t i = 1; tok_mgr->toks_curr[i] != tok_mgr->toks_tail; i++) {
 		printf("%s %s \n", tok_mgr->toks_curr[i]->type, tok_mgr->toks_curr[i]->value);
 	}
 }

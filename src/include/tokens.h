@@ -37,8 +37,16 @@
 #define LESSTHAN '<'
 // Greater than.
 #define GREATERTHAN '>'
+// Comma character.
+#define COMMA ','
+// Left bracket.
+#define LBRACKET '['
+// Right bracket.
+#define RBRACKET ']'
 // Exclamation.
 #define BANG '!'
+// Dot
+#define DOT '.'
 
 
 /// TODO: Use enums told types and have function that returns string representation of it.

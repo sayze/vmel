@@ -4,7 +4,7 @@
             "name": "Mac",
             "includePath": [
                 "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include",
-                "/Users/sayedsadeed/projects/vmel/src/include"
+                "${workspaceRoot}/src/include"
             ],
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,

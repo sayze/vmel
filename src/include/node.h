@@ -9,22 +9,47 @@
 
 #include <string.h>
 
-/**
- * @brief We may have different types of Nodes. Each one corresponds to the unique production in the grammar. 
- */
-enum NodeType {E_EOF_NODE, E_ASSIGNMENT_NODE, E_GROUP_NODE};
+
+enum NodeType {
+	E_ADD_NODE, 
+	E_MINUS_NODE, 
+	E_EQUAL_NODE, 
+	E_STRING_NODE,
+	E_INTERGER_NODE, 
+	E_GROUP_NODE,
+	E_IDENTIFIER_NODE, 
+	E_EOF_NODE
+};
 
 /**
  * @brief Node correlates to a node within a tree.
  * 
- * This is used to map tokens to an AST. Each node has a left value, right value and
+ * This is used to map tokens to an AST.
  * its centre/root.
  */
 struct Node {
-    struct Node *left;
-    char *value;
-    struct Node *right;
+    union SyntaxNode *data;
+    enum NodeType type;
+	unsigned int depth;
+	char *value;
 };
+
+/**
+ * @brief SyntaxNode desscribes the data stored in each Node. 
+ */
+union SyntaxNode {
+	struct {
+        struct Node *left;
+		struct Node *right;
+    } BinExpNode;
+	struct {
+		struct Node *left;
+		struct Node *right;
+	} AsnStmtNode;
+    struct {
+        struct Node *next;
+	} GroupNode;
+} sn ;
 
 /**
  * @brief NodeMgr manages holds all the nodes at the root level.
@@ -44,9 +69,10 @@ typedef struct {
  * 
  * Will create a new node instance irrespective of NodeMgr.
  * 
+ * @param wdata With Data flag determines whether to malloc the data *.
  * @return Pointer to newly created node or null ptr if something went wrong.
  */
-struct Node *Node_new(void);
+struct Node *Node_new(int wdata);
 
 /**
  * @brief Add an existing Node to the internal NodeMgr store.
@@ -73,7 +99,7 @@ int NodeMgr_free(NodeMgr *node_mgr);
  * @brief Create node manager malloc'ed.
  * 
  * This function acts as a constructor for the Node manager.
- * 
+ *
  * @return newly created NodeMgr pointer.
  */
 NodeMgr *NodeMgr_new(void);
