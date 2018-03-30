@@ -55,7 +55,7 @@ int NodeMgr_free(NodeMgr *node_mgr) {
                 break;
             case E_GROUP_NODE:
                 itr = root_node->data->GroupNode.next;
-	    		while (itr != root_node) {
+                while (itr != root_node) {
                     prev = itr;
                     itr = itr->data->GroupNode.next;
                     free(prev->data);
