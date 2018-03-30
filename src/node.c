@@ -102,9 +102,9 @@ struct Node **grow_nodes(NodeMgr *node_mgr) {
     if (node_mgr == NULL)
         return NULL;
 
-	node_mgr->nodes_cap *= 2;
-	struct Node **nodes_new = realloc(node_mgr->nodes, sizeof(struct Node *) * node_mgr->nodes_cap);		
-	return nodes_new;
+    node_mgr->nodes_cap *= 2;
+    struct Node **nodes_new = realloc(node_mgr->nodes, sizeof(struct Node *) * node_mgr->nodes_cap);		
+    return nodes_new;
 }
 
 int NodeMgr_add_node(NodeMgr *node_mgr, struct Node *node) {
