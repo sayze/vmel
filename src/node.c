@@ -23,7 +23,7 @@ int NodeMgr_free(NodeMgr *node_mgr) {
     unsigned int depth_ct = 1;
     
     for (size_t n = 0; n < node_mgr->nodes_ctr; n++) {
-        root_node = node_mgr->nodes[n];
+		root_node = node_mgr->nodes[n];
         switch (root_node->type) {
             /** TODO: At the moment only operator nodes contain left, right pointers
              * this means we need to use prev Node* to keep track of the last operator ast.
