@@ -12,6 +12,8 @@
 
 enum NodeType {
 	E_ADD_NODE, 
+	E_TIMES_NODE,
+	E_DIV_NODE,
 	E_MINUS_NODE, 
 	E_EQUAL_NODE, 
 	E_STRING_NODE,

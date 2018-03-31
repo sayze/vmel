@@ -19,6 +19,22 @@ typedef struct {
     int error_cap;
 } PErrors;
 
+/**
+ * @brief Maintain state within in the parsing process.
+ * 
+ * Instead of passing around excess paramters we simply pass a single
+ * structure which holds all the necessary information per parse.
+ */
+typedef struct {
+	Token *curr_token;
+	struct Node *curr_expr;
+	struct Node *expr_itr;
+	struct Node *root_expr;
+	unsigned int lstate;
+	unsigned int expr_depth;
+	TokenMgr *tok_mgr;
+	PErrors *err_handle;
+} ParserState;
 
 /**
  * @brief Create new malloced PErrors instance.
@@ -26,6 +42,13 @@ typedef struct {
  * @return New instance of PErrors or Null if failed.
  */
 PErrors *parser_new_perrors(void);
+
+/**
+ * @brief Create new malloced ParserState instance.
+ * 
+ * @return new instance of ParserState or null if failed. 
+ */
+ParserState *ParserState_new();
 
 /**
  * Instruct error handler to release all of its stored errors.
@@ -58,11 +81,11 @@ int parser_can_consume(char *tok_type, char *type);
  * 
  * Group = string | string_list
  * 
- * @param tok_mgr TokenMgr instance.
+ * @param pstate ParserState instance.
  * @param err_handle Error handler to capture any parsing errors.
  * @return Node generated from production.
  */
-struct Node *parse_group(TokenMgr *tok_mgr, PErrors *err_handle);
+struct Node *parse_group(ParserState *pstate);
 
 
 /**
@@ -74,8 +97,11 @@ struct Node *parse_group(TokenMgr *tok_mgr, PErrors *err_handle);
  * @param err_handle Error handler to capture any parsing errors.
  * @return Node generated from production.
  */
-struct Node *parse_assignment(TokenMgr *tok_mgr, PErrors *err_handle);
+struct Node *parse_assignment(ParserState *pstate);
 
+struct Node *parse_expr(ParserState *pstate);
+
+// struct Node *parse_factor(ParserState *pstate);
 
 /**
  * @brief Initial entry for parser.

@@ -12,6 +12,9 @@ static const char *R_Keywords[KWORDS_SIZE] = {
     "print", "connect", "release", "input"
 };
 
+//TODO: make below lexing more efficient and readable.
+// possibly create functions for each category and/or
+// add token only at once at the end of char read.
 int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr) {
 	if (buff == NULL) {
 		printf("** Error Buffer invalid state cannot build tokens\n");
@@ -69,7 +72,9 @@ int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr) {
 			bidx++;
 		}
 		else if (isspace(c)) {
-			bidx++;
+			while (isspace(c)) {
+				c = buff[++bidx];
+			}
 			continue;
 
 		}
@@ -213,12 +218,12 @@ int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr) {
 				c = (int) buff[++bidx];
 			}
 			store[stctr] = '\0';
-			if (is_valid_keyword(store)) {
-				TokenMgr_add_token(tokmgr, "KEYWORD", store, lineno);
-			}
-			else {
-				error = 1;
-			}
+			// if (is_valid_keyword(store)) {
+			// 	TokenMgr_add_token(tokmgr, "KEYWORD", store, lineno);
+			// }
+			// else {
+			// 	error = 1;
+			// }
 			stctr = 0;
 		}
 		else {
