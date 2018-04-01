@@ -9,15 +9,7 @@
 
 #include "tokenizer.h"
 #include "node.h"
-
-/**
- * @brief Store all the errors related to parsing process.
- */
-typedef struct {
-    char **errors;
-    size_t error_ctr;
-    int error_cap;
-} PErrors;
+#include "errors.h"
 
 /**
  * @brief Maintain state within in the parsing process.
@@ -26,45 +18,28 @@ typedef struct {
  * structure which holds all the necessary information per parse.
  */
 typedef struct {
-	Token *curr_token;
 	struct Node *curr_expr;
-	struct Node *expr_itr;
-	struct Node *root_expr;
-	unsigned int lstate;
 	unsigned int expr_depth;
+	Token *curr_token;
 	TokenMgr *tok_mgr;
-	PErrors *err_handle;
-} ParserState;
+	Error *err_handle;
+} ParserMgr;
 
 /**
- * @brief Create new malloced PErrors instance.
+ * @brief Create new malloced ParserMgr instance.
  * 
- * @return New instance of PErrors or Null if failed.
+ * @return new instance of ParserMgr or null if failed. 
  */
-PErrors *parser_new_perrors(void);
+ParserMgr *ParserMgr_new();
 
 /**
- * @brief Create new malloced ParserState instance.
+ * @brief Add a error string to the list of errors stored in Error.
  * 
- * @return new instance of ParserState or null if failed. 
- */
-ParserState *ParserState_new();
-
-/**
- * Instruct error handler to release all of its stored errors.
- * 
- * @param err_handle PErrors instance.
- */
-void parser_free_perrors(PErrors *err_handle, int print_mode);
-
-/**
- * @brief Add a error string to the list of errors stored in PErrors.
- * 
- * @param p_error Instance of PErrors.
+ * @param err_error Instance of Error.
  * @param offender Token which triggered the error.
  * @param err_type Index of error string in the array of errors in parser.c.
  */
-void parser_add_perror(PErrors *err_handle, Token *offender, int err_type);
+void ParserMgr_add_error(Error *err_handle, Token *offender, int err_type);
 
 /**
  * @brief Can token be consumed based on expected type.
@@ -81,27 +56,42 @@ int parser_can_consume(char *tok_type, char *type);
  * 
  * Group = string | string_list
  * 
- * @param pstate ParserState instance.
+ * @param par_mgr ParserMgr instance.
  * @param err_handle Error handler to capture any parsing errors.
  * @return Node generated from production.
  */
-struct Node *parse_group(ParserState *pstate);
+struct Node *parse_group(ParserMgr *par_mgr);
 
 
 /**
  * @brief Will consume assignment based on grammar.
  * 
- * identifier = INTEGER | STRING 
+ * assignment = expression | STRING 
  * 
- * @param tok_mgr TokenMgr instance.
- * @param err_handle Error handler to capture any parsing errors.
+ * @param par_mgr ParserMgr instance.
  * @return Node generated from production.
  */
-struct Node *parse_assignment(ParserState *pstate);
+struct Node *parse_assignment(ParserMgr *par_mgr);
 
-struct Node *parse_expr(ParserState *pstate);
+/**
+ * @brief Will consume expression based on grammar.
+ * 
+ * expression = factor | factor (PLUS | MINUS) factor
+ * 
+ * @param par_mgr ParserMgr instance.
+ * @return Node generated from production.
+ */
+struct Node *parse_expr(ParserMgr *par_mgr);
 
-// struct Node *parse_factor(ParserState *pstate);
+/**
+ * @brief Will consume factor based on grammar.
+ * 
+ * factor = INTEGER
+ * 
+ * @param par_mgr ParserMgr instance.
+ * @return Node generated from production.
+ */
+struct Node *parse_factor(ParserMgr *par_mgr);
 
 /**
  * @brief Initial entry for parser.

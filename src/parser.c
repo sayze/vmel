@@ -11,9 +11,6 @@
 #define ERR_GROUP_EXIST 1
 #define ERR_EMPTY_GROUP 2
 
-// Initial amount of errors stored.
-#define INIT_MAX_ERRORS 20
-
 // These are the errors a parser may generate. They are mapped to the #DEFINE above.
 static const char *Error_Templates[] = {
 	"unexpected @0 found in line @1",
@@ -21,40 +18,16 @@ static const char *Error_Templates[] = {
 	"empty group {@0} must contain commands in line @1",
 };
 
-PErrors *parser_new_perrors(void) {
-	PErrors *err_handle = malloc(sizeof(PErrors));
-	err_handle->error_cap = INIT_MAX_ERRORS;
-	err_handle->error_ctr = 0;
-	err_handle->errors = malloc(sizeof(char *) * err_handle->error_cap);
-	return err_handle;
-}
-
-void parser_free_perrors(PErrors *err_handle, int print_mode) {
-	if (err_handle->error_ctr != 0) {
-		for (size_t in = 0; in < err_handle->error_ctr; in++) {
-			if (print_mode)
-				printf("%s\n",err_handle->errors[in]);
-			free(err_handle->errors[in]);
-		}
-		free(err_handle);
-	}
-}
-
-ParserState *ParserState_new() {
-	ParserState *ps = malloc(sizeof(ParserState));
+ParserMgr *ParserMgr_new() {
+	ParserMgr *ps = malloc(sizeof(ParserMgr));
 	ps->curr_expr = NULL;
-	ps->expr_itr = NULL;
 	ps->curr_token = NULL;
 	ps->tok_mgr = NULL;
 	ps->err_handle = NULL;
-	ps->root_expr = NULL;
-	ps->expr_itr = 0;
-	ps->lstate = 0;
-	ps->expr_depth = 0;
 	return ps;
 }
 
-void parser_add_perror(PErrors *err_handle, Token *offender, int err_type) {
+void ParserMgr_add_error(Error *err_handle, Token *offender, int err_type) {
 	// Determine if we need to make bigger.
 	if (err_handle->error_cap - err_handle->error_ctr <= 5) {
 		err_handle->error_cap  = err_handle->error_cap + err_handle->error_ctr / 2;
@@ -92,133 +65,149 @@ int parser_can_consume(char *tok_type, char *type) {
 	return 1;
 }
 
-struct Node *parse_string(ParserState *pstate) {
+struct Node *parse_string(ParserMgr *par_mgr) {
 	struct Node *str = NULL;
-	if (parser_can_consume(pstate->curr_token->type, "STRING")) {
+	if (parser_can_consume(par_mgr->curr_token->type, "STRING")) {
 		str = Node_new(0);
 		str->type = E_STRING_NODE;
-		str->value = pstate->curr_token->value;
-		pstate->curr_token = TokenMgr_next_token(pstate->tok_mgr);
+		str->value = par_mgr->curr_token->value;
+		par_mgr->curr_token = TokenMgr_next_token(par_mgr->tok_mgr);
 	}
 	return str;
 }
 
-struct Node *parse_factor(ParserState *pstate) {
-	pstate->curr_token = TokenMgr_current_token(pstate->tok_mgr);
+struct Node *parse_factor(ParserMgr *par_mgr) {
+	par_mgr->curr_token = TokenMgr_current_token(par_mgr->tok_mgr);
 	struct Node *res = NULL;
-	 if (parser_can_consume(pstate->curr_token->type, "INTEGER")) {
+	 if (parser_can_consume(par_mgr->curr_token->type, "INTEGER")) {
 		 res = Node_new(0);
 		 res->type = E_INTERGER_NODE;
-		 res->value = pstate->curr_token->value; 
-		 pstate->curr_token = TokenMgr_next_token(pstate->tok_mgr);
+		 res->value = par_mgr->curr_token->value; 
+		 par_mgr->curr_token = TokenMgr_next_token(par_mgr->tok_mgr);
 	 }
-	//  else if (parser_can_consume(pstate->curr_token->type, "LPAREN")) {
-	// 	 TokenMgr_next_token(pstate->tok_mgr);
-	// 	 res = parse_expr(pstate);
-	// 	 pstate->curr_token = TokenMgr_current_token(pstate->tok_mgr);
-	// 	 if (parser_can_consume(pstate->curr_token->type, "RPAREN")) {
-	// 		pstate->curr_token = TokenMgr_next_token(pstate->tok_mgr); 
+	//  else if (parser_can_consume(par_mgr->curr_token->type, "LPAREN")) {
+	// 	 TokenMgr_next_token(par_mgr->tok_mgr);
+	// 	 res = parse_expr(par_mgr);
+	// 	 par_mgr->curr_token = TokenMgr_current_token(par_mgr->tok_mgr);
+	// 	 if (parser_can_consume(par_mgr->curr_token->type, "RPAREN")) {
+	// 		par_mgr->curr_token = TokenMgr_next_token(par_mgr->tok_mgr); 
 	// 	 }
 	//  }
 	 return res;
 }
 
-struct Node *parse_term(ParserState *pstate) {
-	struct Node *res = parse_factor(pstate);
+// struct Node *parse_term(ParserMgr *par_mgr) {
+// 	struct Node *res = parse_factor(par_mgr);
 
-	if (pstate->curr_expr != NULL) {
-		pstate->root_expr = pstate->curr_expr;
-	}
 
-	while (!TokenMgr_is_last_token(pstate->tok_mgr) && 
-			(parser_can_consume(pstate->curr_token->value, "*") || parser_can_consume(pstate->curr_token->value, "/"))
+// 	while (!TokenMgr_is_last_token(par_mgr->tok_mgr) && 
+// 			(parser_can_consume(par_mgr->curr_token->value, "*") || parser_can_consume(par_mgr->curr_token->value, "/"))
+// 			&& res != NULL) {
+
+// 		// Create expression node foreach iteration.
+// 		res = Node_new(1);
+
+// 		// Set node type.
+// 		if (strncmp(par_mgr->curr_token->value, "*", 1) == 0) {
+// 			res->type = E_TIMES_NODE;
+// 		}
+// 		else if (strncmp(par_mgr->curr_token->value, "/", 1) == 0) {
+// 			res->type = E_DIV_NODE;
+// 		}
+// 		else {
+// 			parser_add_perror(par_mgr->err_handle, par_mgr->curr_token, ERR_UNEXPECTED);
+// 			par_mgr->curr_token = TokenMgr_next_token(par_mgr->tok_mgr);
+// 			continue;
+// 		}
+
+// 		if (res->type == E_INTERGER_NODE && !par_mgr->lnode_state) {
+// 				par_mgr->curr_expr->data->BinExpNode.left = res;
+// 				par_mgr->lnode_state = 1;
+// 		} 
+// 		else {
+// 			par_mgr->curr_expr->data->BinExpNode.right = res;
+// 			par_mgr->lnode_state = 0;
+// 			par_mgr->expr_depth++;
+// 		}
+
+// 		res = parse_factor(par_mgr);
+
+// 	}
+
+// 	return res;
+// }
+
+struct Node *parse_expr(ParserMgr *par_mgr) {
+	struct Node *res = parse_factor(par_mgr);
+	struct Node *binop = NULL;
+	while (!TokenMgr_is_last_token(par_mgr->tok_mgr) && 
+			(parser_can_consume(par_mgr->curr_token->value, "-") || parser_can_consume(par_mgr->curr_token->value, "+"))
 			&& res != NULL) {
 
-		// Create expression node foreach iteration.
-		res = Node_new(1);
+		// Create binop node foreach iteration.
+		binop = Node_new(1);
 
-		// Set node type.
-		if (strncmp(pstate->curr_token->value, "*", 1) == 0) {
-			res->type = E_TIMES_NODE;
+		// Set node operation type.
+		if (strncmp(par_mgr->curr_token->value, "+", 1) == 0) {
+			binop->type = E_ADD_NODE;
 		}
-		else if (strncmp(pstate->curr_token->value, "/", 1) == 0) {
-			res->type = E_DIV_NODE;
+		else if (strncmp(par_mgr->curr_token->value, "-", 1) == 0) {
+			binop->type = E_MINUS_NODE;
 		}
-	}
-
-	return res;
-}
-
-struct Node *parse_expr(ParserState *pstate) {
-	struct Node *res = parse_term(pstate);
-
-	while (!TokenMgr_is_last_token(pstate->tok_mgr) && 
-			(parser_can_consume(pstate->curr_token->value, "-") || parser_can_consume(pstate->curr_token->value, "+"))
-			&& res != NULL) {
-
-		// Create expression node foreach iteration.
-		pstate->curr_expr = Node_new(1);
-
-		// Set node type.
-		if (strncmp(pstate->curr_token->value, "+", 1) == 0) {
-			pstate->curr_expr->type = E_ADD_NODE;
-		}
-		else if (strncmp(pstate->curr_token->value, "-", 1) == 0) {
-			pstate->curr_expr->type = E_MINUS_NODE;
+		else {
+			ParserMgr_add_error(par_mgr->err_handle, par_mgr->curr_token, ERR_UNEXPECTED);
+			par_mgr->curr_token = TokenMgr_next_token(par_mgr->tok_mgr);
+			continue;
 		}
 		
-		if (res->type == E_INTERGER_NODE && !pstate->lstate) {
-				pstate->curr_expr->data->BinExpNode.left = res;
-				pstate->lstate = 1;
+		if (res->type == E_INTERGER_NODE && !par_mgr->lnode_state) {
+				par_mgr->curr_expr->data->BinExpNode.left = res;
+				par_mgr->lnode_state = 1;
 		} 
 		else {
-			pstate->curr_expr->data->BinExpNode.right = res;
-			pstate->lstate = 0;
-			pstate->expr_depth++;
+			par_mgr->curr_expr->data->BinExpNode.right = res;
+			par_mgr->lnode_state = 0;
+			par_mgr->expr_depth++;
 		}
 			
-		pstate->curr_token = TokenMgr_next_token(pstate->tok_mgr);
-		res = parse_term(pstate);
+		par_mgr->curr_token = TokenMgr_next_token(par_mgr->tok_mgr);
+		res = parse_factor(par_mgr);
 		
-		if (res->type == E_INTERGER_NODE && !pstate->lstate) {
-			pstate->curr_expr->data->BinExpNode.left = res;
-			pstate->lstate = 1;
+		if (res->type == E_INTERGER_NODE && !par_mgr->lnode_state) {
+			par_mgr->curr_expr->data->BinExpNode.left = res;
+			par_mgr->lnode_state = 1;
 		} 
 		else {
-			pstate->curr_expr->data->BinExpNode.right = res;
-			pstate->lstate = 0;
-			pstate->expr_depth++;
+			par_mgr->curr_expr->data->BinExpNode.right = res;
+			par_mgr->lnode_state = 0;
+			par_mgr->expr_depth++;
 		}
 					
 		// Is it a tree more than 1 nesting of arithmetics.
-		if (pstate->expr_depth > 1 ) {
-			pstate->expr_itr->data->BinExpNode.right = pstate->curr_expr;
+		if (par_mgr->expr_depth > 1 ) {
+			par_mgr->expr_itr->data->BinExpNode.right = par_mgr->curr_expr;
 		}		
 		else {
-			pstate->root_expr = pstate->curr_expr;
+			par_mgr->root_expr = par_mgr->curr_expr;
 		}
 
-		pstate->expr_itr = pstate->curr_expr;
+		par_mgr->expr_itr = par_mgr->curr_expr;
 			
 	}
 
-	// Set root expression node.
-	// pstate->root_expr = pstate->expr_itr;
-	// pstate->root_expr->depth = pstate->expr_depth;
-
 	// Clean up unused pointers.
-	pstate->expr_itr = NULL;
-	pstate->curr_expr = NULL;
+	par_mgr->expr_itr = NULL;
+	par_mgr->curr_expr = NULL;
 	res = NULL;
 	
-	return pstate->root_expr;
+	return par_mgr->root_expr;
 }
 
-struct Node *parse_assignment(ParserState *pstate) {
+struct Node *parse_assignment(ParserMgr *par_mgr) {
 	// Store pointer to actual variable name.
-	Token *tok_start_ptr = TokenMgr_current_token(pstate->tok_mgr);
+	Token *tok_start_ptr = TokenMgr_current_token(par_mgr->tok_mgr);
 	// Store pointer to subsequent tokens.
-	pstate->curr_token = TokenMgr_next_token(pstate->tok_mgr);
+	par_mgr->curr_token = TokenMgr_next_token(par_mgr->tok_mgr);
 	
 	// Final ast build by entire assignment.
 	struct Node *ast = NULL;
@@ -228,9 +217,9 @@ struct Node *parse_assignment(ParserState *pstate) {
 	struct Node *lhand = NULL;
 
 	// Assert we can consume an EQUAL.
-	if (parser_can_consume(pstate->curr_token->value, "=")) {
-		pstate->curr_token = TokenMgr_next_token(pstate->tok_mgr);
-		if ((expr = parse_expr(pstate)) != NULL || (expr = parse_string(pstate)) != NULL) {
+	if (parser_can_consume(par_mgr->curr_token->value, "=")) {
+		par_mgr->curr_token = TokenMgr_next_token(par_mgr->tok_mgr);
+		if ((expr = parse_expr(par_mgr)) != NULL || (expr = parse_string(par_mgr)) != NULL) {
 			// Identifier.
 			lhand = Node_new(0); 
 			lhand->type = E_IDENTIFIER_NODE;
@@ -245,92 +234,98 @@ struct Node *parse_assignment(ParserState *pstate) {
 			ast->depth = expr->depth + 1;
 		}
 		else {
-			parser_add_perror(pstate->err_handle, pstate->curr_token, ERR_UNEXPECTED);
-			pstate->curr_token = TokenMgr_next_token(pstate->tok_mgr);
+			ParserMgr_add_error(par_mgr->err_handle, par_mgr->curr_token, ERR_UNEXPECTED);
+			par_mgr->curr_token = TokenMgr_next_token(par_mgr->tok_mgr);
 		}
 	}
 	else {
-		parser_add_perror(pstate->err_handle, pstate->curr_token, ERR_UNEXPECTED);
-		pstate->curr_token = TokenMgr_next_token(pstate->tok_mgr);
+		ParserMgr_add_error(par_mgr->err_handle, par_mgr->curr_token, ERR_UNEXPECTED);
+		par_mgr->curr_token = TokenMgr_next_token(par_mgr->tok_mgr);
 	}
 	return ast;
 }
 
-struct Node *parse_group(ParserState *pstate) {
+struct Node *parse_group(ParserMgr *par_mgr) {
 	// If string isn't next then store error and move to next token.
-	if (strcmp(TokenMgr_peek_token(pstate->tok_mgr)->type, "STRING") != 0) {
-		parser_add_perror(pstate->err_handle, TokenMgr_current_token(pstate->tok_mgr), ERR_EMPTY_GROUP);
-		TokenMgr_next_token(pstate->tok_mgr);
+	if (strcmp(TokenMgr_peek_token(par_mgr->tok_mgr)->type, "STRING") != 0) {
+		ParserMgr_add_error(par_mgr->err_handle, TokenMgr_current_token(par_mgr->tok_mgr), ERR_EMPTY_GROUP);
+		TokenMgr_next_token(par_mgr->tok_mgr);
 		return NULL;
 	}
 
-	struct Node *group_root = Node_new(1);
+	// group node itself. i.e {some_group}.
+	struct Node *group = Node_new(1);
+	// Previously read command <string>.
 	struct Node *prev = NULL;
+	// Recently read command <string>
 	struct Node *curr = NULL;
 	
-	// Setup root node data.
-	group_root->value = TokenMgr_current_token(pstate->tok_mgr)->value;
-	group_root->type = E_GROUP_NODE;
+	// Setup group node data.
+	group->value = TokenMgr_current_token(par_mgr->tok_mgr)->value;
+	group->type = E_GROUP_NODE;
 
 	// Store next token in parser state.
-	pstate->curr_token =  TokenMgr_next_token(pstate->tok_mgr);
+	par_mgr->curr_token =  TokenMgr_next_token(par_mgr->tok_mgr);
 
-	// Initialise nodes.
-	while (!TokenMgr_is_last_token(pstate->tok_mgr) && parser_can_consume(pstate->curr_token->type, "STRING")) {
-		curr = parse_string(pstate);
+	// Iterate through commands and append to group.
+	// Below will build a circular linked list.
+	while (!TokenMgr_is_last_token(par_mgr->tok_mgr) && parser_can_consume(par_mgr->curr_token->type, "STRING")) {
+		curr = parse_string(par_mgr);
 		curr->data = malloc(sizeof(union SyntaxNode));
 		if (prev == NULL)
-			group_root->data->GroupNode.next = curr;
+			group->data->GroupNode.next = curr;
 		else
 			prev->data->GroupNode.next = curr;
 		prev = curr;
 	}
 
-	// Point final command to root.
-	// Creates circular list.
-	curr->data->GroupNode.next = group_root;
-	return group_root;
+	// Point final command back to group node.
+	curr->data->GroupNode.next = group;
+	prev = NULL;
+	curr = NULL;
+	return group;
 }
 
 int parser_init(TokenMgr *tok_mgr) {
+
 	// Create wrapper structs.
-	ParserState *pstate = ParserState_new();
-	pstate->err_handle = parser_new_perrors();
+	ParserMgr *par_mgr = ParserMgr_new();
+	par_mgr->err_handle = parser_new_perrors();
 	NodeMgr *node_mgr = NodeMgr_new();
 
 	// This will do for now.
 	// TODO: Add descriptive error here.
-	if (pstate->err_handle == NULL || pstate == NULL || node_mgr == NULL || tok_mgr == NULL)
+	if (par_mgr->err_handle == NULL || par_mgr == NULL || node_mgr == NULL || tok_mgr == NULL)
 		return -1;
 		
-	pstate->tok_mgr = tok_mgr;
+	par_mgr->tok_mgr = tok_mgr;
 	tok_mgr = NULL;
 
-	// Shorthand pointer to current token.
-	pstate->curr_token = TokenMgr_next_token(pstate->tok_mgr);
 	
-	while (!TokenMgr_is_last_token(pstate->tok_mgr)) {
-		if (strcmp(pstate->curr_token->type, "IDENTIFIER") == 0) {
-			pstate->curr_expr = parse_assignment(pstate);
+	par_mgr->curr_token = TokenMgr_next_token(par_mgr->tok_mgr);
+	
+	while (!TokenMgr_is_last_token(par_mgr->tok_mgr)) {
+		if (strcmp(par_mgr->curr_token->type, "IDENTIFIER") == 0) {
+			par_mgr->curr_expr = parse_assignment(par_mgr);
 		}
-		else if (strcmp(pstate->curr_token->type, "GROUP") == 0) {
-			pstate->curr_expr = parse_group(pstate);
+		else if (strcmp(par_mgr->curr_token->type, "GROUP") == 0) {
+			par_mgr->curr_expr = parse_group(par_mgr);
 		}
 		else {
-			parser_add_perror(pstate->err_handle, pstate->curr_token, ERR_UNEXPECTED);
-			TokenMgr_next_token(pstate->tok_mgr);
+			ParserMgr_add_error(par_mgr->err_handle, par_mgr->curr_token, ERR_UNEXPECTED);
+			TokenMgr_next_token(par_mgr->tok_mgr);
 		}
 		
-		if (pstate->curr_expr != NULL)
-			NodeMgr_add_node(node_mgr, pstate->curr_expr);
+		if (par_mgr->curr_expr != NULL)
+			NodeMgr_add_node(node_mgr, par_mgr->curr_expr);
 	}
 
-	int err = pstate->err_handle->error_ctr;
+	int err = par_mgr->err_handle->error_ctr;
 
 	// Free resources.
-	parser_free_perrors(pstate->err_handle, 1);
+	parser_free_perrors(par_mgr->err_handle, 1);
 	NodeMgr_free(node_mgr);
-	free(pstate);
+	free(par_mgr);
 
 	if (err > 0)
 		return 1;
