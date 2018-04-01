@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include "utils.h"	
 #include "parser.h"
-#include "tokens.h"
 #include "tokenizer.h"   
 #include "node.h"
+#include "errors.h"
 
 // Below are the errors which map to Error_Templates.
 #define ERR_UNEXPECTED 0
@@ -25,6 +25,17 @@ ParserMgr *ParserMgr_new() {
 	ps->tok_mgr = NULL;
 	ps->err_handle = NULL;
 	return ps;
+}
+
+int *ParserMgr_free(ParserMgr *par_mgr) {
+	if (par_mgr == NULL)
+		return 1;
+		
+	par_mgr->curr_expr = NULL;
+	par_mgr->curr_token = NULL;
+	par_mgr->err_handle = NULL;
+	par_mgr->tok_mgr = NULL;
+	free(par_mgr);
 }
 
 void ParserMgr_add_error(Error *err_handle, Token *offender, int err_type) {
@@ -290,7 +301,7 @@ int parser_init(TokenMgr *tok_mgr) {
 
 	// Create wrapper structs.
 	ParserMgr *par_mgr = ParserMgr_new();
-	par_mgr->err_handle = parser_new_perrors();
+	par_mgr->err_handle = Error_new();
 	NodeMgr *node_mgr = NodeMgr_new();
 
 	// This will do for now.
@@ -323,9 +334,9 @@ int parser_init(TokenMgr *tok_mgr) {
 	int err = par_mgr->err_handle->error_ctr;
 
 	// Free resources.
-	parser_free_perrors(par_mgr->err_handle, 1);
+	Error_free(par_mgr->err_handle);
 	NodeMgr_free(node_mgr);
-	free(par_mgr);
+	ParserMgr_free(par_mgr);
 
 	if (err > 0)
 		return 1;

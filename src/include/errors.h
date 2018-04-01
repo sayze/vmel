@@ -37,8 +37,9 @@ Error *Error_new(void);
  * @brief Instruct error handler to release all of its stored errors.
  * 
  * @param err_handle Error instance.
+ * @return 0 if successful or 1 if issues occurred.
  */
-void Error_free(Error *err_handle, int print_mode);
+int Error_free(Error *err_handle);
 
 /**
  * @brief Print all the errors currently stored by Error.

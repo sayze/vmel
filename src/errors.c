@@ -9,13 +9,18 @@ Error *Error_new(void) {
 	return err_handle;
 }
 
-void Error_free(Error *err_handle) {
-	if (err_handle != NULL && err_handle->error_ctr != 0) {
+int Error_free(Error *err_handle) {
+	if (err_handle == NULL)
+		return 1;
+
+	if (err_handle->error_ctr != 0) {
 		for (size_t in = 0; in < err_handle->error_ctr; in++) {
 			free(err_handle->errors[in]);
 		}
+		err_handle->errors = NULL;
 		free(err_handle);
-	}
+	}	
+	return 0;
 }
 
 void Error_print_all(Error *err_handle) {

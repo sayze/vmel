@@ -80,6 +80,7 @@ int NodeMgr_free(NodeMgr *node_mgr) {
         free(root_node);
     }
 
+	
     free(node_mgr);
     return 0;
 }

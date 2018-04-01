@@ -33,6 +33,14 @@ typedef struct {
 ParserMgr *ParserMgr_new();
 
 /**
+ * @brief Free ParserMgr instance.
+ * 
+ * @param Instance of ParserMgr.
+ * @return 0 if free was successful. Otherwise 1 for errors.
+ */
+int *ParserMgr_free(ParserMgr *par_mgr);
+
+/**
  * @brief Add a error string to the list of errors stored in Error.
  * 
  * @param err_error Instance of Error.
