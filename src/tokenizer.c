@@ -254,7 +254,7 @@ TokenMgr *TokenMgr_new(void) {
 	tok_mgr->toks_head = NULL;
 	tok_mgr->tok_ctr = 0;
 	tok_mgr->tok_cap = TOKMGR_TOKS_INIT_SIZE;
-	tok_mgr->toks_curr = malloc(tok_mgr->tok_cap * sizeof(Token *));
+	tok_mgr->toks_curr = malloc(tok_mgr->tok_cap * sizeof(Token*));	
 	return tok_mgr;
 }
 
@@ -262,7 +262,7 @@ int TokenMgr_add_token(TokenMgr *tok_mgr, char tok_type[20], char *tok_val, int 
 	if (tok_mgr == NULL) {
 		printf("**Error** Invalid token manager passed to TokenMgr_add_token");
 		return 1;
-	}
+	}	
 
 	// Get string length of value.
 	size_t tok_val_length = strlen(tok_val);
@@ -276,13 +276,13 @@ int TokenMgr_add_token(TokenMgr *tok_mgr, char tok_type[20], char *tok_val, int 
 	tmp->lineno = tok_lineno;
 
 	// Determine if we need more room in toks.
-	if (tok_mgr->tok_cap - tok_mgr->tok_ctr <= 5) {
-		tok_mgr->toks_curr = grow_curr_tokens(tok_mgr);
+	// if (tok_mgr->tok_cap - tok_mgr->tok_ctr <= 5) {
+	// 	tok_mgr->toks_curr = grow_curr_tokens(tok_mgr);
 
-		// Make sure grow was succesful.
-		if (tok_mgr->toks_curr == NULL)
-			return 1;
-	}	
+	// 	// Make sure grow was succesful.
+	// 	if (tok_mgr->toks_curr == NULL)
+	// 		return 1;
+	// }	
 	
 	tok_mgr->toks_curr[tok_mgr->tok_ctr++] = tmp;
 	tok_mgr->toks_tail = tmp;
@@ -301,7 +301,6 @@ Token *TokenMgr_peek_token(TokenMgr *tok_mgr) {
 }
 
 void TokenMgr_print_tokens(TokenMgr *tok_mgr) {
-	TokenMgr_reset_curr(tok_mgr);
 	for (size_t i = 1; tok_mgr->toks_curr[i] != tok_mgr->toks_tail; i++) {
 		printf("%s %s \n", tok_mgr->toks_curr[i]->type, tok_mgr->toks_curr[i]->value);
 	}
@@ -313,14 +312,19 @@ int TokenMgr_free(TokenMgr *tok_mgr) {
 		return 1;
 	}
 	
-	TokenMgr_reset_curr(tok_mgr);
-
 	for (size_t i = 0; i < tok_mgr->tok_ctr; i++) {
 		free(tok_mgr->toks_curr[i]->value);
 		free(tok_mgr->toks_curr[i]);
 	}
 
+	// Free resources.
+	free(tok_mgr->toks_curr);
+	tok_mgr->toks_curr = NULL;
+	tok_mgr->toks_head = NULL;
+	tok_mgr->toks_tail = NULL;
 	free(tok_mgr);
+	tok_mgr = NULL;
+
 	return 0;
 }
 

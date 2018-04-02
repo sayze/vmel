@@ -18,7 +18,9 @@ char *file_to_buffer(const char *filename) {
 	// File pointer.
 	FILE *fptr = fopen(filename, "r");
 	// Output buffer.
-	char *buff;
+	char *buff = NULL;
+	// File size;
+	long f_size = 0;
 
 	if (fptr == NULL) {
 		perror("Error: ");
@@ -27,14 +29,15 @@ char *file_to_buffer(const char *filename) {
 
 	fseek(fptr, 0, SEEK_END);
 	
-	long f_size = ftell(fptr);
+	f_size = ftell(fptr);
 	
 	fseek(fptr, 0, SEEK_SET);
 	
-	buff = calloc(1, f_size);
-	
-	fread(buff, f_size, 1, fptr);
-	
+	if (f_size > 0) {
+		buff = calloc(1, f_size+1);	
+		fread(buff, f_size, 1, fptr);
+	}
+		
 	fclose(fptr);
 	return buff;
 }

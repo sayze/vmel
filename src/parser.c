@@ -110,10 +110,12 @@ struct Node *parse_factor(ParserMgr *par_mgr) {
 }
 
 struct Node *parse_term(ParserMgr *par_mgr) {
+	par_mgr->curr_expr = NULL;
 	return NULL;
 }
 
 struct Node *parse_expr(ParserMgr *par_mgr) {
+	par_mgr->curr_expr = NULL;
 	return NULL;
 }
 
