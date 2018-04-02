@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "errors.h"
 
 Error *Error_new(void) {
