@@ -2,7 +2,7 @@
     "version": "2.0.0",
     "configurations": [
         {
-            "name": "Vmel Dbg",
+            "name": "Vmel DBG",
             "type": "lldb",
             "request": "launch",
             "program": "${workspaceRoot}/bin/debug/vmel",
@@ -13,24 +13,6 @@
             "osx": {
                 "MIMode": "lldb"
             }
-		},
-		{
-            "name": "Vmel valgrind dbg",
-            "type": "lldb",
-            "request": "launch",
-			"program": "valgrind",
-            "preLaunchTask": "build",
-            "internalConsoleOptions": "openOnSessionStart",
-            "args": [
-				" --leak-check=full",
-				"--show-leak-kinds=all",
-				"${workspaceRoot}/bin/debug/vmel"
-				,"test-data/run.vml"
-			],
-            "cwd": "${workspaceRoot}",
-            "osx": {
-                "MIMode": "lldb"
-            }
-        }
+		}
     ]
 }

@@ -1,16 +1,48 @@
 {
     "version": "2.0.0",
-    "tasks": [
-        {
-            "label": "build",
-            "type": "shell",
-            "command": "make debug",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared"
-            },
-        }
-    ]
+	"tasks": [
+		{
+			"label": "build dbg",
+			"type": "shell",
+			"command": "make debug",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared"
+			},
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
+			"label": "build rel",
+			"type": "shell",
+			"command": "make clean && make release",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared"
+			}
+		},
+		{
+			"label": "valgrind rel",
+			"type": "shell",
+			"command": "valgrind",
+			"args": [
+				"--leak-check=full",
+				"--show-leak-kinds=all",
+				"${workspaceRoot}/bin/release/vmel",
+				"test-data/run.vml"
+			],
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared"
+			},
+		}
+	]
 }
