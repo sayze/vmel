@@ -25,7 +25,8 @@
 				"reveal": "always",
 				"focus": false,
 				"panel": "shared"
-			}
+			},
+			"problemMatcher": []
 		},
 		{
 			"label": "valgrind rel",
@@ -41,8 +42,9 @@
 				"echo": true,
 				"reveal": "always",
 				"focus": false,
-				"panel": "shared"
+				"panel": "new"
 			},
+			"problemMatcher": []
 		}
 	]
 }

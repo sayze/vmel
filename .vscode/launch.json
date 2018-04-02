@@ -1,12 +1,13 @@
 {
     "version": "2.0.0",
     "configurations": [
+		
         {
             "name": "Vmel DBG",
             "type": "lldb",
             "request": "launch",
             "program": "${workspaceRoot}/bin/debug/vmel",
-            "preLaunchTask": "build",
+            "preLaunchTask": "build dbg",
             "internalConsoleOptions": "openOnSessionStart",
             "args": ["test-data/run.vml"],
             "cwd": "${workspaceRoot}",

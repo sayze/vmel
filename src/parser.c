@@ -46,6 +46,7 @@ void ParserMgr_add_error(Error *err_handle, Token *offender, int err_type) {
 		err_handle->error_cap  = err_handle->error_cap + err_handle->error_ctr / 2;
 		char **errors_n = realloc(err_handle->errors, err_handle->error_cap * sizeof(char *));
 		err_handle->errors = errors_n;
+		errors_n = NULL;
 	}
 	
 	// String representation of offending line number. 
@@ -234,17 +235,18 @@ int parser_init(TokenMgr *tok_mgr) {
 		
 		if (par_mgr->curr_expr != NULL)
 			NodeMgr_add_node(node_mgr, par_mgr->curr_expr);
-	}
 
-	int err = par_mgr->err_handle->error_ctr;
+		par_mgr->curr_token = TokenMgr_current_token(par_mgr->tok_mgr);
+	}
+	
+	// Any errors then print them.
+	if (par_mgr->err_handle->error_ctr > 0)
+		Error_print_all(par_mgr->err_handle);
 
 	// Free resources.
 	Error_free(par_mgr->err_handle);
 	NodeMgr_free(node_mgr);
 	ParserMgr_free(par_mgr);
-
-	if (err > 0)
-		return 1;
 
 	return 0;
 }

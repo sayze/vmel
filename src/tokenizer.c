@@ -301,6 +301,7 @@ Token *TokenMgr_peek_token(TokenMgr *tok_mgr) {
 }
 
 void TokenMgr_print_tokens(TokenMgr *tok_mgr) {
+	TokenMgr_reset_curr(tok_mgr);
 	for (size_t i = 1; tok_mgr->toks_curr[i] != tok_mgr->toks_tail; i++) {
 		printf("%s %s \n", tok_mgr->toks_curr[i]->type, tok_mgr->toks_curr[i]->value);
 	}
@@ -311,6 +312,8 @@ int TokenMgr_free(TokenMgr *tok_mgr) {
 		printf("**Error** Invalid token manager passed to TokenMgr_free");
 		return 1;
 	}
+	
+	TokenMgr_reset_curr(tok_mgr);
 	
 	for (size_t i = 0; i < tok_mgr->tok_ctr; i++) {
 		free(tok_mgr->toks_curr[i]->value);

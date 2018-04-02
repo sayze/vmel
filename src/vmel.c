@@ -23,10 +23,14 @@ int main(int argc, char *argv[]) {
 
 	// Instantiate new token manager.
 	TokenMgr *tok_mgr = TokenMgr_new(); 
-	// Store error status.
 	
+	// Store error status.
 	int err = 0;
+
 	err = TokenMgr_build_tokens(buff_in, tok_mgr);
+
+	if (!err)
+		parser_init(tok_mgr);
 	
 	#ifdef DEBUG
 		TokenMgr_print_tokens(tok_mgr);

@@ -105,8 +105,12 @@ char *string_map_vars(const char *src, char **vars, size_t src_len, size_t vars_
 	}
 
 	new_str[new_str_i++] = '\0';
+	
 	// Resize memory.
-	new_str = realloc(new_str, new_str_i * sizeof(char));
+	char *tmp =  realloc(new_str, new_str_i * sizeof(char));
+	if (tmp != NULL)
+		new_str = tmp;
+	
 	return new_str;
 }
 

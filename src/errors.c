@@ -18,9 +18,9 @@ int Error_free(Error *err_handle) {
 		for (size_t in = 0; in < err_handle->error_ctr; in++) {
 			free(err_handle->errors[in]);
 		}
-		err_handle->errors = NULL;
-		free(err_handle);
-	}	
+	}
+	free(err_handle->errors);	
+	free(err_handle);	
 	return 0;
 }
 

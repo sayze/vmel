@@ -1,1 +1,12 @@
-$var = "sayed"
+
+#"vm_user" = "sayed@root"
+$vm_pass = "124astroboy"
+
+{build_npm_packages}
+"cd ~/var/node_project/"
+"npm install"
+"npm run build"
+
+{update_local_repo}
+"cd ~/projects/vmel"
+"git checkout develop && git pull origin develop"
