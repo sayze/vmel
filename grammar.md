@@ -1,10 +1,10 @@
 # Vmel Grammar
 
-The below outline the grammar rules behind vmel. 
+The below outlines the grammar rules behind vmel. 
 
 
 ## Assignment
-A typical *Assignment* production will consists of the below rules. An assignment may either be a STRING or expression. Examples such as
+A typical *Assignment* production will consist of the below rules. An assignment may either be a STRING or expression. Examples such as
 
 `$name = "Smith"`
 

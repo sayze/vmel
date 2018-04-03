@@ -99,25 +99,71 @@ struct Node *parse_factor(ParserMgr *par_mgr) {
 		 res->value = par_mgr->curr_token->value; 
 		 par_mgr->curr_token = TokenMgr_next_token(par_mgr->tok_mgr);
 	 }
-	//  else if (parser_can_consume(par_mgr->curr_token->type, "LPAREN")) {
-	// 	 TokenMgr_next_token(par_mgr->tok_mgr);
-	// 	 res = parse_expr(par_mgr);
-	// 	 par_mgr->curr_token = TokenMgr_current_token(par_mgr->tok_mgr);
-	// 	 if (parser_can_consume(par_mgr->curr_token->type, "RPAREN")) {
-	// 		par_mgr->curr_token = TokenMgr_next_token(par_mgr->tok_mgr); 
-	// 	 }
-	//  }
+	 else if (parser_can_consume(par_mgr->curr_token->type, "LPAREN")) {
+		 TokenMgr_next_token(par_mgr->tok_mgr);
+		 res = parse_expr(par_mgr);
+		 par_mgr->curr_token = TokenMgr_current_token(par_mgr->tok_mgr);
+		 if (parser_can_consume(par_mgr->curr_token->type, "RPAREN")) {
+			par_mgr->curr_token = TokenMgr_next_token(par_mgr->tok_mgr); 
+		 }
+	 }
 	 return res;
 }
 
 struct Node *parse_term(ParserMgr *par_mgr) {
-	par_mgr->curr_expr = NULL;
-	return NULL;
+	struct Node *res = parse_factor(par_mgr);
+	while (!TokenMgr_is_last_token(par_mgr->tok_mgr) &&
+	(parser_can_consume(par_mgr->curr_token->value, "*") || parser_can_consume(par_mgr->curr_token->value, "/"))) {
+		// BinOP node.
+		struct Node *bop = Node_new(1);
+
+		if (strncmp(par_mgr->curr_token->value, "*", 1) == 0) {
+			bop->type = E_TIMES_NODE;
+		}
+		else if (strncmp(par_mgr->curr_token->value, "/", 1) == 0){
+			bop->type = E_DIV_NODE;
+		}
+		else {
+			ParserMgr_add_error(par_mgr->err_handle, par_mgr->curr_token, ERR_UNEXPECTED);
+			TokenMgr_next_token(par_mgr->tok_mgr);
+			continue;
+		}
+		TokenMgr_next_token(par_mgr->tok_mgr);
+		bop->data->BinExpNode.left = res;
+		bop->data->BinExpNode.right = parse_factor(par_mgr);
+		par_mgr->expr_depth++;
+		res = bop;
+	}
+	
+	return res;
 }
 
 struct Node *parse_expr(ParserMgr *par_mgr) {
-	par_mgr->curr_expr = NULL;
-	return NULL;
+	struct Node *res = parse_term(par_mgr);
+	while (!TokenMgr_is_last_token(par_mgr->tok_mgr) &&
+	(parser_can_consume(par_mgr->curr_token->value, "+") || parser_can_consume(par_mgr->curr_token->value, "-"))) {
+		// BinOP node.
+		struct Node *bop = Node_new(1);
+
+		if (strncmp(par_mgr->curr_token->value, "+", 1) == 0) {
+			bop->type = E_ADD_NODE;
+		}
+		else if (strncmp(par_mgr->curr_token->value, "-", 1) == 0){
+			bop->type = E_MINUS_NODE;
+		}
+		else {
+			ParserMgr_add_error(par_mgr->err_handle, par_mgr->curr_token, ERR_UNEXPECTED);
+			TokenMgr_next_token(par_mgr->tok_mgr);
+			continue;
+		}
+		TokenMgr_next_token(par_mgr->tok_mgr);
+		bop->data->BinExpNode.left = res;
+		bop->data->BinExpNode.right = parse_term(par_mgr);
+		par_mgr->expr_depth++;
+		res = bop;
+	}
+	
+	return res;
 }
 
 struct Node *parse_assignment(ParserMgr *par_mgr) {
@@ -125,6 +171,8 @@ struct Node *parse_assignment(ParserMgr *par_mgr) {
 	Token *tok_start_ptr = TokenMgr_current_token(par_mgr->tok_mgr);
 	// Store pointer to subsequent tokens.
 	par_mgr->curr_token = TokenMgr_next_token(par_mgr->tok_mgr);
+	// Reset expression depth.
+	par_mgr->expr_depth = 0;
 	
 	// Final ast build by entire assignment.
 	struct Node *ast = NULL;
@@ -148,7 +196,6 @@ struct Node *parse_assignment(ParserMgr *par_mgr) {
 			ast->value = "+";
 			ast->data->AsnStmtNode.left = lhand;
 			ast->data->AsnStmtNode.right = expr;
-			ast->depth = expr->depth + 1;
 		}
 		else {
 			ParserMgr_add_error(par_mgr->err_handle, par_mgr->curr_token, ERR_UNEXPECTED);
@@ -233,8 +280,10 @@ int parser_init(TokenMgr *tok_mgr) {
 			TokenMgr_next_token(par_mgr->tok_mgr);
 		}
 		
-		if (par_mgr->curr_expr != NULL)
+		if (par_mgr->curr_expr != NULL) {
+			par_mgr->curr_expr->depth = par_mgr->expr_depth;
 			NodeMgr_add_node(node_mgr, par_mgr->curr_expr);
+		}
 
 		par_mgr->curr_token = TokenMgr_current_token(par_mgr->tok_mgr);
 	}
