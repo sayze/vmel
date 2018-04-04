@@ -1,10 +1,9 @@
 var indexSectionsWithContent =
 {
-  0: "fginpstu",
-  1: "npt",
-  2: "nptu",
-  3: "fginpst",
-  4: "n"
+  0: "efginpstu",
+  1: "enpst",
+  2: "enptu",
+  3: "efginpst"
 };
 
 var indexSectionNames =
@@ -12,8 +11,7 @@ var indexSectionNames =
   0: "all",
   1: "classes",
   2: "files",
-  3: "functions",
-  4: "enums"
+  3: "functions"
 };
 
 var indexSectionLabels =
@@ -21,7 +19,6 @@ var indexSectionLabels =
   0: "All",
   1: "Classes",
   2: "Files",
-  3: "Functions",
-  4: "Enumerations"
+  3: "Functions"
 };
 

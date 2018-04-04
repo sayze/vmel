@@ -1,0 +1,39 @@
+\hypertarget{struct_parser_mgr}{}\section{Parser\+Mgr Struct Reference}
+\label{struct_parser_mgr}\index{Parser\+Mgr@{Parser\+Mgr}}
+
+
+Maintain state within in the parsing process.  
+
+
+
+
+{\ttfamily \#include $<$parser.\+h$>$}
+
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{struct_parser_mgr_ab0e632e38653f0b572f9389247148084}\label{struct_parser_mgr_ab0e632e38653f0b572f9389247148084}} 
+struct \mbox{\hyperlink{struct_node}{Node}} $\ast$ {\bfseries curr\+\_\+expr}
+\item 
+\mbox{\Hypertarget{struct_parser_mgr_ac10dc0846d693c106a2620b2906ed729}\label{struct_parser_mgr_ac10dc0846d693c106a2620b2906ed729}} 
+unsigned int {\bfseries expr\+\_\+depth}
+\item 
+\mbox{\Hypertarget{struct_parser_mgr_a2f91e648f300891d40e0fb2b903789c0}\label{struct_parser_mgr_a2f91e648f300891d40e0fb2b903789c0}} 
+\mbox{\hyperlink{struct_token}{Token}} $\ast$ {\bfseries curr\+\_\+token}
+\item 
+\mbox{\Hypertarget{struct_parser_mgr_a2f758482ba8935ae5709f66d4295d320}\label{struct_parser_mgr_a2f758482ba8935ae5709f66d4295d320}} 
+\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$ {\bfseries tok\+\_\+mgr}
+\item 
+\mbox{\Hypertarget{struct_parser_mgr_a35287ee719c8ac8f666cc8ebc2ac7003}\label{struct_parser_mgr_a35287ee719c8ac8f666cc8ebc2ac7003}} 
+\mbox{\hyperlink{struct_error}{Error}} $\ast$ {\bfseries err\+\_\+handle}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Maintain state within in the parsing process. 
+
+Instead of passing around excess paramters we simply pass a single structure which holds all the necessary information per parse. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/include/\mbox{\hyperlink{parser_8h}{parser.\+h}}\end{DoxyCompactItemize}

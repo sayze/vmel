@@ -1,0 +1,85 @@
+\hypertarget{errors_8h}{}\section{src/include/errors.h File Reference}
+\label{errors_8h}\index{src/include/errors.\+h@{src/include/errors.\+h}}
+
+
+File containing a generic error interface which can be consumed by modules.  
+
+
+{\ttfamily \#include $<$string.\+h$>$}\newline
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_error}{Error}}
+\begin{DoxyCompactList}\small\item\em Store all the errors related to parsing process. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{errors_8h_ae0123b71a843b9b8d5b53d81db074913}\label{errors_8h_ae0123b71a843b9b8d5b53d81db074913}} 
+\#define {\bfseries I\+N\+I\+T\+\_\+\+M\+A\+X\+\_\+\+E\+R\+R\+O\+RS}~20
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_error}{Error}} $\ast$ \mbox{\hyperlink{errors_8h_ac71a444bd909eacba9f495ccc7fd7faf}{Error\+\_\+new}} (void)
+\begin{DoxyCompactList}\small\item\em Create new malloced \mbox{\hyperlink{struct_error}{Error}} instance. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{errors_8h_a78cd563f7dbe7b61e8838752af64395e}{Error\+\_\+free}} (\mbox{\hyperlink{struct_error}{Error}} $\ast$err\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Instruct error handler to release all of its stored errors. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{errors_8h_a87a3f753153f7cb0e2762cec687441d3}{Error\+\_\+print\+\_\+all}} (\mbox{\hyperlink{struct_error}{Error}} $\ast$err\+\_\+handle)
+\begin{DoxyCompactList}\small\item\em Print all the errors currently stored by \mbox{\hyperlink{struct_error}{Error}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+File containing a generic error interface which can be consumed by modules. 
+
+\begin{DoxyAuthor}{Author}
+Sayed Sadeed \mbox{\hyperlink{struct_error}{Error}} module is simply a store of malloc\textquotesingle{}ed strings. It is upto an individual module to determing how they produce those errors and the nature of them. \mbox{\hyperlink{struct_error}{Error}} simply keeps track of them in a organized structure so that they can be correct freed and accessed. 
+\end{DoxyAuthor}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{errors_8h_a78cd563f7dbe7b61e8838752af64395e}\label{errors_8h_a78cd563f7dbe7b61e8838752af64395e}} 
+\index{errors.\+h@{errors.\+h}!Error\+\_\+free@{Error\+\_\+free}}
+\index{Error\+\_\+free@{Error\+\_\+free}!errors.\+h@{errors.\+h}}
+\subsubsection{\texorpdfstring{Error\+\_\+free()}{Error\_free()}}
+{\footnotesize\ttfamily int Error\+\_\+free (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_error}{Error}} $\ast$}]{err\+\_\+handle }\end{DoxyParamCaption})}
+
+
+
+Instruct error handler to release all of its stored errors. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em err\+\_\+handle} & \mbox{\hyperlink{struct_error}{Error}} instance. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful or 1 if issues occurred. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{errors_8h_ac71a444bd909eacba9f495ccc7fd7faf}\label{errors_8h_ac71a444bd909eacba9f495ccc7fd7faf}} 
+\index{errors.\+h@{errors.\+h}!Error\+\_\+new@{Error\+\_\+new}}
+\index{Error\+\_\+new@{Error\+\_\+new}!errors.\+h@{errors.\+h}}
+\subsubsection{\texorpdfstring{Error\+\_\+new()}{Error\_new()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_error}{Error}}$\ast$ Error\+\_\+new (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Create new malloced \mbox{\hyperlink{struct_error}{Error}} instance. 
+
+\begin{DoxyReturn}{Returns}
+New instance of \mbox{\hyperlink{struct_error}{Error}} or Null if failed. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{errors_8h_a87a3f753153f7cb0e2762cec687441d3}\label{errors_8h_a87a3f753153f7cb0e2762cec687441d3}} 
+\index{errors.\+h@{errors.\+h}!Error\+\_\+print\+\_\+all@{Error\+\_\+print\+\_\+all}}
+\index{Error\+\_\+print\+\_\+all@{Error\+\_\+print\+\_\+all}!errors.\+h@{errors.\+h}}
+\subsubsection{\texorpdfstring{Error\+\_\+print\+\_\+all()}{Error\_print\_all()}}
+{\footnotesize\ttfamily void Error\+\_\+print\+\_\+all (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_error}{Error}} $\ast$}]{err\+\_\+handle }\end{DoxyParamCaption})}
+
+
+
+Print all the errors currently stored by \mbox{\hyperlink{struct_error}{Error}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em err\+\_\+handle} & \mbox{\hyperlink{struct_error}{Error}} instance. \\
+\hline
+\end{DoxyParams}

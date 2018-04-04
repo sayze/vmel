@@ -7,26 +7,31 @@ File containing all definitions for parser module.
 
 {\ttfamily \#include \char`\"{}tokenizer.\+h\char`\"{}}\newline
 {\ttfamily \#include \char`\"{}node.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}errors.\+h\char`\"{}}\newline
 \subsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
-struct \mbox{\hyperlink{struct_p_errors}{P\+Errors}}
-\begin{DoxyCompactList}\small\item\em Store all the errors related to parsing process. \end{DoxyCompactList}\end{DoxyCompactItemize}
+struct \mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}}
+\begin{DoxyCompactList}\small\item\em Maintain state within in the parsing process. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{struct_p_errors}{P\+Errors}} $\ast$ \mbox{\hyperlink{parser_8h_a326a8ed28fff0b54e19beb5486638167}{parser\+\_\+new\+\_\+perrors}} (void)
-\begin{DoxyCompactList}\small\item\em Create new malloced \mbox{\hyperlink{struct_p_errors}{P\+Errors}} instance. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{parser_8h_a6ba132e08ed1110f51fb3962e264df78}{parser\+\_\+free\+\_\+perrors}} (\mbox{\hyperlink{struct_p_errors}{P\+Errors}} $\ast$err\+\_\+handle, int print\+\_\+mode)
-\item 
-void \mbox{\hyperlink{parser_8h_a64ec77acb899570c72d484e07a0aa17a}{parser\+\_\+add\+\_\+perror}} (\mbox{\hyperlink{struct_p_errors}{P\+Errors}} $\ast$err\+\_\+handle, \mbox{\hyperlink{struct_token}{Token}} $\ast$offender, int err\+\_\+type)
-\begin{DoxyCompactList}\small\item\em Add a error string to the list of errors stored in \mbox{\hyperlink{struct_p_errors}{P\+Errors}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} $\ast$ \mbox{\hyperlink{parser_8h_a491dd83f1c5caab93b58fecd66cedeee}{Parser\+Mgr\+\_\+new}} ()
+\begin{DoxyCompactList}\small\item\em Create new malloced \mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} instance. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{parser_8h_a92454985f0e22aed442a1c8077f9bced}{Parser\+Mgr\+\_\+free}} (\mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} $\ast$par\+\_\+mgr)
+\begin{DoxyCompactList}\small\item\em Free \mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} instance. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{parser_8h_a43ddbfc8a440bb59a7f096337b6b8c26}{Parser\+Mgr\+\_\+add\+\_\+error}} (\mbox{\hyperlink{struct_error}{Error}} $\ast$err\+\_\+handle, \mbox{\hyperlink{struct_token}{Token}} $\ast$offender, int err\+\_\+type)
+\begin{DoxyCompactList}\small\item\em Add a error string to the list of errors stored in \mbox{\hyperlink{struct_error}{Error}}. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{parser_8h_afecccd0d2c4a9a250c8c5b7f00721325}{parser\+\_\+can\+\_\+consume}} (char $\ast$tok\+\_\+type, char $\ast$type)
 \begin{DoxyCompactList}\small\item\em Can token be consumed based on expected type. \end{DoxyCompactList}\item 
-struct \mbox{\hyperlink{struct_node}{Node}} $\ast$ \mbox{\hyperlink{parser_8h_a9afe22b860279cc2062083b5a8c0b6f2}{parse\+\_\+group}} (\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$tok\+\_\+mgr, \mbox{\hyperlink{struct_p_errors}{P\+Errors}} $\ast$err\+\_\+handle)
+struct \mbox{\hyperlink{struct_node}{Node}} $\ast$ \mbox{\hyperlink{parser_8h_a46e3b3b2ad4d512a74e932d869fffd36}{parse\+\_\+group}} (\mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} $\ast$par\+\_\+mgr)
 \begin{DoxyCompactList}\small\item\em Will consume a group based on grammar defintion. \end{DoxyCompactList}\item 
-struct \mbox{\hyperlink{struct_node}{Node}} $\ast$ \mbox{\hyperlink{parser_8h_a50ffa061427a805697a7f32fb3f9c94f}{parse\+\_\+assignment}} (\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$tok\+\_\+mgr, \mbox{\hyperlink{struct_p_errors}{P\+Errors}} $\ast$err\+\_\+handle)
+struct \mbox{\hyperlink{struct_node}{Node}} $\ast$ \mbox{\hyperlink{parser_8h_a12116988947ee2cd13d517a533bb2595}{parse\+\_\+assignment}} (\mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} $\ast$par\+\_\+mgr)
 \begin{DoxyCompactList}\small\item\em Will consume assignment based on grammar. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_node}{Node}} $\ast$ \mbox{\hyperlink{parser_8h_a521f3aadad5d81736710b16e1c03a39b}{parse\+\_\+expr}} (\mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} $\ast$par\+\_\+mgr)
+\begin{DoxyCompactList}\small\item\em Will consume expression based on grammar. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_node}{Node}} $\ast$ \mbox{\hyperlink{parser_8h_a52b720c8a40a613335237af007fe6581}{parse\+\_\+factor}} (\mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} $\ast$par\+\_\+mgr)
+\begin{DoxyCompactList}\small\item\em Will consume factor based on grammar. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{parser_8h_a7ed0c289eb82241a3e41acc50b296356}{parser\+\_\+init}} (\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$tok\+\_\+mgr)
 \begin{DoxyCompactList}\small\item\em Initial entry for parser. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
@@ -40,33 +45,71 @@ Sayed Sadeed
 
 
 \subsection{Function Documentation}
-\mbox{\Hypertarget{parser_8h_a50ffa061427a805697a7f32fb3f9c94f}\label{parser_8h_a50ffa061427a805697a7f32fb3f9c94f}} 
+\mbox{\Hypertarget{parser_8h_a12116988947ee2cd13d517a533bb2595}\label{parser_8h_a12116988947ee2cd13d517a533bb2595}} 
 \index{parser.\+h@{parser.\+h}!parse\+\_\+assignment@{parse\+\_\+assignment}}
 \index{parse\+\_\+assignment@{parse\+\_\+assignment}!parser.\+h@{parser.\+h}}
 \subsubsection{\texorpdfstring{parse\+\_\+assignment()}{parse\_assignment()}}
-{\footnotesize\ttfamily struct \mbox{\hyperlink{struct_node}{Node}}$\ast$ parse\+\_\+assignment (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$}]{tok\+\_\+mgr,  }\item[{\mbox{\hyperlink{struct_p_errors}{P\+Errors}} $\ast$}]{err\+\_\+handle }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{struct_node}{Node}}$\ast$ parse\+\_\+assignment (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} $\ast$}]{par\+\_\+mgr }\end{DoxyParamCaption})}
 
 
 
 Will consume assignment based on grammar. 
 
-identifier = I\+N\+T\+E\+G\+ER $\vert$ S\+T\+R\+I\+NG
+assignment = expression $\vert$ S\+T\+R\+I\+NG
 
 
 \begin{DoxyParams}{Parameters}
-{\em tok\+\_\+mgr} & \mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} instance. \\
-\hline
-{\em err\+\_\+handle} & Error handler to capture any parsing errors. \\
+{\em par\+\_\+mgr} & \mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} instance. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 \mbox{\hyperlink{struct_node}{Node}} generated from production. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{parser_8h_a9afe22b860279cc2062083b5a8c0b6f2}\label{parser_8h_a9afe22b860279cc2062083b5a8c0b6f2}} 
+\mbox{\Hypertarget{parser_8h_a521f3aadad5d81736710b16e1c03a39b}\label{parser_8h_a521f3aadad5d81736710b16e1c03a39b}} 
+\index{parser.\+h@{parser.\+h}!parse\+\_\+expr@{parse\+\_\+expr}}
+\index{parse\+\_\+expr@{parse\+\_\+expr}!parser.\+h@{parser.\+h}}
+\subsubsection{\texorpdfstring{parse\+\_\+expr()}{parse\_expr()}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{struct_node}{Node}}$\ast$ parse\+\_\+expr (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} $\ast$}]{par\+\_\+mgr }\end{DoxyParamCaption})}
+
+
+
+Will consume expression based on grammar. 
+
+expression = factor $\vert$ factor (P\+L\+US $\vert$ M\+I\+N\+US) factor
+
+
+\begin{DoxyParams}{Parameters}
+{\em par\+\_\+mgr} & \mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} instance. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{struct_node}{Node}} generated from production. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{parser_8h_a52b720c8a40a613335237af007fe6581}\label{parser_8h_a52b720c8a40a613335237af007fe6581}} 
+\index{parser.\+h@{parser.\+h}!parse\+\_\+factor@{parse\+\_\+factor}}
+\index{parse\+\_\+factor@{parse\+\_\+factor}!parser.\+h@{parser.\+h}}
+\subsubsection{\texorpdfstring{parse\+\_\+factor()}{parse\_factor()}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{struct_node}{Node}}$\ast$ parse\+\_\+factor (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} $\ast$}]{par\+\_\+mgr }\end{DoxyParamCaption})}
+
+
+
+Will consume factor based on grammar. 
+
+factor = I\+N\+T\+E\+G\+ER
+
+
+\begin{DoxyParams}{Parameters}
+{\em par\+\_\+mgr} & \mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} instance. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{struct_node}{Node}} generated from production. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{parser_8h_a46e3b3b2ad4d512a74e932d869fffd36}\label{parser_8h_a46e3b3b2ad4d512a74e932d869fffd36}} 
 \index{parser.\+h@{parser.\+h}!parse\+\_\+group@{parse\+\_\+group}}
 \index{parse\+\_\+group@{parse\+\_\+group}!parser.\+h@{parser.\+h}}
 \subsubsection{\texorpdfstring{parse\+\_\+group()}{parse\_group()}}
-{\footnotesize\ttfamily struct \mbox{\hyperlink{struct_node}{Node}}$\ast$ parse\+\_\+group (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$}]{tok\+\_\+mgr,  }\item[{\mbox{\hyperlink{struct_p_errors}{P\+Errors}} $\ast$}]{err\+\_\+handle }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{struct_node}{Node}}$\ast$ parse\+\_\+group (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} $\ast$}]{par\+\_\+mgr }\end{DoxyParamCaption})}
 
 
 
@@ -76,33 +119,14 @@ Group = string $\vert$ string\+\_\+list
 
 
 \begin{DoxyParams}{Parameters}
-{\em tok\+\_\+mgr} & \mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} instance. \\
+{\em par\+\_\+mgr} & \mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} instance. \\
 \hline
-{\em err\+\_\+handle} & Error handler to capture any parsing errors. \\
+{\em err\+\_\+handle} & \mbox{\hyperlink{struct_error}{Error}} handler to capture any parsing errors. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 \mbox{\hyperlink{struct_node}{Node}} generated from production. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{parser_8h_a64ec77acb899570c72d484e07a0aa17a}\label{parser_8h_a64ec77acb899570c72d484e07a0aa17a}} 
-\index{parser.\+h@{parser.\+h}!parser\+\_\+add\+\_\+perror@{parser\+\_\+add\+\_\+perror}}
-\index{parser\+\_\+add\+\_\+perror@{parser\+\_\+add\+\_\+perror}!parser.\+h@{parser.\+h}}
-\subsubsection{\texorpdfstring{parser\+\_\+add\+\_\+perror()}{parser\_add\_perror()}}
-{\footnotesize\ttfamily void parser\+\_\+add\+\_\+perror (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_p_errors}{P\+Errors}} $\ast$}]{err\+\_\+handle,  }\item[{\mbox{\hyperlink{struct_token}{Token}} $\ast$}]{offender,  }\item[{int}]{err\+\_\+type }\end{DoxyParamCaption})}
-
-
-
-Add a error string to the list of errors stored in \mbox{\hyperlink{struct_p_errors}{P\+Errors}}. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em p\+\_\+error} & Instance of \mbox{\hyperlink{struct_p_errors}{P\+Errors}}. \\
-\hline
-{\em offender} & \mbox{\hyperlink{struct_token}{Token}} which triggered the error. \\
-\hline
-{\em err\+\_\+type} & Index of error string in the array of errors in parser.\+c. \\
-\hline
-\end{DoxyParams}
 \mbox{\Hypertarget{parser_8h_afecccd0d2c4a9a250c8c5b7f00721325}\label{parser_8h_afecccd0d2c4a9a250c8c5b7f00721325}} 
 \index{parser.\+h@{parser.\+h}!parser\+\_\+can\+\_\+consume@{parser\+\_\+can\+\_\+consume}}
 \index{parser\+\_\+can\+\_\+consume@{parser\+\_\+can\+\_\+consume}!parser.\+h@{parser.\+h}}
@@ -120,19 +144,6 @@ This function is used to determine if a token matches expected type.
 {\em tok} & is a pointer to the token being compared. \\
 \hline
 {\em type} & the type we are expecting it to be. \\
-\hline
-\end{DoxyParams}
-\mbox{\Hypertarget{parser_8h_a6ba132e08ed1110f51fb3962e264df78}\label{parser_8h_a6ba132e08ed1110f51fb3962e264df78}} 
-\index{parser.\+h@{parser.\+h}!parser\+\_\+free\+\_\+perrors@{parser\+\_\+free\+\_\+perrors}}
-\index{parser\+\_\+free\+\_\+perrors@{parser\+\_\+free\+\_\+perrors}!parser.\+h@{parser.\+h}}
-\subsubsection{\texorpdfstring{parser\+\_\+free\+\_\+perrors()}{parser\_free\_perrors()}}
-{\footnotesize\ttfamily void parser\+\_\+free\+\_\+perrors (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_p_errors}{P\+Errors}} $\ast$}]{err\+\_\+handle,  }\item[{int}]{print\+\_\+mode }\end{DoxyParamCaption})}
-
-Instruct error handler to release all of its stored errors.
-
-
-\begin{DoxyParams}{Parameters}
-{\em err\+\_\+handle} & \mbox{\hyperlink{struct_p_errors}{P\+Errors}} instance. \\
 \hline
 \end{DoxyParams}
 \mbox{\Hypertarget{parser_8h_a7ed0c289eb82241a3e41acc50b296356}\label{parser_8h_a7ed0c289eb82241a3e41acc50b296356}} 
@@ -153,16 +164,53 @@ Initial entry for parser.
 \begin{DoxyReturn}{Returns}
 0 if parser was successful or return 1 if issue occurred. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{parser_8h_a326a8ed28fff0b54e19beb5486638167}\label{parser_8h_a326a8ed28fff0b54e19beb5486638167}} 
-\index{parser.\+h@{parser.\+h}!parser\+\_\+new\+\_\+perrors@{parser\+\_\+new\+\_\+perrors}}
-\index{parser\+\_\+new\+\_\+perrors@{parser\+\_\+new\+\_\+perrors}!parser.\+h@{parser.\+h}}
-\subsubsection{\texorpdfstring{parser\+\_\+new\+\_\+perrors()}{parser\_new\_perrors()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{struct_p_errors}{P\+Errors}}$\ast$ parser\+\_\+new\+\_\+perrors (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+\mbox{\Hypertarget{parser_8h_a43ddbfc8a440bb59a7f096337b6b8c26}\label{parser_8h_a43ddbfc8a440bb59a7f096337b6b8c26}} 
+\index{parser.\+h@{parser.\+h}!Parser\+Mgr\+\_\+add\+\_\+error@{Parser\+Mgr\+\_\+add\+\_\+error}}
+\index{Parser\+Mgr\+\_\+add\+\_\+error@{Parser\+Mgr\+\_\+add\+\_\+error}!parser.\+h@{parser.\+h}}
+\subsubsection{\texorpdfstring{Parser\+Mgr\+\_\+add\+\_\+error()}{ParserMgr\_add\_error()}}
+{\footnotesize\ttfamily void Parser\+Mgr\+\_\+add\+\_\+error (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_error}{Error}} $\ast$}]{err\+\_\+handle,  }\item[{\mbox{\hyperlink{struct_token}{Token}} $\ast$}]{offender,  }\item[{int}]{err\+\_\+type }\end{DoxyParamCaption})}
 
 
 
-Create new malloced \mbox{\hyperlink{struct_p_errors}{P\+Errors}} instance. 
+Add a error string to the list of errors stored in \mbox{\hyperlink{struct_error}{Error}}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em err\+\_\+error} & Instance of \mbox{\hyperlink{struct_error}{Error}}. \\
+\hline
+{\em offender} & \mbox{\hyperlink{struct_token}{Token}} which triggered the error. \\
+\hline
+{\em err\+\_\+type} & Index of error string in the array of errors in parser.\+c. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{parser_8h_a92454985f0e22aed442a1c8077f9bced}\label{parser_8h_a92454985f0e22aed442a1c8077f9bced}} 
+\index{parser.\+h@{parser.\+h}!Parser\+Mgr\+\_\+free@{Parser\+Mgr\+\_\+free}}
+\index{Parser\+Mgr\+\_\+free@{Parser\+Mgr\+\_\+free}!parser.\+h@{parser.\+h}}
+\subsubsection{\texorpdfstring{Parser\+Mgr\+\_\+free()}{ParserMgr\_free()}}
+{\footnotesize\ttfamily int Parser\+Mgr\+\_\+free (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} $\ast$}]{par\+\_\+mgr }\end{DoxyParamCaption})}
+
+
+
+Free \mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} instance. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Instance} & of \mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if free was successful. Otherwise 1 for errors. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{parser_8h_a491dd83f1c5caab93b58fecd66cedeee}\label{parser_8h_a491dd83f1c5caab93b58fecd66cedeee}} 
+\index{parser.\+h@{parser.\+h}!Parser\+Mgr\+\_\+new@{Parser\+Mgr\+\_\+new}}
+\index{Parser\+Mgr\+\_\+new@{Parser\+Mgr\+\_\+new}!parser.\+h@{parser.\+h}}
+\subsubsection{\texorpdfstring{Parser\+Mgr\+\_\+new()}{ParserMgr\_new()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}}$\ast$ Parser\+Mgr\+\_\+new (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create new malloced \mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} instance. 
 
 \begin{DoxyReturn}{Returns}
-New instance of \mbox{\hyperlink{struct_p_errors}{P\+Errors}} or Null if failed. 
+new instance of \mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} or null if failed. 
 \end{DoxyReturn}

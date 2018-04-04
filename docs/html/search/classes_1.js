@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['perrors',['PErrors',['../struct_p_errors.html',1,'']]]
+  ['node',['Node',['../struct_node.html',1,'']]],
+  ['nodemgr',['NodeMgr',['../struct_node_mgr.html',1,'']]]
 ];

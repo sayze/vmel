@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Virtual Machine Execution Language (Vmel): Node Struct Reference</title>
+<title>Virtual Machine Execution Language (Vmel): ParserMgr Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -65,37 +65,40 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="struct_node-members.html">List of all members</a>  </div>
+<a href="struct_parser_mgr-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">Node Struct Reference</div>  </div>
+<div class="title">ParserMgr Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><a class="el" href="struct_node.html" title="Node correlates to a node within a tree. ">Node</a> correlates to a node within a tree.  
- <a href="struct_node.html#details">More...</a></p>
+<p>Maintain state within in the parsing process.  
+ <a href="struct_parser_mgr.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="node_8h_source.html">node.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="parser_8h_source.html">parser.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a5fafc290a43e87a4610980c4bf17ccc8"><td class="memItemLeft" align="right" valign="top"><a id="a5fafc290a43e87a4610980c4bf17ccc8"></a>
-union <a class="el" href="union_syntax_node.html">SyntaxNode</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>data</b></td></tr>
-<tr class="separator:a5fafc290a43e87a4610980c4bf17ccc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6297a673269e91293bc50568e573b686"><td class="memItemLeft" align="right" valign="top"><a id="a6297a673269e91293bc50568e573b686"></a>
-enum NodeType&#160;</td><td class="memItemRight" valign="bottom"><b>type</b></td></tr>
-<tr class="separator:a6297a673269e91293bc50568e573b686"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae41eac3cbca43f06a6f8a065215e196b"><td class="memItemLeft" align="right" valign="top"><a id="ae41eac3cbca43f06a6f8a065215e196b"></a>
-unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>depth</b></td></tr>
-<tr class="separator:ae41eac3cbca43f06a6f8a065215e196b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a785f15caf45b9b7aa4984bc72bf4a525"><td class="memItemLeft" align="right" valign="top"><a id="a785f15caf45b9b7aa4984bc72bf4a525"></a>
-char *&#160;</td><td class="memItemRight" valign="bottom"><b>value</b></td></tr>
-<tr class="separator:a785f15caf45b9b7aa4984bc72bf4a525"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0e632e38653f0b572f9389247148084"><td class="memItemLeft" align="right" valign="top"><a id="ab0e632e38653f0b572f9389247148084"></a>
+struct <a class="el" href="struct_node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>curr_expr</b></td></tr>
+<tr class="separator:ab0e632e38653f0b572f9389247148084"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac10dc0846d693c106a2620b2906ed729"><td class="memItemLeft" align="right" valign="top"><a id="ac10dc0846d693c106a2620b2906ed729"></a>
+unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>expr_depth</b></td></tr>
+<tr class="separator:ac10dc0846d693c106a2620b2906ed729"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f91e648f300891d40e0fb2b903789c0"><td class="memItemLeft" align="right" valign="top"><a id="a2f91e648f300891d40e0fb2b903789c0"></a>
+<a class="el" href="struct_token.html">Token</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>curr_token</b></td></tr>
+<tr class="separator:a2f91e648f300891d40e0fb2b903789c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f758482ba8935ae5709f66d4295d320"><td class="memItemLeft" align="right" valign="top"><a id="a2f758482ba8935ae5709f66d4295d320"></a>
+<a class="el" href="struct_token_mgr.html">TokenMgr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>tok_mgr</b></td></tr>
+<tr class="separator:a2f758482ba8935ae5709f66d4295d320"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35287ee719c8ac8f666cc8ebc2ac7003"><td class="memItemLeft" align="right" valign="top"><a id="a35287ee719c8ac8f666cc8ebc2ac7003"></a>
+<a class="el" href="struct_error.html">Error</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>err_handle</b></td></tr>
+<tr class="separator:a35287ee719c8ac8f666cc8ebc2ac7003"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><a class="el" href="struct_node.html" title="Node correlates to a node within a tree. ">Node</a> correlates to a node within a tree. </p>
-<p>This is used to map tokens to an AST. its centre/root. </p>
+<div class="textblock"><p>Maintain state within in the parsing process. </p>
+<p>Instead of passing around excess paramters we simply pass a single structure which holds all the necessary information per parse. </p>
 </div><hr/>The documentation for this struct was generated from the following file:<ul>
-<li>src/include/<a class="el" href="node_8h_source.html">node.h</a></li>
+<li>src/include/<a class="el" href="parser_8h_source.html">parser.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
