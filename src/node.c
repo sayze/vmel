@@ -13,44 +13,48 @@ NodeMgr *NodeMgr_new(void) {
     return node_mgr;
 }
 
+static int is_binop_node(struct Node *n) {
+	return 	n->type ==  E_ADD_NODE || n->type == E_MINUS_NODE || 
+			n->type == E_DIV_NODE || n->type == E_TIMES_NODE;
+}
+
+static void node_free(struct Node *node) {
+	if (node == NULL) 
+		return;
+	
+	if (is_binop_node(node))
+		node_root_free(node->data->BinExpNode.right);
+		
+	if (is_binop_node(node))
+		node_root_free(node->data->BinExpNode.left);
+	
+	if (is_binop_node(node))
+		free(node->data);
+	
+	free(node);
+}
+
 int NodeMgr_free(NodeMgr *node_mgr) {
-    if (node_mgr == NULL)
-        return 1;
+    if (node_mgr == NULL) 
+		return 1;
 
     struct Node *root_node = NULL;     
     struct Node *itr = NULL;
     struct Node *prev = NULL;
-    unsigned int depth_ct = 1;
     
     for (size_t n = 0; n < node_mgr->nodes_ctr; n++) {
 		root_node = node_mgr->nodes[n];
         switch (root_node->type) {
-            /** TODO: At the moment only operator nodes contain left, right pointers
-             * this means we need to use prev Node* to keep track of the last operator ast.
-             * Would be less code and more generic if each node implemented a doubly linked list.
-             * Also we can have a tree walker function that returns an array of 3 pointers to
-             * ast at depth (x). Assuming an ast can't have more than 3 branches.
-             */
             case E_EQUAL_NODE:
                 // Depth 1 e.g 2 + 3       
                 if (root_node->depth == 1) {
                     free(root_node->data->AsnStmtNode.left);
                     free(root_node->data->AsnStmtNode.right);
                 }
+				// Depth > 1 e.g 3 * 1 + 4
                 else {
-                    free(root_node->data->AsnStmtNode.left);
-                    itr = root_node->data->AsnStmtNode.right; 
-                    while (depth_ct < root_node->depth) {
-                        prev = itr;
-                        free(itr->data->BinExpNode.left);
-                        itr = itr->data->BinExpNode.right;
-                        free(prev->data);
-                        free(prev);
-                        depth_ct++;
-                    }
-                    free(itr);
-                    prev = NULL;
-                    itr = NULL;
+					free(root_node->data->AsnStmtNode.left);
+                    node_root_free(root_node->data->AsnStmtNode.right);
                 }
                 break;
             case E_GROUP_NODE:
@@ -100,8 +104,8 @@ struct Node *Node_new(int wdata) {
 }
 
 struct Node **grow_nodes(NodeMgr *node_mgr) {
-    if (node_mgr == NULL)
-        return NULL;
+    if (node_mgr == NULL) 
+		return NULL;
 
     node_mgr->nodes_cap *= 2;
     struct Node **nodes_new = realloc(node_mgr->nodes, sizeof(struct Node *) * node_mgr->nodes_cap);		
@@ -109,14 +113,13 @@ struct Node **grow_nodes(NodeMgr *node_mgr) {
 }
 
 int NodeMgr_add_node(NodeMgr *node_mgr, struct Node *node) {
-    if (node_mgr == NULL)
-        return 1;
+    if (node_mgr == NULL) 
+		return 1;
 
     if (node_mgr->nodes_cap - node_mgr->nodes_ctr == 4)
         node_mgr->nodes = grow_nodes(node_mgr);   
 
-    if (node_mgr->nodes == NULL)
-        return 1;
+    if (node_mgr->nodes == NULL) return 1;
     
     node_mgr->nodes[node_mgr->nodes_ctr++] = node;
     return 0;
