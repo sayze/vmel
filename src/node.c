@@ -23,10 +23,10 @@ static void node_free(struct Node *node) {
 		return;
 	
 	if (is_binop_node(node))
-		node_root_free(node->data->BinExpNode.right);
+		node_free(node->data->BinExpNode.right);
 		
 	if (is_binop_node(node))
-		node_root_free(node->data->BinExpNode.left);
+		node_free(node->data->BinExpNode.left);
 	
 	if (is_binop_node(node))
 		free(node->data);
@@ -47,14 +47,14 @@ int NodeMgr_free(NodeMgr *node_mgr) {
         switch (root_node->type) {
             case E_EQUAL_NODE:
                 // Depth 1 e.g 2 + 3       
-                if (root_node->depth == 1) {
+                if (root_node->depth <= 1) {
                     free(root_node->data->AsnStmtNode.left);
                     free(root_node->data->AsnStmtNode.right);
                 }
 				// Depth > 1 e.g 3 * 1 + 4
                 else {
 					free(root_node->data->AsnStmtNode.left);
-                    node_root_free(root_node->data->AsnStmtNode.right);
+                    node_free(root_node->data->AsnStmtNode.right);
                 }
                 break;
             case E_GROUP_NODE:

@@ -278,6 +278,7 @@ int parser_init(TokenMgr *tok_mgr) {
 		else {
 			ParserMgr_add_error(par_mgr->err_handle, par_mgr->curr_token, ERR_UNEXPECTED);
 			TokenMgr_next_token(par_mgr->tok_mgr);
+			continue;
 		}
 		
 		if (par_mgr->curr_expr != NULL) {
