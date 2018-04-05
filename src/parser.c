@@ -41,13 +41,9 @@ int ParserMgr_free(ParserMgr *par_mgr) {
 }
 
 void ParserMgr_add_error(Error *err_handle, Token *offender, int err_type) {
-	// Determine if we need to make bigger.
-	if (err_handle->error_cap - err_handle->error_ctr <= 5) {
-		err_handle->error_cap  = err_handle->error_cap + err_handle->error_ctr / 2;
-		char **errors_n = realloc(err_handle->errors, err_handle->error_cap * sizeof(char *));
-		err_handle->errors = errors_n;
-		errors_n = NULL;
-	}
+	// Don't exceed error limit
+	if (err_handle->error_cap == err_handle->error_ctr)
+		return;
 	
 	// String representation of offending line number. 
 	char off_lineno[16]; // TODO: Assume that a source file won't exceed 9999,9999,9999,9999 lines ?
@@ -67,8 +63,7 @@ void ParserMgr_add_error(Error *err_handle, Token *offender, int err_type) {
 	template_fmt = string_map_vars(template, template_values, strlen(template), 2);
 	
 	// Add the final template string to error handler.
-	err_handle->errors[err_handle->error_ctr] = malloc(strlen(template_fmt) * sizeof(char));
-	strcpy(err_handle->errors[err_handle->error_ctr], template_fmt);
+	err_handle->errors[err_handle->error_ctr] = template_fmt;
 	err_handle->error_ctr++;
 }
 

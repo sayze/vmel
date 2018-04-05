@@ -21,9 +21,9 @@
  * @brief Store all the errors related to parsing process.
  */
 typedef struct {
-    char **errors;
+    char *errors[INIT_MAX_ERRORS];
     size_t error_ctr;
-    int error_cap;
+    size_t error_cap;
 } Error;
 
 /**
