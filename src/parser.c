@@ -10,21 +10,19 @@
 #define ERR_UNEXPECTED 0
 #define ERR_GROUP_EXIST 1
 #define ERR_EMPTY_GROUP 2
-#define ERR_EMPTY_ARRAY_ITEM 3
 
 // These are the errors a parser may generate. They are mapped to the #DEFINE above.
 static const char *Error_Templates[] = {
 	"unexpected @0 found in line @1",
 	"duplicate definition {@0} already defined in line @1",
 	"empty group {@0} must contain commands in line @1",
-	"array cannot contain empty value at line @1"
 };
 
 // ------------------------------------------------------------
 // Below are shorthand functions for token related actions.
 // ------------------------------------------------------------
 
-// Sync ParserMgr internal token to be current toke held by TokenMgr.
+// Sync ParserMgr internal token to be current token held by TokenMgr.
 static void par_mgr_sync(ParserMgr *par_mgr) {
 	par_mgr->curr_token = TokenMgr_current_token(par_mgr->tok_mgr);
 }
@@ -37,7 +35,6 @@ static void par_mgr_next(ParserMgr *par_mgr) {
 // ------------------------------------------------------------
 // End shorthand functions.
 // ------------------------------------------------------------
-
 
 ParserMgr *ParserMgr_new() {
 	ParserMgr *ps = malloc(sizeof(ParserMgr));
@@ -62,12 +59,12 @@ int ParserMgr_free(ParserMgr *par_mgr) {
 }
 
 void ParserMgr_add_error(Error *err_handle, Token *offender, int err_type) {
-	// Don't exceed error limit
+	// Don't exceed error limit.
 	if (err_handle->error_cap == err_handle->error_ctr)
 		return;
 	
 	// String representation of offending line number. 
-	char off_lineno[16]; // TODO: Assume that a source file won't exceed 9999,9999,9999,9999 lines ?
+	char off_lineno[16]; // Assume that a source file won't exceed 9999,9999,9999,9999 lines ?
 	// Pointer to offending value.
 	char *off_value = offender->value;
 	// The error template which is needed.
