@@ -1,10 +1,11 @@
-\hypertarget{utils_8h}{}\section{src/utils.h File Reference}
-\label{utils_8h}\index{src/utils.\+h@{src/utils.\+h}}
+\hypertarget{utils_8h}{}\section{src/include/utils.h File Reference}
+\label{utils_8h}\index{src/include/utils.\+h@{src/include/utils.\+h}}
 
 
 File containing collection of helper functions.  
 
 
+{\ttfamily \#include $<$string.\+h$>$}\newline
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -12,7 +13,15 @@ File containing collection of helper functions.
 void \mbox{\hyperlink{utils_8h_aa1187b70998f73cdb598833d6afaa30a}{print\+\_\+usage}} (void)
 \begin{DoxyCompactList}\small\item\em Print help to cli. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{utils_8h_a8cae9f2a04943f06b1ac9074e3b8571f}{is\+\_\+valid\+\_\+identifier}} (char id)
-\begin{DoxyCompactList}\small\item\em Utility function to determine if char is one of accepted identifiers. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Utility function to determine if char is one of accepted identifiers. \end{DoxyCompactList}\item 
+char $\ast$ \mbox{\hyperlink{utils_8h_afec8213f9a8c68f5fddcd254e9f02d86}{file\+\_\+to\+\_\+buffer}} (const char $\ast$)
+\begin{DoxyCompactList}\small\item\em Read contents of file to buffer. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{utils_8h_a1b3d227bb361e0377f47e04db658fdb7}{string\+\_\+to\+\_\+int}} (char $\ast$str, size\+\_\+t len)
+\begin{DoxyCompactList}\small\item\em convert a string of numbers to integer. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{utils_8h_a3fc6a14a15a7932942d42a6132390f0d}{int\+\_\+to\+\_\+string}} (char $\ast$out, int src)
+\begin{DoxyCompactList}\small\item\em wrapper around sprintf to convert an integer to a string. \end{DoxyCompactList}\item 
+char $\ast$ \mbox{\hyperlink{utils_8h_a735abe73549c0fe822cdf2ec566187a2}{string\+\_\+map\+\_\+vars}} (const char $\ast$src, char $\ast$$\ast$vars, size\+\_\+t src\+\_\+len, size\+\_\+t vars\+\_\+len)
+\begin{DoxyCompactList}\small\item\em Replace all the variables in string with corresponding values. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -24,6 +33,54 @@ Sayed Sadeed
 
 
 \subsection{Function Documentation}
+\mbox{\Hypertarget{utils_8h_afec8213f9a8c68f5fddcd254e9f02d86}\label{utils_8h_afec8213f9a8c68f5fddcd254e9f02d86}} 
+\index{utils.\+h@{utils.\+h}!file\+\_\+to\+\_\+buffer@{file\+\_\+to\+\_\+buffer}}
+\index{file\+\_\+to\+\_\+buffer@{file\+\_\+to\+\_\+buffer}!utils.\+h@{utils.\+h}}
+\subsubsection{\texorpdfstring{file\+\_\+to\+\_\+buffer()}{file\_to\_buffer()}}
+{\footnotesize\ttfamily char$\ast$ file\+\_\+to\+\_\+buffer (\begin{DoxyParamCaption}\item[{const char $\ast$}]{ }\end{DoxyParamCaption})}
+
+
+
+Read contents of file to buffer. 
+
+This function will read the contents of a passed source file ($\ast$.vml). It will simply dump the contents of a file to a buffer. The buffer is created on heap so must be managed by caller. See below example
+
+
+\begin{DoxyCode}
+\textcolor{keywordtype}{char} *filename = \textcolor{stringliteral}{"~/Desktop/run.vml"};
+\textcolor{keywordtype}{char} *buffer = \mbox{\hyperlink{utils_8h_afec8213f9a8c68f5fddcd254e9f02d86}{file\_to\_buffer}}(filename);
+free(buffer) \textcolor{comment}{// when done.}
+\end{DoxyCode}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & Path to source file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to buffer containing contents of file. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{utils_8h_a3fc6a14a15a7932942d42a6132390f0d}\label{utils_8h_a3fc6a14a15a7932942d42a6132390f0d}} 
+\index{utils.\+h@{utils.\+h}!int\+\_\+to\+\_\+string@{int\+\_\+to\+\_\+string}}
+\index{int\+\_\+to\+\_\+string@{int\+\_\+to\+\_\+string}!utils.\+h@{utils.\+h}}
+\subsubsection{\texorpdfstring{int\+\_\+to\+\_\+string()}{int\_to\_string()}}
+{\footnotesize\ttfamily int int\+\_\+to\+\_\+string (\begin{DoxyParamCaption}\item[{char $\ast$}]{out,  }\item[{int}]{src }\end{DoxyParamCaption})}
+
+
+
+wrapper around sprintf to convert an integer to a string. 
+
+Function take a input source and saves its contents in string format to specified out char.
+
+
+\begin{DoxyParams}{Parameters}
+{\em out} & Pointer to char where converted int is stored.  src Integer being converted. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of chars (exl N\+U\+LL) if went successfully otherwise return negative; 
+\end{DoxyReturn}
 \mbox{\Hypertarget{utils_8h_a8cae9f2a04943f06b1ac9074e3b8571f}\label{utils_8h_a8cae9f2a04943f06b1ac9074e3b8571f}} 
 \index{utils.\+h@{utils.\+h}!is\+\_\+valid\+\_\+identifier@{is\+\_\+valid\+\_\+identifier}}
 \index{is\+\_\+valid\+\_\+identifier@{is\+\_\+valid\+\_\+identifier}!utils.\+h@{utils.\+h}}
@@ -43,4 +100,59 @@ Check to see if a character is deemed valid in the language syntax.
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 1 If it matches accepted identifiers or return 0 if it doesn\textquotesingle{}t. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{utils_8h_a735abe73549c0fe822cdf2ec566187a2}\label{utils_8h_a735abe73549c0fe822cdf2ec566187a2}} 
+\index{utils.\+h@{utils.\+h}!string\+\_\+map\+\_\+vars@{string\+\_\+map\+\_\+vars}}
+\index{string\+\_\+map\+\_\+vars@{string\+\_\+map\+\_\+vars}!utils.\+h@{utils.\+h}}
+\subsubsection{\texorpdfstring{string\+\_\+map\+\_\+vars()}{string\_map\_vars()}}
+{\footnotesize\ttfamily char$\ast$ string\+\_\+map\+\_\+vars (\begin{DoxyParamCaption}\item[{const char $\ast$}]{src,  }\item[{char $\ast$$\ast$}]{vars,  }\item[{size\+\_\+t}]{src\+\_\+len,  }\item[{size\+\_\+t}]{vars\+\_\+len }\end{DoxyParamCaption})}
+
+
+
+Replace all the variables in string with corresponding values. 
+
+Function is useful for a linear string replace. Note that the placeholder values will be replaced based on position of string in vars. 
+\begin{DoxyCode}
+\textcolor{keywordtype}{char} **replace = \{\textcolor{stringliteral}{"sayed"}, \textcolor{stringliteral}{"24"}\};
+\textcolor{keywordtype}{char} *src = \textcolor{stringliteral}{"Hello my name is @0 and I am @1 years old"};
+
+\textcolor{keywordtype}{char} *\textcolor{keyword}{new} = \mbox{\hyperlink{utils_8h_a735abe73549c0fe822cdf2ec566187a2}{string\_map\_vars}}(src, replace, strlen(src), 2);
+\textcolor{comment}{// new will be equal to}
+\textcolor{stringliteral}{"Hello my name is sayed and I am 24 years old"}
+\end{DoxyCode}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em src} & A constant string which contains the variable placeholders. \\
+\hline
+{\em vars} & Array of all the string which serve as replacement values. \\
+\hline
+{\em src\+\_\+len} & Length of src. \\
+\hline
+{\em vars\+\_\+len} & Number of string inside vars. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A malloc\textquotesingle{}ed char pointer containing the final mapped string. Will return N\+U\+LL if error occurred. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{utils_8h_a1b3d227bb361e0377f47e04db658fdb7}\label{utils_8h_a1b3d227bb361e0377f47e04db658fdb7}} 
+\index{utils.\+h@{utils.\+h}!string\+\_\+to\+\_\+int@{string\+\_\+to\+\_\+int}}
+\index{string\+\_\+to\+\_\+int@{string\+\_\+to\+\_\+int}!utils.\+h@{utils.\+h}}
+\subsubsection{\texorpdfstring{string\+\_\+to\+\_\+int()}{string\_to\_int()}}
+{\footnotesize\ttfamily int string\+\_\+to\+\_\+int (\begin{DoxyParamCaption}\item[{char $\ast$}]{str,  }\item[{size\+\_\+t}]{len }\end{DoxyParamCaption})}
+
+
+
+convert a string of numbers to integer. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em str} & string to be converted. \\
+\hline
+{\em len} & the length of the string. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+converted integer if successful or 0. 
 \end{DoxyReturn}

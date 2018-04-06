@@ -29,5 +29,3 @@
 #{run_make}
 #"cd ~/var/exec"
 #"make -dDebug1"
-
-3 + 5

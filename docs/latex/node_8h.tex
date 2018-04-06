@@ -1,0 +1,161 @@
+\hypertarget{node_8h}{}\section{src/include/node.h File Reference}
+\label{node_8h}\index{src/include/node.\+h@{src/include/node.\+h}}
+
+
+The \mbox{\hyperlink{struct_node}{Node}} module represents a \char`\"{}node\char`\"{} inside an A\+ST.  
+
+
+{\ttfamily \#include $<$string.\+h$>$}\newline
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_node}{Node}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{struct_node}{Node}} correlates to a node within a tree. \end{DoxyCompactList}\item 
+union \mbox{\hyperlink{union_syntax_node}{Syntax\+Node}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{union_syntax_node}{Syntax\+Node}} desscribes the data stored in each \mbox{\hyperlink{struct_node}{Node}}. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}} manages holds all the nodes at the root level. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{node_8h_acac9cbaeea226ed297804c012dc12b16}\label{node_8h_acac9cbaeea226ed297804c012dc12b16}} 
+enum {\bfseries Node\+Type} \{ \newline
+{\bfseries E\+\_\+\+A\+D\+D\+\_\+\+N\+O\+DE}, 
+{\bfseries E\+\_\+\+T\+I\+M\+E\+S\+\_\+\+N\+O\+DE}, 
+{\bfseries E\+\_\+\+D\+I\+V\+\_\+\+N\+O\+DE}, 
+{\bfseries E\+\_\+\+M\+I\+N\+U\+S\+\_\+\+N\+O\+DE}, 
+\newline
+{\bfseries E\+\_\+\+E\+Q\+U\+A\+L\+\_\+\+N\+O\+DE}, 
+{\bfseries E\+\_\+\+S\+T\+R\+I\+N\+G\+\_\+\+N\+O\+DE}, 
+{\bfseries E\+\_\+\+I\+N\+T\+E\+G\+E\+R\+\_\+\+N\+O\+DE}, 
+{\bfseries E\+\_\+\+G\+R\+O\+U\+P\+\_\+\+N\+O\+DE}, 
+\newline
+{\bfseries E\+\_\+\+I\+D\+E\+N\+T\+I\+F\+I\+E\+R\+\_\+\+N\+O\+DE}, 
+{\bfseries E\+\_\+\+E\+O\+F\+\_\+\+N\+O\+DE}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_node}{Node}} $\ast$ \mbox{\hyperlink{node_8h_a87764c1d17645f858d7d8f70ae311e48}{Node\+\_\+new}} (int wdata)
+\begin{DoxyCompactList}\small\item\em Create new node instance. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{node_8h_ad0d6bf52e9ff11327bba1a46bb67d729}{Node\+Mgr\+\_\+add\+\_\+node}} (\mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}} $\ast$node\+\_\+mgr, struct \mbox{\hyperlink{struct_node}{Node}} $\ast$node)
+\begin{DoxyCompactList}\small\item\em Add an existing \mbox{\hyperlink{struct_node}{Node}} to the internal \mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}} store. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{node_8h_a25a6d59673585e033763a1a26037c0e1}{Node\+Mgr\+\_\+free}} (\mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}} $\ast$node\+\_\+mgr)
+\begin{DoxyCompactList}\small\item\em Free all resources creates by node manager. Including node manager itself. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}} $\ast$ \mbox{\hyperlink{node_8h_a6c58c981a0f17e2851519bf8bfca335a}{Node\+Mgr\+\_\+new}} (void)
+\begin{DoxyCompactList}\small\item\em Create node manager malloc\textquotesingle{}ed. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_node}{Node}} $\ast$$\ast$ \mbox{\hyperlink{node_8h_ab7f8ce092b66294da6139c7f81391880}{grow\+\_\+nodes}} (\mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}} $\ast$node\+\_\+mgr)
+\begin{DoxyCompactList}\small\item\em Perform relloc on array of of nodes in Manager. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{node_8h_ad9ce713c4781cd6108fdb38235e90070}\label{node_8h_ad9ce713c4781cd6108fdb38235e90070}} 
+union \mbox{\hyperlink{union_syntax_node}{Syntax\+Node}} {\bfseries sn}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The \mbox{\hyperlink{struct_node}{Node}} module represents a \char`\"{}node\char`\"{} inside an A\+ST. 
+
+\begin{DoxyAuthor}{Author}
+Sayed Sadeed 
+\end{DoxyAuthor}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{node_8h_ab7f8ce092b66294da6139c7f81391880}\label{node_8h_ab7f8ce092b66294da6139c7f81391880}} 
+\index{node.\+h@{node.\+h}!grow\+\_\+nodes@{grow\+\_\+nodes}}
+\index{grow\+\_\+nodes@{grow\+\_\+nodes}!node.\+h@{node.\+h}}
+\subsubsection{\texorpdfstring{grow\+\_\+nodes()}{grow\_nodes()}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{struct_node}{Node}}$\ast$$\ast$ grow\+\_\+nodes (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}} $\ast$}]{node\+\_\+mgr }\end{DoxyParamCaption})}
+
+
+
+Perform relloc on array of of nodes in Manager. 
+
+This function is to be used internally by Node\+Mg to allocate more room if need be for node storage.
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+\_\+mgr} & Instance of \mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Newly allocated Node$\ast$$\ast$. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{node_8h_a87764c1d17645f858d7d8f70ae311e48}\label{node_8h_a87764c1d17645f858d7d8f70ae311e48}} 
+\index{node.\+h@{node.\+h}!Node\+\_\+new@{Node\+\_\+new}}
+\index{Node\+\_\+new@{Node\+\_\+new}!node.\+h@{node.\+h}}
+\subsubsection{\texorpdfstring{Node\+\_\+new()}{Node\_new()}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{struct_node}{Node}}$\ast$ Node\+\_\+new (\begin{DoxyParamCaption}\item[{int}]{wdata }\end{DoxyParamCaption})}
+
+
+
+Create new node instance. 
+
+Will create a new node instance irrespective of \mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em wdata} & With Data flag determines whether to malloc the data $\ast$. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to newly created node or null ptr if something went wrong. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{node_8h_ad0d6bf52e9ff11327bba1a46bb67d729}\label{node_8h_ad0d6bf52e9ff11327bba1a46bb67d729}} 
+\index{node.\+h@{node.\+h}!Node\+Mgr\+\_\+add\+\_\+node@{Node\+Mgr\+\_\+add\+\_\+node}}
+\index{Node\+Mgr\+\_\+add\+\_\+node@{Node\+Mgr\+\_\+add\+\_\+node}!node.\+h@{node.\+h}}
+\subsubsection{\texorpdfstring{Node\+Mgr\+\_\+add\+\_\+node()}{NodeMgr\_add\_node()}}
+{\footnotesize\ttfamily int Node\+Mgr\+\_\+add\+\_\+node (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}} $\ast$}]{node\+\_\+mgr,  }\item[{struct \mbox{\hyperlink{struct_node}{Node}} $\ast$}]{node }\end{DoxyParamCaption})}
+
+
+
+Add an existing \mbox{\hyperlink{struct_node}{Node}} to the internal \mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}} store. 
+
+This will allow the addition of externally created \mbox{\hyperlink{struct_node}{Node}} into the \mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}}. Please note that it is expected $\ast$node will be a pointer to \mbox{\hyperlink{struct_node}{Node}} created on heap. To avoid unexpected behavior it is recommended to use \mbox{\hyperlink{node_8h_a87764c1d17645f858d7d8f70ae311e48}{Node\+\_\+new()}} then add the returned pointer using this function.
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+\_\+mgr} & \mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}} instance. \\
+\hline
+{\em node} & \mbox{\hyperlink{struct_node}{Node}} instance to be added. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successful otherwise 1. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{node_8h_a25a6d59673585e033763a1a26037c0e1}\label{node_8h_a25a6d59673585e033763a1a26037c0e1}} 
+\index{node.\+h@{node.\+h}!Node\+Mgr\+\_\+free@{Node\+Mgr\+\_\+free}}
+\index{Node\+Mgr\+\_\+free@{Node\+Mgr\+\_\+free}!node.\+h@{node.\+h}}
+\subsubsection{\texorpdfstring{Node\+Mgr\+\_\+free()}{NodeMgr\_free()}}
+{\footnotesize\ttfamily int Node\+Mgr\+\_\+free (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}} $\ast$}]{node\+\_\+mgr }\end{DoxyParamCaption})}
+
+
+
+Free all resources creates by node manager. Including node manager itself. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em node\+\_\+mgr} & Pointer to the \mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}} instance. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if anything went wrong other return 0. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{node_8h_a6c58c981a0f17e2851519bf8bfca335a}\label{node_8h_a6c58c981a0f17e2851519bf8bfca335a}} 
+\index{node.\+h@{node.\+h}!Node\+Mgr\+\_\+new@{Node\+Mgr\+\_\+new}}
+\index{Node\+Mgr\+\_\+new@{Node\+Mgr\+\_\+new}!node.\+h@{node.\+h}}
+\subsubsection{\texorpdfstring{Node\+Mgr\+\_\+new()}{NodeMgr\_new()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}}$\ast$ Node\+Mgr\+\_\+new (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Create node manager malloc\textquotesingle{}ed. 
+
+This function acts as a constructor for the \mbox{\hyperlink{struct_node}{Node}} manager.
+
+\begin{DoxyReturn}{Returns}
+newly created \mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}} pointer. 
+\end{DoxyReturn}

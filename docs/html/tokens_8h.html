@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Virtual Machine Execution Language (Vmel): src/tokens.h File Reference</title>
+<title>Virtual Machine Execution Language (Vmel): src/include/tokens.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -63,397 +63,89 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_b0856f6b0d80ccb263b2f415c91f9e17.html">include</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
 <div class="title">tokens.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>File containing token definitions.  
+<p>File containing token definitions and enum types.  
 <a href="#details">More...</a></p>
 
 <p><a href="tokens_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_token.html">Token</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represent a single token read from input.  <a href="struct_token.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_token_mgr.html">TokenMgr</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="struct_token.html" title="Represent a single token read from input. ">Token</a> manager represents a pool of tokens.  <a href="struct_token_mgr.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:afec8213f9a8c68f5fddcd254e9f02d86"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokens_8h.html#afec8213f9a8c68f5fddcd254e9f02d86">file_to_buffer</a> (const char *)</td></tr>
-<tr class="memdesc:afec8213f9a8c68f5fddcd254e9f02d86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read contents of file to buffer.  <a href="#afec8213f9a8c68f5fddcd254e9f02d86">More...</a><br /></td></tr>
-<tr class="separator:afec8213f9a8c68f5fddcd254e9f02d86"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a81195342113cfd2b791683fcb8f7c9de"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokens_8h.html#a81195342113cfd2b791683fcb8f7c9de">build_tokens</a> (char *buff, <a class="el" href="struct_token_mgr.html">TokenMgr</a> *tokmgr)</td></tr>
-<tr class="memdesc:a81195342113cfd2b791683fcb8f7c9de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build tokens from buffer in.  <a href="#a81195342113cfd2b791683fcb8f7c9de">More...</a><br /></td></tr>
-<tr class="separator:a81195342113cfd2b791683fcb8f7c9de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8583e6f3a8e9ab1403387fb110e18302"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_token_mgr.html">TokenMgr</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokens_8h.html#a8583e6f3a8e9ab1403387fb110e18302">TokenMgr_new</a> ()</td></tr>
-<tr class="memdesc:a8583e6f3a8e9ab1403387fb110e18302"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create token manager malloc'ed.  <a href="#a8583e6f3a8e9ab1403387fb110e18302">More...</a><br /></td></tr>
-<tr class="separator:a8583e6f3a8e9ab1403387fb110e18302"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aceaa0e8f3b1cd5fb03b4dd0dc5814f93"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokens_8h.html#aceaa0e8f3b1cd5fb03b4dd0dc5814f93">TokenMgr_add_token</a> (<a class="el" href="struct_token_mgr.html">TokenMgr</a> *tok_mgr, char tok_type[50], char tok_val[100])</td></tr>
-<tr class="memdesc:aceaa0e8f3b1cd5fb03b4dd0dc5814f93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add another token to token manager.  <a href="#aceaa0e8f3b1cd5fb03b4dd0dc5814f93">More...</a><br /></td></tr>
-<tr class="separator:aceaa0e8f3b1cd5fb03b4dd0dc5814f93"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7402a62420f576f7f1ce38d0da9bea41"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokens_8h.html#a7402a62420f576f7f1ce38d0da9bea41">TokenMgr_free</a> (<a class="el" href="struct_token_mgr.html">TokenMgr</a> *tok_mgr)</td></tr>
-<tr class="memdesc:a7402a62420f576f7f1ce38d0da9bea41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free tokens stored by token manager as well as token manager.  <a href="#a7402a62420f576f7f1ce38d0da9bea41">More...</a><br /></td></tr>
-<tr class="separator:a7402a62420f576f7f1ce38d0da9bea41"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0bb266bca06cd42cfcfbf7da6de5b874"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokens_8h.html#a0bb266bca06cd42cfcfbf7da6de5b874">TokenMgr_print_tokens</a> (<a class="el" href="struct_token_mgr.html">TokenMgr</a> *tok_mgr)</td></tr>
-<tr class="memdesc:a0bb266bca06cd42cfcfbf7da6de5b874"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print contents of token manager. Useful for debugging.  <a href="#a0bb266bca06cd42cfcfbf7da6de5b874">More...</a><br /></td></tr>
-<tr class="separator:a0bb266bca06cd42cfcfbf7da6de5b874"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abba7a2527fb5684453e62db37cc232cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_token.html">Token</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokens_8h.html#abba7a2527fb5684453e62db37cc232cc">TokenMgr_next_token</a> (<a class="el" href="struct_token_mgr.html">TokenMgr</a> *tok_mgr)</td></tr>
-<tr class="memdesc:abba7a2527fb5684453e62db37cc232cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the next token from Tokens.  <a href="#abba7a2527fb5684453e62db37cc232cc">More...</a><br /></td></tr>
-<tr class="separator:abba7a2527fb5684453e62db37cc232cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab2ffb25ab0ad755354661c3d07836a3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_token.html">Token</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokens_8h.html#aab2ffb25ab0ad755354661c3d07836a3">TokenMgr_prev_token</a> (<a class="el" href="struct_token_mgr.html">TokenMgr</a> *tok_mgr)</td></tr>
-<tr class="memdesc:aab2ffb25ab0ad755354661c3d07836a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the previous token from Tokens.  <a href="#aab2ffb25ab0ad755354661c3d07836a3">More...</a><br /></td></tr>
-<tr class="separator:aab2ffb25ab0ad755354661c3d07836a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a63988158a1868f7eae2322374c85ce54"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokens_8h.html#a63988158a1868f7eae2322374c85ce54">TokenMgr_reset_token</a> (<a class="el" href="struct_token_mgr.html">TokenMgr</a> *tok_mgr)</td></tr>
-<tr class="memdesc:a63988158a1868f7eae2322374c85ce54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset the internal token to NULL.  <a href="#a63988158a1868f7eae2322374c85ce54">More...</a><br /></td></tr>
-<tr class="separator:a63988158a1868f7eae2322374c85ce54"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a24d4b7b7d0361e2bb1146300d406ea70"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_token.html">Token</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokens_8h.html#a24d4b7b7d0361e2bb1146300d406ea70">get_last_token</a> (<a class="el" href="struct_token_mgr.html">TokenMgr</a> *tok_mgr)</td></tr>
-<tr class="memdesc:a24d4b7b7d0361e2bb1146300d406ea70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get last token in token manager.  <a href="#a24d4b7b7d0361e2bb1146300d406ea70">More...</a><br /></td></tr>
-<tr class="separator:a24d4b7b7d0361e2bb1146300d406ea70"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2d93ec75b58f6ee589c4a9af0fa8fc26"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_token.html">Token</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokens_8h.html#a2d93ec75b58f6ee589c4a9af0fa8fc26">get_first_token</a> (<a class="el" href="struct_token_mgr.html">TokenMgr</a> *tok_mgr)</td></tr>
-<tr class="memdesc:a2d93ec75b58f6ee589c4a9af0fa8fc26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get first token in token manager.  <a href="#a2d93ec75b58f6ee589c4a9af0fa8fc26">More...</a><br /></td></tr>
-<tr class="separator:a2d93ec75b58f6ee589c4a9af0fa8fc26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a180f5b3835bdbfc11b353fd2af5c8659"><td class="memItemLeft" align="right" valign="top"><a id="a180f5b3835bdbfc11b353fd2af5c8659"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>COMMENT</b>&#160;&#160;&#160;'#'</td></tr>
+<tr class="separator:a180f5b3835bdbfc11b353fd2af5c8659"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a806511f4930171733227c99101dc0606"><td class="memItemLeft" align="right" valign="top"><a id="a806511f4930171733227c99101dc0606"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>NEWLINE</b>&#160;&#160;&#160;'\n'</td></tr>
+<tr class="separator:a806511f4930171733227c99101dc0606"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44a9fd35b74885ac82584c7927214c7a"><td class="memItemLeft" align="right" valign="top"><a id="a44a9fd35b74885ac82584c7927214c7a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>DQUOTE</b>&#160;&#160;&#160;'&quot;'</td></tr>
+<tr class="separator:a44a9fd35b74885ac82584c7927214c7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a214c717b2e51e1993a749ac99df7de58"><td class="memItemLeft" align="right" valign="top"><a id="a214c717b2e51e1993a749ac99df7de58"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>EQUAL</b>&#160;&#160;&#160;'='</td></tr>
+<tr class="separator:a214c717b2e51e1993a749ac99df7de58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af078bec81516d407fe17fc7cb8b355ac"><td class="memItemLeft" align="right" valign="top"><a id="af078bec81516d407fe17fc7cb8b355ac"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>LBRACE</b>&#160;&#160;&#160;'{'</td></tr>
+<tr class="separator:af078bec81516d407fe17fc7cb8b355ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a301875c1e1858bdc810760f25fcd02d2"><td class="memItemLeft" align="right" valign="top"><a id="a301875c1e1858bdc810760f25fcd02d2"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>RBRACE</b>&#160;&#160;&#160;'}'</td></tr>
+<tr class="separator:a301875c1e1858bdc810760f25fcd02d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abca8dfa78652bc61165262af4fade766"><td class="memItemLeft" align="right" valign="top"><a id="abca8dfa78652bc61165262af4fade766"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>VAR</b>&#160;&#160;&#160;'$'</td></tr>
+<tr class="separator:abca8dfa78652bc61165262af4fade766"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ea7ff5947c5f5430a29fdd98391eb2a"><td class="memItemLeft" align="right" valign="top"><a id="a0ea7ff5947c5f5430a29fdd98391eb2a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>PLUS</b>&#160;&#160;&#160;'+'</td></tr>
+<tr class="separator:a0ea7ff5947c5f5430a29fdd98391eb2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5381a445a1e4bdc36460151d82eed95a"><td class="memItemLeft" align="right" valign="top"><a id="a5381a445a1e4bdc36460151d82eed95a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>MINUS</b>&#160;&#160;&#160;'-'</td></tr>
+<tr class="separator:a5381a445a1e4bdc36460151d82eed95a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ff582e3a0d6ebcd685ffdcbe8f16aa3"><td class="memItemLeft" align="right" valign="top"><a id="a0ff582e3a0d6ebcd685ffdcbe8f16aa3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>ASTERISK</b>&#160;&#160;&#160;'*'</td></tr>
+<tr class="separator:a0ff582e3a0d6ebcd685ffdcbe8f16aa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a136d4add82aa4b386892fdfd64631514"><td class="memItemLeft" align="right" valign="top"><a id="a136d4add82aa4b386892fdfd64631514"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>FSLASH</b>&#160;&#160;&#160;'/'</td></tr>
+<tr class="separator:a136d4add82aa4b386892fdfd64631514"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe30756b10aa77b095a8737a0d0b63ef"><td class="memItemLeft" align="right" valign="top"><a id="abe30756b10aa77b095a8737a0d0b63ef"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>LPAREN</b>&#160;&#160;&#160;'('</td></tr>
+<tr class="separator:abe30756b10aa77b095a8737a0d0b63ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61df4d037757ddf4c87aaa6405438cb2"><td class="memItemLeft" align="right" valign="top"><a id="a61df4d037757ddf4c87aaa6405438cb2"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>RPAREN</b>&#160;&#160;&#160;')'</td></tr>
+<tr class="separator:a61df4d037757ddf4c87aaa6405438cb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbb241fcbc6b66fbde19ed25b7902e63"><td class="memItemLeft" align="right" valign="top"><a id="acbb241fcbc6b66fbde19ed25b7902e63"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>LESSTHAN</b>&#160;&#160;&#160;'&lt;'</td></tr>
+<tr class="separator:acbb241fcbc6b66fbde19ed25b7902e63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1717ee4d9274bbd291cdfdba724c2cda"><td class="memItemLeft" align="right" valign="top"><a id="a1717ee4d9274bbd291cdfdba724c2cda"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>GREATERTHAN</b>&#160;&#160;&#160;'&gt;'</td></tr>
+<tr class="separator:a1717ee4d9274bbd291cdfdba724c2cda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2f49001be13949a16a57e6c99ab00ad"><td class="memItemLeft" align="right" valign="top"><a id="aa2f49001be13949a16a57e6c99ab00ad"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>COMMA</b>&#160;&#160;&#160;','</td></tr>
+<tr class="separator:aa2f49001be13949a16a57e6c99ab00ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0000ee4700a29835a3482b8be6177f7"><td class="memItemLeft" align="right" valign="top"><a id="ae0000ee4700a29835a3482b8be6177f7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>LBRACKET</b>&#160;&#160;&#160;'['</td></tr>
+<tr class="separator:ae0000ee4700a29835a3482b8be6177f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a705974fec677304e31eae3aeed99a7e7"><td class="memItemLeft" align="right" valign="top"><a id="a705974fec677304e31eae3aeed99a7e7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>RBRACKET</b>&#160;&#160;&#160;']'</td></tr>
+<tr class="separator:a705974fec677304e31eae3aeed99a7e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b540d252558bbfc6963934c5c871477"><td class="memItemLeft" align="right" valign="top"><a id="a4b540d252558bbfc6963934c5c871477"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BANG</b>&#160;&#160;&#160;'!'</td></tr>
+<tr class="separator:a4b540d252558bbfc6963934c5c871477"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a5043e7ab655e37e903ffbd8b95d6b2"><td class="memItemLeft" align="right" valign="top"><a id="a8a5043e7ab655e37e903ffbd8b95d6b2"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>DOT</b>&#160;&#160;&#160;'.'</td></tr>
+<tr class="separator:a8a5043e7ab655e37e903ffbd8b95d6b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>File containing token definitions. </p>
+<div class="textblock"><p>File containing token definitions and enum types. </p>
 <dl class="section author"><dt>Author</dt><dd>Sayed Sadeed </dd></dl>
-</div><h2 class="groupheader">Function Documentation</h2>
-<a id="a81195342113cfd2b791683fcb8f7c9de"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a81195342113cfd2b791683fcb8f7c9de">&#9670;&nbsp;</a></span>build_tokens()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int build_tokens </td>
-          <td>(</td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>buff</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="struct_token_mgr.html">TokenMgr</a> *&#160;</td>
-          <td class="paramname"><em>tokmgr</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Build tokens from buffer in. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">buff</td><td>the contents which should be tokenized. </td></tr>
-    <tr><td class="paramname">tokmgr</td><td><a class="el" href="struct_token.html" title="Represent a single token read from input. ">Token</a> Manager to handle tokenization. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>int signifying status. </dd></dl>
-
-</div>
-</div>
-<a id="afec8213f9a8c68f5fddcd254e9f02d86"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afec8213f9a8c68f5fddcd254e9f02d86">&#9670;&nbsp;</a></span>file_to_buffer()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">char* file_to_buffer </td>
-          <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Read contents of file to buffer. </p>
-<p>This function will read the contents of a passed source file (*.vml). It will strip out the inline and external comments from the source and save the contents to a buffer. The buffer is created on heap so must be managed by caller. See below example</p>
-<div class="fragment"><div class="line"><span class="keywordtype">char</span> *filename = <span class="stringliteral">&quot;~/Desktop/run.vml&quot;</span>;</div><div class="line"><span class="keywordtype">char</span> *buffer = <a class="code" href="tokens_8h.html#afec8213f9a8c68f5fddcd254e9f02d86">file_to_buffer</a>(filename);</div><div class="line">free(buffer) <span class="comment">// when done.</span></div></div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">filename</td><td>Path to source file. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Pointer to buffer containing contents of file. </dd></dl>
-
-</div>
-</div>
-<a id="a2d93ec75b58f6ee589c4a9af0fa8fc26"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2d93ec75b58f6ee589c4a9af0fa8fc26">&#9670;&nbsp;</a></span>get_first_token()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="struct_token.html">Token</a>* get_first_token </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_token_mgr.html">TokenMgr</a> *&#160;</td>
-          <td class="paramname"><em>tok_mgr</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Get first token in token manager. </p>
-<p>Unlike the "TokenMgr" prefixed functions this doesn't operate on the internal pointer incrementer. This simply returns a pointer to the first token in the collection.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">tok_mgr</td><td>Pointer to token manager instance. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_token.html" title="Represent a single token read from input. ">Token</a> pointer to first token. </dd></dl>
-
-</div>
-</div>
-<a id="a24d4b7b7d0361e2bb1146300d406ea70"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a24d4b7b7d0361e2bb1146300d406ea70">&#9670;&nbsp;</a></span>get_last_token()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="struct_token.html">Token</a>* get_last_token </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_token_mgr.html">TokenMgr</a> *&#160;</td>
-          <td class="paramname"><em>tok_mgr</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Get last token in token manager. </p>
-<p>Unlike the "TokenMgr" prefixed functions this doesn't operate on the internal pointer incrementer. This simply returns a pointer to the last token in the collection.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">tok_mgr</td><td>Pointer to token manager instance. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_token.html" title="Represent a single token read from input. ">Token</a> pointer to final token. </dd></dl>
-
-</div>
-</div>
-<a id="aceaa0e8f3b1cd5fb03b4dd0dc5814f93"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aceaa0e8f3b1cd5fb03b4dd0dc5814f93">&#9670;&nbsp;</a></span>TokenMgr_add_token()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int TokenMgr_add_token </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_token_mgr.html">TokenMgr</a> *&#160;</td>
-          <td class="paramname"><em>tok_mgr</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char&#160;</td>
-          <td class="paramname"><em>tok_type</em>[50], </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char&#160;</td>
-          <td class="paramname"><em>tok_val</em>[100]&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Add another token to token manager. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">tok_mgr</td><td>Pointer to token manager. </td></tr>
-    <tr><td class="paramname">tok_type</td><td>Type of token. </td></tr>
-    <tr><td class="paramname">tok_value</td><td>Value of token. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>int signifying status. </dd></dl>
-
-</div>
-</div>
-<a id="a7402a62420f576f7f1ce38d0da9bea41"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7402a62420f576f7f1ce38d0da9bea41">&#9670;&nbsp;</a></span>TokenMgr_free()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int TokenMgr_free </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_token_mgr.html">TokenMgr</a> *&#160;</td>
-          <td class="paramname"><em>tok_mgr</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Free tokens stored by token manager as well as token manager. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">tok_mgr</td><td>Pointer to token manager. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>int signifying status. </dd></dl>
-
-</div>
-</div>
-<a id="a8583e6f3a8e9ab1403387fb110e18302"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8583e6f3a8e9ab1403387fb110e18302">&#9670;&nbsp;</a></span>TokenMgr_new()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="struct_token_mgr.html">TokenMgr</a>* TokenMgr_new </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Create token manager malloc'ed. </p>
-<p>This function acts as a constructor for the <a class="el" href="struct_token.html" title="Represent a single token read from input. ">Token</a> manager.</p>
-<dl class="section return"><dt>Returns</dt><dd>newly created <a class="el" href="struct_token_mgr.html" title="Token manager represents a pool of tokens. ">TokenMgr</a> pointer. </dd></dl>
-
-</div>
-</div>
-<a id="abba7a2527fb5684453e62db37cc232cc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abba7a2527fb5684453e62db37cc232cc">&#9670;&nbsp;</a></span>TokenMgr_next_token()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="struct_token.html">Token</a>* TokenMgr_next_token </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_token_mgr.html">TokenMgr</a> *&#160;</td>
-          <td class="paramname"><em>tok_mgr</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Retrieve the next token from Tokens. </p>
-<p>Function will return the next token stored inside <a class="el" href="struct_token.html" title="Represent a single token read from input. ">Token</a> Mgr. Note that it returns based on the current token. Once the last token is reached the internal state must be reset. Otherwise the value returned will continue to be null. See <a class="el" href="tokens_8h.html#a63988158a1868f7eae2322374c85ce54" title="Reset the internal token to NULL. ">TokenMgr_reset_token()</a>.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">tok_mgr</td><td>Pointer to token manager instance. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>next <a class="el" href="struct_token.html" title="Represent a single token read from input. ">Token</a> in manager. </dd></dl>
-
-</div>
-</div>
-<a id="aab2ffb25ab0ad755354661c3d07836a3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aab2ffb25ab0ad755354661c3d07836a3">&#9670;&nbsp;</a></span>TokenMgr_prev_token()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="struct_token.html">Token</a>* TokenMgr_prev_token </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_token_mgr.html">TokenMgr</a> *&#160;</td>
-          <td class="paramname"><em>tok_mgr</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Retrieve the previous token from Tokens. </p>
-<p>Function will return the previous token stored inside <a class="el" href="struct_token.html" title="Represent a single token read from input. ">Token</a> Mgr. Note that it returns based on the current token. Once the first token is reached the internal state must be reset. Otherwise the value returned will continue to be null. See <a class="el" href="tokens_8h.html#a63988158a1868f7eae2322374c85ce54" title="Reset the internal token to NULL. ">TokenMgr_reset_token()</a>.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">tok_mgr</td><td>Pointer to token manager instance. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>previous <a class="el" href="struct_token.html" title="Represent a single token read from input. ">Token</a> in manager. </dd></dl>
-
-</div>
-</div>
-<a id="a0bb266bca06cd42cfcfbf7da6de5b874"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0bb266bca06cd42cfcfbf7da6de5b874">&#9670;&nbsp;</a></span>TokenMgr_print_tokens()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void TokenMgr_print_tokens </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_token_mgr.html">TokenMgr</a> *&#160;</td>
-          <td class="paramname"><em>tok_mgr</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Print contents of token manager. Useful for debugging. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">tok_mgr</td><td>Pointer to token manager. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a63988158a1868f7eae2322374c85ce54"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a63988158a1868f7eae2322374c85ce54">&#9670;&nbsp;</a></span>TokenMgr_reset_token()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void TokenMgr_reset_token </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_token_mgr.html">TokenMgr</a> *&#160;</td>
-          <td class="paramname"><em>tok_mgr</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Reset the internal token to NULL. </p>
-<p>This function operates on the internal token incrementer of the token manager. It will nullify the internal pointer so that collection can be incremented through again. See <a class="el" href="tokens_8h.html#abba7a2527fb5684453e62db37cc232cc" title="Retrieve the next token from Tokens. ">TokenMgr_next_token()</a> and <a class="el" href="tokens_8h.html#aab2ffb25ab0ad755354661c3d07836a3" title="Retrieve the previous token from Tokens. ">TokenMgr_prev_token()</a>.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">tok_mgr</td><td>Pointer to token manager instance. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-</div><!-- contents -->
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

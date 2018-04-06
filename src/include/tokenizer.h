@@ -1,24 +1,29 @@
 /**
- * @file tokens.h
+ * @file tokenizer.h
  * @author Sayed Sadeed
  * @brief File containing token management.
  */
 
 #ifndef TOKENIZER_H
 #define TOKENIZER_H
-#define KWORDS_SIZE 3
+
+#define KWORDS_SIZE 4
+#define TOKENTYPE_SIZE 20
+#define TOKMGR_TOKS_INIT_SIZE 40
 
 #include <string.h>
+#include "tokens.h"
 
 /**
  * @brief Represent a single token read from input.
  *
  * Struct will hold every identified token meta data. Is needed for parsing.
  */
-typedef struct{
-	char type[20]; //TODO: safe to assume types will only ever be less than 20 ???
-	char value[100]; //TODO: needs optimizing BAD. It is possible to have STRING more than 100 chars
+typedef struct {
+	char type[TOKENTYPE_SIZE];
+	char *value;
 	size_t val_length;
+	int lineno;
 } Token;
 
 /**
@@ -28,11 +33,25 @@ typedef struct{
  * for anything token related as it manages internal memory allocs and deallocs.
  * Struct will mantain all tokens and responsible for methods.
  */
-typedef struct{
-	Token **curr_tok;
-	Token *toks[1000]; // TODO: needs optimizing BAD. Use realloc here
+typedef struct {
+	Token *toks_head;
+	Token **toks_curr;
+	Token *toks_tail;
 	size_t tok_ctr;
+	size_t tok_cap;
 } TokenMgr;
+
+
+/**
+ * @brief Perform relloc on array of of tokens.
+ * 
+ * This is an internal function used to allocate more space
+ * for storage of tokens.
+ * 
+ * @param tok_mgr TokenMgr instance which being applied to.
+ * @return Newly allocated Token**.
+ */
+Token **grow_curr_tokens(TokenMgr *tok_mgr);
 
 /**
  * @brief Build tokens from steam of input.
@@ -44,7 +63,7 @@ typedef struct{
  * @param tokmgr Token Manager to handle tokenization.
  * @return int signifying status.
  */
-int build_tokens(char *buff, TokenMgr *tokmgr);
+int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr);
 
 /**
  * @brief Create token manager malloc'ed.
@@ -53,17 +72,20 @@ int build_tokens(char *buff, TokenMgr *tokmgr);
  * 
  * @return newly created TokenMgr pointer.
  */
-TokenMgr *TokenMgr_new();
+TokenMgr *TokenMgr_new(void);
 
 /**
  * @brief Add another token to token manager.
  * 
+ * Important to note that the tok_val is expected to be null terminated string ptr.
+ * 
  * @param tok_mgr Pointer to token manager.
  * @param tok_type Type of token.
  * @param tok_value Value of token.
+ * @param tok_lineno Line number in source file where token occurs.
  * @return int signifying status.
  */
-int TokenMgr_add_token(TokenMgr *tok_mgr, char tok_type[50], char tok_val[100]);
+int TokenMgr_add_token(TokenMgr *tok_mgr, char tok_type[20], char *tok_val, int tok_lineno);
 
 /**
  * @brief Free tokens stored by token manager as well as token manager.
@@ -94,6 +116,28 @@ void TokenMgr_print_tokens(TokenMgr *tok_mgr);
 Token *TokenMgr_next_token(TokenMgr *tok_mgr);
 
 /**
+ * @brief Peek at the next token.
+ * 
+ * Function will return the next token without altering the
+ * internal pointer.
+ * 
+ * @param tok_mgr Pointer to token manager instance.
+ * @return next Token in manager.
+ */
+Token *TokenMgr_peek_token(TokenMgr *tok_mgr);
+
+/**
+ * @brief Check to see if current token in manager is the last.
+ * 
+ * This function provides high level interface for determining if the
+ * current token stored inside the manager is the last one.
+ * 
+ * @param tok_mgr Pointer to token manager instance.
+ * @return 0 if not last token otherwise return 1.
+ */
+int TokenMgr_is_last_token(TokenMgr *tok_mgr);
+
+/**
  * @brief Retrieve the previous token from Tokens.
  * 
  * Function will return the previous token stored inside TokenMgr.
@@ -107,28 +151,15 @@ Token *TokenMgr_next_token(TokenMgr *tok_mgr);
 Token *TokenMgr_prev_token(TokenMgr *tok_mgr);
 
 /**
- * @brief Set the internal counter back to start.
- * 
- * Unlike TokenMgr_reset_token() this function will set the TokenMgr counter
- * back to 0. This recycles the existing memory for addition of new tokens.
- * A common use case for this is in the cli (command line interface) where each time a statement
- * is evaluated we don't want to evaluate those same tokens again on the execution.
- *
- * @param tok_mgr Pointer to token manager. 
- */
-void TokenMgr_clear_tokens(TokenMgr *tok_mgr);
-
-/**
- * @brief Reset the internal token to NULL.
+ * @brief Reset the internal token back to start of array.
  *
  * This function operates on the internal curr token
- * of the token manager. It will nullify the internal pointer so that the
- * collection can be incremented through again.
+ * of the token manager. It will position the tokens pointer pointer back to the HEAD.
  * See TokenMgr_next_token() and TokenMgr_prev_token().
  *
  * @param tok_mgr Pointer to token manager instance.
  */
-void TokenMgr_reset_token(TokenMgr *tok_mgr);
+void TokenMgr_reset_curr(TokenMgr *tok_mgr);
 
 /**
  * @brief Get the Token currently being pointed to by Token Manager 
@@ -139,11 +170,12 @@ void TokenMgr_reset_token(TokenMgr *tok_mgr);
  * the internal structure of the TokenMgr struct.
  *
  * @param tok_mgr Pointer to token manager instance.
- * @return Token pointer currently pointed to by **cur_token.
+ * @return Token pointer currently pointed to by **tok_curr.
  */
 Token *TokenMgr_current_token(TokenMgr *tok_mgr);
 
 /**
+<<<<<<< HEAD:src/tokenizer.h
  * @brief Get last token in token manager.
  * 
  * Unlike the "TokenMgr" prefixed functions this doesn't operate
@@ -166,5 +198,16 @@ Token *get_last_token(TokenMgr *tok_mgr);
  * @return Token pointer to first token.
  */
 Token *get_first_token(TokenMgr *tok_mgr);
+=======
+ * @brief Determine if a string is a valid keyword.
+ * 
+ * This function checks against R_Keywords inside tokens.h
+ * to determine if it is a valid keyword or not.
+ * 
+ * @param str the string to check for.
+ * @return 1 if it is valid keyword otherwise return 0.
+ */
+int is_valid_keyword(char *str);
+>>>>>>> develop:src/include/tokenizer.h
 
 #endif

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['get_5ffirst_5ftoken',['get_first_token',['../tokens_8h.html#a2d93ec75b58f6ee589c4a9af0fa8fc26',1,'tokens.h']]],
-  ['get_5flast_5ftoken',['get_last_token',['../tokens_8h.html#a24d4b7b7d0361e2bb1146300d406ea70',1,'tokens.h']]]
+  ['grow_5fcurr_5ftokens',['grow_curr_tokens',['../tokenizer_8h.html#a75669d9d1bca4a680834f6e79a3ba026',1,'tokenizer.h']]],
+  ['grow_5fnodes',['grow_nodes',['../node_8h.html#ab7f8ce092b66294da6139c7f81391880',1,'node.h']]]
 ];

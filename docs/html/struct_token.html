@@ -74,22 +74,28 @@ $(function() {
 <p>Represent a single token read from input.  
  <a href="struct_token.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="tokens_8h_source.html">tokens.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="tokenizer_8h_source.html">tokenizer.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:ab8c9876b0a3f630d1022e8eb99f5de81"><td class="memItemLeft" align="right" valign="top"><a id="ab8c9876b0a3f630d1022e8eb99f5de81"></a>
-char&#160;</td><td class="memItemRight" valign="bottom"><b>type</b> [20]</td></tr>
-<tr class="separator:ab8c9876b0a3f630d1022e8eb99f5de81"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae3a20bd709dc24779b6dfcc5e6eb932d"><td class="memItemLeft" align="right" valign="top"><a id="ae3a20bd709dc24779b6dfcc5e6eb932d"></a>
-char&#160;</td><td class="memItemRight" valign="bottom"><b>value</b> [100]</td></tr>
-<tr class="separator:ae3a20bd709dc24779b6dfcc5e6eb932d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ce1465ae45fecb9798e5cfb8c8b2165"><td class="memItemLeft" align="right" valign="top"><a id="a8ce1465ae45fecb9798e5cfb8c8b2165"></a>
+char&#160;</td><td class="memItemRight" valign="bottom"><b>type</b> [TOKENTYPE_SIZE]</td></tr>
+<tr class="separator:a8ce1465ae45fecb9798e5cfb8c8b2165"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a240c7e82be05331fbe8acc2b774955"><td class="memItemLeft" align="right" valign="top"><a id="a2a240c7e82be05331fbe8acc2b774955"></a>
+char *&#160;</td><td class="memItemRight" valign="bottom"><b>value</b></td></tr>
+<tr class="separator:a2a240c7e82be05331fbe8acc2b774955"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73113624d32945da98d535efe8cea42a"><td class="memItemLeft" align="right" valign="top"><a id="a73113624d32945da98d535efe8cea42a"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>val_length</b></td></tr>
+<tr class="separator:a73113624d32945da98d535efe8cea42a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac27f35dabf992e05899db84ee4c132cb"><td class="memItemLeft" align="right" valign="top"><a id="ac27f35dabf992e05899db84ee4c132cb"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>lineno</b></td></tr>
+<tr class="separator:ac27f35dabf992e05899db84ee4c132cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represent a single token read from input. </p>
 <p>Struct will hold every identified token meta data. Is needed for parsing. </p>
 </div><hr/>The documentation for this struct was generated from the following file:<ul>
-<li>src/<a class="el" href="tokens_8h_source.html">tokens.h</a></li>
+<li>src/include/<a class="el" href="tokenizer_8h_source.html">tokenizer.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Virtual Machine Execution Language (Vmel): src/parser.h File Reference</title>
+<title>Virtual Machine Execution Language (Vmel): src/include/parser.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -63,10 +63,13 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_b0856f6b0d80ccb263b2f415c91f9e17.html">include</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">parser.h File Reference</div>  </div>
 </div><!--header-->
@@ -74,12 +77,322 @@ $(function() {
 
 <p>File containing all definitions for parser module.  
 <a href="#details">More...</a></p>
-
+<div class="textblock"><code>#include &quot;<a class="el" href="tokenizer_8h_source.html">tokenizer.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="node_8h_source.html">node.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="errors_8h_source.html">errors.h</a>&quot;</code><br />
+</div>
 <p><a href="parser_8h_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_parser_mgr.html">ParserMgr</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maintain state within in the parsing process.  <a href="struct_parser_mgr.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a491dd83f1c5caab93b58fecd66cedeee"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_parser_mgr.html">ParserMgr</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a491dd83f1c5caab93b58fecd66cedeee">ParserMgr_new</a> ()</td></tr>
+<tr class="memdesc:a491dd83f1c5caab93b58fecd66cedeee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create new malloced <a class="el" href="struct_parser_mgr.html" title="Maintain state within in the parsing process. ">ParserMgr</a> instance.  <a href="#a491dd83f1c5caab93b58fecd66cedeee">More...</a><br /></td></tr>
+<tr class="separator:a491dd83f1c5caab93b58fecd66cedeee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92454985f0e22aed442a1c8077f9bced"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a92454985f0e22aed442a1c8077f9bced">ParserMgr_free</a> (<a class="el" href="struct_parser_mgr.html">ParserMgr</a> *par_mgr)</td></tr>
+<tr class="memdesc:a92454985f0e22aed442a1c8077f9bced"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free <a class="el" href="struct_parser_mgr.html" title="Maintain state within in the parsing process. ">ParserMgr</a> instance.  <a href="#a92454985f0e22aed442a1c8077f9bced">More...</a><br /></td></tr>
+<tr class="separator:a92454985f0e22aed442a1c8077f9bced"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43ddbfc8a440bb59a7f096337b6b8c26"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a43ddbfc8a440bb59a7f096337b6b8c26">ParserMgr_add_error</a> (<a class="el" href="struct_error.html">Error</a> *err_handle, <a class="el" href="struct_token.html">Token</a> *offender, int err_type)</td></tr>
+<tr class="memdesc:a43ddbfc8a440bb59a7f096337b6b8c26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a error string to the list of errors stored in <a class="el" href="struct_error.html" title="Store all the errors related to parsing process. ">Error</a>.  <a href="#a43ddbfc8a440bb59a7f096337b6b8c26">More...</a><br /></td></tr>
+<tr class="separator:a43ddbfc8a440bb59a7f096337b6b8c26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afecccd0d2c4a9a250c8c5b7f00721325"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#afecccd0d2c4a9a250c8c5b7f00721325">parser_can_consume</a> (char *tok_type, char *type)</td></tr>
+<tr class="memdesc:afecccd0d2c4a9a250c8c5b7f00721325"><td class="mdescLeft">&#160;</td><td class="mdescRight">Can token be consumed based on expected type.  <a href="#afecccd0d2c4a9a250c8c5b7f00721325">More...</a><br /></td></tr>
+<tr class="separator:afecccd0d2c4a9a250c8c5b7f00721325"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46e3b3b2ad4d512a74e932d869fffd36"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="struct_node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a46e3b3b2ad4d512a74e932d869fffd36">parse_group</a> (<a class="el" href="struct_parser_mgr.html">ParserMgr</a> *par_mgr)</td></tr>
+<tr class="memdesc:a46e3b3b2ad4d512a74e932d869fffd36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Will consume a group based on grammar defintion.  <a href="#a46e3b3b2ad4d512a74e932d869fffd36">More...</a><br /></td></tr>
+<tr class="separator:a46e3b3b2ad4d512a74e932d869fffd36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12116988947ee2cd13d517a533bb2595"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="struct_node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a12116988947ee2cd13d517a533bb2595">parse_assignment</a> (<a class="el" href="struct_parser_mgr.html">ParserMgr</a> *par_mgr)</td></tr>
+<tr class="memdesc:a12116988947ee2cd13d517a533bb2595"><td class="mdescLeft">&#160;</td><td class="mdescRight">Will consume assignment based on grammar.  <a href="#a12116988947ee2cd13d517a533bb2595">More...</a><br /></td></tr>
+<tr class="separator:a12116988947ee2cd13d517a533bb2595"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a521f3aadad5d81736710b16e1c03a39b"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="struct_node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a521f3aadad5d81736710b16e1c03a39b">parse_expr</a> (<a class="el" href="struct_parser_mgr.html">ParserMgr</a> *par_mgr)</td></tr>
+<tr class="memdesc:a521f3aadad5d81736710b16e1c03a39b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Will consume expression based on grammar.  <a href="#a521f3aadad5d81736710b16e1c03a39b">More...</a><br /></td></tr>
+<tr class="separator:a521f3aadad5d81736710b16e1c03a39b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52b720c8a40a613335237af007fe6581"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="struct_node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a52b720c8a40a613335237af007fe6581">parse_factor</a> (<a class="el" href="struct_parser_mgr.html">ParserMgr</a> *par_mgr)</td></tr>
+<tr class="memdesc:a52b720c8a40a613335237af007fe6581"><td class="mdescLeft">&#160;</td><td class="mdescRight">Will consume factor based on grammar.  <a href="#a52b720c8a40a613335237af007fe6581">More...</a><br /></td></tr>
+<tr class="separator:a52b720c8a40a613335237af007fe6581"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ed0c289eb82241a3e41acc50b296356"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a7ed0c289eb82241a3e41acc50b296356">parser_init</a> (<a class="el" href="struct_token_mgr.html">TokenMgr</a> *tok_mgr)</td></tr>
+<tr class="memdesc:a7ed0c289eb82241a3e41acc50b296356"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initial entry for parser.  <a href="#a7ed0c289eb82241a3e41acc50b296356">More...</a><br /></td></tr>
+<tr class="separator:a7ed0c289eb82241a3e41acc50b296356"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>File containing all definitions for parser module. </p>
 <dl class="section author"><dt>Author</dt><dd>Sayed Sadeed </dd></dl>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="a12116988947ee2cd13d517a533bb2595"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a12116988947ee2cd13d517a533bb2595">&#9670;&nbsp;</a></span>parse_assignment()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct <a class="el" href="struct_node.html">Node</a>* parse_assignment </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_parser_mgr.html">ParserMgr</a> *&#160;</td>
+          <td class="paramname"><em>par_mgr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Will consume assignment based on grammar. </p>
+<p>assignment = expression | STRING</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">par_mgr</td><td><a class="el" href="struct_parser_mgr.html" title="Maintain state within in the parsing process. ">ParserMgr</a> instance. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_node.html" title="Node correlates to a node within a tree. ">Node</a> generated from production. </dd></dl>
+
+</div>
+</div>
+<a id="a521f3aadad5d81736710b16e1c03a39b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a521f3aadad5d81736710b16e1c03a39b">&#9670;&nbsp;</a></span>parse_expr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct <a class="el" href="struct_node.html">Node</a>* parse_expr </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_parser_mgr.html">ParserMgr</a> *&#160;</td>
+          <td class="paramname"><em>par_mgr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Will consume expression based on grammar. </p>
+<p>expression = factor | factor (PLUS | MINUS) factor</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">par_mgr</td><td><a class="el" href="struct_parser_mgr.html" title="Maintain state within in the parsing process. ">ParserMgr</a> instance. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_node.html" title="Node correlates to a node within a tree. ">Node</a> generated from production. </dd></dl>
+
+</div>
+</div>
+<a id="a52b720c8a40a613335237af007fe6581"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a52b720c8a40a613335237af007fe6581">&#9670;&nbsp;</a></span>parse_factor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct <a class="el" href="struct_node.html">Node</a>* parse_factor </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_parser_mgr.html">ParserMgr</a> *&#160;</td>
+          <td class="paramname"><em>par_mgr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Will consume factor based on grammar. </p>
+<p>factor = INTEGER</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">par_mgr</td><td><a class="el" href="struct_parser_mgr.html" title="Maintain state within in the parsing process. ">ParserMgr</a> instance. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_node.html" title="Node correlates to a node within a tree. ">Node</a> generated from production. </dd></dl>
+
+</div>
+</div>
+<a id="a46e3b3b2ad4d512a74e932d869fffd36"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a46e3b3b2ad4d512a74e932d869fffd36">&#9670;&nbsp;</a></span>parse_group()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct <a class="el" href="struct_node.html">Node</a>* parse_group </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_parser_mgr.html">ParserMgr</a> *&#160;</td>
+          <td class="paramname"><em>par_mgr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Will consume a group based on grammar defintion. </p>
+<p>Group = string | string_list</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">par_mgr</td><td><a class="el" href="struct_parser_mgr.html" title="Maintain state within in the parsing process. ">ParserMgr</a> instance. </td></tr>
+    <tr><td class="paramname">err_handle</td><td><a class="el" href="struct_error.html" title="Store all the errors related to parsing process. ">Error</a> handler to capture any parsing errors. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_node.html" title="Node correlates to a node within a tree. ">Node</a> generated from production. </dd></dl>
+
+</div>
+</div>
+<a id="afecccd0d2c4a9a250c8c5b7f00721325"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afecccd0d2c4a9a250c8c5b7f00721325">&#9670;&nbsp;</a></span>parser_can_consume()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int parser_can_consume </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>tok_type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>type</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Can token be consumed based on expected type. </p>
+<p>This function is used to determine if a token matches expected type.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tok</td><td>is a pointer to the token being compared. </td></tr>
+    <tr><td class="paramname">type</td><td>the type we are expecting it to be. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7ed0c289eb82241a3e41acc50b296356"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ed0c289eb82241a3e41acc50b296356">&#9670;&nbsp;</a></span>parser_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int parser_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_token_mgr.html">TokenMgr</a> *&#160;</td>
+          <td class="paramname"><em>tok_mgr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initial entry for parser. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tok_mgr</td><td><a class="el" href="struct_token_mgr.html" title="Token manager represents a pool of tokens. ">TokenMgr</a> containing all token information. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if parser was successful or return 1 if issue occurred. </dd></dl>
+
+</div>
+</div>
+<a id="a43ddbfc8a440bb59a7f096337b6b8c26"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43ddbfc8a440bb59a7f096337b6b8c26">&#9670;&nbsp;</a></span>ParserMgr_add_error()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ParserMgr_add_error </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_error.html">Error</a> *&#160;</td>
+          <td class="paramname"><em>err_handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_token.html">Token</a> *&#160;</td>
+          <td class="paramname"><em>offender</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>err_type</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add a error string to the list of errors stored in <a class="el" href="struct_error.html" title="Store all the errors related to parsing process. ">Error</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">err_error</td><td>Instance of <a class="el" href="struct_error.html" title="Store all the errors related to parsing process. ">Error</a>. </td></tr>
+    <tr><td class="paramname">offender</td><td><a class="el" href="struct_token.html" title="Represent a single token read from input. ">Token</a> which triggered the error. </td></tr>
+    <tr><td class="paramname">err_type</td><td>Index of error string in the array of errors in parser.c. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a92454985f0e22aed442a1c8077f9bced"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92454985f0e22aed442a1c8077f9bced">&#9670;&nbsp;</a></span>ParserMgr_free()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int ParserMgr_free </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_parser_mgr.html">ParserMgr</a> *&#160;</td>
+          <td class="paramname"><em>par_mgr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Free <a class="el" href="struct_parser_mgr.html" title="Maintain state within in the parsing process. ">ParserMgr</a> instance. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Instance</td><td>of <a class="el" href="struct_parser_mgr.html" title="Maintain state within in the parsing process. ">ParserMgr</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if free was successful. Otherwise 1 for errors. </dd></dl>
+
+</div>
+</div>
+<a id="a491dd83f1c5caab93b58fecd66cedeee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a491dd83f1c5caab93b58fecd66cedeee">&#9670;&nbsp;</a></span>ParserMgr_new()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_parser_mgr.html">ParserMgr</a>* ParserMgr_new </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create new malloced <a class="el" href="struct_parser_mgr.html" title="Maintain state within in the parsing process. ">ParserMgr</a> instance. </p>
+<dl class="section return"><dt>Returns</dt><dd>new instance of <a class="el" href="struct_parser_mgr.html" title="Maintain state within in the parsing process. ">ParserMgr</a> or null if failed. </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

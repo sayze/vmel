@@ -1,4 +1,7 @@
 var searchData=
 [
-  ['print_5fusage',['print_usage',['../utils_8h.html#aa1187b70998f73cdb598833d6afaa30a',1,'utils.h']]]
+  ['node_5fnew',['Node_new',['../node_8h.html#a87764c1d17645f858d7d8f70ae311e48',1,'node.h']]],
+  ['nodemgr_5fadd_5fnode',['NodeMgr_add_node',['../node_8h.html#ad0d6bf52e9ff11327bba1a46bb67d729',1,'node.h']]],
+  ['nodemgr_5ffree',['NodeMgr_free',['../node_8h.html#a25a6d59673585e033763a1a26037c0e1',1,'node.h']]],
+  ['nodemgr_5fnew',['NodeMgr_new',['../node_8h.html#a6c58c981a0f17e2851519bf8bfca335a',1,'node.h']]]
 ];

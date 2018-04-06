@@ -6,7 +6,16 @@
 #include "tokenizer.h"
 #include "tokens.h"
 
-int build_tokens(char *buff, TokenMgr *tokmgr) {
+// Below are reserved keywords.
+// TODO: Move this to tokens.h ? or better manage this.
+static const char *R_Keywords[KWORDS_SIZE] = {
+    "print", "connect", "release", "input"
+};
+
+//TODO: make below lexing more efficient and readable.
+// possibly create functions for each category and/or
+// add token only at once at the end of char read.
+int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr) {
 	if (buff == NULL) {
 		printf("** Error Buffer invalid state cannot build tokens\n");
 		return 1;
@@ -20,7 +29,7 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 	// Each character in buffer.
 	char c;
 	// Reusable storage to hold strings. 
-	char store[100];
+	char store[100]; // TODO: Make dynamic incase someone has string longer than 100 chars.
 	// Buff iterator.
 	int bidx = 0;
 	// Track storage size.
@@ -29,7 +38,13 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 	int error = 0;
 	// Track line no.
 	int lineno = 1;
-	
+
+	// Add a head token as padding to help with pointer arithmetic.
+	if (tokmgr->toks_head == NULL) {
+		TokenMgr_add_token(tokmgr, "HEAD", "HEAD", 0);
+		tokmgr->toks_head = *tokmgr->toks_curr;
+	}
+
 	// Iterate through all chars until terminator or error.
 	while (buff[bidx] != '\0' && !error) {
 		c = buff[bidx];
@@ -45,81 +60,93 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 			lineno++;
 			bidx++;
 			continue;
-
 		}
 		else if (c == BANG) {
 			if (buff[bidx+1] == EQUAL) {
-				TokenMgr_add_token(tokmgr, "OPERATOR", "NOTEQUALTO");
+				TokenMgr_add_token(tokmgr, "OPERATOR", "!=", lineno);
 				bidx++;
 			}
 			else {
-				TokenMgr_add_token(tokmgr, "OPERATOR", "NOT");
+				TokenMgr_add_token(tokmgr, "OPERATOR", "!", lineno);
 			}
 			bidx++;
 		}
 		else if (isspace(c)) {
-			bidx++;
+			while (isspace(c)) {
+				c = buff[++bidx];
+			}
 			continue;
 
 		}
-		else if (c == LPAREN) {
-			TokenMgr_add_token(tokmgr, "LPAREN", "(");
+		else if (c == LBRACKET) {
+			TokenMgr_add_token(tokmgr, "LBRACKET", "[", lineno);
 			bidx++;
-
+		}
+		else if (c == RBRACKET) {
+			TokenMgr_add_token(tokmgr, "RBRACKET", "]", lineno);
+			bidx++;
+		}
+		else if (c == LPAREN) {
+			TokenMgr_add_token(tokmgr, "LPAREN", "(", lineno);
+			bidx++;
 		}
 		else if (c == RPAREN) {
-			TokenMgr_add_token(tokmgr, "RPAREN", ")");
+			TokenMgr_add_token(tokmgr, "RPAREN", ")", lineno);
 			bidx++;
 		}
 		else if (c == LESSTHAN) {
 			if (buff[bidx+1] == EQUAL) {
-				TokenMgr_add_token(tokmgr, "OPERATOR", "LTEQTO");
+				TokenMgr_add_token(tokmgr, "OPERATOR", "<=", lineno);
 				bidx++;
 			}
 			else {
-				TokenMgr_add_token(tokmgr, "OPERATOR", "LESSTHAN");
+				TokenMgr_add_token(tokmgr, "OPERATOR", "<", lineno);
 			}
 			bidx++;
 		}
 		else if (c == GREATERTHAN) {
 			switch(buff[++bidx]) {
 				case EQUAL:
-					TokenMgr_add_token(tokmgr, "OPERATOR", "GTEQTO");
+					TokenMgr_add_token(tokmgr, "OPERATOR", ">=", lineno);
 					break;
 				case LESSTHAN:
-					TokenMgr_add_token(tokmgr, "OPERATOR", "BETWEEN");
+					TokenMgr_add_token(tokmgr, "OPERATOR", "><", lineno);
 					break;
 				default:
 					bidx--;
-					TokenMgr_add_token(tokmgr, "OPERATOR", "GREATERTHAN");
+					TokenMgr_add_token(tokmgr, "OPERATOR", ">", lineno);
 					break;
 			}
 			bidx++;
 		}
 		else if (c ==  EQUAL) {
 			if (buff[bidx+1] == EQUAL) {
-				TokenMgr_add_token(tokmgr, "OPERATOR", "EQUALTO");
+				TokenMgr_add_token(tokmgr, "OPERATOR", "==", lineno);
 				bidx++;
 			}
 			else {
-				TokenMgr_add_token(tokmgr, "OPERATOR", "EQUAL");
+				TokenMgr_add_token(tokmgr, "OPERATOR", "=", lineno);
 			}	
 			bidx++;
 		}
 		else if (c == PLUS) {
-			TokenMgr_add_token(tokmgr, "OPERATOR", "PLUS");
+			TokenMgr_add_token(tokmgr, "OPERATOR", "+", lineno);
 			bidx++;
 		} 
 		else if (c ==  MINUS) {
-			TokenMgr_add_token(tokmgr, "OPERATOR", "MINUS");
+			TokenMgr_add_token(tokmgr, "OPERATOR", "-", lineno);
 			bidx++;
 		} 
 		else if (c ==  ASTERISK) {
-			TokenMgr_add_token(tokmgr, "OPERATOR", "ASTERISK");
+			TokenMgr_add_token(tokmgr, "OPERATOR", "*", lineno);
 			bidx++;
 		} 
 		else if (c == FSLASH) {
-			TokenMgr_add_token(tokmgr, "OPERATOR", "FSLASH");
+			TokenMgr_add_token(tokmgr, "OPERATOR", "/", lineno);
+			bidx++;
+		}
+		else if (c == COMMA) {
+			TokenMgr_add_token(tokmgr, "COMMA", ",", lineno);
 			bidx++;
 		}
 		else if (c == DQUOTE) {
@@ -135,7 +162,7 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 				error = 1;
 				continue;
 			}
-			TokenMgr_add_token(tokmgr, "STRING", store);
+			TokenMgr_add_token(tokmgr, "STRING", store, lineno);
 			stctr = 0;
 			bidx++;
 		}
@@ -146,16 +173,16 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 				c = buff[++bidx];
 			}
 			store[stctr] = '\0';
-			TokenMgr_add_token(tokmgr, "IDENTIFIER", store);
+			TokenMgr_add_token(tokmgr, "IDENTIFIER", store, lineno);
 			stctr = 0;
 		}
-		else if (isdigit((int) c)) {
-			while (isdigit((int) c)) {
+		else if (isdigit(c)) {
+			while (isdigit(c)) {
 				store[stctr++] = c;
-				c = (int) buff[++bidx];
+				c = buff[++bidx];
 			}
 			store[stctr] = '\0';
-			TokenMgr_add_token(tokmgr, "INTEGER", store);
+			TokenMgr_add_token(tokmgr, "INTEGER", store, lineno);
 			stctr = 0;
 		}
 		else if (c == LBRACE) {
@@ -181,14 +208,28 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 				continue;
 			}
 
-			TokenMgr_add_token(tokmgr, "GROUP", store);
+			TokenMgr_add_token(tokmgr, "GROUP", store, lineno);
 			stctr = 0;
 			bidx++;
+		}
+		else if (isalpha(c)) {
+			while (is_valid_identifier(c)) {
+				store[stctr++] = c;
+				c = (int) buff[++bidx];
+			}
+			store[stctr] = '\0';
+			// if (is_valid_keyword(store)) {
+			// 	TokenMgr_add_token(tokmgr, "KEYWORD", store, lineno);
+			// }
+			// else {
+			// 	error = 1;
+			// }
+			stctr = 0;
 		}
 		else {
 			store[stctr++] = c;
 			c = buff[++bidx];
-			while (c != COMMENT && c != LBRACE && c != RBRACE \
+			while (c != COMMENT && c != LBRACE && c != RBRACE && c != '\0' \
 				&& c != DQUOTE && c != VAR & c != NEWLINE && c!= EQUAL) {
 				store[stctr++] = c;
 				c = buff[++bidx];
@@ -198,44 +239,71 @@ int build_tokens(char *buff, TokenMgr *tokmgr) {
 		}
 	}
 
+	// Add tail token.
+	TokenMgr_add_token(tokmgr, "EOT", "EOT", 0);
+
 	if (error)
-		printf("** Invalid syntax: unknown '%s' found in line %d\n", store, lineno);
+		printf("Invalid syntax: unknown '%s' found in line %d\n", store, lineno);
 
 	return error;
 }
 
-TokenMgr *TokenMgr_new() {
+TokenMgr *TokenMgr_new(void) {
 	TokenMgr *tok_mgr = malloc(sizeof(TokenMgr));
+	tok_mgr->toks_tail = NULL;
+	tok_mgr->toks_head = NULL;
 	tok_mgr->tok_ctr = 0;
-	tok_mgr->curr_tok = NULL;
+	tok_mgr->tok_cap = TOKMGR_TOKS_INIT_SIZE;
+	tok_mgr->toks_curr = malloc(tok_mgr->tok_cap * sizeof(Token*));	
 	return tok_mgr;
 }
 
-Token *TokenMgr_current_token(TokenMgr *tok_mgr) {
-	if (tok_mgr == NULL)
-		return NULL;
-
-	return *tok_mgr->curr_tok;
-}
-
-int TokenMgr_add_token(TokenMgr *tok_mgr, char tok_type[50], char tok_val[100]) {
+int TokenMgr_add_token(TokenMgr *tok_mgr, char tok_type[20], char *tok_val, int tok_lineno) {
 	if (tok_mgr == NULL) {
 		printf("**Error** Invalid token manager passed to TokenMgr_add_token");
 		return 1;
-	}
+	}	
 
-	Token *tmp = malloc(sizeof(Token));
+	// Get string length of value.
+	size_t tok_val_length = strlen(tok_val);
+	
+	// Create temp token on heap.
+	Token *tmp = malloc(sizeof(Token));	
+	tmp->value = calloc(tok_val_length+1, sizeof(char));
 	strcpy(tmp->type, tok_type);
 	strcpy(tmp->value, tok_val);
 	tmp->val_length = strlen(tmp->value);
-	tok_mgr->toks[tok_mgr->tok_ctr] = tmp;
-	tok_mgr->tok_ctr += 1;
+	tmp->lineno = tok_lineno;
+
+	// Determine if we need more room in toks.
+	// if (tok_mgr->tok_cap - tok_mgr->tok_ctr <= 5) {
+	// 	tok_mgr->toks_curr = grow_curr_tokens(tok_mgr);
+
+	// 	// Make sure grow was succesful.
+	// 	if (tok_mgr->toks_curr == NULL)
+	// 		return 1;
+	// }	
+	
+	tok_mgr->toks_curr[tok_mgr->tok_ctr++] = tmp;
+	tok_mgr->toks_tail = tmp;
+
 	return 0;
 }
 
+Token *TokenMgr_peek_token(TokenMgr *tok_mgr) {
+	if (tok_mgr == NULL || *tok_mgr->toks_curr == tok_mgr->toks_tail)
+		return NULL;
+
+	tok_mgr->toks_curr++;
+	Token *next = *tok_mgr->toks_curr;
+	tok_mgr->toks_curr--;
+	return next;
+}
+
 void TokenMgr_print_tokens(TokenMgr *tok_mgr) {
-	for (size_t i =0; i < tok_mgr->tok_ctr; i++) {
-		printf("%s %s \n", tok_mgr->toks[i]->type, tok_mgr->toks[i]->value);
+	TokenMgr_reset_curr(tok_mgr);
+	for (size_t i = 1; tok_mgr->toks_curr[i] != tok_mgr->toks_tail; i++) {
+		printf("%s %s \n", tok_mgr->toks_curr[i]->type, tok_mgr->toks_curr[i]->value);
 	}
 }
 
@@ -244,78 +312,90 @@ int TokenMgr_free(TokenMgr *tok_mgr) {
 		printf("**Error** Invalid token manager passed to TokenMgr_free");
 		return 1;
 	}
-
+	
+	TokenMgr_reset_curr(tok_mgr);
+	
 	for (size_t i = 0; i < tok_mgr->tok_ctr; i++) {
-		free(tok_mgr->toks[i]);
+		free(tok_mgr->toks_curr[i]->value);
+		free(tok_mgr->toks_curr[i]);
 	}
-	tok_mgr->curr_tok = NULL;
+
+	// Free resources.
+	free(tok_mgr->toks_curr);
+	tok_mgr->toks_curr = NULL;
+	tok_mgr->toks_head = NULL;
+	tok_mgr->toks_tail = NULL;
 	free(tok_mgr);
+	tok_mgr = NULL;
+
 	return 0;
 }
 
 Token *TokenMgr_next_token(TokenMgr *tok_mgr) {
 	if (tok_mgr == NULL)
 		return NULL;
+	
+	// Don't surpass final token.
+	if (TokenMgr_is_last_token(tok_mgr))
+		return NULL;		
 
-	if (tok_mgr->curr_tok == NULL) {
-		tok_mgr->curr_tok = tok_mgr->toks;
-	} 
-	else {
-
-		// Don't surpass final token.
-		if (*tok_mgr->curr_tok == tok_mgr->toks[tok_mgr->tok_ctr-1]) {
-			return NULL;
-		}
-		
-		tok_mgr->curr_tok++;	
-	}
-	return *tok_mgr->curr_tok;
+	tok_mgr->toks_curr++;	
+	return *tok_mgr->toks_curr;
 }
 
 Token *TokenMgr_prev_token(TokenMgr *tok_mgr) {
+	// Ensure is initialised or don't surpass first token.
+	if (tok_mgr == NULL || *tok_mgr->toks_curr == tok_mgr->toks_head)
+		return NULL;
+
+	tok_mgr->toks_curr--;
+	return *tok_mgr->toks_curr;
+}
+
+int TokenMgr_is_last_token(TokenMgr *tok_mgr) {
+	if (tok_mgr == NULL)
+		return -1;
+
+	return *tok_mgr->toks_curr == tok_mgr->toks_tail;
+}
+
+Token *TokenMgr_current_token(TokenMgr *tok_mgr) {
 	if (tok_mgr == NULL)
 		return NULL;
 
-	if (tok_mgr->curr_tok == NULL) {
-		tok_mgr->curr_tok = &tok_mgr->toks[tok_mgr->tok_ctr-1];
-	} 
-	else {
-
-		// Don't surpass first token.
-		if (*tok_mgr->curr_tok == tok_mgr->toks[0]) {
-			return NULL;
-		}
-			
-		tok_mgr->curr_tok--;	
-	}
-	return *tok_mgr->curr_tok;
+	return *tok_mgr->toks_curr;
 }
 
-void TokenMgr_reset_token(TokenMgr *tok_mgr) {
+void TokenMgr_reset_curr(TokenMgr *tok_mgr) {
 	if (tok_mgr == NULL)
 		return;
-	tok_mgr->curr_tok = NULL;
-}
-
-void TokenMgr_clear_tokens(TokenMgr *tok_mgr) {
-	if (tok_mgr == NULL) {
-		printf("**Error** Invalid token manager passed to TokenMgr_free");
-		return;
-	}
-	tok_mgr->curr_tok = NULL;
-	tok_mgr->tok_ctr = 0;
-}
-
-Token *get_first_token(TokenMgr *tok_mgr) {
-	if (tok_mgr == NULL || tok_mgr->tok_ctr < 1)
-		return NULL;
 	
-	return tok_mgr->toks[0];
+	while (*tok_mgr->toks_curr != tok_mgr->toks_head) {
+		tok_mgr->toks_curr--;
+	}
 }
 
-Token *get_last_token(TokenMgr *tok_mgr) {
-	if (tok_mgr == NULL || tok_mgr->tok_ctr < 1)
-		return NULL;
+int is_valid_keyword(char *str) {
+	int ret = 0;
+	
+	if (str == NULL)
+		return ret;
+	
+	for (int x = 0; x < KWORDS_SIZE-1; x++) {
+		const char *t = R_Keywords[x];
+		if (strcmp(t, str) == 0) {
+			ret = 1;
+			break;
+		}
+	}
+	return ret;
+}
 
-	return tok_mgr->toks[tok_mgr->tok_ctr-1];
+Token **grow_curr_tokens(TokenMgr *tok_mgr) {
+	if (tok_mgr == NULL)
+		return NULL;
+		
+	tok_mgr->tok_cap *= 2;
+	Token **toks_curr_new = realloc(tok_mgr->toks_curr, sizeof(Token *) * tok_mgr->tok_cap);		
+	return toks_curr_new;
 }

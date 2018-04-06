@@ -7,16 +7,22 @@ Represent a single token read from input.
 
 
 
-{\ttfamily \#include $<$tokens.\+h$>$}
+{\ttfamily \#include $<$tokenizer.\+h$>$}
 
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{struct_token_ab8c9876b0a3f630d1022e8eb99f5de81}\label{struct_token_ab8c9876b0a3f630d1022e8eb99f5de81}} 
-char {\bfseries type} \mbox{[}20\mbox{]}
+\mbox{\Hypertarget{struct_token_a8ce1465ae45fecb9798e5cfb8c8b2165}\label{struct_token_a8ce1465ae45fecb9798e5cfb8c8b2165}} 
+char {\bfseries type} \mbox{[}T\+O\+K\+E\+N\+T\+Y\+P\+E\+\_\+\+S\+I\+ZE\mbox{]}
 \item 
-\mbox{\Hypertarget{struct_token_ae3a20bd709dc24779b6dfcc5e6eb932d}\label{struct_token_ae3a20bd709dc24779b6dfcc5e6eb932d}} 
-char {\bfseries value} \mbox{[}100\mbox{]}
+\mbox{\Hypertarget{struct_token_a2a240c7e82be05331fbe8acc2b774955}\label{struct_token_a2a240c7e82be05331fbe8acc2b774955}} 
+char $\ast$ {\bfseries value}
+\item 
+\mbox{\Hypertarget{struct_token_a73113624d32945da98d535efe8cea42a}\label{struct_token_a73113624d32945da98d535efe8cea42a}} 
+size\+\_\+t {\bfseries val\+\_\+length}
+\item 
+\mbox{\Hypertarget{struct_token_ac27f35dabf992e05899db84ee4c132cb}\label{struct_token_ac27f35dabf992e05899db84ee4c132cb}} 
+int {\bfseries lineno}
 \end{DoxyCompactItemize}
 
 
@@ -27,4 +33,4 @@ Struct will hold every identified token meta data. Is needed for parsing.
 
 The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-src/\mbox{\hyperlink{tokens_8h}{tokens.\+h}}\end{DoxyCompactItemize}
+src/include/\mbox{\hyperlink{tokenizer_8h}{tokenizer.\+h}}\end{DoxyCompactItemize}

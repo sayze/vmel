@@ -7,19 +7,25 @@
 
 
 
-{\ttfamily \#include $<$tokens.\+h$>$}
+{\ttfamily \#include $<$tokenizer.\+h$>$}
 
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{struct_token_mgr_a7f5a58a2f7ba83078262f1c5509c7dca}\label{struct_token_mgr_a7f5a58a2f7ba83078262f1c5509c7dca}} 
-\mbox{\hyperlink{struct_token}{Token}} $\ast$$\ast$ {\bfseries curr\+\_\+tok}
+\mbox{\Hypertarget{struct_token_mgr_aee9bee2443af37eae9fa475620873646}\label{struct_token_mgr_aee9bee2443af37eae9fa475620873646}} 
+\mbox{\hyperlink{struct_token}{Token}} $\ast$ {\bfseries toks\+\_\+head}
 \item 
-\mbox{\Hypertarget{struct_token_mgr_a0863848afa7874307f5ed4d46c1a22e5}\label{struct_token_mgr_a0863848afa7874307f5ed4d46c1a22e5}} 
-\mbox{\hyperlink{struct_token}{Token}} $\ast$ {\bfseries toks} \mbox{[}1000\mbox{]}
+\mbox{\Hypertarget{struct_token_mgr_a3d36fd3a48a52dbd497fa83eea77bbb8}\label{struct_token_mgr_a3d36fd3a48a52dbd497fa83eea77bbb8}} 
+\mbox{\hyperlink{struct_token}{Token}} $\ast$$\ast$ {\bfseries toks\+\_\+curr}
+\item 
+\mbox{\Hypertarget{struct_token_mgr_ad9416707c973324743b48586e20c7bee}\label{struct_token_mgr_ad9416707c973324743b48586e20c7bee}} 
+\mbox{\hyperlink{struct_token}{Token}} $\ast$ {\bfseries toks\+\_\+tail}
 \item 
 \mbox{\Hypertarget{struct_token_mgr_a764c0f04ff55f5e23b727b1c7de8003e}\label{struct_token_mgr_a764c0f04ff55f5e23b727b1c7de8003e}} 
 size\+\_\+t {\bfseries tok\+\_\+ctr}
+\item 
+\mbox{\Hypertarget{struct_token_mgr_a6c51c54b6a2a05ad7f54a6e33c63e5fb}\label{struct_token_mgr_a6c51c54b6a2a05ad7f54a6e33c63e5fb}} 
+size\+\_\+t {\bfseries tok\+\_\+cap}
 \end{DoxyCompactItemize}
 
 
@@ -30,4 +36,4 @@ This provides a high level interfacing for token management. It is preferred to 
 
 The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-src/\mbox{\hyperlink{tokens_8h}{tokens.\+h}}\end{DoxyCompactItemize}
+src/include/\mbox{\hyperlink{tokenizer_8h}{tokenizer.\+h}}\end{DoxyCompactItemize}
