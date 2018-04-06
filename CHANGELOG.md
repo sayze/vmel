@@ -10,7 +10,7 @@
 * Still need to clean up fixed memory allocations for `char[]` to use realloc's.
 * As a result of above there are limitations on how long a line of input can be.
 
-## v0.0.1
+## v0.0.2
 * Replaced most fixed `char[]` allocations with dynamic arrays.
 * Introduced AST module.
 * Created more Managers for Node, Parser and Errors.
