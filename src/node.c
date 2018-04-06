@@ -46,16 +46,9 @@ int NodeMgr_free(NodeMgr *node_mgr) {
 		root_node = node_mgr->nodes[n];
         switch (root_node->type) {
             case E_EQUAL_NODE:
-                // Depth 1 e.g 2 + 3       
-                if (root_node->depth <= 1) {
-                    free(root_node->data->AsnStmtNode.left);
-                    free(root_node->data->AsnStmtNode.right);
-                }
-				// Depth > 1 e.g 3 * 1 + 4
-                else {
-					free(root_node->data->AsnStmtNode.left);
-                    node_free(root_node->data->AsnStmtNode.right);
-                }
+				itr = root_node->data->AsnStmtNode.right;
+				free(root_node->data->AsnStmtNode.left);
+				node_free(itr);
                 break;
             case E_GROUP_NODE:
                 itr = root_node->data->GroupNode.next;

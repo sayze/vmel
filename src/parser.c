@@ -10,13 +10,34 @@
 #define ERR_UNEXPECTED 0
 #define ERR_GROUP_EXIST 1
 #define ERR_EMPTY_GROUP 2
+#define ERR_EMPTY_ARRAY_ITEM 3
 
 // These are the errors a parser may generate. They are mapped to the #DEFINE above.
 static const char *Error_Templates[] = {
 	"unexpected @0 found in line @1",
 	"duplicate definition {@0} already defined in line @1",
 	"empty group {@0} must contain commands in line @1",
+	"array cannot contain empty value at line @1"
 };
+
+// ------------------------------------------------------------
+// Below are shorthand functions for token related actions.
+// ------------------------------------------------------------
+
+// Sync ParserMgr internal token to be current toke held by TokenMgr.
+static void par_mgr_sync(ParserMgr *par_mgr) {
+	par_mgr->curr_token = TokenMgr_current_token(par_mgr->tok_mgr);
+}
+
+// Increment the token within TokenMgr and assign it to par_mgr.
+static void par_mgr_next(ParserMgr *par_mgr) {
+	par_mgr->curr_token = TokenMgr_next_token(par_mgr->tok_mgr);
+}
+
+// ------------------------------------------------------------
+// End shorthand functions.
+// ------------------------------------------------------------
+
 
 ParserMgr *ParserMgr_new() {
 	ParserMgr *ps = malloc(sizeof(ParserMgr));
@@ -80,26 +101,26 @@ struct Node *parse_string(ParserMgr *par_mgr) {
 		str = Node_new(0);
 		str->type = E_STRING_NODE;
 		str->value = par_mgr->curr_token->value;
-		par_mgr->curr_token = TokenMgr_next_token(par_mgr->tok_mgr);
+		par_mgr_next(par_mgr);
 	}
 	return str;
 }
 
 struct Node *parse_factor(ParserMgr *par_mgr) {
-	par_mgr->curr_token = TokenMgr_current_token(par_mgr->tok_mgr);
+	par_mgr_sync(par_mgr);
 	struct Node *res = NULL;
 	 if (parser_can_consume(par_mgr->curr_token->type, "INTEGER")) {
 		 res = Node_new(0);
 		 res->type = E_INTEGER_NODE;
 		 res->value = par_mgr->curr_token->value; 
-		 par_mgr->curr_token = TokenMgr_next_token(par_mgr->tok_mgr);
+		 par_mgr_next(par_mgr);
 	 }
 	 else if (parser_can_consume(par_mgr->curr_token->type, "LPAREN")) {
 		 TokenMgr_next_token(par_mgr->tok_mgr);
 		 res = parse_expr(par_mgr);
-		 par_mgr->curr_token = TokenMgr_current_token(par_mgr->tok_mgr);
+		 par_mgr_sync(par_mgr);
 		 if (parser_can_consume(par_mgr->curr_token->type, "RPAREN")) {
-			par_mgr->curr_token = TokenMgr_next_token(par_mgr->tok_mgr); 
+			par_mgr_next(par_mgr); 
 		 }
 	 }
 	 return res;
@@ -165,7 +186,7 @@ struct Node *parse_assignment(ParserMgr *par_mgr) {
 	// Store pointer to actual variable name.
 	Token *tok_start_ptr = TokenMgr_current_token(par_mgr->tok_mgr);
 	// Store pointer to subsequent tokens.
-	par_mgr->curr_token = TokenMgr_next_token(par_mgr->tok_mgr);
+	par_mgr_next(par_mgr);
 	// Reset expression depth.
 	par_mgr->expr_depth = 0;
 	
@@ -178,7 +199,7 @@ struct Node *parse_assignment(ParserMgr *par_mgr) {
 
 	// Assert we can consume an EQUAL.
 	if (parser_can_consume(par_mgr->curr_token->value, "=")) {
-		par_mgr->curr_token = TokenMgr_next_token(par_mgr->tok_mgr);
+		par_mgr_next(par_mgr);
 		if ((expr = parse_string(par_mgr)) != NULL || (expr = parse_expr(par_mgr)) != NULL) {
 			// Identifier.
 			lhand = Node_new(0); 
@@ -194,15 +215,16 @@ struct Node *parse_assignment(ParserMgr *par_mgr) {
 		}
 		else {
 			ParserMgr_add_error(par_mgr->err_handle, par_mgr->curr_token, ERR_UNEXPECTED);
-			par_mgr->curr_token = TokenMgr_next_token(par_mgr->tok_mgr);
+			par_mgr_next(par_mgr);
 		}
 	}
 	else {
 		ParserMgr_add_error(par_mgr->err_handle, par_mgr->curr_token, ERR_UNEXPECTED);
-		par_mgr->curr_token = TokenMgr_next_token(par_mgr->tok_mgr);
+		par_mgr_next(par_mgr);
 	}
 	return ast;
 }
+
 
 struct Node *parse_group(ParserMgr *par_mgr) {
 	// If string isn't next then store error and move to next token.
@@ -261,7 +283,7 @@ int parser_init(TokenMgr *tok_mgr) {
 	tok_mgr = NULL;
 
 	
-	par_mgr->curr_token = TokenMgr_next_token(par_mgr->tok_mgr);
+	par_mgr_next(par_mgr);
 	
 	while (!TokenMgr_is_last_token(par_mgr->tok_mgr)) {
 		if (strcmp(par_mgr->curr_token->type, "IDENTIFIER") == 0) {
@@ -272,7 +294,7 @@ int parser_init(TokenMgr *tok_mgr) {
 		}
 		else {
 			ParserMgr_add_error(par_mgr->err_handle, par_mgr->curr_token, ERR_UNEXPECTED);
-			TokenMgr_next_token(par_mgr->tok_mgr);
+			par_mgr_next(par_mgr);
 			continue;
 		}
 		
@@ -281,7 +303,7 @@ int parser_init(TokenMgr *tok_mgr) {
 			NodeMgr_add_node(node_mgr, par_mgr->curr_expr);
 		}
 
-		par_mgr->curr_token = TokenMgr_current_token(par_mgr->tok_mgr);
+		par_mgr_sync(par_mgr);
 	}
 	
 	// Any errors then print them.

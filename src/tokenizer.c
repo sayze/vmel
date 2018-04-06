@@ -83,7 +83,7 @@ int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr) {
 			bidx++;
 		}
 		else if (c == RBRACKET) {
-			TokenMgr_add_token(tokmgr, "LPAREN", "]", lineno);
+			TokenMgr_add_token(tokmgr, "RBRACKET", "]", lineno);
 			bidx++;
 		}
 		else if (c == LPAREN) {

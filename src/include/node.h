@@ -19,7 +19,8 @@ enum NodeType {
 	E_STRING_NODE,
 	E_INTEGER_NODE, 
 	E_GROUP_NODE,
-	E_IDENTIFIER_NODE, 
+	E_IDENTIFIER_NODE,
+	E_ARRAY_NODE, 
 	E_EOF_NODE
 };
 
@@ -51,7 +52,7 @@ union SyntaxNode {
     struct {
         struct Node *next;
 	} GroupNode;
-} sn ;
+};
 
 /**
  * @brief NodeMgr manages holds all the nodes at the root level.

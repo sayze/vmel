@@ -5,14 +5,14 @@
  * 
  * Error module is simply a store of malloc'ed strings. It is upto an individual module to 
  * determing how they produce those errors and the nature of them. Error simply keeps track
- * of them in a organized structure so that they can be correct freed and accessed.
+ * of them in a organized structure so that they can be correctly accessed freed.
  * 
  */
 
 #ifndef ERRORS_H
 #define ERRORS_H
 
-// Initial amount of errors stored.
+// Default max errors to show per parse.
 #define INIT_MAX_ERRORS 20
 
 #include <string.h>
