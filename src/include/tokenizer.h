@@ -175,30 +175,6 @@ void TokenMgr_reset_curr(TokenMgr *tok_mgr);
 Token *TokenMgr_current_token(TokenMgr *tok_mgr);
 
 /**
-<<<<<<< HEAD:src/tokenizer.h
- * @brief Get last token in token manager.
- * 
- * Unlike the "TokenMgr" prefixed functions this doesn't operate
- * on the internal pointer. This simply returns a pointer
- * to the last token in the collection.
- *
- * @param tok_mgr Pointer to token manager instance.
- * @return Token pointer to final token.
- */
-Token *get_last_token(TokenMgr *tok_mgr);
-
-/**
- * @brief Get first token in token manager.
-
- * Unlike the "TokenMgr" prefixed functions this doesn't operate
- * on the internal pointer. This simply returns a pointer
- * to the first token in the collection.
-
- * @param tok_mgr Pointer to token manager instance.
- * @return Token pointer to first token.
- */
-Token *get_first_token(TokenMgr *tok_mgr);
-=======
  * @brief Determine if a string is a valid keyword.
  * 
  * This function checks against R_Keywords inside tokens.h
@@ -208,6 +184,5 @@ Token *get_first_token(TokenMgr *tok_mgr);
  * @return 1 if it is valid keyword otherwise return 0.
  */
 int is_valid_keyword(char *str);
->>>>>>> develop:src/include/tokenizer.h
 
 #endif
