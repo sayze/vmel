@@ -18,10 +18,6 @@ static const char *Error_Templates[] = {
 	"empty group {@0} must contain commands in line @1",
 };
 
-// ------------------------------------------------------------
-// Below are shorthand functions for token related actions.
-// ------------------------------------------------------------
-
 // Sync ParserMgr internal token to be current token held by TokenMgr.
 static void par_mgr_sync(ParserMgr *par_mgr) {
 	par_mgr->curr_token = TokenMgr_current_token(par_mgr->tok_mgr);
@@ -31,10 +27,6 @@ static void par_mgr_sync(ParserMgr *par_mgr) {
 static void par_mgr_next(ParserMgr *par_mgr) {
 	par_mgr->curr_token = TokenMgr_next_token(par_mgr->tok_mgr);
 }
-
-// ------------------------------------------------------------
-// End shorthand functions.
-// ------------------------------------------------------------
 
 ParserMgr *ParserMgr_new() {
 	ParserMgr *ps = malloc(sizeof(ParserMgr));
