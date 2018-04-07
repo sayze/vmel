@@ -13,9 +13,9 @@
 
 // These are the errors a parser may generate. They are mapped to the #DEFINE above.
 static const char *Error_Templates[] = {
-	"unexpected @0 found in line @1",
-	"duplicate definition {@0} already defined in line @1",
-	"empty group {@0} must contain commands in line @1",
+	"Error: unexpected @0 found in line @1",
+	"Error: duplicate definition {@0} already defined in line @1",
+	"Error: empty group {@0} must contain commands in line @1",
 };
 
 // Sync ParserMgr internal token to be current token held by TokenMgr.

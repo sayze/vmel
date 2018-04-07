@@ -218,12 +218,12 @@ int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr) {
 				c = (int) buff[++bidx];
 			}
 			store[stctr] = '\0';
-			// if (is_valid_keyword(store)) {
-			// 	TokenMgr_add_token(tokmgr, "KEYWORD", store, lineno);
-			// }
-			// else {
-			// 	error = 1;
-			// }
+			if (is_valid_keyword(store)) {
+				TokenMgr_add_token(tokmgr, "KEYWORD", store, lineno);
+			}
+			else {
+				error = 1;
+			}
 			stctr = 0;
 		}
 		else {

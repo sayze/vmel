@@ -9,7 +9,7 @@
 
 $vm_user = "sayed@root"
 $vm_pass = "124astroboy"
-$total = 1 + 4 + 56
+$total = print($vm_pass)
 
 # ---------------------------------- # 
 #            Groups                  #
