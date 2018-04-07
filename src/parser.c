@@ -84,8 +84,8 @@ int parser_can_consume(char *tok_type, char *type) {
 	return 1;
 }
 
-struct Node *parse_string(ParserMgr *par_mgr) {
-	struct Node *str = NULL;
+Node *parse_string(ParserMgr *par_mgr) {
+	Node *str = NULL;
 	if (parser_can_consume(par_mgr->curr_token->type, "STRING")) {
 		str = Node_new(0);
 		str->type = E_STRING_NODE;
@@ -95,9 +95,9 @@ struct Node *parse_string(ParserMgr *par_mgr) {
 	return str;
 }
 
-struct Node *parse_factor(ParserMgr *par_mgr) {
+Node *parse_factor(ParserMgr *par_mgr) {
 	par_mgr_sync(par_mgr);
-	struct Node *res = NULL;
+	Node *res = NULL;
 	 if (parser_can_consume(par_mgr->curr_token->type, "INTEGER")) {
 		 res = Node_new(0);
 		 res->type = E_INTEGER_NODE;
@@ -115,12 +115,12 @@ struct Node *parse_factor(ParserMgr *par_mgr) {
 	 return res;
 }
 
-struct Node *parse_term(ParserMgr *par_mgr) {
-	struct Node *res = parse_factor(par_mgr);
+Node *parse_term(ParserMgr *par_mgr) {
+	Node *res = parse_factor(par_mgr);
 	while (!TokenMgr_is_last_token(par_mgr->tok_mgr) &&
 	(parser_can_consume(par_mgr->curr_token->value, "*") || parser_can_consume(par_mgr->curr_token->value, "/"))) {
 		// BinOP node.
-		struct Node *bop = Node_new(1);
+		Node *bop = Node_new(1);
 
 		if (strncmp(par_mgr->curr_token->value, "*", 1) == 0) {
 			bop->type = E_TIMES_NODE;
@@ -143,12 +143,12 @@ struct Node *parse_term(ParserMgr *par_mgr) {
 	return res;
 }
 
-struct Node *parse_expr(ParserMgr *par_mgr) {
-	struct Node *res = parse_term(par_mgr);
+Node *parse_expr(ParserMgr *par_mgr) {
+	Node *res = parse_term(par_mgr);
 	while (!TokenMgr_is_last_token(par_mgr->tok_mgr) &&
 	(parser_can_consume(par_mgr->curr_token->value, "+") || parser_can_consume(par_mgr->curr_token->value, "-"))) {
 		// BinOP node.
-		struct Node *bop = Node_new(1);
+		Node *bop = Node_new(1);
 
 		if (strncmp(par_mgr->curr_token->value, "+", 1) == 0) {
 			bop->type = E_ADD_NODE;
@@ -171,7 +171,7 @@ struct Node *parse_expr(ParserMgr *par_mgr) {
 	return res;
 }
 
-struct Node *parse_assignment(ParserMgr *par_mgr) {
+Node *parse_assignment(ParserMgr *par_mgr) {
 	// Store pointer to actual variable name.
 	Token *tok_start_ptr = TokenMgr_current_token(par_mgr->tok_mgr);
 	// Store pointer to subsequent tokens.
@@ -180,11 +180,11 @@ struct Node *parse_assignment(ParserMgr *par_mgr) {
 	par_mgr->expr_depth = 0;
 	
 	// Final ast build by entire assignment.
-	struct Node *ast = NULL;
+	Node *ast = NULL;
 	// Returned by each recursive handle.
-	struct Node *expr = NULL;	
+	Node *expr = NULL;	
 	// Leftmost node of root ast. 
-	struct Node *lhand = NULL;
+	Node *lhand = NULL;
 
 	// Assert we can consume an EQUAL.
 	if (parser_can_consume(par_mgr->curr_token->value, "=")) {
@@ -215,7 +215,7 @@ struct Node *parse_assignment(ParserMgr *par_mgr) {
 }
 
 
-struct Node *parse_group(ParserMgr *par_mgr) {
+Node *parse_group(ParserMgr *par_mgr) {
 	// If string isn't next then store error and move to next token.
 	if (strcmp(TokenMgr_peek_token(par_mgr->tok_mgr)->type, "STRING") != 0) {
 		ParserMgr_add_error(par_mgr->err_handle, TokenMgr_current_token(par_mgr->tok_mgr), ERR_EMPTY_GROUP);
@@ -224,11 +224,11 @@ struct Node *parse_group(ParserMgr *par_mgr) {
 	}
 
 	// group node itself. i.e {some_group}.
-	struct Node *group = Node_new(1);
+	Node *group = Node_new(1);
 	// Previously read command <string>.
-	struct Node *prev = NULL;
+	Node *prev = NULL;
 	// Recently read command <string>
-	struct Node *curr = NULL;
+	Node *curr = NULL;
 	
 	// Setup group node data.
 	group->value = TokenMgr_current_token(par_mgr->tok_mgr)->value;

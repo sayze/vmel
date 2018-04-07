@@ -37,20 +37,23 @@ struct Node {
 	char *value;
 };
 
+// Alias for Node itself.
+typedef struct Node Node;
+
 /**
  * @brief SyntaxNode desscribes the data stored in each Node. 
  */
 union SyntaxNode {
 	struct {
-        struct Node *left;
-		struct Node *right;
+        Node *left;
+		Node *right;
     } BinExpNode;
 	struct {
-		struct Node *left;
-		struct Node *right;
+		Node *left;
+		Node *right;
 	} AsnStmtNode;
     struct {
-        struct Node *next;
+        Node *next;
 	} GroupNode;
 };
 
@@ -62,7 +65,7 @@ union SyntaxNode {
  * 
  */
 typedef struct {
-    struct Node **nodes; 
+    Node **nodes; 
     size_t nodes_ctr;
     size_t nodes_cap;
 } NodeMgr;
@@ -75,7 +78,7 @@ typedef struct {
  * @param wdata With Data flag determines whether to malloc the data *.
  * @return Pointer to newly created node or null ptr if something went wrong.
  */
-struct Node *Node_new(int wdata);
+Node *Node_new(int wdata);
 
 /**
  * @brief Add an existing Node to the internal NodeMgr store.
@@ -88,7 +91,7 @@ struct Node *Node_new(int wdata);
  * @param node Node instance to be added.
  * @return 0 if successful otherwise 1.
  */
- int NodeMgr_add_node(NodeMgr *node_mgr, struct Node *node);
+ int NodeMgr_add_node(NodeMgr *node_mgr, Node *node);
 
 /**
  * @brief Free all resources creates by node manager. Including node manager itself.
@@ -116,6 +119,6 @@ NodeMgr *NodeMgr_new(void);
  * @param node_mgr Instance of NodeMgr.
  * @return Newly allocated Node**.
  */
-struct Node **grow_nodes(NodeMgr *node_mgr);
+Node **grow_nodes(NodeMgr *node_mgr);
 
 #endif

@@ -9,16 +9,16 @@ NodeMgr *NodeMgr_new(void) {
 	NodeMgr *node_mgr = malloc(sizeof(NodeMgr)) ;  
     node_mgr->nodes_ctr = 0;
     node_mgr->nodes_cap = INIT_NODEMGR_SIZE;
-    node_mgr->nodes = malloc(node_mgr->nodes_cap * sizeof(struct Node*));
+    node_mgr->nodes = malloc(node_mgr->nodes_cap * sizeof(Node *));
     return node_mgr;
 }
 
-static int is_binop_node(struct Node *n) {
+static int is_binop_node(Node *n) {
 	return 	n->type ==  E_ADD_NODE || n->type == E_MINUS_NODE || 
 			n->type == E_DIV_NODE || n->type == E_TIMES_NODE;
 }
 
-static void node_free(struct Node *node) {
+static void node_free(Node *node) {
 	if (node == NULL) 
 		return;
 	
@@ -38,9 +38,9 @@ int NodeMgr_free(NodeMgr *node_mgr) {
     if (node_mgr == NULL) 
 		return 1;
 
-    struct Node *root_node = NULL;     
-    struct Node *itr = NULL;
-    struct Node *prev = NULL;
+    Node *root_node = NULL;     
+    Node *itr = NULL;
+    Node *prev = NULL;
     
     for (size_t n = 0; n < node_mgr->nodes_ctr; n++) {
 		root_node = node_mgr->nodes[n];
@@ -82,8 +82,8 @@ int NodeMgr_free(NodeMgr *node_mgr) {
     return 0;
 }
 
-struct Node *Node_new(int wdata) {
-    struct Node *n = malloc(sizeof(struct Node));
+Node *Node_new(int wdata) {
+    Node *n = malloc(sizeof(struct Node));
     
     // Malloc data if needed.
     if (wdata)
@@ -96,16 +96,16 @@ struct Node *Node_new(int wdata) {
     return n;
 }
 
-struct Node **grow_nodes(NodeMgr *node_mgr) {
+Node **grow_nodes(NodeMgr *node_mgr) {
     if (node_mgr == NULL) 
 		return NULL;
 
     node_mgr->nodes_cap *= 2;
-    struct Node **nodes_new = realloc(node_mgr->nodes, sizeof(struct Node *) * node_mgr->nodes_cap);		
+    Node **nodes_new = realloc(node_mgr->nodes, sizeof(Node *) * node_mgr->nodes_cap);		
     return nodes_new;
 }
 
-int NodeMgr_add_node(NodeMgr *node_mgr, struct Node *node) {
+int NodeMgr_add_node(NodeMgr *node_mgr, Node *node) {
     if (node_mgr == NULL) 
 		return 1;
 

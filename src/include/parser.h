@@ -18,7 +18,7 @@
  * structure which holds all the necessary information per parse.
  */
 typedef struct {
-	struct Node *curr_expr;
+	Node *curr_expr;
 	unsigned int expr_depth;
 	Token *curr_token;
 	TokenMgr *tok_mgr;
@@ -68,7 +68,7 @@ int parser_can_consume(char *tok_type, char *type);
  * @param err_handle Error handler to capture any parsing errors.
  * @return Node generated from production.
  */
-struct Node *parse_group(ParserMgr *par_mgr);
+Node *parse_group(ParserMgr *par_mgr);
 
 
 /**
@@ -79,7 +79,7 @@ struct Node *parse_group(ParserMgr *par_mgr);
  * @param par_mgr ParserMgr instance.
  * @return Node generated from production.
  */
-struct Node *parse_assignment(ParserMgr *par_mgr);
+Node *parse_assignment(ParserMgr *par_mgr);
 
 /**
  * @brief Will consume expression based on grammar.
@@ -89,7 +89,7 @@ struct Node *parse_assignment(ParserMgr *par_mgr);
  * @param par_mgr ParserMgr instance.
  * @return Node generated from production.
  */
-struct Node *parse_expr(ParserMgr *par_mgr);
+Node *parse_expr(ParserMgr *par_mgr);
 
 /**
  * @brief Will consume factor based on grammar.
@@ -99,7 +99,7 @@ struct Node *parse_expr(ParserMgr *par_mgr);
  * @param par_mgr ParserMgr instance.
  * @return Node generated from production.
  */
-struct Node *parse_factor(ParserMgr *par_mgr);
+Node *parse_factor(ParserMgr *par_mgr);
 
 /**
  * @brief Initial entry for parser.
