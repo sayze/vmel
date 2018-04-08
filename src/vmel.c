@@ -3,6 +3,7 @@
 #include <string.h>
 #include "tokenizer.h"
 #include "parser.h"
+#include "node.h"
 #include "utils.h"
 
 #define CLI_BUFFER_LIMIT 50
@@ -16,27 +17,37 @@ int main(int argc, char *argv[]) {
 	if (argc == 2)
 		buff_in = file_to_buffer(argv[1]);
 
-	// Don't bother building tokens
-	// empty file read.
+	// Don't bother building tokens empty file read.
 	if (!buff_in)
 		return 0;
 
 	// Instantiate new token manager.
 	TokenMgr *tok_mgr = TokenMgr_new(); 
-	
+	// Store ast returned from parser.
+	NodeMgr *node_mgr = NULL;
+	// Symbol table instance.
+	SyTable *sy_table = NULL;
 	// Store error status.
 	int err = 0;
 
 	err = TokenMgr_build_tokens(buff_in, tok_mgr);
 
-	if (!err)
-		parser_init(tok_mgr);
-	
+	if (!err) {
+		node_mgr = parser_init(tok_mgr);
+
+		// Create Symbol Table instance.
+	 	sy_table = SyTable_new();
+		NodeMgr_fill_sytable(node_mgr, sy_table);
+	}	
+
 	#ifdef DEBUG
+		SyTable_print_symbols(sy_table);
 		TokenMgr_print_tokens(tok_mgr);
 	#endif
 
 	// Free resources.
+	SyTable_free(sy_table);
+	NodeMgr_free(node_mgr);
 	TokenMgr_free(tok_mgr);
 	free(buff_in);
 

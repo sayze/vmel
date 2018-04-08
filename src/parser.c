@@ -285,7 +285,7 @@ Node *parse_keyword(ParserMgr *par_mgr) {
 	return stmt;
 }
 
-int parser_init(TokenMgr *tok_mgr) {
+NodeMgr *parser_init(TokenMgr *tok_mgr) {
 
 	// Create wrapper structs.
 	ParserMgr *par_mgr = ParserMgr_new();
@@ -295,7 +295,7 @@ int parser_init(TokenMgr *tok_mgr) {
 	// This will do for now.
 	// TODO: Add descriptive error here.
 	if (!par_mgr->err_handle || !par_mgr || !node_mgr || !tok_mgr)
-		return -1;
+		return NULL;
 		
 	par_mgr->tok_mgr = tok_mgr;
 	tok_mgr = NULL;
@@ -331,22 +331,8 @@ int parser_init(TokenMgr *tok_mgr) {
 	if (par_mgr->err_handle->error_ctr > 0)
 		Error_print_all(par_mgr->err_handle);
 
-
-	// Create Symbol Table instance.
-	SyTable *sy_table = SyTable_new();
-
-	// Fill in symbol table through NodeManager.
-	NodeMgr_fill_sytable(node_mgr, sy_table);
-
-	#ifdef DEBUG
-		SyTable_print_symbols(sy_table);
-	#endif
-
 	// Free resources.
-	SyTable_free(sy_table);
 	Error_free(par_mgr->err_handle);
-	NodeMgr_free(node_mgr);
 	ParserMgr_free(par_mgr);
-	
-	return 0;
+	return  node_mgr;
 }

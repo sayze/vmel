@@ -104,10 +104,11 @@ Node *parse_factor(ParserMgr *par_mgr);
 /**
  * @brief Initial entry for parser.
  * 
+ * Function will perform parsing and construct an AST as output.
  * 
  * @param tok_mgr TokenMgr containing all token information.
- * @return 0 if parser was successful or return 1 if issue occurred.
+ * @return NodeMgr instance containing generated AST or NULL if error occurred.
  */
-int parser_init(TokenMgr *tok_mgr);
+NodeMgr *parser_init(TokenMgr *tok_mgr);
 
 #endif

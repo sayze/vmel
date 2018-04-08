@@ -11,6 +11,7 @@ SyTable *SyTable_new() {
 void SyTable_free(SyTable *sy_table) {
 	if (!sy_table)
 		return;
+		
 	for (size_t i = 0; i < sy_table->sym_ctr; i++) {
 		free(sy_table->symbols[i]);
 	}
@@ -37,6 +38,9 @@ Symbol *SyTable_get_symbol(SyTable *sy_table, char *sy_name) {
 }
 
 int SyTable_add_symbol(SyTable *sy_table, Symbol *symbol) {
+	if (!sy_table)
+		return 1;
+
 	if (sy_table->sym_cap - sy_table->sym_ctr <= 5) {
 		Symbol **sy_new = grow_sy_table(sy_table);
 		if (!sy_new)
@@ -51,6 +55,9 @@ int SyTable_add_symbol(SyTable *sy_table, Symbol *symbol) {
 }
 
 void SyTable_print_symbols(SyTable *sy_table) {
+	if (!sy_table)
+		return;
+
 	printf("--------------------------------------\n");
 	printf("** Symbol Table Dump **\n");
 	printf("--------------------------------------\n");
