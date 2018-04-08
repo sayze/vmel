@@ -1,0 +1,176 @@
+\hypertarget{sytable_8h}{}\section{src/include/sytable.h File Reference}
+\label{sytable_8h}\index{src/include/sytable.\+h@{src/include/sytable.\+h}}
+
+
+Module defintions for \mbox{\hyperlink{struct_symbol}{Symbol}} Table functionality.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_symbol}{Symbol}}
+\begin{DoxyCompactList}\small\item\em Individual Symbols pertaining. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_sy_table}{Sy\+Table}}
+\begin{DoxyCompactList}\small\item\em Symbol\+Table which stores collection of symbols. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{sytable_8h_a6c1ff30b4aff624c1fb2d479ff8eae14}\label{sytable_8h_a6c1ff30b4aff624c1fb2d479ff8eae14}} 
+\#define {\bfseries I\+N\+I\+T\+\_\+\+S\+Y\+T\+A\+B\+L\+E\+\_\+\+S\+I\+ZE}~7
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{sytable_8h_a0bf0290e6ba834c5c7c1914279c25149}\label{sytable_8h_a0bf0290e6ba834c5c7c1914279c25149}} 
+enum {\bfseries Sy\+\_\+\+Type} \{ {\bfseries E\+\_\+\+G\+R\+O\+U\+P\+\_\+\+T\+Y\+PE}, 
+{\bfseries E\+\_\+\+I\+D\+N\+\_\+\+T\+Y\+PE}, 
+{\bfseries E\+\_\+\+F\+U\+N\+C\+\_\+\+T\+Y\+PE}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_sy_table}{Sy\+Table}} $\ast$ \mbox{\hyperlink{sytable_8h_abc30a3c6b8d223f5fc6f89f4da4a9dd6}{Sy\+Table\+\_\+new}} ()
+\begin{DoxyCompactList}\small\item\em Create malloc\textquotesingle{}ed \mbox{\hyperlink{struct_sy_table}{Sy\+Table}} instance. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{sytable_8h_a03110a1595f8cfbec8f508f206390859}{Sy\+Table\+\_\+add\+\_\+symbol}} (\mbox{\hyperlink{struct_sy_table}{Sy\+Table}} $\ast$sy\+\_\+table, \mbox{\hyperlink{struct_symbol}{Symbol}} $\ast$symbol)
+\begin{DoxyCompactList}\small\item\em Add a symbol to \mbox{\hyperlink{struct_sy_table}{Sy\+Table}} instance. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{sytable_8h_ab67da742e169076547daf53e26d67dd7}{Sy\+Table\+\_\+print\+\_\+symbols}} (\mbox{\hyperlink{struct_sy_table}{Sy\+Table}} $\ast$sy\+\_\+table)
+\begin{DoxyCompactList}\small\item\em Print contents of \mbox{\hyperlink{struct_sy_table}{Sy\+Table}}. Useful for debugging. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{sytable_8h_a8ec9d9c343808762b89ce73a8e24b4f3}{Sy\+Table\+\_\+free}} (\mbox{\hyperlink{struct_sy_table}{Sy\+Table}} $\ast$sy\+\_\+table)
+\begin{DoxyCompactList}\small\item\em Free resources used by \mbox{\hyperlink{struct_sy_table}{Sy\+Table}} instance. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_symbol}{Symbol}} $\ast$ \mbox{\hyperlink{sytable_8h_adced747f2e1b5b8c9df331b49ae2ae8f}{Symbol\+\_\+new}} (void)
+\begin{DoxyCompactList}\small\item\em Create malloc\textquotesingle{}ed instance of \mbox{\hyperlink{struct_symbol}{Symbol}}. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_symbol}{Symbol}} $\ast$ \mbox{\hyperlink{sytable_8h_abd5b2c8af8f0391cf32cf9583bffbe3b}{Sy\+Table\+\_\+get\+\_\+symbol}} (\mbox{\hyperlink{struct_sy_table}{Sy\+Table}} $\ast$sy\+\_\+table, char $\ast$sy\+\_\+name)
+\begin{DoxyCompactList}\small\item\em Get an existing symbol from \mbox{\hyperlink{struct_sy_table}{Sy\+Table}} instance. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_symbol}{Symbol}} $\ast$$\ast$ \mbox{\hyperlink{sytable_8h_ae5d95212681730ac75e7c0577388b65c}{grow\+\_\+sy\+\_\+table}} (\mbox{\hyperlink{struct_sy_table}{Sy\+Table}} $\ast$sy\+\_\+table)
+\begin{DoxyCompactList}\small\item\em Perform relloc on array of of symbols in \mbox{\hyperlink{struct_sy_table}{Sy\+Table}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Module defintions for \mbox{\hyperlink{struct_symbol}{Symbol}} Table functionality. 
+
+\begin{DoxyAuthor}{Author}
+Sayed Sadeed 
+\end{DoxyAuthor}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{sytable_8h_ae5d95212681730ac75e7c0577388b65c}\label{sytable_8h_ae5d95212681730ac75e7c0577388b65c}} 
+\index{sytable.\+h@{sytable.\+h}!grow\+\_\+sy\+\_\+table@{grow\+\_\+sy\+\_\+table}}
+\index{grow\+\_\+sy\+\_\+table@{grow\+\_\+sy\+\_\+table}!sytable.\+h@{sytable.\+h}}
+\subsubsection{\texorpdfstring{grow\+\_\+sy\+\_\+table()}{grow\_sy\_table()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_symbol}{Symbol}}$\ast$$\ast$ grow\+\_\+sy\+\_\+table (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_sy_table}{Sy\+Table}} $\ast$}]{sy\+\_\+table }\end{DoxyParamCaption})}
+
+
+
+Perform relloc on array of of symbols in \mbox{\hyperlink{struct_sy_table}{Sy\+Table}}. 
+
+This function is to be used internally to allocate more space.
+
+
+\begin{DoxyParams}{Parameters}
+{\em sy\+\_\+table} & instance of \mbox{\hyperlink{struct_sy_table}{Sy\+Table}}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Newly allocated Sy\+Tablee$\ast$$\ast$. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{sytable_8h_adced747f2e1b5b8c9df331b49ae2ae8f}\label{sytable_8h_adced747f2e1b5b8c9df331b49ae2ae8f}} 
+\index{sytable.\+h@{sytable.\+h}!Symbol\+\_\+new@{Symbol\+\_\+new}}
+\index{Symbol\+\_\+new@{Symbol\+\_\+new}!sytable.\+h@{sytable.\+h}}
+\subsubsection{\texorpdfstring{Symbol\+\_\+new()}{Symbol\_new()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_symbol}{Symbol}}$\ast$ Symbol\+\_\+new (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Create malloc\textquotesingle{}ed instance of \mbox{\hyperlink{struct_symbol}{Symbol}}. 
+
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{struct_symbol}{Symbol}} pointer. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{sytable_8h_a03110a1595f8cfbec8f508f206390859}\label{sytable_8h_a03110a1595f8cfbec8f508f206390859}} 
+\index{sytable.\+h@{sytable.\+h}!Sy\+Table\+\_\+add\+\_\+symbol@{Sy\+Table\+\_\+add\+\_\+symbol}}
+\index{Sy\+Table\+\_\+add\+\_\+symbol@{Sy\+Table\+\_\+add\+\_\+symbol}!sytable.\+h@{sytable.\+h}}
+\subsubsection{\texorpdfstring{Sy\+Table\+\_\+add\+\_\+symbol()}{SyTable\_add\_symbol()}}
+{\footnotesize\ttfamily int Sy\+Table\+\_\+add\+\_\+symbol (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_sy_table}{Sy\+Table}} $\ast$}]{sy\+\_\+table,  }\item[{\mbox{\hyperlink{struct_symbol}{Symbol}} $\ast$}]{symbol }\end{DoxyParamCaption})}
+
+
+
+Add a symbol to \mbox{\hyperlink{struct_sy_table}{Sy\+Table}} instance. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sy\+\_\+table} & Instance of \mbox{\hyperlink{struct_sy_table}{Sy\+Table}}. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if success or 1 if error. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{sytable_8h_a8ec9d9c343808762b89ce73a8e24b4f3}\label{sytable_8h_a8ec9d9c343808762b89ce73a8e24b4f3}} 
+\index{sytable.\+h@{sytable.\+h}!Sy\+Table\+\_\+free@{Sy\+Table\+\_\+free}}
+\index{Sy\+Table\+\_\+free@{Sy\+Table\+\_\+free}!sytable.\+h@{sytable.\+h}}
+\subsubsection{\texorpdfstring{Sy\+Table\+\_\+free()}{SyTable\_free()}}
+{\footnotesize\ttfamily void Sy\+Table\+\_\+free (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_sy_table}{Sy\+Table}} $\ast$}]{sy\+\_\+table }\end{DoxyParamCaption})}
+
+
+
+Free resources used by \mbox{\hyperlink{struct_sy_table}{Sy\+Table}} instance. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sy\+\_\+table} & Pointer to symbol table. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{sytable_8h_abd5b2c8af8f0391cf32cf9583bffbe3b}\label{sytable_8h_abd5b2c8af8f0391cf32cf9583bffbe3b}} 
+\index{sytable.\+h@{sytable.\+h}!Sy\+Table\+\_\+get\+\_\+symbol@{Sy\+Table\+\_\+get\+\_\+symbol}}
+\index{Sy\+Table\+\_\+get\+\_\+symbol@{Sy\+Table\+\_\+get\+\_\+symbol}!sytable.\+h@{sytable.\+h}}
+\subsubsection{\texorpdfstring{Sy\+Table\+\_\+get\+\_\+symbol()}{SyTable\_get\_symbol()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_symbol}{Symbol}}$\ast$ Sy\+Table\+\_\+get\+\_\+symbol (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_sy_table}{Sy\+Table}} $\ast$}]{sy\+\_\+table,  }\item[{char $\ast$}]{sy\+\_\+name }\end{DoxyParamCaption})}
+
+
+
+Get an existing symbol from \mbox{\hyperlink{struct_sy_table}{Sy\+Table}} instance. 
+
+Function can be used to determine if a symbol already exist.
+
+
+\begin{DoxyParams}{Parameters}
+{\em sy\+\_\+table} & \mbox{\hyperlink{struct_sy_table}{Sy\+Table}} instance. \\
+\hline
+{\em sy\+\_\+name} & name of the symbol to return. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+N\+U\+LL if symbol can\textquotesingle{}t be found otherwise return pointer to matched symbol. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{sytable_8h_abc30a3c6b8d223f5fc6f89f4da4a9dd6}\label{sytable_8h_abc30a3c6b8d223f5fc6f89f4da4a9dd6}} 
+\index{sytable.\+h@{sytable.\+h}!Sy\+Table\+\_\+new@{Sy\+Table\+\_\+new}}
+\index{Sy\+Table\+\_\+new@{Sy\+Table\+\_\+new}!sytable.\+h@{sytable.\+h}}
+\subsubsection{\texorpdfstring{Sy\+Table\+\_\+new()}{SyTable\_new()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_sy_table}{Sy\+Table}}$\ast$ Sy\+Table\+\_\+new (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Create malloc\textquotesingle{}ed \mbox{\hyperlink{struct_sy_table}{Sy\+Table}} instance. 
+
+\begin{DoxyReturn}{Returns}
+New instance of \mbox{\hyperlink{struct_sy_table}{Sy\+Table}}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{sytable_8h_ab67da742e169076547daf53e26d67dd7}\label{sytable_8h_ab67da742e169076547daf53e26d67dd7}} 
+\index{sytable.\+h@{sytable.\+h}!Sy\+Table\+\_\+print\+\_\+symbols@{Sy\+Table\+\_\+print\+\_\+symbols}}
+\index{Sy\+Table\+\_\+print\+\_\+symbols@{Sy\+Table\+\_\+print\+\_\+symbols}!sytable.\+h@{sytable.\+h}}
+\subsubsection{\texorpdfstring{Sy\+Table\+\_\+print\+\_\+symbols()}{SyTable\_print\_symbols()}}
+{\footnotesize\ttfamily void Sy\+Table\+\_\+print\+\_\+symbols (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_sy_table}{Sy\+Table}} $\ast$}]{sy\+\_\+table }\end{DoxyParamCaption})}
+
+
+
+Print contents of \mbox{\hyperlink{struct_sy_table}{Sy\+Table}}. Useful for debugging. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sy\+\_\+table} & Pointer to symbol table. \\
+\hline
+\end{DoxyParams}

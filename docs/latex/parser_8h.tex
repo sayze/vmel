@@ -24,15 +24,15 @@ void \mbox{\hyperlink{parser_8h_a43ddbfc8a440bb59a7f096337b6b8c26}{Parser\+Mgr\+
 \begin{DoxyCompactList}\small\item\em Add a error string to the list of errors stored in \mbox{\hyperlink{struct_error}{Error}}. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{parser_8h_afecccd0d2c4a9a250c8c5b7f00721325}{parser\+\_\+can\+\_\+consume}} (char $\ast$tok\+\_\+type, char $\ast$type)
 \begin{DoxyCompactList}\small\item\em Can token be consumed based on expected type. \end{DoxyCompactList}\item 
-struct \mbox{\hyperlink{struct_node}{Node}} $\ast$ \mbox{\hyperlink{parser_8h_a46e3b3b2ad4d512a74e932d869fffd36}{parse\+\_\+group}} (\mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} $\ast$par\+\_\+mgr)
+\mbox{\hyperlink{struct_node}{Node}} $\ast$ \mbox{\hyperlink{parser_8h_adf72ac5187e7d06483dfcc4ba5cb8e54}{parse\+\_\+group}} (\mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} $\ast$par\+\_\+mgr)
 \begin{DoxyCompactList}\small\item\em Will consume a group based on grammar defintion. \end{DoxyCompactList}\item 
-struct \mbox{\hyperlink{struct_node}{Node}} $\ast$ \mbox{\hyperlink{parser_8h_a12116988947ee2cd13d517a533bb2595}{parse\+\_\+assignment}} (\mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} $\ast$par\+\_\+mgr)
+\mbox{\hyperlink{struct_node}{Node}} $\ast$ \mbox{\hyperlink{parser_8h_af111eac32c300776289e5afbe9884359}{parse\+\_\+assignment}} (\mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} $\ast$par\+\_\+mgr)
 \begin{DoxyCompactList}\small\item\em Will consume assignment based on grammar. \end{DoxyCompactList}\item 
-struct \mbox{\hyperlink{struct_node}{Node}} $\ast$ \mbox{\hyperlink{parser_8h_a521f3aadad5d81736710b16e1c03a39b}{parse\+\_\+expr}} (\mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} $\ast$par\+\_\+mgr)
+\mbox{\hyperlink{struct_node}{Node}} $\ast$ \mbox{\hyperlink{parser_8h_a66f2ecec7c0c974998fe81fbb0ad137b}{parse\+\_\+expr}} (\mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} $\ast$par\+\_\+mgr)
 \begin{DoxyCompactList}\small\item\em Will consume expression based on grammar. \end{DoxyCompactList}\item 
-struct \mbox{\hyperlink{struct_node}{Node}} $\ast$ \mbox{\hyperlink{parser_8h_a52b720c8a40a613335237af007fe6581}{parse\+\_\+factor}} (\mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} $\ast$par\+\_\+mgr)
+\mbox{\hyperlink{struct_node}{Node}} $\ast$ \mbox{\hyperlink{parser_8h_a44611db626ee1dbe4a1fc348b3ded010}{parse\+\_\+factor}} (\mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} $\ast$par\+\_\+mgr)
 \begin{DoxyCompactList}\small\item\em Will consume factor based on grammar. \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{parser_8h_a7ed0c289eb82241a3e41acc50b296356}{parser\+\_\+init}} (\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$tok\+\_\+mgr)
+\mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}} $\ast$ \mbox{\hyperlink{parser_8h_a511d19d57db43175efb469a688b3e565}{parser\+\_\+init}} (\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$tok\+\_\+mgr)
 \begin{DoxyCompactList}\small\item\em Initial entry for parser. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
@@ -45,11 +45,11 @@ Sayed Sadeed
 
 
 \subsection{Function Documentation}
-\mbox{\Hypertarget{parser_8h_a12116988947ee2cd13d517a533bb2595}\label{parser_8h_a12116988947ee2cd13d517a533bb2595}} 
+\mbox{\Hypertarget{parser_8h_af111eac32c300776289e5afbe9884359}\label{parser_8h_af111eac32c300776289e5afbe9884359}} 
 \index{parser.\+h@{parser.\+h}!parse\+\_\+assignment@{parse\+\_\+assignment}}
 \index{parse\+\_\+assignment@{parse\+\_\+assignment}!parser.\+h@{parser.\+h}}
 \subsubsection{\texorpdfstring{parse\+\_\+assignment()}{parse\_assignment()}}
-{\footnotesize\ttfamily struct \mbox{\hyperlink{struct_node}{Node}}$\ast$ parse\+\_\+assignment (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} $\ast$}]{par\+\_\+mgr }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_node}{Node}}$\ast$ parse\+\_\+assignment (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} $\ast$}]{par\+\_\+mgr }\end{DoxyParamCaption})}
 
 
 
@@ -65,11 +65,11 @@ assignment = expression $\vert$ S\+T\+R\+I\+NG
 \begin{DoxyReturn}{Returns}
 \mbox{\hyperlink{struct_node}{Node}} generated from production. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{parser_8h_a521f3aadad5d81736710b16e1c03a39b}\label{parser_8h_a521f3aadad5d81736710b16e1c03a39b}} 
+\mbox{\Hypertarget{parser_8h_a66f2ecec7c0c974998fe81fbb0ad137b}\label{parser_8h_a66f2ecec7c0c974998fe81fbb0ad137b}} 
 \index{parser.\+h@{parser.\+h}!parse\+\_\+expr@{parse\+\_\+expr}}
 \index{parse\+\_\+expr@{parse\+\_\+expr}!parser.\+h@{parser.\+h}}
 \subsubsection{\texorpdfstring{parse\+\_\+expr()}{parse\_expr()}}
-{\footnotesize\ttfamily struct \mbox{\hyperlink{struct_node}{Node}}$\ast$ parse\+\_\+expr (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} $\ast$}]{par\+\_\+mgr }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_node}{Node}}$\ast$ parse\+\_\+expr (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} $\ast$}]{par\+\_\+mgr }\end{DoxyParamCaption})}
 
 
 
@@ -85,11 +85,11 @@ expression = factor $\vert$ factor (P\+L\+US $\vert$ M\+I\+N\+US) factor
 \begin{DoxyReturn}{Returns}
 \mbox{\hyperlink{struct_node}{Node}} generated from production. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{parser_8h_a52b720c8a40a613335237af007fe6581}\label{parser_8h_a52b720c8a40a613335237af007fe6581}} 
+\mbox{\Hypertarget{parser_8h_a44611db626ee1dbe4a1fc348b3ded010}\label{parser_8h_a44611db626ee1dbe4a1fc348b3ded010}} 
 \index{parser.\+h@{parser.\+h}!parse\+\_\+factor@{parse\+\_\+factor}}
 \index{parse\+\_\+factor@{parse\+\_\+factor}!parser.\+h@{parser.\+h}}
 \subsubsection{\texorpdfstring{parse\+\_\+factor()}{parse\_factor()}}
-{\footnotesize\ttfamily struct \mbox{\hyperlink{struct_node}{Node}}$\ast$ parse\+\_\+factor (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} $\ast$}]{par\+\_\+mgr }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_node}{Node}}$\ast$ parse\+\_\+factor (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} $\ast$}]{par\+\_\+mgr }\end{DoxyParamCaption})}
 
 
 
@@ -105,11 +105,11 @@ factor = I\+N\+T\+E\+G\+ER
 \begin{DoxyReturn}{Returns}
 \mbox{\hyperlink{struct_node}{Node}} generated from production. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{parser_8h_a46e3b3b2ad4d512a74e932d869fffd36}\label{parser_8h_a46e3b3b2ad4d512a74e932d869fffd36}} 
+\mbox{\Hypertarget{parser_8h_adf72ac5187e7d06483dfcc4ba5cb8e54}\label{parser_8h_adf72ac5187e7d06483dfcc4ba5cb8e54}} 
 \index{parser.\+h@{parser.\+h}!parse\+\_\+group@{parse\+\_\+group}}
 \index{parse\+\_\+group@{parse\+\_\+group}!parser.\+h@{parser.\+h}}
 \subsubsection{\texorpdfstring{parse\+\_\+group()}{parse\_group()}}
-{\footnotesize\ttfamily struct \mbox{\hyperlink{struct_node}{Node}}$\ast$ parse\+\_\+group (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} $\ast$}]{par\+\_\+mgr }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_node}{Node}}$\ast$ parse\+\_\+group (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} $\ast$}]{par\+\_\+mgr }\end{DoxyParamCaption})}
 
 
 
@@ -146,15 +146,17 @@ This function is used to determine if a token matches expected type.
 {\em type} & the type we are expecting it to be. \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{parser_8h_a7ed0c289eb82241a3e41acc50b296356}\label{parser_8h_a7ed0c289eb82241a3e41acc50b296356}} 
+\mbox{\Hypertarget{parser_8h_a511d19d57db43175efb469a688b3e565}\label{parser_8h_a511d19d57db43175efb469a688b3e565}} 
 \index{parser.\+h@{parser.\+h}!parser\+\_\+init@{parser\+\_\+init}}
 \index{parser\+\_\+init@{parser\+\_\+init}!parser.\+h@{parser.\+h}}
 \subsubsection{\texorpdfstring{parser\+\_\+init()}{parser\_init()}}
-{\footnotesize\ttfamily int parser\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$}]{tok\+\_\+mgr }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}}$\ast$ parser\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$}]{tok\+\_\+mgr }\end{DoxyParamCaption})}
 
 
 
 Initial entry for parser. 
+
+Function will perform parsing and construct an A\+ST as output.
 
 
 \begin{DoxyParams}{Parameters}
@@ -162,7 +164,7 @@ Initial entry for parser.
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-0 if parser was successful or return 1 if issue occurred. 
+\mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}} instance containing generated A\+ST or N\+U\+LL if error occurred. 
 \end{DoxyReturn}
 \mbox{\Hypertarget{parser_8h_a43ddbfc8a440bb59a7f096337b6b8c26}\label{parser_8h_a43ddbfc8a440bb59a7f096337b6b8c26}} 
 \index{parser.\+h@{parser.\+h}!Parser\+Mgr\+\_\+add\+\_\+error@{Parser\+Mgr\+\_\+add\+\_\+error}}

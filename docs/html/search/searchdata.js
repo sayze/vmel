@@ -2,7 +2,7 @@ var indexSectionsWithContent =
 {
   0: "efginpstu",
   1: "enpst",
-  2: "enptu",
+  2: "enpstu",
   3: "efginpst"
 };
 

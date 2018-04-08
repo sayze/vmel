@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Virtual Machine Execution Language (Vmel): Error Struct Reference</title>
+<title>Virtual Machine Execution Language (Vmel): SyTable Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -65,33 +65,33 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="struct_error-members.html">List of all members</a>  </div>
+<a href="struct_sy_table-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">Error Struct Reference</div>  </div>
+<div class="title">SyTable Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Store all the errors related to parsing process.  
- <a href="struct_error.html#details">More...</a></p>
+<p>SymbolTable which stores collection of symbols.  
+ <a href="struct_sy_table.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="errors_8h_source.html">errors.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="sytable_8h_source.html">sytable.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a50d17719945d477d2830d6e67686fbc9"><td class="memItemLeft" align="right" valign="top"><a id="a50d17719945d477d2830d6e67686fbc9"></a>
-char *&#160;</td><td class="memItemRight" valign="bottom"><b>errors</b> [INIT_MAX_ERRORS]</td></tr>
-<tr class="separator:a50d17719945d477d2830d6e67686fbc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab8e91a2a36d960644a38e9b4ad9d4713"><td class="memItemLeft" align="right" valign="top"><a id="ab8e91a2a36d960644a38e9b4ad9d4713"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>error_ctr</b></td></tr>
-<tr class="separator:ab8e91a2a36d960644a38e9b4ad9d4713"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f55d65d19ac242871f8deca9962cae2"><td class="memItemLeft" align="right" valign="top"><a id="a3f55d65d19ac242871f8deca9962cae2"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>error_cap</b></td></tr>
-<tr class="separator:a3f55d65d19ac242871f8deca9962cae2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbb4c7791aea1322aca3ed88f8ea58d5"><td class="memItemLeft" align="right" valign="top"><a id="adbb4c7791aea1322aca3ed88f8ea58d5"></a>
+<a class="el" href="struct_symbol.html">Symbol</a> **&#160;</td><td class="memItemRight" valign="bottom"><b>symbols</b></td></tr>
+<tr class="separator:adbb4c7791aea1322aca3ed88f8ea58d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af68e1f41c42ac50a21dc844be65b78b2"><td class="memItemLeft" align="right" valign="top"><a id="af68e1f41c42ac50a21dc844be65b78b2"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>sym_cap</b></td></tr>
+<tr class="separator:af68e1f41c42ac50a21dc844be65b78b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85f9031540dd992aa6b6371537ffebc0"><td class="memItemLeft" align="right" valign="top"><a id="a85f9031540dd992aa6b6371537ffebc0"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>sym_ctr</b></td></tr>
+<tr class="separator:a85f9031540dd992aa6b6371537ffebc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Store all the errors related to parsing process. </p>
+<div class="textblock"><p>SymbolTable which stores collection of symbols. </p>
 </div><hr/>The documentation for this struct was generated from the following file:<ul>
-<li>src/include/<a class="el" href="errors_8h_source.html">errors.h</a></li>
+<li>src/include/<a class="el" href="sytable_8h_source.html">sytable.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
