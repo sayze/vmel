@@ -8,6 +8,7 @@
 #define NODE_H
 
 #include <string.h>
+#include "sytable.h"
 
 
 enum NodeType {
@@ -19,6 +20,7 @@ enum NodeType {
 	E_STRING_NODE,
 	E_INTEGER_NODE, 
 	E_GROUP_NODE,
+	E_CMPSTMT_NODE,
 	E_IDENTIFIER_NODE,
 	E_ARRAY_NODE, 
 	E_EOF_NODE
@@ -55,6 +57,9 @@ union SyntaxNode {
     struct {
         Node *next;
 	} GroupNode;
+	struct {
+		Node *args;
+	} CmpStmtNode;
 };
 
 /**
@@ -109,6 +114,15 @@ int NodeMgr_free(NodeMgr *node_mgr);
  * @return newly created NodeMgr pointer.
  */
 NodeMgr *NodeMgr_new(void);
+
+/**
+ * @brief Fill Symbol Table with information.
+ * 
+ * @param node_mgr Instance of NodeMgr containing ast.
+ * @param sy_table Instance of SyTable to get populated.
+ * @return 0 If successfull otherwise return 1.
+ */
+int NodeMgr_fill_sytable(NodeMgr *node_mgr, SyTable *sy_table);
 
 /**
  * @brief Perform relloc on array of of nodes in Manager.

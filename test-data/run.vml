@@ -1,27 +1,3 @@
-# This is an example config which vmel interpreter can read and execute.
-# There are 2 distinct sections on for Variables and another define groups of actions.
-
-# ---------------------------------- # 
-#            Variables               #
-# ---------------------------------- #
-# Variables must be prefixed with a dollar sign... yes I do like PHP.
-# Such as the below
-
-$vm_user = "sayed@root"
-$vm_pass = "124astroboy"
-$total = print($vm_pass)
-
-# ---------------------------------- # 
-#            Groups                  #
-# ---------------------------------- #
-# Groups as the name suggests are a collection or "group" of related tasks.
-# Each group must contain a unique name, most likely a name that describes the tasks.
-# Each Group may have a variable amount of tasks to be performed. Refer to the below.
-
-{update_local_repo}
-"cd ~/projects/vmel"
-"git checkout develop && git pull origin develop"
-
-{run_make}
-"cd ~/var/exec"
-"make -dDebug1"
+$s9 = 1 -3
+$s9 = 1 * 3 / 5
+$s2 = 2 + 5 * (3 -3)

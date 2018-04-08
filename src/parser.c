@@ -4,18 +4,21 @@
 #include "parser.h"
 #include "tokenizer.h"   
 #include "node.h"
+#include "sytable.h"
 #include "errors.h"
 
 // Below are the errors which map to Error_Templates.
 #define ERR_UNEXPECTED 0
 #define ERR_GROUP_EXIST 1
 #define ERR_EMPTY_GROUP 2
+#define ERR_EMPTY_STMT 3
 
 // These are the errors a parser may generate. They are mapped to the #DEFINE above.
 static const char *Error_Templates[] = {
-	"Error: unexpected @0 found in line @1",
-	"Error: duplicate definition {@0} already defined in line @1",
-	"Error: empty group {@0} must contain commands in line @1",
+	"Unexpected @0 found in line @1",
+	"Duplicate definition {@0} already defined in line @1",
+	"Empty group {@0} must contain commands in line @1",
+	"Statement '@0' missing arguments in line @1"
 };
 
 // Sync ParserMgr internal token to be current token held by TokenMgr.
@@ -104,6 +107,12 @@ Node *parse_factor(ParserMgr *par_mgr) {
 		 res->value = par_mgr->curr_token->value; 
 		 par_mgr_next(par_mgr);
 	 }
+	 else if (parser_can_consume(par_mgr->curr_token->type, "IDENTIFIER")) {
+		 res = Node_new(0);
+		 res->type = E_IDENTIFIER_NODE;
+		 res->value = par_mgr->curr_token->value; 
+		 par_mgr_next(par_mgr);
+	 }
 	 else if (parser_can_consume(par_mgr->curr_token->type, "LPAREN")) {
 		 TokenMgr_next_token(par_mgr->tok_mgr);
 		 res = parse_expr(par_mgr);
@@ -124,9 +133,11 @@ Node *parse_term(ParserMgr *par_mgr) {
 
 		if (strncmp(par_mgr->curr_token->value, "*", 1) == 0) {
 			bop->type = E_TIMES_NODE;
+			bop->value = "*"; 
 		}
 		else if (strncmp(par_mgr->curr_token->value, "/", 1) == 0){
 			bop->type = E_DIV_NODE;
+			bop->value = "/"; 
 		}
 		else {
 			ParserMgr_add_error(par_mgr->err_handle, par_mgr->curr_token, ERR_UNEXPECTED);
@@ -152,9 +163,11 @@ Node *parse_expr(ParserMgr *par_mgr) {
 
 		if (strncmp(par_mgr->curr_token->value, "+", 1) == 0) {
 			bop->type = E_ADD_NODE;
+			bop->value = "+"; 
 		}
 		else if (strncmp(par_mgr->curr_token->value, "-", 1) == 0){
 			bop->type = E_MINUS_NODE;
+			bop->value = "-";
 		}
 		else {
 			ParserMgr_add_error(par_mgr->err_handle, par_mgr->curr_token, ERR_UNEXPECTED);
@@ -198,7 +211,7 @@ Node *parse_assignment(ParserMgr *par_mgr) {
 			// Join to return ast from expression.
 			ast = Node_new(1); 
 			ast->type = E_EQUAL_NODE;
-			ast->value = "+";
+			ast->value = "=";
 			ast->data->AsnStmtNode.left = lhand;
 			ast->data->AsnStmtNode.right = expr;
 		}
@@ -256,6 +269,22 @@ Node *parse_group(ParserMgr *par_mgr) {
 	return group;
 }
 
+Node *parse_keyword(ParserMgr *par_mgr) {
+	// If string isn't next then store error and move to next token.
+	if (strcmp(TokenMgr_peek_token(par_mgr->tok_mgr)->type, "STRING") != 0) {
+		ParserMgr_add_error(par_mgr->err_handle, TokenMgr_current_token(par_mgr->tok_mgr), ERR_EMPTY_STMT);
+		TokenMgr_next_token(par_mgr->tok_mgr);
+		return NULL;
+	}
+
+	Node *stmt = Node_new(1);
+	stmt->type = E_CMPSTMT_NODE;
+	stmt->value = par_mgr->curr_token->value;
+	par_mgr_next(par_mgr);
+	stmt->data->CmpStmtNode.args = parse_string(par_mgr);
+	return stmt;
+}
+
 int parser_init(TokenMgr *tok_mgr) {
 
 	// Create wrapper structs.
@@ -281,6 +310,9 @@ int parser_init(TokenMgr *tok_mgr) {
 		else if (strcmp(par_mgr->curr_token->type, "GROUP") == 0) {
 			par_mgr->curr_expr = parse_group(par_mgr);
 		}
+		else if (strcmp(par_mgr->curr_token->type, "KEYWORD") == 0) {
+			par_mgr->curr_expr = parse_keyword(par_mgr);
+		}
 		else {
 			ParserMgr_add_error(par_mgr->err_handle, par_mgr->curr_token, ERR_UNEXPECTED);
 			par_mgr_next(par_mgr);
@@ -299,10 +331,22 @@ int parser_init(TokenMgr *tok_mgr) {
 	if (par_mgr->err_handle->error_ctr > 0)
 		Error_print_all(par_mgr->err_handle);
 
+
+	// Create Symbol Table instance.
+	SyTable *sy_table = SyTable_new();
+
+	// Fill in symbol table through NodeManager.
+	NodeMgr_fill_sytable(node_mgr, sy_table);
+
+	#ifdef DEBUG
+		SyTable_print_symbols(sy_table);
+	#endif
+
 	// Free resources.
+	SyTable_free(sy_table);
 	Error_free(par_mgr->err_handle);
 	NodeMgr_free(node_mgr);
 	ParserMgr_free(par_mgr);
-
+	
 	return 0;
 }

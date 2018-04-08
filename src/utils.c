@@ -8,10 +8,7 @@ void print_usage(void) {
 }
 
 int is_valid_identifier(char id) {
-	if (isalpha(id) || id == '_' || id == '-' )
-		return 1;
-	else
-		return 0;
+	return (isalpha(id) || id == '_' || id == '-' || isdigit(id));
 }
 
 char *file_to_buffer(const char *filename) {

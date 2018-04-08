@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "node.h"
+#include "utils.h"
 
 #define INIT_NODEMGR_SIZE 100
 
@@ -23,15 +24,35 @@ static void node_free(Node *node) {
 		return;
 	
 	if (is_binop_node(node))
-		node_free(node->data->BinExpNode.right);
+		node_free(node->data->BinExpNode.left);
 		
 	if (is_binop_node(node))
-		node_free(node->data->BinExpNode.left);
+		node_free(node->data->BinExpNode.right);
 	
 	if (is_binop_node(node))
 		free(node->data);
 	
 	free(node);
+}
+
+// Temp vars for printing tree.
+char nbuff[5][15];
+int dep = 0;
+int pos = 0;
+Node *lastn = NULL;
+
+void print_nbuff(int y, int x) {
+	char p;
+	for (int h= 0 ; h < y ; h ++) {
+		for (int w = 0; w < x; w++) {
+			p = nbuff[h][w];
+			if (p == '\0') {
+				p = ' ';
+			}
+			printf("%c", p);
+		}
+		printf("\n");
+	}
 }
 
 int NodeMgr_free(NodeMgr *node_mgr) {
@@ -59,6 +80,9 @@ int NodeMgr_free(NodeMgr *node_mgr) {
                     free(prev);
 			    }
                 break;
+			case E_CMPSTMT_NODE:
+				free(root_node->data->CmpStmtNode.args);
+				break;
             default:
                 break;
         }
@@ -103,6 +127,34 @@ Node **grow_nodes(NodeMgr *node_mgr) {
     node_mgr->nodes_cap *= 2;
     Node **nodes_new = realloc(node_mgr->nodes, sizeof(Node *) * node_mgr->nodes_cap);		
     return nodes_new;
+}
+
+int NodeMgr_fill_sytable(NodeMgr *node_mgr, SyTable *sy_table) {
+	if (sy_table == NULL || node_mgr == NULL)
+		return 1;
+
+	Node *root = NULL;
+	Symbol *sy = NULL;
+
+	for (size_t idx = 0; idx < node_mgr->nodes_ctr; idx++) {
+		root = node_mgr->nodes[idx];
+		switch (root->type) {
+			case E_EQUAL_NODE:
+				sy = Symbol_new();
+				sy->name = root->data->AsnStmtNode.left->value;
+				sy->type = E_IDN_TYPE;
+				break;
+			case E_GROUP_NODE:
+				sy = Symbol_new();
+				sy->name = root->value;
+				sy->type = E_GROUP_TYPE;
+				break;
+			default:
+				break;
+		}
+		SyTable_add_symbol(sy_table, sy);
+	}
+	return 0;
 }
 
 int NodeMgr_add_node(NodeMgr *node_mgr, Node *node) {

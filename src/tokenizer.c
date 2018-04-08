@@ -276,13 +276,13 @@ int TokenMgr_add_token(TokenMgr *tok_mgr, char tok_type[20], char *tok_val, int 
 	tmp->lineno = tok_lineno;
 
 	// Determine if we need more room in toks.
-	// if (tok_mgr->tok_cap - tok_mgr->tok_ctr <= 5) {
-	// 	tok_mgr->toks_curr = grow_curr_tokens(tok_mgr);
+	if (tok_mgr->tok_cap - tok_mgr->tok_ctr <= 5) {
+		tok_mgr->toks_curr = grow_curr_tokens(tok_mgr);
 
-	// 	// Make sure grow was succesful.
-	// 	if (tok_mgr->toks_curr == NULL)
-	// 		return 1;
-	// }	
+		// Make sure grow was succesful.
+		if (tok_mgr->toks_curr == NULL)
+			return 1;
+	}	
 	
 	tok_mgr->toks_curr[tok_mgr->tok_ctr++] = tmp;
 	tok_mgr->toks_tail = tmp;
@@ -302,8 +302,11 @@ Token *TokenMgr_peek_token(TokenMgr *tok_mgr) {
 
 void TokenMgr_print_tokens(TokenMgr *tok_mgr) {
 	TokenMgr_reset_curr(tok_mgr);
+	printf("--------------------------------------\n");
+	printf("** Token Info Dump **\n");
+	printf("--------------------------------------\n");
 	for (size_t i = 1; tok_mgr->toks_curr[i] != tok_mgr->toks_tail; i++) {
-		printf("%s %s \n", tok_mgr->toks_curr[i]->type, tok_mgr->toks_curr[i]->value);
+		printf("--> %s %s \n", tok_mgr->toks_curr[i]->type, tok_mgr->toks_curr[i]->value);
 	}
 }
 
