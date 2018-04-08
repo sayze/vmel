@@ -16,12 +16,12 @@ static const char *R_Keywords[KWORDS_SIZE] = {
 // possibly create functions for each category and/or
 // add token only at once at the end of char read.
 int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr) {
-	if (buff == NULL) {
+	if (!buff) {
 		printf("** Error Buffer invalid state cannot build tokens\n");
 		return 1;
 	}
 
-	if (tokmgr == NULL) {
+	if (!tokmgr) {
 		printf("** Error Invalid token manager passed to build token");
 		return 1;
 	}
@@ -40,7 +40,7 @@ int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr) {
 	int lineno = 1;
 
 	// Add a head token as padding to help with pointer arithmetic.
-	if (tokmgr->toks_head == NULL) {
+	if (!tokmgr->toks_head) {
 		TokenMgr_add_token(tokmgr, "HEAD", "HEAD", 0);
 		tokmgr->toks_head = *tokmgr->toks_curr;
 	}
@@ -259,7 +259,7 @@ TokenMgr *TokenMgr_new(void) {
 }
 
 int TokenMgr_add_token(TokenMgr *tok_mgr, char tok_type[20], char *tok_val, int tok_lineno) {
-	if (tok_mgr == NULL) {
+	if (!tok_mgr) {
 		printf("**Error** Invalid token manager passed to TokenMgr_add_token");
 		return 1;
 	}	
@@ -280,7 +280,7 @@ int TokenMgr_add_token(TokenMgr *tok_mgr, char tok_type[20], char *tok_val, int 
 		tok_mgr->toks_curr = grow_curr_tokens(tok_mgr);
 
 		// Make sure grow was succesful.
-		if (tok_mgr->toks_curr == NULL)
+		if (!tok_mgr->toks_curr)
 			return 1;
 	}	
 	
@@ -291,7 +291,7 @@ int TokenMgr_add_token(TokenMgr *tok_mgr, char tok_type[20], char *tok_val, int 
 }
 
 Token *TokenMgr_peek_token(TokenMgr *tok_mgr) {
-	if (tok_mgr == NULL || *tok_mgr->toks_curr == tok_mgr->toks_tail)
+	if (!tok_mgr || *tok_mgr->toks_curr == tok_mgr->toks_tail)
 		return NULL;
 
 	tok_mgr->toks_curr++;
@@ -311,7 +311,7 @@ void TokenMgr_print_tokens(TokenMgr *tok_mgr) {
 }
 
 int TokenMgr_free(TokenMgr *tok_mgr) {
-	if (tok_mgr == NULL) {
+	if (!tok_mgr) {
 		printf("**Error** Invalid token manager passed to TokenMgr_free");
 		return 1;
 	}
@@ -335,7 +335,7 @@ int TokenMgr_free(TokenMgr *tok_mgr) {
 }
 
 Token *TokenMgr_next_token(TokenMgr *tok_mgr) {
-	if (tok_mgr == NULL)
+	if (!tok_mgr)
 		return NULL;
 	
 	// Don't surpass final token.
@@ -348,7 +348,7 @@ Token *TokenMgr_next_token(TokenMgr *tok_mgr) {
 
 Token *TokenMgr_prev_token(TokenMgr *tok_mgr) {
 	// Ensure is initialised or don't surpass first token.
-	if (tok_mgr == NULL || *tok_mgr->toks_curr == tok_mgr->toks_head)
+	if (!tok_mgr || *tok_mgr->toks_curr == tok_mgr->toks_head)
 		return NULL;
 
 	tok_mgr->toks_curr--;
@@ -356,21 +356,21 @@ Token *TokenMgr_prev_token(TokenMgr *tok_mgr) {
 }
 
 int TokenMgr_is_last_token(TokenMgr *tok_mgr) {
-	if (tok_mgr == NULL)
+	if (!tok_mgr)
 		return -1;
 
 	return *tok_mgr->toks_curr == tok_mgr->toks_tail;
 }
 
 Token *TokenMgr_current_token(TokenMgr *tok_mgr) {
-	if (tok_mgr == NULL)
+	if (!tok_mgr)
 		return NULL;
 
 	return *tok_mgr->toks_curr;
 }
 
 void TokenMgr_reset_curr(TokenMgr *tok_mgr) {
-	if (tok_mgr == NULL)
+	if (!tok_mgr)
 		return;
 	
 	while (*tok_mgr->toks_curr != tok_mgr->toks_head) {
@@ -381,7 +381,7 @@ void TokenMgr_reset_curr(TokenMgr *tok_mgr) {
 int is_valid_keyword(char *str) {
 	int ret = 0;
 	
-	if (str == NULL)
+	if (!str)
 		return ret;
 	
 	for (int x = 0; x < KWORDS_SIZE-1; x++) {
@@ -395,7 +395,7 @@ int is_valid_keyword(char *str) {
 }
 
 Token **grow_curr_tokens(TokenMgr *tok_mgr) {
-	if (tok_mgr == NULL)
+	if (!tok_mgr)
 		return NULL;
 		
 	tok_mgr->tok_cap *= 2;

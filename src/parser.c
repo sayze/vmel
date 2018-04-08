@@ -41,7 +41,7 @@ ParserMgr *ParserMgr_new() {
 }
 
 int ParserMgr_free(ParserMgr *par_mgr) {
-	if (par_mgr == NULL)
+	if (!par_mgr)
 		return 1;
 		
 	par_mgr->curr_expr = NULL;
@@ -255,7 +255,7 @@ Node *parse_group(ParserMgr *par_mgr) {
 	while (!TokenMgr_is_last_token(par_mgr->tok_mgr) && parser_can_consume(par_mgr->curr_token->type, "STRING")) {
 		curr = parse_string(par_mgr);
 		curr->data = malloc(sizeof(union SyntaxNode));
-		if (prev == NULL)
+		if (!prev)
 			group->data->GroupNode.next = curr;
 		else
 			prev->data->GroupNode.next = curr;
@@ -294,7 +294,7 @@ int parser_init(TokenMgr *tok_mgr) {
 
 	// This will do for now.
 	// TODO: Add descriptive error here.
-	if (par_mgr->err_handle == NULL || par_mgr == NULL || node_mgr == NULL || tok_mgr == NULL)
+	if (!par_mgr->err_handle || !par_mgr || !node_mgr || !tok_mgr)
 		return -1;
 		
 	par_mgr->tok_mgr = tok_mgr;

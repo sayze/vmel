@@ -71,6 +71,17 @@ void SyTable_free(SyTable *sy_table);
 Symbol *Symbol_new(void);
 
 /**
+ * @brief Get an existing symbol from SyTable instance.
+ * 
+ * Function can be used to determine if a symbol already exist.
+ * 
+ * @param sy_table SyTable instance.
+ * @param sy_name name of the symbol to return.
+ * @return NULL if symbol can't be found otherwise return pointer to matched symbol.
+ */
+Symbol *SyTable_get_symbol(SyTable *sy_table, char *sy_name);
+
+/**
  * @brief Perform relloc on array of of symbols in SyTable.
  * 
  * This function is to be used internally to allocate more space.

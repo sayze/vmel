@@ -20,7 +20,7 @@ static int is_binop_node(Node *n) {
 }
 
 static void node_free(Node *node) {
-	if (node == NULL) 
+	if (!node) 
 		return;
 	
 	if (is_binop_node(node))
@@ -56,7 +56,7 @@ void print_nbuff(int y, int x) {
 }
 
 int NodeMgr_free(NodeMgr *node_mgr) {
-    if (node_mgr == NULL) 
+    if (!node_mgr) 
 		return 1;
 
     Node *root_node = NULL;     
@@ -121,7 +121,7 @@ Node *Node_new(int wdata) {
 }
 
 Node **grow_nodes(NodeMgr *node_mgr) {
-    if (node_mgr == NULL) 
+    if (!node_mgr) 
 		return NULL;
 
     node_mgr->nodes_cap *= 2;
@@ -130,7 +130,7 @@ Node **grow_nodes(NodeMgr *node_mgr) {
 }
 
 int NodeMgr_fill_sytable(NodeMgr *node_mgr, SyTable *sy_table) {
-	if (sy_table == NULL || node_mgr == NULL)
+	if (!sy_table || !node_mgr)
 		return 1;
 
 	Node *root = NULL;
@@ -145,26 +145,36 @@ int NodeMgr_fill_sytable(NodeMgr *node_mgr, SyTable *sy_table) {
 				sy->type = E_IDN_TYPE;
 				break;
 			case E_GROUP_NODE:
-				sy = Symbol_new();
-				sy->name = root->value;
-				sy->type = E_GROUP_TYPE;
+				if (!SyTable_get_symbol(sy_table, root->value)) {
+					sy = Symbol_new();
+					sy->name = root->value;
+					sy->type = E_GROUP_TYPE;
+				}
+				else {
+					// TODO: Need a better way to manage errors after parsing process.
+					printf("Group {%s} already exists...duplicate definition\n", root->value);
+				}
 				break;
 			default:
 				break;
 		}
-		SyTable_add_symbol(sy_table, sy);
+		if (sy) {
+			SyTable_add_symbol(sy_table, sy);
+			sy = NULL;
+		}
 	}
 	return 0;
 }
 
 int NodeMgr_add_node(NodeMgr *node_mgr, Node *node) {
-    if (node_mgr == NULL) 
+    if (!node_mgr) 
 		return 1;
 
     if (node_mgr->nodes_cap - node_mgr->nodes_ctr == 4)
         node_mgr->nodes = grow_nodes(node_mgr);   
 
-    if (node_mgr->nodes == NULL) return 1;
+    if (!node_mgr->nodes) 
+		return 1;
     
     node_mgr->nodes[node_mgr->nodes_ctr++] = node;
     return 0;

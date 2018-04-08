@@ -10,7 +10,7 @@ Error *Error_new(void) {
 }
 
 int Error_free(Error *err_handle) {
-	if (err_handle == NULL)
+	if (!err_handle)
 		return 1;
 
 	if (err_handle->error_ctr != 0) {

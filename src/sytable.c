@@ -9,7 +9,7 @@ SyTable *SyTable_new() {
 }
 
 void SyTable_free(SyTable *sy_table) {
-	if (sy_table == NULL)
+	if (!sy_table)
 		return;
 	for (size_t i = 0; i < sy_table->sym_ctr; i++) {
 		free(sy_table->symbols[i]);
@@ -24,10 +24,22 @@ Symbol *Symbol_new(void) {
 	return sy;
 }
 
+Symbol *SyTable_get_symbol(SyTable *sy_table, char *sy_name) {
+	if (!sy_table)
+		return NULL;
+
+	for (size_t idx = 0; idx < sy_table->sym_ctr; idx++ ) {
+			if (strcmp(sy_table->symbols[idx]->name, sy_name) == 0) {
+				return sy_table->symbols[idx];
+			}
+	}
+	return NULL;
+}
+
 int SyTable_add_symbol(SyTable *sy_table, Symbol *symbol) {
 	if (sy_table->sym_cap - sy_table->sym_ctr <= 5) {
 		Symbol **sy_new = grow_sy_table(sy_table);
-		if (sy_new == NULL)
+		if (!sy_new)
 			return 1;
 		sy_table->symbols = sy_new;
 		sy_new = NULL;
@@ -54,7 +66,7 @@ void SyTable_print_symbols(SyTable *sy_table) {
 }
 
 Symbol **grow_sy_table(SyTable *sy_table) {
-	if (sy_table == NULL) 
+	if (!sy_table) 
 		return NULL;
 
     sy_table->sym_cap *= 2;

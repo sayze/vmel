@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
 
 	// Don't bother building tokens
 	// empty file read.
-	if (buff_in == NULL)
+	if (!buff_in)
 		return 0;
 
 	// Instantiate new token manager.
