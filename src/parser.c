@@ -15,10 +15,10 @@
 
 // These are the errors a parser may generate. They are mapped to the #DEFINE above.
 static const char *Error_Templates[] = {
-	"Unexpected @0 found in line @1",
-	"Duplicate definition {@0} already defined in line @1",
-	"Empty group {@0} must contain commands in line @1",
-	"Statement '@0' missing arguments in line @1"
+	"Syntax error : unexpected @0 found in line @1",
+	"Error : Duplicate definition {@0} already defined in line @1",
+	"Error : Empty group {@0} must contain commands in line @1",
+	"Syntax error: Statement '@0' missing arguments in line @1"
 };
 
 // Sync ParserMgr internal token to be current token held by TokenMgr.
@@ -78,6 +78,12 @@ void ParserMgr_add_error(Error *err_handle, Token *offender, int err_type) {
 	// Add the final template string to error handler.
 	err_handle->errors[err_handle->error_ctr] = template_fmt;
 	err_handle->error_ctr++;
+}
+
+void ParserMgr_skip_to(ParserMgr *par_mgr, char *type) {
+	while (!TokenMgr_is_last_token(par_mgr->tok_mgr) && !string_compare(type, par_mgr->curr_token->value)) {
+		par_mgr_next(par_mgr);
+	}
 }
 
 Node *parse_string(ParserMgr *par_mgr) {
@@ -196,6 +202,16 @@ Node *parse_assignment(ParserMgr *par_mgr) {
 	if (string_compare(par_mgr->curr_token->value, "=")) {
 		par_mgr_next(par_mgr);
 		if ((expr = parse_string(par_mgr)) != NULL || (expr = parse_expr(par_mgr)) != NULL) {
+			
+			// Add symbol if not exits.
+			// TODO: Move to SyTable module.
+			if (!SyTable_get_symbol(par_mgr->sy_table, tok_start_ptr->value)) {
+				Symbol *sy = Symbol_new();
+				sy->sy_token = tok_start_ptr;
+				sy->sy_type = E_IDN_TYPE;
+				SyTable_add_symbol(par_mgr->sy_table, sy);
+			}
+			
 			// Identifier.
 			lhand = Node_new(0); 
 			lhand->type = E_IDENTIFIER_NODE;
@@ -223,9 +239,17 @@ Node *parse_assignment(ParserMgr *par_mgr) {
 
 Node *parse_group(ParserMgr *par_mgr) {
 	// If string isn't next then store error and move to next token.
-	if (strcmp(TokenMgr_peek_token(par_mgr->tok_mgr)->type, "STRING") != 0) {
+	if (!string_compare(TokenMgr_peek_token(par_mgr->tok_mgr)->type, "STRING")) {
 		ParserMgr_add_error(par_mgr->err_handle, TokenMgr_current_token(par_mgr->tok_mgr), ERR_EMPTY_GROUP);
 		TokenMgr_next_token(par_mgr->tok_mgr);
+		return NULL;
+	}
+
+	// Check if group already defined. Add it to sytable if it doesn't.
+	// Otherwise store "duplicate group" error.
+	if (SyTable_get_symbol(par_mgr->sy_table, par_mgr->curr_token->value)) {
+		ParserMgr_add_error(par_mgr->err_handle, par_mgr->curr_token, ERR_GROUP_EXIST);
+		par_mgr_next(par_mgr);
 		return NULL;
 	}
 
@@ -236,8 +260,16 @@ Node *parse_group(ParserMgr *par_mgr) {
 	// Recently read command <string>
 	Node *curr = NULL;
 	
+	// Create group entry.
+	Symbol *sy = Symbol_new();
+	sy->sy_token = par_mgr->curr_token;
+	sy->sy_type = E_GROUP_TYPE;
+	SyTable_add_symbol(par_mgr->sy_table, sy);
+	
+	par_mgr_sync(par_mgr);
+	
 	// Setup group node data.
-	group->value = TokenMgr_current_token(par_mgr->tok_mgr)->value;
+	group->value = par_mgr->curr_token->value;
 	group->type = E_GROUP_NODE;
 
 	// Store next token in parser state.
@@ -282,20 +314,24 @@ NodeMgr *parser_init(TokenMgr *tok_mgr) {
 
 	// Create wrapper structs.
 	ParserMgr *par_mgr = ParserMgr_new();
-	par_mgr->err_handle = Error_new();
+	Error *err_handle = Error_new();
 	NodeMgr *node_mgr = NodeMgr_new();
-
+	SyTable *sy_table = SyTable_new();
+	
 	// This will do for now.
 	// TODO: Add descriptive error here.
-	if (!par_mgr->err_handle || !par_mgr || !node_mgr || !tok_mgr)
+	if (!err_handle || !par_mgr || !node_mgr || !tok_mgr || !sy_table)
 		return NULL;
-		
+	
+	// ParserMgr will track wrapper structs.
 	par_mgr->tok_mgr = tok_mgr;
+	par_mgr->sy_table = sy_table;
+	par_mgr->err_handle = err_handle;
+	err_handle = NULL;
+	sy_table = NULL;
 	tok_mgr = NULL;
 
-	
-	par_mgr_next(par_mgr);
-	
+	par_mgr_next(par_mgr);	
 	while (!TokenMgr_is_last_token(par_mgr->tok_mgr)) {
 		if (strcmp(par_mgr->curr_token->type, "IDENTIFIER") == 0) {
 			par_mgr->curr_expr = parse_assignment(par_mgr);
@@ -324,7 +360,12 @@ NodeMgr *parser_init(TokenMgr *tok_mgr) {
 	if (par_mgr->err_handle->error_ctr > 0)
 		Error_print_all(par_mgr->err_handle);
 
+	#ifdef DEBUG
+		SyTable_print_symbols(par_mgr->sy_table);
+	#endif
+
 	// Free resources.
+	SyTable_free(par_mgr->sy_table);
 	Error_free(par_mgr->err_handle);
 	ParserMgr_free(par_mgr);
 	return  node_mgr;

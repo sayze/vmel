@@ -116,15 +116,6 @@ int NodeMgr_free(NodeMgr *node_mgr);
 NodeMgr *NodeMgr_new(void);
 
 /**
- * @brief Fill Symbol Table with information.
- * 
- * @param node_mgr Instance of NodeMgr containing ast.
- * @param sy_table Instance of SyTable to get populated.
- * @return 0 If successfull otherwise return 1.
- */
-int NodeMgr_fill_sytable(NodeMgr *node_mgr, SyTable *sy_table);
-
-/**
  * @brief Perform relloc on array of of nodes in Manager.
  * 
  * This function is to be used internally by NodeMg to allocate more

@@ -8,9 +8,7 @@
 
 // Below are reserved keywords.
 // TODO: Move this to tokens.h ? or better manage this.
-static const char *R_Keywords[KWORDS_SIZE] = {
-    "print", "connect", "release", "input"
-};
+static const char *R_Keywords[KWORDS_SIZE] = {"print"};
 
 //TODO: make below lexing more efficient and readable.
 // possibly create functions for each category and/or
@@ -243,7 +241,7 @@ int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr) {
 	TokenMgr_add_token(tokmgr, "EOT", "EOT", 0);
 
 	if (error)
-		printf("Invalid syntax: unknown '%s' found in line %d\n", store, lineno);
+		printf("Syntax error: unknown '%s' found in line %d\n", store, lineno);
 
 	return error;
 }

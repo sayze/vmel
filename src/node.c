@@ -129,43 +129,6 @@ Node **grow_nodes(NodeMgr *node_mgr) {
     return nodes_new;
 }
 
-int NodeMgr_fill_sytable(NodeMgr *node_mgr, SyTable *sy_table) {
-	if (!sy_table || !node_mgr)
-		return 1;
-
-	Node *root = NULL;
-	Symbol *sy = NULL;
-
-	for (size_t idx = 0; idx < node_mgr->nodes_ctr; idx++) {
-		root = node_mgr->nodes[idx];
-		switch (root->type) {
-			case E_EQUAL_NODE:
-				sy = Symbol_new();
-				sy->name = root->data->AsnStmtNode.left->value;
-				sy->type = E_IDN_TYPE;
-				break;
-			case E_GROUP_NODE:
-				if (!SyTable_get_symbol(sy_table, root->value)) {
-					sy = Symbol_new();
-					sy->name = root->value;
-					sy->type = E_GROUP_TYPE;
-				}
-				else {
-					// TODO: Need a better way to manage errors after parsing process.
-					printf("Group {%s} already exists...duplicate definition\n", root->value);
-				}
-				break;
-			default:
-				break;
-		}
-		if (sy) {
-			SyTable_add_symbol(sy_table, sy);
-			sy = NULL;
-		}
-	}
-	return 0;
-}
-
 int NodeMgr_add_node(NodeMgr *node_mgr, Node *node) {
     if (!node_mgr) 
 		return 1;

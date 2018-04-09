@@ -9,6 +9,7 @@
 
 #include "tokenizer.h"
 #include "node.h"
+#include "sytable.h"
 #include "errors.h"
 
 /**
@@ -21,6 +22,7 @@ typedef struct {
 	Node *curr_expr;
 	unsigned int expr_depth;
 	Token *curr_token;
+	SyTable *sy_table;
 	TokenMgr *tok_mgr;
 	Error *err_handle;
 } ParserMgr;
@@ -99,5 +101,16 @@ Node *parse_factor(ParserMgr *par_mgr);
  * @return NodeMgr instance containing generated AST or NULL if error occurred.
  */
 NodeMgr *parser_init(TokenMgr *tok_mgr);
+
+/**
+ * @brief Iterate through tokens until specific token type is encountered.
+ * 
+ * This function will skip tokens until the next token specified by type.
+ * Useful for error recovery. 
+ * 
+ * @param par_mgr ParserMgr instance.
+ * @param type The token type to skip to.
+ */
+void ParserMgr_skip_to(ParserMgr *par_mgr, char *type);
 
 #endif

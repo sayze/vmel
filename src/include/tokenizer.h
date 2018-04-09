@@ -7,7 +7,7 @@
 #ifndef TOKENIZER_H
 #define TOKENIZER_H
 
-#define KWORDS_SIZE 4
+#define KWORDS_SIZE 1
 #define TOKENTYPE_SIZE 20
 #define TOKMGR_TOKS_INIT_SIZE 40
 
