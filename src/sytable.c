@@ -21,7 +21,6 @@ void SyTable_free(SyTable *sy_table) {
 
 Symbol *Symbol_new(void) {
 	Symbol *sy = malloc(sizeof(Symbol));
-	sy->name = NULL;
 	return sy;
 }
 
@@ -30,7 +29,7 @@ Symbol *SyTable_get_symbol(SyTable *sy_table, char *sy_name) {
 		return NULL;
 
 	for (size_t idx = 0; idx < sy_table->sym_ctr; idx++ ) {
-			if (strcmp(sy_table->symbols[idx]->name, sy_name) == 0) {
+			if (strcmp(sy_table->symbols[idx]->sy_token->value, sy_name) == 0) {
 				return sy_table->symbols[idx];
 			}
 	}
@@ -63,12 +62,12 @@ void SyTable_print_symbols(SyTable *sy_table) {
 	printf("--------------------------------------\n");
 	char *t = NULL;
 	for (size_t i = 0; i < sy_table->sym_ctr; i++) {
-		if (sy_table->symbols[i]->type == E_IDN_TYPE)
+		if (sy_table->symbols[i]->sy_type == E_IDN_TYPE)
 			t = "Variable";
 		else
 			t = "Group Name";
 
-		printf("--> Name : %s | Type: %s  \n", sy_table->symbols[i]->name, t);
+		printf("--> Name : %s | Type: %s  \n", sy_table->symbols[i]->sy_token->value, t);
 	}
 }
 

@@ -11,18 +11,20 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "tokenizer.h"
+
 #define INIT_SYTABLE_SIZE 7
 
-enum Sy_Type {
+enum SyType {
 	E_GROUP_TYPE, E_IDN_TYPE, E_FUNC_TYPE
 };
 
 /**
- * @brief Individual Symbols pertaining.
+ * @brief Store relevant token pertaining to symbol entry.
  */
 typedef struct {
-	char *name;
-	enum Sy_Type type;
+	Token *sy_token;
+	enum SyType sy_type;
 } Symbol;
 
 /**

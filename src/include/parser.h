@@ -50,16 +50,6 @@ int ParserMgr_free(ParserMgr *par_mgr);
 void ParserMgr_add_error(Error *err_handle, Token *offender, int err_type);
 
 /**
- * @brief Can token be consumed based on expected type.
- * 
- * This function is used to determine if a token matches expected type.
- * 
- * @param tok is a pointer to the token being compared.
- * @param type the type we are expecting it to be. 
- */
-int parser_can_consume(char *tok_type, char *type);
-
-/**
  * @brief Will consume a group based on grammar defintion.
  * 
  * Group = string | string_list
@@ -69,7 +59,6 @@ int parser_can_consume(char *tok_type, char *type);
  * @return Node generated from production.
  */
 Node *parse_group(ParserMgr *par_mgr);
-
 
 /**
  * @brief Will consume assignment based on grammar.

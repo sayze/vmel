@@ -7,10 +7,6 @@ void print_usage(void) {
 	printf("Usage: vmel [config_file <run.vml>]\n");
 }
 
-int is_valid_identifier(char id) {
-	return (isalpha(id) || id == '_' || id == '-' || isdigit(id));
-}
-
 char *file_to_buffer(const char *filename) {
 	// File pointer.
 	FILE *fptr = fopen(filename, "r");
@@ -115,3 +111,13 @@ char *string_map_vars(const char *src, char **vars, size_t src_len, size_t vars_
 int int_to_string(char *out, int src) {
 	return sprintf(out, "%d", src);
 }
+
+int string_compare(char *str1, char *str2) {
+	if (!str1 || !str2)
+		return 0;
+		
+	if (strcmp(str1, str2) == 0)
+		return 1;
+	else
+		return 0;
+}	

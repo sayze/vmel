@@ -15,16 +15,6 @@
 void print_usage(void);
 
 /**
- * @brief Utility function to determine if char is one of accepted identifiers.
- * 
- * Check to see if a character is deemed valid in the language syntax.
- *
- * @param id The char to get validated.
- * @return 1 If it matches accepted identifiers or return 0 if it doesn't.
- */	
-int is_valid_identifier(char id);
-
-/**
  * @brief Read contents of file to buffer.
  *
  * This function will read the contents of a passed source file (*.vml).
@@ -43,7 +33,7 @@ int is_valid_identifier(char id);
 char *file_to_buffer(const char *);
 
 /**
- * @brief convert a string of numbers to integer.
+ * @brief Convert a string of numbers to integer.
  * 
  * @param str string to be converted.
  * @param len the length of the string.
@@ -52,7 +42,7 @@ char *file_to_buffer(const char *);
 int string_to_int(char *str, size_t len);
 
 /**
- * @brief wrapper around sprintf to convert an integer to a string.
+ * @brief Wrapper around sprintf to convert an integer to a string.
  * 
  * Function take a input source and saves its contents in string format to
  * specified out char.
@@ -62,6 +52,18 @@ int string_to_int(char *str, size_t len);
  * @returns number of chars (exl NULL) if went successfully otherwise return negative;
  */
 int int_to_string(char *out, int src);
+
+/**
+ * @brief Shorthand for strcmp.
+ * 
+ * Function will remove the need to check for 0 on performing strcmp.
+ * Assuming strings are null terminated.
+ * 
+ * @param str1 Pointer to first string.
+ * @param str2 Pointer to second string.
+ * @return 1 if strings match, 0 if not match.
+ */
+int string_compare(char *str1, char *str2);
 
 /**
  * @brief Replace all the variables in string with corresponding values.

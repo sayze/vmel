@@ -378,6 +378,15 @@ void TokenMgr_reset_curr(TokenMgr *tok_mgr) {
 	}
 }
 
+Token **grow_curr_tokens(TokenMgr *tok_mgr) {
+	if (!tok_mgr)
+		return NULL;
+		
+	tok_mgr->tok_cap *= 2;
+	Token **toks_curr_new = realloc(tok_mgr->toks_curr, sizeof(Token *) * tok_mgr->tok_cap);		
+	return toks_curr_new;
+}
+
 int is_valid_keyword(char *str) {
 	int ret = 0;
 	
@@ -394,11 +403,6 @@ int is_valid_keyword(char *str) {
 	return ret;
 }
 
-Token **grow_curr_tokens(TokenMgr *tok_mgr) {
-	if (!tok_mgr)
-		return NULL;
-		
-	tok_mgr->tok_cap *= 2;
-	Token **toks_curr_new = realloc(tok_mgr->toks_curr, sizeof(Token *) * tok_mgr->tok_cap);		
-	return toks_curr_new;
+int is_valid_identifier(char id) {
+	return (isalpha(id) || id == '_' || id == '-' || isdigit(id));
 }

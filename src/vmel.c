@@ -36,8 +36,8 @@ int main(int argc, char *argv[]) {
 		node_mgr = parser_init(tok_mgr);
 
 		// Create Symbol Table instance.
-	 	sy_table = SyTable_new();
-		NodeMgr_fill_sytable(node_mgr, sy_table);
+	 	// sy_table = SyTable_new();
+		// NodeMgr_fill_sytable(node_mgr, sy_table);
 	}	
 
 	#ifdef DEBUG

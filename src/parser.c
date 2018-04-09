@@ -80,16 +80,9 @@ void ParserMgr_add_error(Error *err_handle, Token *offender, int err_type) {
 	err_handle->error_ctr++;
 }
 
-int parser_can_consume(char *tok_type, char *type) {
-	if (strcmp(tok_type, type) != 0)
-		return 0;
-	
-	return 1;
-}
-
 Node *parse_string(ParserMgr *par_mgr) {
 	Node *str = NULL;
-	if (parser_can_consume(par_mgr->curr_token->type, "STRING")) {
+	if (string_compare(par_mgr->curr_token->type, "STRING")) {
 		str = Node_new(0);
 		str->type = E_STRING_NODE;
 		str->value = par_mgr->curr_token->value;
@@ -101,23 +94,23 @@ Node *parse_string(ParserMgr *par_mgr) {
 Node *parse_factor(ParserMgr *par_mgr) {
 	par_mgr_sync(par_mgr);
 	Node *res = NULL;
-	 if (parser_can_consume(par_mgr->curr_token->type, "INTEGER")) {
+	 if (string_compare(par_mgr->curr_token->type, "INTEGER")) {
 		 res = Node_new(0);
 		 res->type = E_INTEGER_NODE;
 		 res->value = par_mgr->curr_token->value; 
 		 par_mgr_next(par_mgr);
 	 }
-	 else if (parser_can_consume(par_mgr->curr_token->type, "IDENTIFIER")) {
+	 else if (string_compare(par_mgr->curr_token->type, "IDENTIFIER")) {
 		 res = Node_new(0);
 		 res->type = E_IDENTIFIER_NODE;
 		 res->value = par_mgr->curr_token->value; 
 		 par_mgr_next(par_mgr);
 	 }
-	 else if (parser_can_consume(par_mgr->curr_token->type, "LPAREN")) {
+	 else if (string_compare(par_mgr->curr_token->type, "LPAREN")) {
 		 TokenMgr_next_token(par_mgr->tok_mgr);
 		 res = parse_expr(par_mgr);
 		 par_mgr_sync(par_mgr);
-		 if (parser_can_consume(par_mgr->curr_token->type, "RPAREN")) {
+		 if (string_compare(par_mgr->curr_token->type, "RPAREN")) {
 			par_mgr_next(par_mgr); 
 		 }
 	 }
@@ -127,7 +120,7 @@ Node *parse_factor(ParserMgr *par_mgr) {
 Node *parse_term(ParserMgr *par_mgr) {
 	Node *res = parse_factor(par_mgr);
 	while (!TokenMgr_is_last_token(par_mgr->tok_mgr) &&
-	(parser_can_consume(par_mgr->curr_token->value, "*") || parser_can_consume(par_mgr->curr_token->value, "/"))) {
+	(string_compare(par_mgr->curr_token->value, "*") || string_compare(par_mgr->curr_token->value, "/"))) {
 		// BinOP node.
 		Node *bop = Node_new(1);
 
@@ -157,7 +150,7 @@ Node *parse_term(ParserMgr *par_mgr) {
 Node *parse_expr(ParserMgr *par_mgr) {
 	Node *res = parse_term(par_mgr);
 	while (!TokenMgr_is_last_token(par_mgr->tok_mgr) &&
-	(parser_can_consume(par_mgr->curr_token->value, "+") || parser_can_consume(par_mgr->curr_token->value, "-"))) {
+	(string_compare(par_mgr->curr_token->value, "+") || string_compare(par_mgr->curr_token->value, "-"))) {
 		// BinOP node.
 		Node *bop = Node_new(1);
 
@@ -200,7 +193,7 @@ Node *parse_assignment(ParserMgr *par_mgr) {
 	Node *lhand = NULL;
 
 	// Assert we can consume an EQUAL.
-	if (parser_can_consume(par_mgr->curr_token->value, "=")) {
+	if (string_compare(par_mgr->curr_token->value, "=")) {
 		par_mgr_next(par_mgr);
 		if ((expr = parse_string(par_mgr)) != NULL || (expr = parse_expr(par_mgr)) != NULL) {
 			// Identifier.
@@ -252,7 +245,7 @@ Node *parse_group(ParserMgr *par_mgr) {
 
 	// Iterate through commands and append to group.
 	// Below will build a circular linked list.
-	while (!TokenMgr_is_last_token(par_mgr->tok_mgr) && parser_can_consume(par_mgr->curr_token->type, "STRING")) {
+	while (!TokenMgr_is_last_token(par_mgr->tok_mgr) && string_compare(par_mgr->curr_token->type, "STRING")) {
 		curr = parse_string(par_mgr);
 		curr->data = malloc(sizeof(union SyntaxNode));
 		if (!prev)
