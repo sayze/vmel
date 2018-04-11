@@ -391,7 +391,7 @@ int is_valid_keyword(char *str) {
 	if (!str)
 		return ret;
 	
-	for (int x = 0; x < KWORDS_SIZE-1; x++) {
+	for (int x = 0; x < KWORDS_SIZE; x++) {
 		const char *t = R_Keywords[x];
 		if (strcmp(t, str) == 0) {
 			ret = 1;

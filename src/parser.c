@@ -201,7 +201,7 @@ Node *parse_assignment(ParserMgr *par_mgr) {
 	// Assert we can consume an EQUAL.
 	if (string_compare(par_mgr->curr_token->value, "=")) {
 		par_mgr_next(par_mgr);
-		if ((expr = parse_string(par_mgr)) != NULL || (expr = parse_expr(par_mgr)) != NULL) {
+		if ((expr = parse_string(par_mgr)) || (expr = parse_expr(par_mgr))) {
 			
 			// Add symbol if not exits.
 			if (!SyTable_get_symbol(par_mgr->sy_table, tok_start_ptr->value))
@@ -248,7 +248,7 @@ Node *parse_group(ParserMgr *par_mgr) {
 		return NULL;
 	}
 
-	// group node itself. i.e {some_group}.
+	// Group node itself. i.e {some_group}.
 	Node *group = Node_new(1);
 	// Previously read command <string>.
 	Node *prev = NULL;
@@ -268,7 +268,7 @@ Node *parse_group(ParserMgr *par_mgr) {
 	par_mgr->curr_token =  TokenMgr_next_token(par_mgr->tok_mgr);
 
 	// Iterate through commands and append to group.
-	// Below will build a circular linked list.
+	// Below will build a circular single linked list.
 	while (!TokenMgr_is_last_token(par_mgr->tok_mgr) && string_compare(par_mgr->curr_token->type, "STRING")) {
 		curr = parse_string(par_mgr);
 		curr->data = malloc(sizeof(union SyntaxNode));
@@ -287,18 +287,37 @@ Node *parse_group(ParserMgr *par_mgr) {
 }
 
 Node *parse_keyword(ParserMgr *par_mgr) {
-	// If string isn't next then store error and move to next token.
-	if (strcmp(TokenMgr_peek_token(par_mgr->tok_mgr)->type, "STRING") != 0) {
+	// Peek into the next token in TokenMgr.
+	Token *peek = TokenMgr_peek_token(par_mgr->tok_mgr);
+
+	// If valid arg isn't next then store error and move to next token.
+	if (!string_compare(peek->type, "STRING")
+		&& !string_compare(peek->type, "INTEGER")
+		&& !string_compare(peek->type, "IDENTIFIER")) {
 		ParserMgr_add_error(par_mgr->err_handle, TokenMgr_current_token(par_mgr->tok_mgr), ERR_EMPTY_STMT);
-		TokenMgr_next_token(par_mgr->tok_mgr);
+		par_mgr_next(par_mgr);
 		return NULL;
 	}
 
-	Node *stmt = Node_new(1);
-	stmt->type = E_CMPSTMT_NODE;
-	stmt->value = par_mgr->curr_token->value;
+	// Store keyword argument.
+	Node *args = NULL;
+	// Final statement node,
+	Node *stmt = NULL;
+
 	par_mgr_next(par_mgr);
-	stmt->data->CmpStmtNode.args = parse_string(par_mgr);
+
+	// If args is valid then store.
+	if ((args = parse_expr(par_mgr)) || (args = parse_string(par_mgr))) {
+		stmt = Node_new(1);
+		stmt->type = E_CMPSTMT_NODE;
+		stmt->value = par_mgr->curr_token->value;
+		stmt->data->CmpStmtNode.args = args;
+	}
+	else {
+		ParserMgr_add_error(par_mgr->err_handle, TokenMgr_current_token(par_mgr->tok_mgr), ERR_UNEXPECTED);
+		par_mgr_next(par_mgr);
+	}
+
 	return stmt;
 }
 

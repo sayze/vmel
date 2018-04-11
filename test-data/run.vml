@@ -7,8 +7,16 @@
 # Variables must be prefixed with a dollar sign... yes I do like PHP.
 # Such as the below
 
-$vm_user = "sayed@root"
-$vm_pass = "124astroboy"
+$var_str = "sayed@root" # A String
+$var_int = 12 # An Int
+$var_int2 = $var_int # Variable assignment
+$var_expr = 12 + 45 * (34 -1) # Expression assignment
+
+print "hello world" # Printing a string
+print 12 # Printing an int
+print 13 + 44 - 1 # Printing an expression
+print $var_int # Printing a variable
+#print `Dear $var_str, hope you are having a great day.` # Printing mixed string
 
 # ---------------------------------- # 
 #            Groups                  #
