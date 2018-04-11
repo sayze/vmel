@@ -310,20 +310,19 @@ Node *parse_keyword(ParserMgr *par_mgr) {
 	return stmt;
 }
 
-NodeMgr *parser_init(TokenMgr *tok_mgr) {
+NodeMgr *parser_init(TokenMgr *tok_mgr, SyTable *sy_table) {
 
 	// Create wrapper structs.
 	ParserMgr *par_mgr = ParserMgr_new();
 	Error *err_handle = Error_new();
 	NodeMgr *node_mgr = NodeMgr_new();
-	SyTable *sy_table = SyTable_new();
-	
+
 	// This will do for now.
 	// TODO: Add descriptive error here.
 	if (!err_handle || !par_mgr || !node_mgr || !tok_mgr || !sy_table)
 		return NULL;
 	
-	// ParserMgr will track wrapper structs.
+	// ParserMgr will track foreign wrapper structs.
 	par_mgr->tok_mgr = tok_mgr;
 	par_mgr->sy_table = sy_table;
 	par_mgr->err_handle = err_handle;
@@ -360,12 +359,6 @@ NodeMgr *parser_init(TokenMgr *tok_mgr) {
 	if (par_mgr->err_handle->error_ctr > 0)
 		Error_print_all(par_mgr->err_handle);
 
-	#ifdef DEBUG
-		SyTable_print_symbols(par_mgr->sy_table);
-	#endif
-
-	// Free resources.
-	SyTable_free(par_mgr->sy_table);
 	Error_free(par_mgr->err_handle);
 	ParserMgr_free(par_mgr);
 	return  node_mgr;

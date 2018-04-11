@@ -98,9 +98,10 @@ Node *parse_factor(ParserMgr *par_mgr);
  * Function will perform parsing and construct an AST as output.
  * 
  * @param tok_mgr TokenMgr containing all token information.
+ * @param sy_table SyTable instance to store resulting symbol information.
  * @return NodeMgr instance containing generated AST or NULL if error occurred.
  */
-NodeMgr *parser_init(TokenMgr *tok_mgr);
+NodeMgr *parser_init(TokenMgr *tok_mgr, SyTable *sy_table);
 
 /**
  * @brief Iterate through tokens until specific token type is encountered.

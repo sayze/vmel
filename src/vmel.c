@@ -33,8 +33,8 @@ int main(int argc, char *argv[]) {
 	err = TokenMgr_build_tokens(buff_in, tok_mgr);
 
 	if (!err) {
-		node_mgr = parser_init(tok_mgr);
-
+		sy_table = SyTable_new();
+		node_mgr = parser_init(tok_mgr, sy_table);
 	}	
 
 	#ifdef DEBUG
