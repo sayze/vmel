@@ -16,12 +16,12 @@ static const char *R_Keywords[KWORDS_SIZE] = {"print"};
 int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr) {
 	if (!buff) {
 		printf("** Error Buffer invalid state cannot build tokens\n");
-		return 1;
+		return -1;
 	}
 
 	if (!tokmgr) {
 		printf("** Error Invalid token manager passed to build token");
-		return 1;
+		return -1;
 	}
 
 	// Each character in buffer.
@@ -259,7 +259,7 @@ TokenMgr *TokenMgr_new(void) {
 int TokenMgr_add_token(TokenMgr *tok_mgr, char tok_type[20], char *tok_val, int tok_lineno) {
 	if (!tok_mgr) {
 		printf("**Error** Invalid token manager passed to TokenMgr_add_token");
-		return 1;
+		return -1;
 	}	
 
 	// Get string length of value.
@@ -311,7 +311,7 @@ void TokenMgr_print_tokens(TokenMgr *tok_mgr) {
 int TokenMgr_free(TokenMgr *tok_mgr) {
 	if (!tok_mgr) {
 		printf("**Error** Invalid token manager passed to TokenMgr_free");
-		return 1;
+		return -1;
 	}
 	
 	TokenMgr_reset_curr(tok_mgr);

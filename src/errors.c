@@ -11,7 +11,7 @@ Error *Error_new(void) {
 
 int Error_free(Error *err_handle) {
 	if (!err_handle)
-		return 1;
+		return -1;
 
 	if (err_handle->error_ctr != 0) {
 		for (size_t in = 0; in < err_handle->error_ctr; in++) {

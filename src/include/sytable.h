@@ -47,9 +47,11 @@ SyTable *SyTable_new();
  * @brief Add a symbol to SyTable instance.
  * 
  * @param sy_table Instance of SyTable.
+ * @param sy_tok Instance of Token.
+ * @param sy_type Enum to specify symbol type.
  * @return 0 if success or 1 if error.
  */
-int SyTable_add_symbol(SyTable *sy_table, Symbol *symbol);
+int SyTable_add_symbol(SyTable *sy_table, Token *sy_tok, enum SyType sy_type);
 
 /**
  * @brief Print contents of SyTable. Useful for debugging.

@@ -36,9 +36,9 @@ Symbol *SyTable_get_symbol(SyTable *sy_table, char *sy_name) {
 	return NULL;
 }
 
-int SyTable_add_symbol(SyTable *sy_table, Symbol *symbol) {
-	if (!sy_table)
-		return 1;
+int SyTable_add_symbol(SyTable *sy_table, Token *sy_tok, enum SyType sy_type) {
+	if (!sy_table || !sy_tok)
+		return -1;
 
 	if (sy_table->sym_cap - sy_table->sym_ctr <= 5) {
 		Symbol **sy_new = grow_sy_table(sy_table);
@@ -49,7 +49,11 @@ int SyTable_add_symbol(SyTable *sy_table, Symbol *symbol) {
 	}
 	
 	// Add symbol and increment counter.
-	sy_table->symbols[sy_table->sym_ctr++] = symbol;
+	Symbol *sy = Symbol_new();
+	sy->sy_token = sy_tok;
+	sy->sy_type = sy_type;
+	sy_table->symbols[sy_table->sym_ctr++] = sy;
+	sy = NULL;
 	return 0;
 }
 

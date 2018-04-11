@@ -42,7 +42,7 @@ ParserMgr *ParserMgr_new() {
 
 int ParserMgr_free(ParserMgr *par_mgr) {
 	if (!par_mgr)
-		return 1;
+		return -1;
 		
 	par_mgr->curr_expr = NULL;
 	par_mgr->curr_token = NULL;
@@ -204,13 +204,8 @@ Node *parse_assignment(ParserMgr *par_mgr) {
 		if ((expr = parse_string(par_mgr)) != NULL || (expr = parse_expr(par_mgr)) != NULL) {
 			
 			// Add symbol if not exits.
-			// TODO: Move to SyTable module.
-			if (!SyTable_get_symbol(par_mgr->sy_table, tok_start_ptr->value)) {
-				Symbol *sy = Symbol_new();
-				sy->sy_token = tok_start_ptr;
-				sy->sy_type = E_IDN_TYPE;
-				SyTable_add_symbol(par_mgr->sy_table, sy);
-			}
+			if (!SyTable_get_symbol(par_mgr->sy_table, tok_start_ptr->value))
+				SyTable_add_symbol(par_mgr->sy_table, tok_start_ptr, E_IDN_TYPE);
 			
 			// Identifier.
 			lhand = Node_new(0); 
@@ -261,10 +256,7 @@ Node *parse_group(ParserMgr *par_mgr) {
 	Node *curr = NULL;
 	
 	// Create group entry.
-	Symbol *sy = Symbol_new();
-	sy->sy_token = par_mgr->curr_token;
-	sy->sy_type = E_GROUP_TYPE;
-	SyTable_add_symbol(par_mgr->sy_table, sy);
+	SyTable_add_symbol(par_mgr->sy_table, par_mgr->curr_token, E_GROUP_TYPE);
 	
 	par_mgr_sync(par_mgr);
 	

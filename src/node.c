@@ -35,29 +35,9 @@ static void node_free(Node *node) {
 	free(node);
 }
 
-// Temp vars for printing tree.
-char nbuff[5][15];
-int dep = 0;
-int pos = 0;
-Node *lastn = NULL;
-
-void print_nbuff(int y, int x) {
-	char p;
-	for (int h= 0 ; h < y ; h ++) {
-		for (int w = 0; w < x; w++) {
-			p = nbuff[h][w];
-			if (p == '\0') {
-				p = ' ';
-			}
-			printf("%c", p);
-		}
-		printf("\n");
-	}
-}
-
 int NodeMgr_free(NodeMgr *node_mgr) {
     if (!node_mgr) 
-		return 1;
+		return -1;
 
     Node *root_node = NULL;     
     Node *itr = NULL;
@@ -131,13 +111,13 @@ Node **grow_nodes(NodeMgr *node_mgr) {
 
 int NodeMgr_add_node(NodeMgr *node_mgr, Node *node) {
     if (!node_mgr) 
-		return 1;
+		return -1;
 
     if (node_mgr->nodes_cap - node_mgr->nodes_ctr == 4)
         node_mgr->nodes = grow_nodes(node_mgr);   
 
     if (!node_mgr->nodes) 
-		return 1;
+		return -1;
     
     node_mgr->nodes[node_mgr->nodes_ctr++] = node;
     return 0;
