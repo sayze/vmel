@@ -4,6 +4,7 @@
 #include "tokenizer.h"
 #include "parser.h"
 #include "node.h"
+#include "nexec.h"
 #include "utils.h"
 
 #define CLI_BUFFER_LIMIT 50
@@ -42,10 +43,15 @@ int main(int argc, char *argv[]) {
 		TokenMgr_print_tokens(tok_mgr);
 	#endif
 
+	// Initialise Node Execution manager.
+	NexecMgr *nexec_mgr = NexecMgr_new();
+
+
 	// Free resources.
 	SyTable_free(sy_table);
 	NodeMgr_free(node_mgr);
 	TokenMgr_free(tok_mgr);
+	NexecMgr_free(nexec_mgr);
 	free(buff_in);
 
 	return 0;

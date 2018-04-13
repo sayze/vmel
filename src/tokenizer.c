@@ -59,6 +59,23 @@ int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr) {
 			bidx++;
 			continue;
 		}
+		else if (c == BTICK) {
+			c = buff[++bidx];
+			while (c != BTICK && c != '\0' && c != NEWLINE) {
+				store[stctr++] = c;
+				c = buff[++bidx];
+			}
+			store[stctr] = '\0';
+			
+			// Ensure last read char is closing quote.
+			if (c != BTICK) {
+				error = 1;
+				continue;
+			}
+			TokenMgr_add_token(tokmgr, "MIXSTRING", store, lineno);
+			stctr = 0;
+			bidx++;
+		}
 		else if (c == BANG) {
 			if (buff[bidx+1] == EQUAL) {
 				TokenMgr_add_token(tokmgr, "OPERATOR", "!=", lineno);
@@ -69,8 +86,8 @@ int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr) {
 			}
 			bidx++;
 		}
-		else if (isspace(c)) {
-			while (isspace(c)) {
+		else if (isspace(c) && c != NEWLINE) {
+			while (isspace(c) && c != NEWLINE) {
 				c = buff[++bidx];
 			}
 			continue;
@@ -171,8 +188,17 @@ int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr) {
 				c = buff[++bidx];
 			}
 			store[stctr] = '\0';
+			
+			// Prevent empty variables e.g $
+			if (strlen(store) < 2) {
+				error = 1;
+				bidx++;
+				continue;
+			}
+
 			TokenMgr_add_token(tokmgr, "IDENTIFIER", store, lineno);
 			stctr = 0;
+			
 		}
 		else if (isdigit(c)) {
 			while (isdigit(c)) {

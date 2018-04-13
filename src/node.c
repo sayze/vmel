@@ -19,17 +19,33 @@ static int is_binop_node(Node *n) {
 			n->type == E_DIV_NODE || n->type == E_TIMES_NODE;
 }
 
+static int is_array_node(Node *n) {
+	return 	n->type ==  E_ARRAY_NODE;
+}
+
 static void node_free(Node *node) {
 	if (!node) 
 		return;
-	
+
+	if (is_array_node(node)) {
+		for (size_t i = 0; i < node->data->ArrayNode.dctr; i++) {
+			if (is_array_node(node->data->ArrayNode.items[i])) {
+				node_free(node->data->ArrayNode.items[i]);	
+			}
+			else {
+				free(node->data->ArrayNode.items[i]);
+			}
+		} 	
+		free(node->data->ArrayNode.items);
+	}
+
 	if (is_binop_node(node))
 		node_free(node->data->BinExpNode.left);
 		
 	if (is_binop_node(node))
 		node_free(node->data->BinExpNode.right);
 	
-	if (is_binop_node(node))
+	if (is_binop_node(node) || is_array_node(node))
 		free(node->data);
 	
 	free(node);

@@ -12,13 +12,16 @@
 #define ERR_GROUP_EXIST 1
 #define ERR_EMPTY_GROUP 2
 #define ERR_EMPTY_STMT 3
-
+#define ERR_ARRAY_EMPTY 4
+#define ERR_ARRAY_CLOSING 5
 // These are the errors a parser may generate. They are mapped to the #DEFINE above.
 static const char *Error_Templates[] = {
 	"Syntax error : unexpected @0 found in line @1",
 	"Error : Duplicate definition {@0} already defined in line @1",
 	"Error : Empty group {@0} must contain commands in line @1",
-	"Syntax error: Statement '@0' missing arguments in line @1"
+	"Syntax error: Statement '@0' missing arguments in line @1",
+	"Error : Expected array item after comma but found NULL in line @1",
+	"Syntax error: No closing bracket found near '@0' in line @1"
 };
 
 // Sync ParserMgr internal token to be current token held by TokenMgr.
@@ -30,6 +33,29 @@ static void par_mgr_sync(ParserMgr *par_mgr) {
 static void par_mgr_next(ParserMgr *par_mgr) {
 	par_mgr->curr_token = TokenMgr_next_token(par_mgr->tok_mgr);
 }
+
+// Allocate more memory for array node items.
+static Node **grow_arr_nodes(Node *arr_node) {
+	if (!arr_node)
+		return NULL;
+	Node **new_items = NULL;
+	arr_node->data->ArrayNode.dcap = arr_node->data->ArrayNode.dcap * (arr_node->data->ArrayNode.dcap / 2);
+	new_items = realloc(arr_node->data->ArrayNode.items, arr_node->data->ArrayNode.dcap *sizeof(Node *));
+	return new_items;
+}
+
+// Shorthand for malloc'ed array node and items.
+static Node *node_new_array() {
+	Node *arr = NULL;
+	arr = Node_new(1);
+	arr->type = E_ARRAY_NODE;
+	arr->data->ArrayNode.dctr = 0;
+	arr->data->ArrayNode.dcap = 15;
+	arr->value = NULL;
+	arr->data->ArrayNode.items = malloc(arr->data->ArrayNode.dcap * sizeof(Node *));
+	return arr;
+}
+
 
 ParserMgr *ParserMgr_new() {
 	ParserMgr *ps = malloc(sizeof(ParserMgr));
@@ -88,7 +114,7 @@ void ParserMgr_skip_to(ParserMgr *par_mgr, char *type) {
 
 Node *parse_string(ParserMgr *par_mgr) {
 	Node *str = NULL;
-	if (string_compare(par_mgr->curr_token->type, "STRING")) {
+	if (string_compare(par_mgr->curr_token->type, "STRING") || string_compare(par_mgr->curr_token->type, "MIXSTRING")) {
 		str = Node_new(0);
 		str->type = E_STRING_NODE;
 		str->value = par_mgr->curr_token->value;
@@ -183,6 +209,78 @@ Node *parse_expr(ParserMgr *par_mgr) {
 	return res;
 }
 
+Node *parse_array(ParserMgr *par_mgr) {
+	
+	// Store retrun node from each root level evaluation.
+	Node *ret = NULL;
+	// Store final array node.
+	Node *arr = NULL;
+
+	// Array must begin with '['
+	if (!string_compare(par_mgr->curr_token->type, "LBRACKET"))
+		return NULL;
+
+	// Push token pointer forward.
+	par_mgr_next(par_mgr);	
+
+	// Handle first element.
+	if (string_compare(par_mgr->curr_token->type, "STRING")) {
+		ret = parse_string(par_mgr);
+	}
+	else if (string_compare(par_mgr->curr_token->type, "INTEGER")) {
+		ret = parse_factor(par_mgr);
+	}
+	if (string_compare(par_mgr->curr_token->type, "LBRACKET")) {
+		ret = parse_array(par_mgr);
+	}
+	
+	// Instansiate array node.
+	// Add node to array node if valid.
+	arr = node_new_array();
+	if (ret)
+		arr->data->ArrayNode.items[arr->data->ArrayNode.dctr++] = ret;
+	
+	// Iterate using comma as delimiter.
+	while (!TokenMgr_is_last_token(par_mgr->tok_mgr) 
+		&& (string_compare(par_mgr->curr_token->type, "COMMA"))) {
+		
+		// Next token.
+		par_mgr_next(par_mgr);		
+
+		if (string_compare(par_mgr->curr_token->type, "INTEGER")) {
+			ret = parse_factor(par_mgr);
+		}
+		else if (string_compare(par_mgr->curr_token->type, "STRING")) {
+			ret = parse_string(par_mgr);
+		}
+		else if (string_compare(par_mgr->curr_token->type, "LBRACKET")) {
+			ret = parse_array(par_mgr);
+		}
+		else {
+			ret = NULL;
+		}
+
+		// Ignore empty values after comma.
+		if (!ret) {
+			continue;
+		}
+
+		// Resize if need be, prior to appending array node.
+		if (arr->data->ArrayNode.dcap - arr->data->ArrayNode.dctr <= 5)
+			arr->data->ArrayNode.items = grow_arr_nodes(arr);
+
+		arr->data->ArrayNode.items[arr->data->ArrayNode.dctr++] = ret;	
+	}
+	
+	if (!string_compare(par_mgr->curr_token->type, "RBRACKET"))
+		ParserMgr_add_error(par_mgr->err_handle, par_mgr->curr_token, ERR_ARRAY_CLOSING);
+	else
+		par_mgr_next(par_mgr);
+	
+	return arr;
+
+}
+
 Node *parse_assignment(ParserMgr *par_mgr) {
 	// Store pointer to actual variable name.
 	Token *tok_start_ptr = TokenMgr_current_token(par_mgr->tok_mgr);
@@ -201,8 +299,8 @@ Node *parse_assignment(ParserMgr *par_mgr) {
 	// Assert we can consume an EQUAL.
 	if (string_compare(par_mgr->curr_token->value, "=")) {
 		par_mgr_next(par_mgr);
-		if ((expr = parse_string(par_mgr)) || (expr = parse_expr(par_mgr))) {
-			
+		if ((expr = parse_string(par_mgr)) || (expr = parse_expr(par_mgr)) || (expr = parse_array(par_mgr))) {
+
 			// Add symbol if not exits.
 			if (!SyTable_get_symbol(par_mgr->sy_table, tok_start_ptr->value))
 				SyTable_add_symbol(par_mgr->sy_table, tok_start_ptr, E_IDN_TYPE);
@@ -230,7 +328,6 @@ Node *parse_assignment(ParserMgr *par_mgr) {
 	}
 	return ast;
 }
-
 
 Node *parse_group(ParserMgr *par_mgr) {
 	// If string isn't next then store error and move to next token.
@@ -292,6 +389,7 @@ Node *parse_keyword(ParserMgr *par_mgr) {
 
 	// If valid arg isn't next then store error and move to next token.
 	if (!string_compare(peek->type, "STRING")
+	&& !string_compare(peek->type, "MIXSTRING")
 		&& !string_compare(peek->type, "INTEGER")
 		&& !string_compare(peek->type, "IDENTIFIER")) {
 		ParserMgr_add_error(par_mgr->err_handle, TokenMgr_current_token(par_mgr->tok_mgr), ERR_EMPTY_STMT);

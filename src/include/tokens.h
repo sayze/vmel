@@ -47,5 +47,7 @@
 #define BANG '!'
 // Dot
 #define DOT '.'
+// Back Tick
+#define BTICK '`'
 
 #endif

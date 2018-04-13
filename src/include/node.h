@@ -60,6 +60,11 @@ union SyntaxNode {
 	struct {
 		Node *args;
 	} CmpStmtNode;
+	struct {
+		size_t dctr;
+		size_t dcap;
+		Node **items;
+	} ArrayNode;
 };
 
 /**
