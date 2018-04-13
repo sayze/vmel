@@ -14,6 +14,7 @@
 #define ERR_EMPTY_STMT 3
 #define ERR_ARRAY_EMPTY 4
 #define ERR_ARRAY_CLOSING 5
+
 // These are the errors a parser may generate. They are mapped to the #DEFINE above.
 static const char *Error_Templates[] = {
 	"Syntax error : unexpected @0 found in line @1",
@@ -55,7 +56,6 @@ static Node *node_new_array() {
 	arr->data->ArrayNode.items = malloc(arr->data->ArrayNode.dcap * sizeof(Node *));
 	return arr;
 }
-
 
 ParserMgr *ParserMgr_new() {
 	ParserMgr *ps = malloc(sizeof(ParserMgr));

@@ -70,11 +70,12 @@ static char *expr_to_string(int src) {
 // Get the value of a variable stored in symbol table.
 // Return NULL if it doesn't exist or undefined.
 static char *expand_variable(SyTable *sy_table, char *name) {
-	char *sy_val = SyTable_get_symbol(sy_table, name)->val;
-	if (!sy_val) 
-		printf("Variable %s undefined \n", name);
+	Symbol *sy = SyTable_get_symbol(sy_table, name);
+	
+	if (!sy)
+		return NULL;
 		
-	return sy_val;
+	return sy->val;
 }
 
 int NexecMgr_free(NexecMgr *nexec_mgr) {
@@ -89,7 +90,8 @@ int Nexec_func_node(NexecMgr *nexec_mgr) {
 	if (!nexec_mgr)
 		return -1;
 	
-	Symbol *sy = NULL;
+	char *exp_var = NULL;
+	int calc = 0;
 
 	if (string_compare(nexec_mgr->curr_node->value, "print")) {
 		switch (nexec_mgr->curr_node->data->CmpStmtNode.args->type) {
@@ -98,9 +100,16 @@ int Nexec_func_node(NexecMgr *nexec_mgr) {
 				printf("%s\n", exec_string(nexec_mgr->curr_node->data->CmpStmtNode.args));
 				break;
 			case E_IDENTIFIER_NODE:
-				sy = SyTable_get_symbol(nexec_mgr->sy_table, nexec_mgr->curr_node->data->CmpStmtNode.args->value);
-				printf("%s\n", sy->val);
+				exp_var = expand_variable(nexec_mgr->sy_table, nexec_mgr->curr_node->data->CmpStmtNode.args->value);
+				if (exp_var)
+					printf("%s\n", exp_var);
+				else
+					printf("Error: could not access undefined variable '$%s'\n", nexec_mgr->curr_node->data->CmpStmtNode.args->value);
+				break;
 			default:
+				// Derive final value from operation node.
+				calc = exec_expression(nexec_mgr, nexec_mgr->curr_node->data->CmpStmtNode.args);
+				printf("%d\n", calc);
 				break;
 		} 
 	}
