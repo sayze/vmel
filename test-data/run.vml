@@ -1,29 +1,16 @@
 # This is an example config which vmel interpreter can read and execute.
+# There are 2 distinct sections on for Variables and another define groups of actions.
 
 # ---------------------------------- # 
 #            Variables               #
 # ---------------------------------- #
 # Variables must be prefixed with a dollar sign... yes I do like PHP.
+# Such as the below
 
-# Below showcase basic data types.
-$var_arr_2d = 
-[
-	"ID", "Name", "Age", "Genres",
-	["00121", "Sayed", "22", ["pop", "hiphop"]],
-	["00222", "Turban Head", "55"],
-	["00444", "Mike", "12"],
-	["00126", "Steven", "17"]
-]
+$vm_user = "sayed@root"
+$vm_pass = "124astroboy"
 
-# ---------------------------------- # 
-#            Built in functions      #
-# ---------------------------------- #
-# Below are usages of built int functions.
-$total = 1200 + 300 / 2
-print "hello world"
-print $total
-
-
+print $vm_user
 
 # ---------------------------------- # 
 #            Groups                  #

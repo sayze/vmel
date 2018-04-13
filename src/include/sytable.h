@@ -24,6 +24,7 @@ enum SyType {
  */
 typedef struct {
 	Token *sy_token;
+	char *val;
 	enum SyType sy_type;
 } Symbol;
 
@@ -84,6 +85,15 @@ Symbol *Symbol_new(void);
  * @return NULL if symbol can't be found otherwise return pointer to matched symbol.
  */
 Symbol *SyTable_get_symbol(SyTable *sy_table, char *sy_name);
+
+/**
+ * @brief Update the value stored inside a symbol
+ *
+ * @param sy_table SyTable instance.
+ * @param sy_name name of the symbol to return.
+ * @return 0 if successfully updated otherwise -1.
+ */
+int SyTable_update_symbol(SyTable *sy_table, char *sy_name, char *sy_n_value);
 
 /**
  * @brief Perform relloc on array of of symbols in SyTable.

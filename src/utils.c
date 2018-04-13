@@ -112,6 +112,16 @@ int int_to_string(char *out, int src) {
 	return sprintf(out, "%d", src);
 }
 
+char *string_dup(char *src, unsigned int src_len) {
+	if (!src || src_len == 0)
+		return NULL;
+
+	char *new_str = calloc(1, src_len * sizeof(char) + 1);
+	memcpy(new_str, src, src_len);
+
+	return new_str;
+}
+
 int string_compare(char *str1, char *str2) {
 	if (!str1 || !str2)
 		return 0;

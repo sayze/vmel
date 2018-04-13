@@ -87,4 +87,13 @@ int string_compare(char *str1, char *str2);
  */
 char *string_map_vars(const char *src, char **vars, size_t src_len, size_t vars_len);
 
+/**
+ * @brief Duplicate a string into malloc'ed space.
+ * 
+ * @param src string to be duplicated.
+ * @param src_len length of string.
+ * @returns a pointer to the new string or NULL if failed.
+ */
+char *string_dup(char *src, unsigned int src_len);
+
 #endif

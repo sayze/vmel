@@ -401,6 +401,8 @@ Node *parse_keyword(ParserMgr *par_mgr) {
 	Node *args = NULL;
 	// Final statement node,
 	Node *stmt = NULL;
+	// Store function token.
+	Token *name = par_mgr->curr_token;
 
 	par_mgr_next(par_mgr);
 
@@ -408,7 +410,7 @@ Node *parse_keyword(ParserMgr *par_mgr) {
 	if ((args = parse_expr(par_mgr)) || (args = parse_string(par_mgr))) {
 		stmt = Node_new(1);
 		stmt->type = E_CMPSTMT_NODE;
-		stmt->value = par_mgr->curr_token->value;
+		stmt->value = name->value;
 		stmt->data->CmpStmtNode.args = args;
 	}
 	else {
@@ -437,7 +439,6 @@ NodeMgr *parser_init(TokenMgr *tok_mgr, SyTable *sy_table) {
 	par_mgr->err_handle = err_handle;
 	err_handle = NULL;
 	sy_table = NULL;
-	tok_mgr = NULL;
 
 	par_mgr_next(par_mgr);	
 	while (!TokenMgr_is_last_token(par_mgr->tok_mgr)) {

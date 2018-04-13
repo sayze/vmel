@@ -38,20 +38,18 @@ int main(int argc, char *argv[]) {
 		node_mgr = parser_init(tok_mgr, sy_table);
 	}	
 
+	// Initialise Node Execution manager.
+	Nexec_init(sy_table, node_mgr);
+
 	#ifdef DEBUG
 		SyTable_print_symbols(sy_table);
 		TokenMgr_print_tokens(tok_mgr);
 	#endif
 
-	// Initialise Node Execution manager.
-	NexecMgr *nexec_mgr = NexecMgr_new();
-
-
 	// Free resources.
 	SyTable_free(sy_table);
 	NodeMgr_free(node_mgr);
 	TokenMgr_free(tok_mgr);
-	NexecMgr_free(nexec_mgr);
 	free(buff_in);
 
 	return 0;

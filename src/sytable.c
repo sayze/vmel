@@ -1,4 +1,5 @@
 #include "sytable.h"
+#include "utils.h"
 
 SyTable *SyTable_new() {
 	SyTable *sy_table = malloc(sizeof(SyTable));
@@ -11,16 +12,21 @@ SyTable *SyTable_new() {
 void SyTable_free(SyTable *sy_table) {
 	if (!sy_table)
 		return;
-		
+
 	for (size_t i = 0; i < sy_table->sym_ctr; i++) {
+		if (sy_table->symbols[i]->sy_type == E_IDN_TYPE && sy_table->symbols[i]->val) {
+			free(sy_table->symbols[i]->val);
+		}
 		free(sy_table->symbols[i]);
 	}
+	
 	free(sy_table->symbols);
 	free(sy_table);
 }
 
 Symbol *Symbol_new(void) {
 	Symbol *sy = malloc(sizeof(Symbol));
+	sy->val = NULL;
 	return sy;
 }
 
@@ -57,6 +63,25 @@ int SyTable_add_symbol(SyTable *sy_table, Token *sy_tok, enum SyType sy_type) {
 	return 0;
 }
 
+int SyTable_update_symbol(SyTable *sy_table, char *sy_name, char *sy_n_value) {
+	if (!sy_table || !sy_name || !sy_n_value) 
+	 	return -1;
+	
+	Symbol *sy = SyTable_get_symbol(sy_table, sy_name);
+	
+	// Does the symbol exit.
+	if (!sy)
+		return -1;
+	
+	// Has it already been set
+	if (sy->val)
+		free(sy->val);
+
+	// Reassign to new value.
+	sy->val = string_dup(sy_n_value, strlen(sy_n_value));
+	return 0;
+}
+
 void SyTable_print_symbols(SyTable *sy_table) {
 	if (!sy_table)
 		return;
@@ -70,8 +95,8 @@ void SyTable_print_symbols(SyTable *sy_table) {
 			t = "Variable";
 		else
 			t = "Group Name";
-
-		printf("--> Name : %s | Type: %s  \n", sy_table->symbols[i]->sy_token->value, t);
+		char *sy_val = sy_table->symbols[i]->val ? sy_table->symbols[i]->val : "Undefined";
+		printf("--> Name : %s | Type: %s  | Value: %s \n", sy_table->symbols[i]->sy_token->value, t, sy_val);
 	}
 }
 
