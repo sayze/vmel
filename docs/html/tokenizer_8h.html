@@ -95,7 +95,7 @@ Classes</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
 <tr class="memitem:a658822069c3cb6becbd8de70f08e158b"><td class="memItemLeft" align="right" valign="top"><a id="a658822069c3cb6becbd8de70f08e158b"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>KWORDS_SIZE</b>&#160;&#160;&#160;4</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>KWORDS_SIZE</b>&#160;&#160;&#160;1</td></tr>
 <tr class="separator:a658822069c3cb6becbd8de70f08e158b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac92e1beebb69112db5166df5a4e6f6d3"><td class="memItemLeft" align="right" valign="top"><a id="ac92e1beebb69112db5166df5a4e6f6d3"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>TOKENTYPE_SIZE</b>&#160;&#160;&#160;20</td></tr>
@@ -145,6 +145,9 @@ Functions</h2></td></tr>
 <tr class="memitem:af6ea6657e58ee1f05e71a7be6ec7ca90"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokenizer_8h.html#af6ea6657e58ee1f05e71a7be6ec7ca90">is_valid_keyword</a> (char *str)</td></tr>
 <tr class="memdesc:af6ea6657e58ee1f05e71a7be6ec7ca90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine if a string is a valid keyword.  <a href="#af6ea6657e58ee1f05e71a7be6ec7ca90">More...</a><br /></td></tr>
 <tr class="separator:af6ea6657e58ee1f05e71a7be6ec7ca90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cae9f2a04943f06b1ac9074e3b8571f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tokenizer_8h.html#a8cae9f2a04943f06b1ac9074e3b8571f">is_valid_identifier</a> (char id)</td></tr>
+<tr class="memdesc:a8cae9f2a04943f06b1ac9074e3b8571f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine if char is one of accepted identifiers.  <a href="#a8cae9f2a04943f06b1ac9074e3b8571f">More...</a><br /></td></tr>
+<tr class="separator:a8cae9f2a04943f06b1ac9074e3b8571f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>File containing token management. </p>
@@ -175,6 +178,34 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Newly allocated Token**. </dd></dl>
+
+</div>
+</div>
+<a id="a8cae9f2a04943f06b1ac9074e3b8571f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8cae9f2a04943f06b1ac9074e3b8571f">&#9670;&nbsp;</a></span>is_valid_identifier()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int is_valid_identifier </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Determine if char is one of accepted identifiers. </p>
+<p>Check to see if a character is deemed valid in the language syntax.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>The char to get validated. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>1 If it matches accepted identifiers or return 0 if it doesn't. </dd></dl>
 
 </div>
 </div>

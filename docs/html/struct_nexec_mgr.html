@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Virtual Machine Execution Language (Vmel): ParserMgr Struct Reference</title>
+<title>Virtual Machine Execution Language (Vmel): NexecMgr Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -65,43 +65,36 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="struct_parser_mgr-members.html">List of all members</a>  </div>
+<a href="struct_nexec_mgr-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">ParserMgr Struct Reference</div>  </div>
+<div class="title">NexecMgr Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Maintain state within in the parsing process.  
- <a href="struct_parser_mgr.html#details">More...</a></p>
+<p>Maintain state between tree executions.  
+ <a href="struct_nexec_mgr.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="parser_8h_source.html">parser.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="nexec_8h_source.html">nexec.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a50b337b2185017f943a7ce0a7dc7e8f9"><td class="memItemLeft" align="right" valign="top"><a id="a50b337b2185017f943a7ce0a7dc7e8f9"></a>
-<a class="el" href="struct_node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>curr_expr</b></td></tr>
-<tr class="separator:a50b337b2185017f943a7ce0a7dc7e8f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac10dc0846d693c106a2620b2906ed729"><td class="memItemLeft" align="right" valign="top"><a id="ac10dc0846d693c106a2620b2906ed729"></a>
-unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>expr_depth</b></td></tr>
-<tr class="separator:ac10dc0846d693c106a2620b2906ed729"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f91e648f300891d40e0fb2b903789c0"><td class="memItemLeft" align="right" valign="top"><a id="a2f91e648f300891d40e0fb2b903789c0"></a>
-<a class="el" href="struct_token.html">Token</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>curr_token</b></td></tr>
-<tr class="separator:a2f91e648f300891d40e0fb2b903789c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a62ecf294cfb5f6a769eb7602448da454"><td class="memItemLeft" align="right" valign="top"><a id="a62ecf294cfb5f6a769eb7602448da454"></a>
+<tr class="memitem:a52a46cb76bcb1c51fd330097817ba2b3"><td class="memItemLeft" align="right" valign="top"><a id="a52a46cb76bcb1c51fd330097817ba2b3"></a>
 <a class="el" href="struct_sy_table.html">SyTable</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>sy_table</b></td></tr>
-<tr class="separator:a62ecf294cfb5f6a769eb7602448da454"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f758482ba8935ae5709f66d4295d320"><td class="memItemLeft" align="right" valign="top"><a id="a2f758482ba8935ae5709f66d4295d320"></a>
-<a class="el" href="struct_token_mgr.html">TokenMgr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>tok_mgr</b></td></tr>
-<tr class="separator:a2f758482ba8935ae5709f66d4295d320"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a35287ee719c8ac8f666cc8ebc2ac7003"><td class="memItemLeft" align="right" valign="top"><a id="a35287ee719c8ac8f666cc8ebc2ac7003"></a>
+<tr class="separator:a52a46cb76bcb1c51fd330097817ba2b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7f212b8c54fc39b351e4cb7ba48f395"><td class="memItemLeft" align="right" valign="top"><a id="ae7f212b8c54fc39b351e4cb7ba48f395"></a>
 <a class="el" href="struct_error.html">Error</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>err_handle</b></td></tr>
-<tr class="separator:a35287ee719c8ac8f666cc8ebc2ac7003"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:ae7f212b8c54fc39b351e4cb7ba48f395"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67bb5ce6c22f2f1e324a4823e77d548d"><td class="memItemLeft" align="right" valign="top"><a id="a67bb5ce6c22f2f1e324a4823e77d548d"></a>
+<a class="el" href="struct_node_mgr.html">NodeMgr</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>node_mgr</b></td></tr>
+<tr class="separator:a67bb5ce6c22f2f1e324a4823e77d548d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46ad1ae7a7d7858d0888c81c6d19474b"><td class="memItemLeft" align="right" valign="top"><a id="a46ad1ae7a7d7858d0888c81c6d19474b"></a>
+unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>scope</b></td></tr>
+<tr class="separator:a46ad1ae7a7d7858d0888c81c6d19474b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Maintain state within in the parsing process. </p>
-<p>Instead of passing around excess paramters we simply pass a single structure which holds all the necessary information per parse. </p>
+<div class="textblock"><p>Maintain state between tree executions. </p>
 </div><hr/>The documentation for this struct was generated from the following file:<ul>
-<li>src/include/<a class="el" href="parser_8h_source.html">parser.h</a></li>
+<li>src/include/<a class="el" href="nexec_8h_source.html">nexec.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

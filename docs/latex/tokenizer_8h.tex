@@ -18,7 +18,7 @@ struct \mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\Hypertarget{tokenizer_8h_a658822069c3cb6becbd8de70f08e158b}\label{tokenizer_8h_a658822069c3cb6becbd8de70f08e158b}} 
-\#define {\bfseries K\+W\+O\+R\+D\+S\+\_\+\+S\+I\+ZE}~4
+\#define {\bfseries K\+W\+O\+R\+D\+S\+\_\+\+S\+I\+ZE}~1
 \item 
 \mbox{\Hypertarget{tokenizer_8h_ac92e1beebb69112db5166df5a4e6f6d3}\label{tokenizer_8h_ac92e1beebb69112db5166df5a4e6f6d3}} 
 \#define {\bfseries T\+O\+K\+E\+N\+T\+Y\+P\+E\+\_\+\+S\+I\+ZE}~20
@@ -54,7 +54,9 @@ void \mbox{\hyperlink{tokenizer_8h_a45e24a734941cbe20923df823dcce6ea}{Token\+Mgr
 \mbox{\hyperlink{struct_token}{Token}} $\ast$ \mbox{\hyperlink{tokenizer_8h_aa371b5398923bd4f5e6d5646016e995b}{Token\+Mgr\+\_\+current\+\_\+token}} (\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$tok\+\_\+mgr)
 \begin{DoxyCompactList}\small\item\em Get the \mbox{\hyperlink{struct_token}{Token}} currently being pointed to by \mbox{\hyperlink{struct_token}{Token}} Manager internal token pointer. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{tokenizer_8h_af6ea6657e58ee1f05e71a7be6ec7ca90}{is\+\_\+valid\+\_\+keyword}} (char $\ast$str)
-\begin{DoxyCompactList}\small\item\em Determine if a string is a valid keyword. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Determine if a string is a valid keyword. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{tokenizer_8h_a8cae9f2a04943f06b1ac9074e3b8571f}{is\+\_\+valid\+\_\+identifier}} (char id)
+\begin{DoxyCompactList}\small\item\em Determine if char is one of accepted identifiers. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -85,6 +87,26 @@ This is an internal function used to allocate more space for storage of tokens.
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 Newly allocated Token$\ast$$\ast$. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{tokenizer_8h_a8cae9f2a04943f06b1ac9074e3b8571f}\label{tokenizer_8h_a8cae9f2a04943f06b1ac9074e3b8571f}} 
+\index{tokenizer.\+h@{tokenizer.\+h}!is\+\_\+valid\+\_\+identifier@{is\+\_\+valid\+\_\+identifier}}
+\index{is\+\_\+valid\+\_\+identifier@{is\+\_\+valid\+\_\+identifier}!tokenizer.\+h@{tokenizer.\+h}}
+\subsubsection{\texorpdfstring{is\+\_\+valid\+\_\+identifier()}{is\_valid\_identifier()}}
+{\footnotesize\ttfamily int is\+\_\+valid\+\_\+identifier (\begin{DoxyParamCaption}\item[{char}]{id }\end{DoxyParamCaption})}
+
+
+
+Determine if char is one of accepted identifiers. 
+
+Check to see if a character is deemed valid in the language syntax.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The char to get validated. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 If it matches accepted identifiers or return 0 if it doesn\textquotesingle{}t. 
 \end{DoxyReturn}
 \mbox{\Hypertarget{tokenizer_8h_af6ea6657e58ee1f05e71a7be6ec7ca90}\label{tokenizer_8h_af6ea6657e58ee1f05e71a7be6ec7ca90}} 
 \index{tokenizer.\+h@{tokenizer.\+h}!is\+\_\+valid\+\_\+keyword@{is\+\_\+valid\+\_\+keyword}}

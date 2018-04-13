@@ -54,8 +54,6 @@ int \mbox{\hyperlink{node_8h_a25a6d59673585e033763a1a26037c0e1}{Node\+Mgr\+\_\+f
 \begin{DoxyCompactList}\small\item\em Free all resources creates by node manager. Including node manager itself. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}} $\ast$ \mbox{\hyperlink{node_8h_a6c58c981a0f17e2851519bf8bfca335a}{Node\+Mgr\+\_\+new}} (void)
 \begin{DoxyCompactList}\small\item\em Create node manager malloc\textquotesingle{}ed. \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{node_8h_a20545653337cc7e44aad698f101f7b5c}{Node\+Mgr\+\_\+fill\+\_\+sytable}} (\mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}} $\ast$node\+\_\+mgr, \mbox{\hyperlink{struct_sy_table}{Sy\+Table}} $\ast$sy\+\_\+table)
-\begin{DoxyCompactList}\small\item\em Fill \mbox{\hyperlink{struct_symbol}{Symbol}} Table with information. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{struct_node}{Node}} $\ast$$\ast$ \mbox{\hyperlink{node_8h_a1b419b1aeccd509bde02d75e5836742e}{grow\+\_\+nodes}} (\mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}} $\ast$node\+\_\+mgr)
 \begin{DoxyCompactList}\small\item\em Perform relloc on array of of nodes in Manager. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
@@ -130,26 +128,6 @@ This will allow the addition of externally created \mbox{\hyperlink{struct_node}
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 0 if successful otherwise 1. 
-\end{DoxyReturn}
-\mbox{\Hypertarget{node_8h_a20545653337cc7e44aad698f101f7b5c}\label{node_8h_a20545653337cc7e44aad698f101f7b5c}} 
-\index{node.\+h@{node.\+h}!Node\+Mgr\+\_\+fill\+\_\+sytable@{Node\+Mgr\+\_\+fill\+\_\+sytable}}
-\index{Node\+Mgr\+\_\+fill\+\_\+sytable@{Node\+Mgr\+\_\+fill\+\_\+sytable}!node.\+h@{node.\+h}}
-\subsubsection{\texorpdfstring{Node\+Mgr\+\_\+fill\+\_\+sytable()}{NodeMgr\_fill\_sytable()}}
-{\footnotesize\ttfamily int Node\+Mgr\+\_\+fill\+\_\+sytable (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}} $\ast$}]{node\+\_\+mgr,  }\item[{\mbox{\hyperlink{struct_sy_table}{Sy\+Table}} $\ast$}]{sy\+\_\+table }\end{DoxyParamCaption})}
-
-
-
-Fill \mbox{\hyperlink{struct_symbol}{Symbol}} Table with information. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em node\+\_\+mgr} & Instance of \mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}} containing ast. \\
-\hline
-{\em sy\+\_\+table} & Instance of \mbox{\hyperlink{struct_sy_table}{Sy\+Table}} to get populated. \\
-\hline
-\end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-0 If successfull otherwise return 1. 
 \end{DoxyReturn}
 \mbox{\Hypertarget{node_8h_a25a6d59673585e033763a1a26037c0e1}\label{node_8h_a25a6d59673585e033763a1a26037c0e1}} 
 \index{node.\+h@{node.\+h}!Node\+Mgr\+\_\+free@{Node\+Mgr\+\_\+free}}

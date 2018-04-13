@@ -12,14 +12,14 @@ File containing collection of helper functions.
 \mbox{\Hypertarget{utils_8h_aa1187b70998f73cdb598833d6afaa30a}\label{utils_8h_aa1187b70998f73cdb598833d6afaa30a}} 
 void \mbox{\hyperlink{utils_8h_aa1187b70998f73cdb598833d6afaa30a}{print\+\_\+usage}} (void)
 \begin{DoxyCompactList}\small\item\em Print help to cli. \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{utils_8h_a8cae9f2a04943f06b1ac9074e3b8571f}{is\+\_\+valid\+\_\+identifier}} (char id)
-\begin{DoxyCompactList}\small\item\em Utility function to determine if char is one of accepted identifiers. \end{DoxyCompactList}\item 
 char $\ast$ \mbox{\hyperlink{utils_8h_afec8213f9a8c68f5fddcd254e9f02d86}{file\+\_\+to\+\_\+buffer}} (const char $\ast$)
 \begin{DoxyCompactList}\small\item\em Read contents of file to buffer. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{utils_8h_a1b3d227bb361e0377f47e04db658fdb7}{string\+\_\+to\+\_\+int}} (char $\ast$str, size\+\_\+t len)
-\begin{DoxyCompactList}\small\item\em convert a string of numbers to integer. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Convert a string of numbers to integer. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{utils_8h_a3fc6a14a15a7932942d42a6132390f0d}{int\+\_\+to\+\_\+string}} (char $\ast$out, int src)
-\begin{DoxyCompactList}\small\item\em wrapper around sprintf to convert an integer to a string. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Wrapper around sprintf to convert an integer to a string. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{utils_8h_a8edfae9606f62a482398940b1931293d}{string\+\_\+compare}} (char $\ast$str1, char $\ast$str2)
+\begin{DoxyCompactList}\small\item\em Shorthand for strcmp. \end{DoxyCompactList}\item 
 char $\ast$ \mbox{\hyperlink{utils_8h_a735abe73549c0fe822cdf2ec566187a2}{string\+\_\+map\+\_\+vars}} (const char $\ast$src, char $\ast$$\ast$vars, size\+\_\+t src\+\_\+len, size\+\_\+t vars\+\_\+len)
 \begin{DoxyCompactList}\small\item\em Replace all the variables in string with corresponding values. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
@@ -69,7 +69,7 @@ Pointer to buffer containing contents of file.
 
 
 
-wrapper around sprintf to convert an integer to a string. 
+Wrapper around sprintf to convert an integer to a string. 
 
 Function take a input source and saves its contents in string format to specified out char.
 
@@ -81,25 +81,27 @@ Function take a input source and saves its contents in string format to specifie
 \begin{DoxyReturn}{Returns}
 number of chars (exl N\+U\+LL) if went successfully otherwise return negative; 
 \end{DoxyReturn}
-\mbox{\Hypertarget{utils_8h_a8cae9f2a04943f06b1ac9074e3b8571f}\label{utils_8h_a8cae9f2a04943f06b1ac9074e3b8571f}} 
-\index{utils.\+h@{utils.\+h}!is\+\_\+valid\+\_\+identifier@{is\+\_\+valid\+\_\+identifier}}
-\index{is\+\_\+valid\+\_\+identifier@{is\+\_\+valid\+\_\+identifier}!utils.\+h@{utils.\+h}}
-\subsubsection{\texorpdfstring{is\+\_\+valid\+\_\+identifier()}{is\_valid\_identifier()}}
-{\footnotesize\ttfamily int is\+\_\+valid\+\_\+identifier (\begin{DoxyParamCaption}\item[{char}]{id }\end{DoxyParamCaption})}
+\mbox{\Hypertarget{utils_8h_a8edfae9606f62a482398940b1931293d}\label{utils_8h_a8edfae9606f62a482398940b1931293d}} 
+\index{utils.\+h@{utils.\+h}!string\+\_\+compare@{string\+\_\+compare}}
+\index{string\+\_\+compare@{string\+\_\+compare}!utils.\+h@{utils.\+h}}
+\subsubsection{\texorpdfstring{string\+\_\+compare()}{string\_compare()}}
+{\footnotesize\ttfamily int string\+\_\+compare (\begin{DoxyParamCaption}\item[{char $\ast$}]{str1,  }\item[{char $\ast$}]{str2 }\end{DoxyParamCaption})}
 
 
 
-Utility function to determine if char is one of accepted identifiers. 
+Shorthand for strcmp. 
 
-Check to see if a character is deemed valid in the language syntax.
+Function will remove the need to check for 0 on performing strcmp. Assuming strings are null terminated.
 
 
 \begin{DoxyParams}{Parameters}
-{\em id} & The char to get validated. \\
+{\em str1} & Pointer to first string. \\
+\hline
+{\em str2} & Pointer to second string. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-1 If it matches accepted identifiers or return 0 if it doesn\textquotesingle{}t. 
+1 if strings match, 0 if not match. 
 \end{DoxyReturn}
 \mbox{\Hypertarget{utils_8h_a735abe73549c0fe822cdf2ec566187a2}\label{utils_8h_a735abe73549c0fe822cdf2ec566187a2}} 
 \index{utils.\+h@{utils.\+h}!string\+\_\+map\+\_\+vars@{string\+\_\+map\+\_\+vars}}
@@ -144,7 +146,7 @@ A malloc\textquotesingle{}ed char pointer containing the final mapped string. Wi
 
 
 
-convert a string of numbers to integer. 
+Convert a string of numbers to integer. 
 
 
 \begin{DoxyParams}{Parameters}

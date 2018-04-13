@@ -8,11 +8,12 @@ Module defintions for \mbox{\hyperlink{struct_symbol}{Symbol}} Table functionali
 {\ttfamily \#include $<$stdio.\+h$>$}\newline
 {\ttfamily \#include $<$stdlib.\+h$>$}\newline
 {\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}tokenizer.\+h\char`\"{}}\newline
 \subsection*{Classes}
 \begin{DoxyCompactItemize}
 \item 
 struct \mbox{\hyperlink{struct_symbol}{Symbol}}
-\begin{DoxyCompactList}\small\item\em Individual Symbols pertaining. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Store relevant token pertaining to symbol entry. \end{DoxyCompactList}\item 
 struct \mbox{\hyperlink{struct_sy_table}{Sy\+Table}}
 \begin{DoxyCompactList}\small\item\em Symbol\+Table which stores collection of symbols. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Macros}
@@ -24,8 +25,8 @@ struct \mbox{\hyperlink{struct_sy_table}{Sy\+Table}}
 \subsection*{Enumerations}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{sytable_8h_a0bf0290e6ba834c5c7c1914279c25149}\label{sytable_8h_a0bf0290e6ba834c5c7c1914279c25149}} 
-enum {\bfseries Sy\+\_\+\+Type} \{ {\bfseries E\+\_\+\+G\+R\+O\+U\+P\+\_\+\+T\+Y\+PE}, 
+\mbox{\Hypertarget{sytable_8h_aba5b14e4c18f0fd34168d4f895f26e7f}\label{sytable_8h_aba5b14e4c18f0fd34168d4f895f26e7f}} 
+enum {\bfseries Sy\+Type} \{ {\bfseries E\+\_\+\+G\+R\+O\+U\+P\+\_\+\+T\+Y\+PE}, 
 {\bfseries E\+\_\+\+I\+D\+N\+\_\+\+T\+Y\+PE}, 
 {\bfseries E\+\_\+\+F\+U\+N\+C\+\_\+\+T\+Y\+PE}
  \}
@@ -35,7 +36,7 @@ enum {\bfseries Sy\+\_\+\+Type} \{ {\bfseries E\+\_\+\+G\+R\+O\+U\+P\+\_\+\+T\+Y
 \item 
 \mbox{\hyperlink{struct_sy_table}{Sy\+Table}} $\ast$ \mbox{\hyperlink{sytable_8h_abc30a3c6b8d223f5fc6f89f4da4a9dd6}{Sy\+Table\+\_\+new}} ()
 \begin{DoxyCompactList}\small\item\em Create malloc\textquotesingle{}ed \mbox{\hyperlink{struct_sy_table}{Sy\+Table}} instance. \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{sytable_8h_a03110a1595f8cfbec8f508f206390859}{Sy\+Table\+\_\+add\+\_\+symbol}} (\mbox{\hyperlink{struct_sy_table}{Sy\+Table}} $\ast$sy\+\_\+table, \mbox{\hyperlink{struct_symbol}{Symbol}} $\ast$symbol)
+int \mbox{\hyperlink{sytable_8h_a9c92b34149aa145cb96ba228fcc4ebdf}{Sy\+Table\+\_\+add\+\_\+symbol}} (\mbox{\hyperlink{struct_sy_table}{Sy\+Table}} $\ast$sy\+\_\+table, \mbox{\hyperlink{struct_token}{Token}} $\ast$sy\+\_\+tok, enum Sy\+Type sy\+\_\+type)
 \begin{DoxyCompactList}\small\item\em Add a symbol to \mbox{\hyperlink{struct_sy_table}{Sy\+Table}} instance. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{sytable_8h_ab67da742e169076547daf53e26d67dd7}{Sy\+Table\+\_\+print\+\_\+symbols}} (\mbox{\hyperlink{struct_sy_table}{Sy\+Table}} $\ast$sy\+\_\+table)
 \begin{DoxyCompactList}\small\item\em Print contents of \mbox{\hyperlink{struct_sy_table}{Sy\+Table}}. Useful for debugging. \end{DoxyCompactList}\item 
@@ -91,11 +92,11 @@ Create malloc\textquotesingle{}ed instance of \mbox{\hyperlink{struct_symbol}{Sy
 \begin{DoxyReturn}{Returns}
 \mbox{\hyperlink{struct_symbol}{Symbol}} pointer. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{sytable_8h_a03110a1595f8cfbec8f508f206390859}\label{sytable_8h_a03110a1595f8cfbec8f508f206390859}} 
+\mbox{\Hypertarget{sytable_8h_a9c92b34149aa145cb96ba228fcc4ebdf}\label{sytable_8h_a9c92b34149aa145cb96ba228fcc4ebdf}} 
 \index{sytable.\+h@{sytable.\+h}!Sy\+Table\+\_\+add\+\_\+symbol@{Sy\+Table\+\_\+add\+\_\+symbol}}
 \index{Sy\+Table\+\_\+add\+\_\+symbol@{Sy\+Table\+\_\+add\+\_\+symbol}!sytable.\+h@{sytable.\+h}}
 \subsubsection{\texorpdfstring{Sy\+Table\+\_\+add\+\_\+symbol()}{SyTable\_add\_symbol()}}
-{\footnotesize\ttfamily int Sy\+Table\+\_\+add\+\_\+symbol (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_sy_table}{Sy\+Table}} $\ast$}]{sy\+\_\+table,  }\item[{\mbox{\hyperlink{struct_symbol}{Symbol}} $\ast$}]{symbol }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int Sy\+Table\+\_\+add\+\_\+symbol (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_sy_table}{Sy\+Table}} $\ast$}]{sy\+\_\+table,  }\item[{\mbox{\hyperlink{struct_token}{Token}} $\ast$}]{sy\+\_\+tok,  }\item[{enum Sy\+Type}]{sy\+\_\+type }\end{DoxyParamCaption})}
 
 
 
@@ -104,6 +105,10 @@ Add a symbol to \mbox{\hyperlink{struct_sy_table}{Sy\+Table}} instance.
 
 \begin{DoxyParams}{Parameters}
 {\em sy\+\_\+table} & Instance of \mbox{\hyperlink{struct_sy_table}{Sy\+Table}}. \\
+\hline
+{\em sy\+\_\+tok} & Instance of \mbox{\hyperlink{struct_token}{Token}}. \\
+\hline
+{\em sy\+\_\+type} & Enum to specify symbol type. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}

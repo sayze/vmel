@@ -1,0 +1,115 @@
+\hypertarget{nexec_8h}{}\section{src/include/nexec.h File Reference}
+\label{nexec_8h}\index{src/include/nexec.\+h@{src/include/nexec.\+h}}
+
+
+The execution module implementation. This module described how each node in an A\+ST is executed.  
+
+
+{\ttfamily \#include \char`\"{}sytable.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}node.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}errors.\+h\char`\"{}}\newline
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_nexec_mgr}{Nexec\+Mgr}}
+\begin{DoxyCompactList}\small\item\em Maintain state between tree executions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_nexec_mgr}{Nexec\+Mgr}} $\ast$ \mbox{\hyperlink{nexec_8h_a2332f432481ec10cab9016e6825af0fa}{Nexec\+Mgr\+\_\+new}} (void)
+\begin{DoxyCompactList}\small\item\em Create instance of \mbox{\hyperlink{struct_nexec_mgr}{Nexec\+Mgr}}. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{nexec_8h_afd718412e2cc9394fc298ca6899abbff}{Nexec\+Mgr\+\_\+free}} (\mbox{\hyperlink{struct_nexec_mgr}{Nexec\+Mgr}} $\ast$nexec\+\_\+mgr)
+\begin{DoxyCompactList}\small\item\em Free instance of \mbox{\hyperlink{struct_nexec_mgr}{Nexec\+Mgr}};. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{nexec_8h_a1e8c437418ef62c79bef5d854dd3a2fe}{Nexec\+\_\+func\+\_\+node}} (\mbox{\hyperlink{struct_nexec_mgr}{Nexec\+Mgr}} $\ast$nexec\+\_\+mgr)
+\begin{DoxyCompactList}\small\item\em Execute a function node. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{nexec_8h_a8e1d609f6eaa8cc0db1db4049d558f7a}{Nexec\+\_\+expr\+\_\+node}} (\mbox{\hyperlink{struct_nexec_mgr}{Nexec\+Mgr}} $\ast$nexec\+\_\+mgr)
+\begin{DoxyCompactList}\small\item\em Execute an expression node. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{nexec_8h_ab970c85ea5930d83cfeca11751395b8c}{Nexec\+\_\+group\+\_\+node}} (\mbox{\hyperlink{struct_nexec_mgr}{Nexec\+Mgr}} $\ast$nexec\+\_\+mgr)
+\begin{DoxyCompactList}\small\item\em Execute a group node. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The execution module implementation. This module described how each node in an A\+ST is executed. 
+
+\begin{DoxyAuthor}{Author}
+Sayed Sadeed 
+\end{DoxyAuthor}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{nexec_8h_a8e1d609f6eaa8cc0db1db4049d558f7a}\label{nexec_8h_a8e1d609f6eaa8cc0db1db4049d558f7a}} 
+\index{nexec.\+h@{nexec.\+h}!Nexec\+\_\+expr\+\_\+node@{Nexec\+\_\+expr\+\_\+node}}
+\index{Nexec\+\_\+expr\+\_\+node@{Nexec\+\_\+expr\+\_\+node}!nexec.\+h@{nexec.\+h}}
+\subsubsection{\texorpdfstring{Nexec\+\_\+expr\+\_\+node()}{Nexec\_expr\_node()}}
+{\footnotesize\ttfamily int Nexec\+\_\+expr\+\_\+node (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_nexec_mgr}{Nexec\+Mgr}} $\ast$}]{nexec\+\_\+mgr }\end{DoxyParamCaption})}
+
+
+
+Execute an expression node. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nexec\+\_\+mgr} & Pointer to \mbox{\hyperlink{struct_nexec_mgr}{Nexec\+Mgr}} instance. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{nexec_8h_a1e8c437418ef62c79bef5d854dd3a2fe}\label{nexec_8h_a1e8c437418ef62c79bef5d854dd3a2fe}} 
+\index{nexec.\+h@{nexec.\+h}!Nexec\+\_\+func\+\_\+node@{Nexec\+\_\+func\+\_\+node}}
+\index{Nexec\+\_\+func\+\_\+node@{Nexec\+\_\+func\+\_\+node}!nexec.\+h@{nexec.\+h}}
+\subsubsection{\texorpdfstring{Nexec\+\_\+func\+\_\+node()}{Nexec\_func\_node()}}
+{\footnotesize\ttfamily int Nexec\+\_\+func\+\_\+node (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_nexec_mgr}{Nexec\+Mgr}} $\ast$}]{nexec\+\_\+mgr }\end{DoxyParamCaption})}
+
+
+
+Execute a function node. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nexec\+\_\+mgr} & Pointer to \mbox{\hyperlink{struct_nexec_mgr}{Nexec\+Mgr}} instance. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{nexec_8h_ab970c85ea5930d83cfeca11751395b8c}\label{nexec_8h_ab970c85ea5930d83cfeca11751395b8c}} 
+\index{nexec.\+h@{nexec.\+h}!Nexec\+\_\+group\+\_\+node@{Nexec\+\_\+group\+\_\+node}}
+\index{Nexec\+\_\+group\+\_\+node@{Nexec\+\_\+group\+\_\+node}!nexec.\+h@{nexec.\+h}}
+\subsubsection{\texorpdfstring{Nexec\+\_\+group\+\_\+node()}{Nexec\_group\_node()}}
+{\footnotesize\ttfamily int Nexec\+\_\+group\+\_\+node (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_nexec_mgr}{Nexec\+Mgr}} $\ast$}]{nexec\+\_\+mgr }\end{DoxyParamCaption})}
+
+
+
+Execute a group node. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nexec\+\_\+mgr} & Pointer to \mbox{\hyperlink{struct_nexec_mgr}{Nexec\+Mgr}} instance. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{nexec_8h_afd718412e2cc9394fc298ca6899abbff}\label{nexec_8h_afd718412e2cc9394fc298ca6899abbff}} 
+\index{nexec.\+h@{nexec.\+h}!Nexec\+Mgr\+\_\+free@{Nexec\+Mgr\+\_\+free}}
+\index{Nexec\+Mgr\+\_\+free@{Nexec\+Mgr\+\_\+free}!nexec.\+h@{nexec.\+h}}
+\subsubsection{\texorpdfstring{Nexec\+Mgr\+\_\+free()}{NexecMgr\_free()}}
+{\footnotesize\ttfamily int Nexec\+Mgr\+\_\+free (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_nexec_mgr}{Nexec\+Mgr}} $\ast$}]{nexec\+\_\+mgr }\end{DoxyParamCaption})}
+
+
+
+Free instance of \mbox{\hyperlink{struct_nexec_mgr}{Nexec\+Mgr}};. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nexec\+\_\+mgr} & Pointer to \mbox{\hyperlink{struct_nexec_mgr}{Nexec\+Mgr}} instance. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successfully freed otherwise -\/1. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{nexec_8h_a2332f432481ec10cab9016e6825af0fa}\label{nexec_8h_a2332f432481ec10cab9016e6825af0fa}} 
+\index{nexec.\+h@{nexec.\+h}!Nexec\+Mgr\+\_\+new@{Nexec\+Mgr\+\_\+new}}
+\index{Nexec\+Mgr\+\_\+new@{Nexec\+Mgr\+\_\+new}!nexec.\+h@{nexec.\+h}}
+\subsubsection{\texorpdfstring{Nexec\+Mgr\+\_\+new()}{NexecMgr\_new()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_nexec_mgr}{Nexec\+Mgr}}$\ast$ Nexec\+Mgr\+\_\+new (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Create instance of \mbox{\hyperlink{struct_nexec_mgr}{Nexec\+Mgr}}. 
+
+\begin{DoxyReturn}{Returns}
+Pointer to new \mbox{\hyperlink{struct_nexec_mgr}{Nexec\+Mgr}} or N\+U\+LL. 
+\end{DoxyReturn}
