@@ -325,6 +325,9 @@ Token *TokenMgr_peek_token(TokenMgr *tok_mgr) {
 }
 
 void TokenMgr_print_tokens(TokenMgr *tok_mgr) {
+	if (!tok_mgr)
+		return;
+
 	TokenMgr_reset_curr(tok_mgr);
 	printf("--------------------------------------\n");
 	printf("** Token Info Dump **\n");

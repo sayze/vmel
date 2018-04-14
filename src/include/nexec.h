@@ -74,4 +74,14 @@ int Nexec_group_node(NexecMgr *nexec_mgr);
  * Will start iterating over all the nodes and performing
  * the appropriate command.
  */
-void Nexec_init(SyTable *sy_table, NodeMgr *node_mgr);
+NexecMgr *Nexec_init(SyTable *sy_table, NodeMgr *node_mgr);
+
+/**
+ * @brief Provides the ability to execute individual nodes independant
+ * of the entire tree.
+ * 
+ * This function is useful for incremental executions such as CLI where
+ * execution is performed on a predefined state such as pressing enter on CLI.
+ *  
+ */
+int Nexec_exec(NexecMgr *nexec_mgr, Node *node);

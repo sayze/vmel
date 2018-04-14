@@ -4,7 +4,7 @@
 #include "utils.h"
 
 void print_usage(void) {
-	printf("Usage: vmel [config_file <run.vml>]\n");
+	printf("Usage: vmel [script] OR vmel -c\n");
 }
 
 char *file_to_buffer(const char *filename) {
@@ -112,13 +112,13 @@ int int_to_string(char *out, int src) {
 	return sprintf(out, "%d", src);
 }
 
-char *string_dup(char *src, unsigned int src_len) {
-	if (!src || src_len == 0)
+char *string_dup(char *src) {
+	if (!src)
 		return NULL;
 
+	size_t src_len = strlen(src);
 	char *new_str = calloc(1, src_len * sizeof(char) + 1);
 	memcpy(new_str, src, src_len);
-
 	return new_str;
 }
 

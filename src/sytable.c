@@ -78,7 +78,7 @@ int SyTable_update_symbol(SyTable *sy_table, char *sy_name, char *sy_n_value) {
 		free(sy->val);
 
 	// Reassign to new value.
-	sy->val = string_dup(sy_n_value, strlen(sy_n_value));
+	sy->val = string_dup(sy_n_value);
 	return 0;
 }
 

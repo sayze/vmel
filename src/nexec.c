@@ -13,7 +13,6 @@ NexecMgr *NexecMgr_new(void) {
 	return n;
 }
 
-
 // Execute a string node.
 static char *exec_string(Node *node) {
 	return node->value;
@@ -52,10 +51,9 @@ static int exec_expression(NexecMgr *nexec_mgr, Node *node) {
 
 // Helper to convert intger to malloc'ed string.
 static char *expr_to_string(int src) {
-	// Allocate initial store.
 	char *dest = malloc(6 * sizeof(char));
-	// Store output string.
 	char *out = NULL;
+	
 	// Store any additional bytes if needed.
 	int extra_b = snprintf(dest, 6, "%d" , src);
 	
@@ -163,25 +161,24 @@ int Nexec_assignment_node(NexecMgr *nexec_mgr) {
 	return 0;
 }
 
-void Nexec_init(SyTable *sy_table, NodeMgr *node_mgr) {
+NexecMgr *Nexec_init(SyTable *sy_table, NodeMgr *node_mgr) {
 	if (!sy_table || !node_mgr)
-		return;
+		return NULL;
 
 	// Setup wrapper structs.
 	NexecMgr *nexec_mgr = NexecMgr_new();
 	nexec_mgr->node_mgr = node_mgr;
 	nexec_mgr->sy_table = sy_table;
 
-	#ifdef DEBUG
-		printf("--------------------------------------\n");
-		printf("** Program Output **\n");
-		printf("--------------------------------------\n");
-	#endif
+	return nexec_mgr;
+}
 
-	// Iterate through nodes and call appropriate execute methods.
-	for (size_t i =  0; i < nexec_mgr->node_mgr->nodes_ctr; i++) {
-		nexec_mgr->curr_node = nexec_mgr->node_mgr->nodes[i];
-		switch (nexec_mgr->curr_node->type) {
+int Nexec_exec(NexecMgr *nexec_mgr, Node *node) {
+	if (!nexec_mgr || !node)
+		return -1;
+	
+	nexec_mgr->curr_node = node;
+	switch (node->type) {
 			case E_CMPSTMT_NODE:
 				Nexec_func_node(nexec_mgr);
 				break;
@@ -190,9 +187,7 @@ void Nexec_init(SyTable *sy_table, NodeMgr *node_mgr) {
 				break;
 			default:
 				break;
-		}
 	}
 
-	NexecMgr_free(nexec_mgr);	
+	return 0;
 }
-

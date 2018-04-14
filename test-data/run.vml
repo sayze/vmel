@@ -1,12 +1,5 @@
 $vm_user = "root@sayed_sadeed"
-$age = 44
-
-# array 2d
-$address_book = [
-	"bookNo", "bookTitle", "bookRelease",
-	[1003, "Lord of the rings", 1993],
-	[1005, "Programming for dummies", 2007]
-]
-
-print $vm_pass
-print $vm_user
+$age = 44 + 23
+print $age
+$age = $age *12
+print $age

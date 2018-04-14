@@ -88,12 +88,16 @@ int string_compare(char *str1, char *str2);
 char *string_map_vars(const char *src, char **vars, size_t src_len, size_t vars_len);
 
 /**
- * @brief Duplicate a string into malloc'ed space.
+ * @brief Duplicate a string into malloc'ed space and returns pointer,
+ * 
+ * The passed string is assumed to be null terminated. Could
+ * lead to undefined behaviour and/or leaks if terminator is not
+ * present. Also memory is allocated on heap so caller is responsible 
+ * for freeing resource.
  * 
  * @param src string to be duplicated.
- * @param src_len length of string.
  * @returns a pointer to the new string or NULL if failed.
  */
-char *string_dup(char *src, unsigned int src_len);
+char *string_dup(char *src);
 
 #endif
