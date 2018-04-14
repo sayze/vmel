@@ -31,8 +31,10 @@ void \mbox{\hyperlink{parser_8h_a43ddbfc8a440bb59a7f096337b6b8c26}{Parser\+Mgr\+
 \begin{DoxyCompactList}\small\item\em Will consume expression based on grammar. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{struct_node}{Node}} $\ast$ \mbox{\hyperlink{parser_8h_a44611db626ee1dbe4a1fc348b3ded010}{parse\+\_\+factor}} (\mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} $\ast$par\+\_\+mgr)
 \begin{DoxyCompactList}\small\item\em Will consume factor based on grammar. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}} $\ast$ \mbox{\hyperlink{parser_8h_af84da8a00269c0b0c3a240c1a6c5b0dd}{parser\+\_\+init}} (\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$tok\+\_\+mgr, \mbox{\hyperlink{struct_sy_table}{Sy\+Table}} $\ast$sy\+\_\+table)
-\begin{DoxyCompactList}\small\item\em Initial entry for parser. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} $\ast$ \mbox{\hyperlink{parser_8h_a206a2aece08fff67864c1d8bd74fb980}{Parse\+Mgr\+\_\+init}} (\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$tok\+\_\+mgr, \mbox{\hyperlink{struct_sy_table}{Sy\+Table}} $\ast$sy\+\_\+table, \mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}} $\ast$node\+\_\+mgr, \mbox{\hyperlink{struct_error}{Error}} $\ast$err)
+\begin{DoxyCompactList}\small\item\em Initialise parser with required structs before parsing. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_node}{Node}} $\ast$ \mbox{\hyperlink{parser_8h_a7d9aeb08b9156d95807b96fd41e45935}{Parser\+\_\+parse}} (\mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} $\ast$par\+\_\+mgr)
+\begin{DoxyCompactList}\small\item\em Perform parse on stream of tokens. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{parser_8h_a26e9a806ce5086be34a9a3bef6510a66}{Parser\+Mgr\+\_\+skip\+\_\+to}} (\mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} $\ast$par\+\_\+mgr, char $\ast$type)
 \begin{DoxyCompactList}\small\item\em Iterate through tokens until specific token type is encountered. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
@@ -128,17 +130,17 @@ Group = string $\vert$ string\+\_\+list
 \begin{DoxyReturn}{Returns}
 \mbox{\hyperlink{struct_node}{Node}} generated from production. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{parser_8h_af84da8a00269c0b0c3a240c1a6c5b0dd}\label{parser_8h_af84da8a00269c0b0c3a240c1a6c5b0dd}} 
-\index{parser.\+h@{parser.\+h}!parser\+\_\+init@{parser\+\_\+init}}
-\index{parser\+\_\+init@{parser\+\_\+init}!parser.\+h@{parser.\+h}}
-\subsubsection{\texorpdfstring{parser\+\_\+init()}{parser\_init()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}}$\ast$ parser\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$}]{tok\+\_\+mgr,  }\item[{\mbox{\hyperlink{struct_sy_table}{Sy\+Table}} $\ast$}]{sy\+\_\+table }\end{DoxyParamCaption})}
+\mbox{\Hypertarget{parser_8h_a206a2aece08fff67864c1d8bd74fb980}\label{parser_8h_a206a2aece08fff67864c1d8bd74fb980}} 
+\index{parser.\+h@{parser.\+h}!Parse\+Mgr\+\_\+init@{Parse\+Mgr\+\_\+init}}
+\index{Parse\+Mgr\+\_\+init@{Parse\+Mgr\+\_\+init}!parser.\+h@{parser.\+h}}
+\subsubsection{\texorpdfstring{Parse\+Mgr\+\_\+init()}{ParseMgr\_init()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}}$\ast$ Parse\+Mgr\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_token_mgr}{Token\+Mgr}} $\ast$}]{tok\+\_\+mgr,  }\item[{\mbox{\hyperlink{struct_sy_table}{Sy\+Table}} $\ast$}]{sy\+\_\+table,  }\item[{\mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}} $\ast$}]{node\+\_\+mgr,  }\item[{\mbox{\hyperlink{struct_error}{Error}} $\ast$}]{err }\end{DoxyParamCaption})}
 
 
 
-Initial entry for parser. 
+Initialise parser with required structs before parsing. 
 
-Function will perform parsing and construct an A\+ST as output.
+Function will initialise the components of \mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} to a ready state.
 
 
 \begin{DoxyParams}{Parameters}
@@ -146,10 +148,31 @@ Function will perform parsing and construct an A\+ST as output.
 \hline
 {\em sy\+\_\+table} & \mbox{\hyperlink{struct_sy_table}{Sy\+Table}} instance to store resulting symbol information. \\
 \hline
+{\em node\+\_\+mgr} & \mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}} instance to store resulting ast. \\
+\hline
+{\em err} & \mbox{\hyperlink{struct_error}{Error}} instance where all errors will be logged. \\
+\hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
-\mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}} instance containing generated A\+ST or N\+U\+LL if error occurred. 
+\mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} instance. 
 \end{DoxyReturn}
+\mbox{\Hypertarget{parser_8h_a7d9aeb08b9156d95807b96fd41e45935}\label{parser_8h_a7d9aeb08b9156d95807b96fd41e45935}} 
+\index{parser.\+h@{parser.\+h}!Parser\+\_\+parse@{Parser\+\_\+parse}}
+\index{Parser\+\_\+parse@{Parser\+\_\+parse}!parser.\+h@{parser.\+h}}
+\subsubsection{\texorpdfstring{Parser\+\_\+parse()}{Parser\_parse()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_node}{Node}}$\ast$ Parser\+\_\+parse (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}} $\ast$}]{par\+\_\+mgr }\end{DoxyParamCaption})}
+
+
+
+Perform parse on stream of tokens. 
+
+Function will use internal structs to store information. The internal structs may be filled using the init method see Parser\+Mgr\+\_\+init(\+Parser\+Mgr $\ast$par\+\_\+mgr). Or simply manually assigned.
+
+
+\begin{DoxyParams}{Parameters}
+{\em par\+\_\+mgr} & instance of \mbox{\hyperlink{struct_parser_mgr}{Parser\+Mgr}}. return \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{parser_8h_a43ddbfc8a440bb59a7f096337b6b8c26}\label{parser_8h_a43ddbfc8a440bb59a7f096337b6b8c26}} 
 \index{parser.\+h@{parser.\+h}!Parser\+Mgr\+\_\+add\+\_\+error@{Parser\+Mgr\+\_\+add\+\_\+error}}
 \index{Parser\+Mgr\+\_\+add\+\_\+error@{Parser\+Mgr\+\_\+add\+\_\+error}!parser.\+h@{parser.\+h}}

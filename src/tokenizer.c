@@ -14,13 +14,8 @@ static const char *R_Keywords[KWORDS_SIZE] = {"print"};
 // possibly create functions for each category and/or
 // add token only at once at the end of char read.
 int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr) {
-	if (!buff) {
-		printf("** Error Buffer invalid state cannot build tokens\n");
-		return -1;
-	}
-
-	if (!tokmgr) {
-		printf("** Error Invalid token manager passed to build token");
+	if (!buff || !tokmgr) {
+		null_check("Tokenizer build tokens");
 		return -1;
 	}
 
@@ -284,7 +279,7 @@ TokenMgr *TokenMgr_new(void) {
 
 int TokenMgr_add_token(TokenMgr *tok_mgr, char tok_type[20], char *tok_val, int tok_lineno) {
 	if (!tok_mgr) {
-		printf("**Error** Invalid token manager passed to TokenMgr_add_token");
+		null_check("Tokenizer add token");
 		return -1;
 	}	
 
@@ -315,8 +310,10 @@ int TokenMgr_add_token(TokenMgr *tok_mgr, char tok_type[20], char *tok_val, int 
 }
 
 Token *TokenMgr_peek_token(TokenMgr *tok_mgr) {
-	if (!tok_mgr || *tok_mgr->toks_curr == tok_mgr->toks_tail)
+	if (!tok_mgr || *tok_mgr->toks_curr == tok_mgr->toks_tail) {
+		null_check("Tokenizer peek token");
 		return NULL;
+	}
 
 	tok_mgr->toks_curr++;
 	Token *next = *tok_mgr->toks_curr;
@@ -325,8 +322,10 @@ Token *TokenMgr_peek_token(TokenMgr *tok_mgr) {
 }
 
 void TokenMgr_print_tokens(TokenMgr *tok_mgr) {
-	if (!tok_mgr)
+	if (!tok_mgr) {
+		null_check("Tokenizer print tokens");
 		return;
+	}
 
 	TokenMgr_reset_curr(tok_mgr);
 	printf("--------------------------------------\n");
@@ -339,7 +338,7 @@ void TokenMgr_print_tokens(TokenMgr *tok_mgr) {
 
 int TokenMgr_free(TokenMgr *tok_mgr) {
 	if (!tok_mgr) {
-		printf("**Error** Invalid token manager passed to TokenMgr_free");
+		null_check("Tokenizer free");
 		return -1;
 	}
 	
@@ -362,9 +361,11 @@ int TokenMgr_free(TokenMgr *tok_mgr) {
 }
 
 Token *TokenMgr_next_token(TokenMgr *tok_mgr) {
-	if (!tok_mgr)
+	if (!tok_mgr) {
+		null_check("Tokenizer next token");
 		return NULL;
-	
+	}
+		
 	// Don't surpass final token.
 	if (TokenMgr_is_last_token(tok_mgr))
 		return NULL;		
@@ -375,30 +376,38 @@ Token *TokenMgr_next_token(TokenMgr *tok_mgr) {
 
 Token *TokenMgr_prev_token(TokenMgr *tok_mgr) {
 	// Ensure is initialised or don't surpass first token.
-	if (!tok_mgr || *tok_mgr->toks_curr == tok_mgr->toks_head)
+	if (!tok_mgr || *tok_mgr->toks_curr == tok_mgr->toks_head) {
+		null_check("Tokenizer prev token");
 		return NULL;
+	}
 
 	tok_mgr->toks_curr--;
 	return *tok_mgr->toks_curr;
 }
 
 int TokenMgr_is_last_token(TokenMgr *tok_mgr) {
-	if (!tok_mgr)
+	if (!tok_mgr) {
+		null_check("Tokenizer last token");
 		return -1;
+	}
 
 	return *tok_mgr->toks_curr == tok_mgr->toks_tail;
 }
 
 Token *TokenMgr_current_token(TokenMgr *tok_mgr) {
-	if (!tok_mgr)
+	if (!tok_mgr) {
+		null_check("Tokenizer current token");
 		return NULL;
+	}
 
 	return *tok_mgr->toks_curr;
 }
 
 void TokenMgr_reset_curr(TokenMgr *tok_mgr) {
-	if (!tok_mgr)
+	if (!tok_mgr) {
+		null_check("Tokenizer reset");
 		return;
+	}
 	
 	while (*tok_mgr->toks_curr != tok_mgr->toks_head) {
 		tok_mgr->toks_curr--;
@@ -406,8 +415,10 @@ void TokenMgr_reset_curr(TokenMgr *tok_mgr) {
 }
 
 Token **grow_curr_tokens(TokenMgr *tok_mgr) {
-	if (!tok_mgr)
+	if (!tok_mgr) {
+		null_check("grow tokens");
 		return NULL;
+	}
 		
 	tok_mgr->tok_cap *= 2;
 	Token **toks_curr_new = realloc(tok_mgr->toks_curr, sizeof(Token *) * tok_mgr->tok_cap);		

@@ -10,8 +10,10 @@ SyTable *SyTable_new() {
 }
 
 void SyTable_free(SyTable *sy_table) {
-	if (!sy_table)
+	if (!sy_table) {
+		null_check("sytable free");
 		return;
+	}
 
 	for (size_t i = 0; i < sy_table->sym_ctr; i++) {
 		if (sy_table->symbols[i]->sy_type == E_IDN_TYPE && sy_table->symbols[i]->val) {
@@ -31,20 +33,25 @@ Symbol *Symbol_new(void) {
 }
 
 Symbol *SyTable_get_symbol(SyTable *sy_table, char *sy_name) {
-	if (!sy_table)
+	if (!sy_table) {
+		null_check("sytable get symbol");
 		return NULL;
-
+	}
+		
 	for (size_t idx = 0; idx < sy_table->sym_ctr; idx++ ) {
 			if (strcmp(sy_table->symbols[idx]->sy_token->value, sy_name) == 0) {
 				return sy_table->symbols[idx];
 			}
 	}
+
 	return NULL;
 }
 
 int SyTable_add_symbol(SyTable *sy_table, Token *sy_tok, enum SyType sy_type) {
-	if (!sy_table || !sy_tok)
+	if (!sy_table || !sy_tok) {
+		null_check("sytable add symbol");
 		return -1;
+	}
 
 	if (sy_table->sym_cap - sy_table->sym_ctr <= 5) {
 		Symbol **sy_new = grow_sy_table(sy_table);
@@ -64,9 +71,11 @@ int SyTable_add_symbol(SyTable *sy_table, Token *sy_tok, enum SyType sy_type) {
 }
 
 int SyTable_update_symbol(SyTable *sy_table, char *sy_name, char *sy_n_value) {
-	if (!sy_table || !sy_name || !sy_n_value) 
-	 	return -1;
-	
+	if (!sy_table || !sy_name || !sy_n_value) {
+		null_check("sytable update symbol");
+		return -1;
+	}
+
 	Symbol *sy = SyTable_get_symbol(sy_table, sy_name);
 	
 	// Does the symbol exit.
@@ -83,8 +92,10 @@ int SyTable_update_symbol(SyTable *sy_table, char *sy_name, char *sy_n_value) {
 }
 
 void SyTable_print_symbols(SyTable *sy_table) {
-	if (!sy_table)
+	if (!sy_table) {
+		null_check("sytable print");
 		return;
+	}
 
 	printf("--------------------------------------\n");
 	printf("** Symbol Table Dump **\n");
@@ -101,8 +112,10 @@ void SyTable_print_symbols(SyTable *sy_table) {
 }
 
 Symbol **grow_sy_table(SyTable *sy_table) {
-	if (!sy_table) 
+	if (!sy_table) {
+		null_check("sytable grow");
 		return NULL;
+	}
 
     sy_table->sym_cap *= 2;
     Symbol **sy_new = realloc(sy_table->symbols, sizeof(Symbol *) * sy_table->sym_cap);	

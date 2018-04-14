@@ -46,6 +46,8 @@ void \mbox{\hyperlink{sytable_8h_a8ec9d9c343808762b89ce73a8e24b4f3}{Sy\+Table\+\
 \begin{DoxyCompactList}\small\item\em Create malloc\textquotesingle{}ed instance of \mbox{\hyperlink{struct_symbol}{Symbol}}. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{struct_symbol}{Symbol}} $\ast$ \mbox{\hyperlink{sytable_8h_abd5b2c8af8f0391cf32cf9583bffbe3b}{Sy\+Table\+\_\+get\+\_\+symbol}} (\mbox{\hyperlink{struct_sy_table}{Sy\+Table}} $\ast$sy\+\_\+table, char $\ast$sy\+\_\+name)
 \begin{DoxyCompactList}\small\item\em Get an existing symbol from \mbox{\hyperlink{struct_sy_table}{Sy\+Table}} instance. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{sytable_8h_ac59424175f0944f81c14de9ef65c15fb}{Sy\+Table\+\_\+update\+\_\+symbol}} (\mbox{\hyperlink{struct_sy_table}{Sy\+Table}} $\ast$sy\+\_\+table, char $\ast$sy\+\_\+name, char $\ast$sy\+\_\+n\+\_\+value)
+\begin{DoxyCompactList}\small\item\em Update the value stored inside a symbol. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{struct_symbol}{Symbol}} $\ast$$\ast$ \mbox{\hyperlink{sytable_8h_ae5d95212681730ac75e7c0577388b65c}{grow\+\_\+sy\+\_\+table}} (\mbox{\hyperlink{struct_sy_table}{Sy\+Table}} $\ast$sy\+\_\+table)
 \begin{DoxyCompactList}\small\item\em Perform relloc on array of of symbols in \mbox{\hyperlink{struct_sy_table}{Sy\+Table}}. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
@@ -179,3 +181,23 @@ Print contents of \mbox{\hyperlink{struct_sy_table}{Sy\+Table}}. Useful for debu
 {\em sy\+\_\+table} & Pointer to symbol table. \\
 \hline
 \end{DoxyParams}
+\mbox{\Hypertarget{sytable_8h_ac59424175f0944f81c14de9ef65c15fb}\label{sytable_8h_ac59424175f0944f81c14de9ef65c15fb}} 
+\index{sytable.\+h@{sytable.\+h}!Sy\+Table\+\_\+update\+\_\+symbol@{Sy\+Table\+\_\+update\+\_\+symbol}}
+\index{Sy\+Table\+\_\+update\+\_\+symbol@{Sy\+Table\+\_\+update\+\_\+symbol}!sytable.\+h@{sytable.\+h}}
+\subsubsection{\texorpdfstring{Sy\+Table\+\_\+update\+\_\+symbol()}{SyTable\_update\_symbol()}}
+{\footnotesize\ttfamily int Sy\+Table\+\_\+update\+\_\+symbol (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_sy_table}{Sy\+Table}} $\ast$}]{sy\+\_\+table,  }\item[{char $\ast$}]{sy\+\_\+name,  }\item[{char $\ast$}]{sy\+\_\+n\+\_\+value }\end{DoxyParamCaption})}
+
+
+
+Update the value stored inside a symbol. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sy\+\_\+table} & \mbox{\hyperlink{struct_sy_table}{Sy\+Table}} instance. \\
+\hline
+{\em sy\+\_\+name} & name of the symbol to return. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if successfully updated otherwise -\/1. 
+\end{DoxyReturn}

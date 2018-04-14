@@ -37,8 +37,11 @@ static void par_mgr_next(ParserMgr *par_mgr) {
 
 // Allocate more memory for array node items.
 static Node **grow_arr_nodes(Node *arr_node) {
-	if (!arr_node)
+	if (!arr_node) {
+		null_check("grow array nodes");
 		return NULL;
+	}
+
 	Node **new_items = NULL;
 	arr_node->data->ArrayNode.dcap = arr_node->data->ArrayNode.dcap * (arr_node->data->ArrayNode.dcap / 2);
 	new_items = realloc(arr_node->data->ArrayNode.items, arr_node->data->ArrayNode.dcap *sizeof(Node *));
@@ -61,14 +64,17 @@ ParserMgr *ParserMgr_new() {
 	ParserMgr *ps = malloc(sizeof(ParserMgr));
 	ps->curr_expr = NULL;
 	ps->curr_token = NULL;
+	ps->node_mgr = NULL;
 	ps->tok_mgr = NULL;
 	ps->err_handle = NULL;
 	return ps;
 }
 
 int ParserMgr_free(ParserMgr *par_mgr) {
-	if (!par_mgr)
+	if (!par_mgr) {
+		null_check("parsermgr free");
 		return -1;
+	}
 		
 	par_mgr->curr_expr = NULL;
 	par_mgr->curr_token = NULL;
@@ -421,26 +427,30 @@ Node *parse_keyword(ParserMgr *par_mgr) {
 	return stmt;
 }
 
-NodeMgr *parser_init(TokenMgr *tok_mgr, SyTable *sy_table) {
-
-	// Create wrapper structs.
-	ParserMgr *par_mgr = ParserMgr_new();
-	Error *err_handle = Error_new();
-	NodeMgr *node_mgr = NodeMgr_new();
-
-	// This will do for now.
-	// TODO: Add descriptive error here.
-	if (!err_handle || !par_mgr || !node_mgr || !tok_mgr || !sy_table)
+ParserMgr *ParseMgr_init(TokenMgr *tok_mgr, SyTable *sy_table, NodeMgr *node_mgr, Error *err) {
+	if (!tok_mgr || !sy_table || !node_mgr || !err) {
+		null_check("parsermgr init");
 		return NULL;
-	
-	// ParserMgr will track foreign wrapper structs.
+	}
+
+	ParserMgr *par_mgr = ParserMgr_new();
 	par_mgr->tok_mgr = tok_mgr;
 	par_mgr->sy_table = sy_table;
-	par_mgr->err_handle = err_handle;
-	err_handle = NULL;
-	sy_table = NULL;
+	par_mgr->err_handle = err;
+	par_mgr->node_mgr = node_mgr;
+	par_mgr_sync(par_mgr);
+	return  par_mgr;
+}
 
-	par_mgr_next(par_mgr);	
+Node *Parser_parse(ParserMgr *par_mgr) {
+	if (!par_mgr) {
+		null_check("parser parser");
+		return NULL;
+	}
+
+	if (string_compare(par_mgr->curr_token->value, "HEAD"))
+		par_mgr_next(par_mgr);	
+
 	while (!TokenMgr_is_last_token(par_mgr->tok_mgr)) {
 		if (strcmp(par_mgr->curr_token->type, "IDENTIFIER") == 0) {
 			par_mgr->curr_expr = parse_assignment(par_mgr);
@@ -459,17 +469,13 @@ NodeMgr *parser_init(TokenMgr *tok_mgr, SyTable *sy_table) {
 		
 		if (par_mgr->curr_expr != NULL) {
 			par_mgr->curr_expr->depth = par_mgr->expr_depth;
-			NodeMgr_add_node(node_mgr, par_mgr->curr_expr);
+			NodeMgr_add_node(par_mgr->node_mgr, par_mgr->curr_expr);
 		}
 
 		par_mgr_sync(par_mgr);
 	}
-	
-	// Any errors then print them.
-	if (par_mgr->err_handle->error_ctr > 0)
-		Error_print_all(par_mgr->err_handle);
 
-	Error_free(par_mgr->err_handle);
-	ParserMgr_free(par_mgr);
-	return  node_mgr;
+	Error_print_all(par_mgr->err_handle);
+
+	return par_mgr->curr_expr;
 }

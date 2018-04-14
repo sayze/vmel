@@ -106,11 +106,48 @@ Functions</h2></td></tr>
 <tr class="memitem:ab970c85ea5930d83cfeca11751395b8c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nexec_8h.html#ab970c85ea5930d83cfeca11751395b8c">Nexec_group_node</a> (<a class="el" href="struct_nexec_mgr.html">NexecMgr</a> *nexec_mgr)</td></tr>
 <tr class="memdesc:ab970c85ea5930d83cfeca11751395b8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute a group node.  <a href="#ab970c85ea5930d83cfeca11751395b8c">More...</a><br /></td></tr>
 <tr class="separator:ab970c85ea5930d83cfeca11751395b8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc0139630a81a313f117db73de17fe95"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_nexec_mgr.html">NexecMgr</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nexec_8h.html#adc0139630a81a313f117db73de17fe95">Nexec_init</a> (<a class="el" href="struct_sy_table.html">SyTable</a> *sy_table, <a class="el" href="struct_node_mgr.html">NodeMgr</a> *node_mgr)</td></tr>
+<tr class="memdesc:adc0139630a81a313f117db73de17fe95"><td class="mdescLeft">&#160;</td><td class="mdescRight">Entry point to <a class="el" href="struct_node.html" title="Node correlates to a node within a tree. ">Node</a> Execution.  <a href="#adc0139630a81a313f117db73de17fe95">More...</a><br /></td></tr>
+<tr class="separator:adc0139630a81a313f117db73de17fe95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae45252fa6f1d14619f6f6841aad82f31"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="nexec_8h.html#ae45252fa6f1d14619f6f6841aad82f31">Nexec_exec</a> (<a class="el" href="struct_nexec_mgr.html">NexecMgr</a> *nexec_mgr, <a class="el" href="struct_node.html">Node</a> *node)</td></tr>
+<tr class="memdesc:ae45252fa6f1d14619f6f6841aad82f31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides the ability to execute individual nodes independant of the entire tree.  <a href="#ae45252fa6f1d14619f6f6841aad82f31">More...</a><br /></td></tr>
+<tr class="separator:ae45252fa6f1d14619f6f6841aad82f31"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The execution module implementation. This module described how each node in an AST is executed. </p>
 <dl class="section author"><dt>Author</dt><dd>Sayed Sadeed </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
+<a id="ae45252fa6f1d14619f6f6841aad82f31"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae45252fa6f1d14619f6f6841aad82f31">&#9670;&nbsp;</a></span>Nexec_exec()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Nexec_exec </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_nexec_mgr.html">NexecMgr</a> *&#160;</td>
+          <td class="paramname"><em>nexec_mgr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>node</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Provides the ability to execute individual nodes independant of the entire tree. </p>
+<p>This function is useful for incremental executions such as CLI where execution is performed on a predefined state such as pressing enter on CLI. </p>
+
+</div>
+</div>
 <a id="a8e1d609f6eaa8cc0db1db4049d558f7a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8e1d609f6eaa8cc0db1db4049d558f7a">&#9670;&nbsp;</a></span>Nexec_expr_node()</h2>
 
@@ -128,12 +165,14 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Execute an expression node. </p>
+<p>Evaluate an expression and assign the return value to the respective variable within symbol table.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">nexec_mgr</td><td>Pointer to <a class="el" href="struct_nexec_mgr.html" title="Maintain state between tree executions. ">NexecMgr</a> instance. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if success otherwise returns -1. </dd></dl>
 
 </div>
 </div>
@@ -154,12 +193,14 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Execute a function node. </p>
+<p>Function will evaluate a function node such as print. It will call subsequent translation methods or perform the command directly depending on the function.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">nexec_mgr</td><td>Pointer to <a class="el" href="struct_nexec_mgr.html" title="Maintain state between tree executions. ">NexecMgr</a> instance. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if success otherwise returns -1. </dd></dl>
 
 </div>
 </div>
@@ -180,12 +221,45 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Execute a group node. </p>
+<p>Evaluate the commands within a group and perform the appropriate actions.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">nexec_mgr</td><td>Pointer to <a class="el" href="struct_nexec_mgr.html" title="Maintain state between tree executions. ">NexecMgr</a> instance. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if success otherwise returns -1. </dd></dl>
+
+</div>
+</div>
+<a id="adc0139630a81a313f117db73de17fe95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc0139630a81a313f117db73de17fe95">&#9670;&nbsp;</a></span>Nexec_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_nexec_mgr.html">NexecMgr</a>* Nexec_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_sy_table.html">SyTable</a> *&#160;</td>
+          <td class="paramname"><em>sy_table</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_node_mgr.html">NodeMgr</a> *&#160;</td>
+          <td class="paramname"><em>node_mgr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Entry point to <a class="el" href="struct_node.html" title="Node correlates to a node within a tree. ">Node</a> Execution. </p>
+<p>Will start iterating over all the nodes and performing the appropriate command. </p>
 
 </div>
 </div>

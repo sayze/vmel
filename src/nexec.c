@@ -18,6 +18,17 @@ static char *exec_string(Node *node) {
 	return node->value;
 }
 
+// Get the value of a variable stored in symbol table.
+// Return NULL if it doesn't exist or undefined.
+static char *expand_variable(SyTable *sy_table, char *name) {
+	Symbol *sy = SyTable_get_symbol(sy_table, name);
+	
+	if (!sy)
+		return NULL;
+		
+	return sy->val;
+}
+
 // Execute a expression node (3 + 4).
 static int exec_expression(NexecMgr *nexec_mgr, Node *node) {
 	int ret = 0;
@@ -65,28 +76,21 @@ static char *expr_to_string(int src) {
 	return dest;
 }
 
-// Get the value of a variable stored in symbol table.
-// Return NULL if it doesn't exist or undefined.
-static char *expand_variable(SyTable *sy_table, char *name) {
-	Symbol *sy = SyTable_get_symbol(sy_table, name);
-	
-	if (!sy)
-		return NULL;
-		
-	return sy->val;
-}
-
 int NexecMgr_free(NexecMgr *nexec_mgr) {
-	if (!nexec_mgr)
+	if (!nexec_mgr) {
+		null_check("nexecmgr free");
 		return -1;
+	}
 
 	free(nexec_mgr);
 	return 0;
 }
 
 int Nexec_func_node(NexecMgr *nexec_mgr) {
-	if (!nexec_mgr)
+	if (!nexec_mgr) {
+		null_check("nexec fun node");
 		return -1;
+	}
 	
 	char *exp_var = NULL;
 	int calc = 0;
@@ -116,15 +120,19 @@ int Nexec_func_node(NexecMgr *nexec_mgr) {
 }
 
 int Nexec_group_node(NexecMgr *nexec_mgr) {
-	if (!nexec_mgr)
+	if (!nexec_mgr) {
+		null_check("nexec group node");
 		return -1;
+	}
 
 	return 0;
 }
 
 int Nexec_assignment_node(NexecMgr *nexec_mgr) {
-	if (!nexec_mgr)
+	if (!nexec_mgr) {
+		null_check("nexec assignment node");
 		return -1;
+	}
 
 	// Left child node of assignment node.
 	Node *asn_left_node = nexec_mgr->curr_node->data->AsnStmtNode.left;
@@ -162,8 +170,10 @@ int Nexec_assignment_node(NexecMgr *nexec_mgr) {
 }
 
 NexecMgr *Nexec_init(SyTable *sy_table, NodeMgr *node_mgr) {
-	if (!sy_table || !node_mgr)
+	if (!sy_table || !node_mgr) {
+		null_check("nexec init");
 		return NULL;
+	}
 
 	// Setup wrapper structs.
 	NexecMgr *nexec_mgr = NexecMgr_new();
@@ -174,8 +184,10 @@ NexecMgr *Nexec_init(SyTable *sy_table, NodeMgr *node_mgr) {
 }
 
 int Nexec_exec(NexecMgr *nexec_mgr, Node *node) {
-	if (!nexec_mgr || !node)
+	if (!nexec_mgr || !node) {
+		null_check("nexec exec");
 		return -1;
+	}
 	
 	nexec_mgr->curr_node = node;
 	switch (node->type) {

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "errors.h"
+#include "utils.h"
 
 Error *Error_new(void) {
 	Error *err_handle = malloc(sizeof(Error));
@@ -10,8 +11,10 @@ Error *Error_new(void) {
 }
 
 int Error_free(Error *err_handle) {
-	if (!err_handle)
+	if (!err_handle) {
+		null_check("errors free");
 		return -1;
+	}
 
 	if (err_handle->error_ctr != 0) {
 		for (size_t in = 0; in < err_handle->error_ctr; in++) {
@@ -23,7 +26,12 @@ int Error_free(Error *err_handle) {
 }
 
 void Error_print_all(Error *err_handle) {
-	if (err_handle != NULL && err_handle->error_ctr != 0) {
+	if (!err_handle) {
+		null_check("errors free");
+		return;
+	}
+	
+	if (err_handle->error_ctr != 0) {
 		for (size_t in = 0; in < err_handle->error_ctr; in++) {	
 			printf("%s\n",err_handle->errors[in]);
 		}

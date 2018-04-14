@@ -25,7 +25,11 @@ int \mbox{\hyperlink{nexec_8h_a1e8c437418ef62c79bef5d854dd3a2fe}{Nexec\+\_\+func
 int \mbox{\hyperlink{nexec_8h_a8e1d609f6eaa8cc0db1db4049d558f7a}{Nexec\+\_\+expr\+\_\+node}} (\mbox{\hyperlink{struct_nexec_mgr}{Nexec\+Mgr}} $\ast$nexec\+\_\+mgr)
 \begin{DoxyCompactList}\small\item\em Execute an expression node. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{nexec_8h_ab970c85ea5930d83cfeca11751395b8c}{Nexec\+\_\+group\+\_\+node}} (\mbox{\hyperlink{struct_nexec_mgr}{Nexec\+Mgr}} $\ast$nexec\+\_\+mgr)
-\begin{DoxyCompactList}\small\item\em Execute a group node. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Execute a group node. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{struct_nexec_mgr}{Nexec\+Mgr}} $\ast$ \mbox{\hyperlink{nexec_8h_adc0139630a81a313f117db73de17fe95}{Nexec\+\_\+init}} (\mbox{\hyperlink{struct_sy_table}{Sy\+Table}} $\ast$sy\+\_\+table, \mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}} $\ast$node\+\_\+mgr)
+\begin{DoxyCompactList}\small\item\em Entry point to \mbox{\hyperlink{struct_node}{Node}} Execution. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{nexec_8h_ae45252fa6f1d14619f6f6841aad82f31}{Nexec\+\_\+exec}} (\mbox{\hyperlink{struct_nexec_mgr}{Nexec\+Mgr}} $\ast$nexec\+\_\+mgr, \mbox{\hyperlink{struct_node}{Node}} $\ast$node)
+\begin{DoxyCompactList}\small\item\em Provides the ability to execute individual nodes independant of the entire tree. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -37,7 +41,17 @@ Sayed Sadeed
 
 
 \subsection{Function Documentation}
-\mbox{\Hypertarget{nexec_8h_a8e1d609f6eaa8cc0db1db4049d558f7a}\label{nexec_8h_a8e1d609f6eaa8cc0db1db4049d558f7a}} 
+\mbox{\Hypertarget{nexec_8h_ae45252fa6f1d14619f6f6841aad82f31}\label{nexec_8h_ae45252fa6f1d14619f6f6841aad82f31}} 
+\index{nexec.\+h@{nexec.\+h}!Nexec\+\_\+exec@{Nexec\+\_\+exec}}
+\index{Nexec\+\_\+exec@{Nexec\+\_\+exec}!nexec.\+h@{nexec.\+h}}
+\subsubsection{\texorpdfstring{Nexec\+\_\+exec()}{Nexec\_exec()}}
+{\footnotesize\ttfamily int Nexec\+\_\+exec (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_nexec_mgr}{Nexec\+Mgr}} $\ast$}]{nexec\+\_\+mgr,  }\item[{\mbox{\hyperlink{struct_node}{Node}} $\ast$}]{node }\end{DoxyParamCaption})}
+
+
+
+Provides the ability to execute individual nodes independant of the entire tree. 
+
+This function is useful for incremental executions such as C\+LI where execution is performed on a predefined state such as pressing enter on C\+LI. \mbox{\Hypertarget{nexec_8h_a8e1d609f6eaa8cc0db1db4049d558f7a}\label{nexec_8h_a8e1d609f6eaa8cc0db1db4049d558f7a}} 
 \index{nexec.\+h@{nexec.\+h}!Nexec\+\_\+expr\+\_\+node@{Nexec\+\_\+expr\+\_\+node}}
 \index{Nexec\+\_\+expr\+\_\+node@{Nexec\+\_\+expr\+\_\+node}!nexec.\+h@{nexec.\+h}}
 \subsubsection{\texorpdfstring{Nexec\+\_\+expr\+\_\+node()}{Nexec\_expr\_node()}}
@@ -47,11 +61,16 @@ Sayed Sadeed
 
 Execute an expression node. 
 
+Evaluate an expression and assign the return value to the respective variable within symbol table.
+
 
 \begin{DoxyParams}{Parameters}
 {\em nexec\+\_\+mgr} & Pointer to \mbox{\hyperlink{struct_nexec_mgr}{Nexec\+Mgr}} instance. \\
 \hline
 \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if success otherwise returns -\/1. 
+\end{DoxyReturn}
 \mbox{\Hypertarget{nexec_8h_a1e8c437418ef62c79bef5d854dd3a2fe}\label{nexec_8h_a1e8c437418ef62c79bef5d854dd3a2fe}} 
 \index{nexec.\+h@{nexec.\+h}!Nexec\+\_\+func\+\_\+node@{Nexec\+\_\+func\+\_\+node}}
 \index{Nexec\+\_\+func\+\_\+node@{Nexec\+\_\+func\+\_\+node}!nexec.\+h@{nexec.\+h}}
@@ -62,11 +81,16 @@ Execute an expression node.
 
 Execute a function node. 
 
+Function will evaluate a function node such as print. It will call subsequent translation methods or perform the command directly depending on the function.
+
 
 \begin{DoxyParams}{Parameters}
 {\em nexec\+\_\+mgr} & Pointer to \mbox{\hyperlink{struct_nexec_mgr}{Nexec\+Mgr}} instance. \\
 \hline
 \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if success otherwise returns -\/1. 
+\end{DoxyReturn}
 \mbox{\Hypertarget{nexec_8h_ab970c85ea5930d83cfeca11751395b8c}\label{nexec_8h_ab970c85ea5930d83cfeca11751395b8c}} 
 \index{nexec.\+h@{nexec.\+h}!Nexec\+\_\+group\+\_\+node@{Nexec\+\_\+group\+\_\+node}}
 \index{Nexec\+\_\+group\+\_\+node@{Nexec\+\_\+group\+\_\+node}!nexec.\+h@{nexec.\+h}}
@@ -77,12 +101,27 @@ Execute a function node.
 
 Execute a group node. 
 
+Evaluate the commands within a group and perform the appropriate actions.
+
 
 \begin{DoxyParams}{Parameters}
 {\em nexec\+\_\+mgr} & Pointer to \mbox{\hyperlink{struct_nexec_mgr}{Nexec\+Mgr}} instance. \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{nexec_8h_afd718412e2cc9394fc298ca6899abbff}\label{nexec_8h_afd718412e2cc9394fc298ca6899abbff}} 
+\begin{DoxyReturn}{Returns}
+0 if success otherwise returns -\/1. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{nexec_8h_adc0139630a81a313f117db73de17fe95}\label{nexec_8h_adc0139630a81a313f117db73de17fe95}} 
+\index{nexec.\+h@{nexec.\+h}!Nexec\+\_\+init@{Nexec\+\_\+init}}
+\index{Nexec\+\_\+init@{Nexec\+\_\+init}!nexec.\+h@{nexec.\+h}}
+\subsubsection{\texorpdfstring{Nexec\+\_\+init()}{Nexec\_init()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_nexec_mgr}{Nexec\+Mgr}}$\ast$ Nexec\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_sy_table}{Sy\+Table}} $\ast$}]{sy\+\_\+table,  }\item[{\mbox{\hyperlink{struct_node_mgr}{Node\+Mgr}} $\ast$}]{node\+\_\+mgr }\end{DoxyParamCaption})}
+
+
+
+Entry point to \mbox{\hyperlink{struct_node}{Node}} Execution. 
+
+Will start iterating over all the nodes and performing the appropriate command. \mbox{\Hypertarget{nexec_8h_afd718412e2cc9394fc298ca6899abbff}\label{nexec_8h_afd718412e2cc9394fc298ca6899abbff}} 
 \index{nexec.\+h@{nexec.\+h}!Nexec\+Mgr\+\_\+free@{Nexec\+Mgr\+\_\+free}}
 \index{Nexec\+Mgr\+\_\+free@{Nexec\+Mgr\+\_\+free}!nexec.\+h@{nexec.\+h}}
 \subsubsection{\texorpdfstring{Nexec\+Mgr\+\_\+free()}{NexecMgr\_free()}}

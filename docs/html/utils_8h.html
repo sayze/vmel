@@ -101,6 +101,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util
 <tr class="memitem:a735abe73549c0fe822cdf2ec566187a2"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a735abe73549c0fe822cdf2ec566187a2">string_map_vars</a> (const char *src, char **vars, size_t src_len, size_t vars_len)</td></tr>
 <tr class="memdesc:a735abe73549c0fe822cdf2ec566187a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replace all the variables in string with corresponding values.  <a href="#a735abe73549c0fe822cdf2ec566187a2">More...</a><br /></td></tr>
 <tr class="separator:a735abe73549c0fe822cdf2ec566187a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d5c5a70ff357c67a97a511d291e60fa"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a2d5c5a70ff357c67a97a511d291e60fa">string_dup</a> (char *src)</td></tr>
+<tr class="memdesc:a2d5c5a70ff357c67a97a511d291e60fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Duplicate a string into malloc'ed space and returns pointer,.  <a href="#a2d5c5a70ff357c67a97a511d291e60fa">More...</a><br /></td></tr>
+<tr class="separator:a2d5c5a70ff357c67a97a511d291e60fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55cbd7f55966ccd433d2e34215f840bd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utils_8h.html#a55cbd7f55966ccd433d2e34215f840bd">null_check</a> (char *obj)</td></tr>
+<tr class="memdesc:a55cbd7f55966ccd433d2e34215f840bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print null object error with name.  <a href="#a55cbd7f55966ccd433d2e34215f840bd">More...</a><br /></td></tr>
+<tr class="separator:a55cbd7f55966ccd433d2e34215f840bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>File containing collection of helper functions. </p>
@@ -172,6 +178,33 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util
 
 </div>
 </div>
+<a id="a55cbd7f55966ccd433d2e34215f840bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55cbd7f55966ccd433d2e34215f840bd">&#9670;&nbsp;</a></span>null_check()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void null_check </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>obj</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Print null object error with name. </p>
+<p>This is helpful for debugging purposes</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">obj</td><td>name of the object which gets printed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a8edfae9606f62a482398940b1931293d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8edfae9606f62a482398940b1931293d">&#9670;&nbsp;</a></span>string_compare()</h2>
 
@@ -208,6 +241,34 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>1 if strings match, 0 if not match. </dd></dl>
+
+</div>
+</div>
+<a id="a2d5c5a70ff357c67a97a511d291e60fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d5c5a70ff357c67a97a511d291e60fa">&#9670;&nbsp;</a></span>string_dup()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char* string_dup </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>src</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Duplicate a string into malloc'ed space and returns pointer,. </p>
+<p>The passed string is assumed to be null terminated. Could lead to undefined behaviour and/or leaks if terminator is not present. Also memory is allocated on heap so caller is responsible for freeing resource.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">src</td><td>string to be duplicated. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>a pointer to the new string or NULL if failed. </dd></dl>
 
 </div>
 </div>

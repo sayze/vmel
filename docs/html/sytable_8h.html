@@ -129,6 +129,9 @@ Functions</h2></td></tr>
 <tr class="memitem:abd5b2c8af8f0391cf32cf9583bffbe3b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_symbol.html">Symbol</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sytable_8h.html#abd5b2c8af8f0391cf32cf9583bffbe3b">SyTable_get_symbol</a> (<a class="el" href="struct_sy_table.html">SyTable</a> *sy_table, char *sy_name)</td></tr>
 <tr class="memdesc:abd5b2c8af8f0391cf32cf9583bffbe3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get an existing symbol from <a class="el" href="struct_sy_table.html" title="SymbolTable which stores collection of symbols. ">SyTable</a> instance.  <a href="#abd5b2c8af8f0391cf32cf9583bffbe3b">More...</a><br /></td></tr>
 <tr class="separator:abd5b2c8af8f0391cf32cf9583bffbe3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac59424175f0944f81c14de9ef65c15fb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sytable_8h.html#ac59424175f0944f81c14de9ef65c15fb">SyTable_update_symbol</a> (<a class="el" href="struct_sy_table.html">SyTable</a> *sy_table, char *sy_name, char *sy_n_value)</td></tr>
+<tr class="memdesc:ac59424175f0944f81c14de9ef65c15fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the value stored inside a symbol.  <a href="#ac59424175f0944f81c14de9ef65c15fb">More...</a><br /></td></tr>
+<tr class="separator:ac59424175f0944f81c14de9ef65c15fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae5d95212681730ac75e7c0577388b65c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_symbol.html">Symbol</a> **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sytable_8h.html#ae5d95212681730ac75e7c0577388b65c">grow_sy_table</a> (<a class="el" href="struct_sy_table.html">SyTable</a> *sy_table)</td></tr>
 <tr class="memdesc:ae5d95212681730ac75e7c0577388b65c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform relloc on array of of symbols in <a class="el" href="struct_sy_table.html" title="SymbolTable which stores collection of symbols. ">SyTable</a>.  <a href="#ae5d95212681730ac75e7c0577388b65c">More...</a><br /></td></tr>
 <tr class="separator:ae5d95212681730ac75e7c0577388b65c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -339,6 +342,50 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="ac59424175f0944f81c14de9ef65c15fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac59424175f0944f81c14de9ef65c15fb">&#9670;&nbsp;</a></span>SyTable_update_symbol()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int SyTable_update_symbol </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_sy_table.html">SyTable</a> *&#160;</td>
+          <td class="paramname"><em>sy_table</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>sy_name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>sy_n_value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Update the value stored inside a symbol. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sy_table</td><td><a class="el" href="struct_sy_table.html" title="SymbolTable which stores collection of symbols. ">SyTable</a> instance. </td></tr>
+    <tr><td class="paramname">sy_name</td><td>name of the symbol to return. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 if successfully updated otherwise -1. </dd></dl>
 
 </div>
 </div>

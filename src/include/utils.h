@@ -100,4 +100,13 @@ char *string_map_vars(const char *src, char **vars, size_t src_len, size_t vars_
  */
 char *string_dup(char *src);
 
+/**
+ * @brief Print null object error with name.
+ * 
+ * This is helpful for debugging purposes
+ * 
+ * @param obj name of the object which gets printed.
+ */
+void null_check(char *obj);
+
 #endif

@@ -113,9 +113,12 @@ Functions</h2></td></tr>
 <tr class="memitem:a44611db626ee1dbe4a1fc348b3ded010"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a44611db626ee1dbe4a1fc348b3ded010">parse_factor</a> (<a class="el" href="struct_parser_mgr.html">ParserMgr</a> *par_mgr)</td></tr>
 <tr class="memdesc:a44611db626ee1dbe4a1fc348b3ded010"><td class="mdescLeft">&#160;</td><td class="mdescRight">Will consume factor based on grammar.  <a href="#a44611db626ee1dbe4a1fc348b3ded010">More...</a><br /></td></tr>
 <tr class="separator:a44611db626ee1dbe4a1fc348b3ded010"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af84da8a00269c0b0c3a240c1a6c5b0dd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_node_mgr.html">NodeMgr</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#af84da8a00269c0b0c3a240c1a6c5b0dd">parser_init</a> (<a class="el" href="struct_token_mgr.html">TokenMgr</a> *tok_mgr, <a class="el" href="struct_sy_table.html">SyTable</a> *sy_table)</td></tr>
-<tr class="memdesc:af84da8a00269c0b0c3a240c1a6c5b0dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initial entry for parser.  <a href="#af84da8a00269c0b0c3a240c1a6c5b0dd">More...</a><br /></td></tr>
-<tr class="separator:af84da8a00269c0b0c3a240c1a6c5b0dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a206a2aece08fff67864c1d8bd74fb980"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_parser_mgr.html">ParserMgr</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a206a2aece08fff67864c1d8bd74fb980">ParseMgr_init</a> (<a class="el" href="struct_token_mgr.html">TokenMgr</a> *tok_mgr, <a class="el" href="struct_sy_table.html">SyTable</a> *sy_table, <a class="el" href="struct_node_mgr.html">NodeMgr</a> *node_mgr, <a class="el" href="struct_error.html">Error</a> *err)</td></tr>
+<tr class="memdesc:a206a2aece08fff67864c1d8bd74fb980"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialise parser with required structs before parsing.  <a href="#a206a2aece08fff67864c1d8bd74fb980">More...</a><br /></td></tr>
+<tr class="separator:a206a2aece08fff67864c1d8bd74fb980"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d9aeb08b9156d95807b96fd41e45935"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a7d9aeb08b9156d95807b96fd41e45935">Parser_parse</a> (<a class="el" href="struct_parser_mgr.html">ParserMgr</a> *par_mgr)</td></tr>
+<tr class="memdesc:a7d9aeb08b9156d95807b96fd41e45935"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform parse on stream of tokens.  <a href="#a7d9aeb08b9156d95807b96fd41e45935">More...</a><br /></td></tr>
+<tr class="separator:a7d9aeb08b9156d95807b96fd41e45935"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a26e9a806ce5086be34a9a3bef6510a66"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8h.html#a26e9a806ce5086be34a9a3bef6510a66">ParserMgr_skip_to</a> (<a class="el" href="struct_parser_mgr.html">ParserMgr</a> *par_mgr, char *type)</td></tr>
 <tr class="memdesc:a26e9a806ce5086be34a9a3bef6510a66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterate through tokens until specific token type is encountered.  <a href="#a26e9a806ce5086be34a9a3bef6510a66">More...</a><br /></td></tr>
 <tr class="separator:a26e9a806ce5086be34a9a3bef6510a66"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -237,14 +240,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="af84da8a00269c0b0c3a240c1a6c5b0dd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af84da8a00269c0b0c3a240c1a6c5b0dd">&#9670;&nbsp;</a></span>parser_init()</h2>
+<a id="a206a2aece08fff67864c1d8bd74fb980"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a206a2aece08fff67864c1d8bd74fb980">&#9670;&nbsp;</a></span>ParseMgr_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="struct_node_mgr.html">NodeMgr</a>* parser_init </td>
+          <td class="memname"><a class="el" href="struct_parser_mgr.html">ParserMgr</a>* ParseMgr_init </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="struct_token_mgr.html">TokenMgr</a> *&#160;</td>
           <td class="paramname"><em>tok_mgr</em>, </td>
@@ -253,7 +256,19 @@ Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="struct_sy_table.html">SyTable</a> *&#160;</td>
-          <td class="paramname"><em>sy_table</em>&#160;</td>
+          <td class="paramname"><em>sy_table</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_node_mgr.html">NodeMgr</a> *&#160;</td>
+          <td class="paramname"><em>node_mgr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_error.html">Error</a> *&#160;</td>
+          <td class="paramname"><em>err</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -263,16 +278,45 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Initial entry for parser. </p>
-<p>Function will perform parsing and construct an AST as output.</p>
+<p>Initialise parser with required structs before parsing. </p>
+<p>Function will initialise the components of <a class="el" href="struct_parser_mgr.html" title="Maintain state within in the parsing process. ">ParserMgr</a> to a ready state.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">tok_mgr</td><td><a class="el" href="struct_token_mgr.html" title="Token manager represents a pool of tokens. ">TokenMgr</a> containing all token information. </td></tr>
     <tr><td class="paramname">sy_table</td><td><a class="el" href="struct_sy_table.html" title="SymbolTable which stores collection of symbols. ">SyTable</a> instance to store resulting symbol information. </td></tr>
+    <tr><td class="paramname">node_mgr</td><td><a class="el" href="struct_node_mgr.html" title="NodeMgr manages holds all the nodes at the root level. ">NodeMgr</a> instance to store resulting ast. </td></tr>
+    <tr><td class="paramname">err</td><td><a class="el" href="struct_error.html" title="Store all the errors related to parsing process. ">Error</a> instance where all errors will be logged. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_node_mgr.html" title="NodeMgr manages holds all the nodes at the root level. ">NodeMgr</a> instance containing generated AST or NULL if error occurred. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="struct_parser_mgr.html" title="Maintain state within in the parsing process. ">ParserMgr</a> instance. </dd></dl>
+
+</div>
+</div>
+<a id="a7d9aeb08b9156d95807b96fd41e45935"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d9aeb08b9156d95807b96fd41e45935">&#9670;&nbsp;</a></span>Parser_parse()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_node.html">Node</a>* Parser_parse </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_parser_mgr.html">ParserMgr</a> *&#160;</td>
+          <td class="paramname"><em>par_mgr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Perform parse on stream of tokens. </p>
+<p>Function will use internal structs to store information. The internal structs may be filled using the init method see ParserMgr_init(ParserMgr *par_mgr). Or simply manually assigned.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">par_mgr</td><td>instance of <a class="el" href="struct_parser_mgr.html" title="Maintain state within in the parsing process. ">ParserMgr</a>. return </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

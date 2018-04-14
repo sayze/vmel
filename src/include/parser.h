@@ -22,6 +22,7 @@ typedef struct {
 	Node *curr_expr;
 	unsigned int expr_depth;
 	Token *curr_token;
+	NodeMgr *node_mgr;
 	SyTable *sy_table;
 	TokenMgr *tok_mgr;
 	Error *err_handle;
@@ -93,15 +94,29 @@ Node *parse_expr(ParserMgr *par_mgr);
 Node *parse_factor(ParserMgr *par_mgr);
 
 /**
- * @brief Initial entry for parser.
+ * @brief Initialise parser with required structs before parsing.
  * 
- * Function will perform parsing and construct an AST as output.
+ * Function will initialise the components of ParserMgr to a ready state.
  * 
  * @param tok_mgr TokenMgr containing all token information.
  * @param sy_table SyTable instance to store resulting symbol information.
- * @return NodeMgr instance containing generated AST or NULL if error occurred.
+ * @param node_mgr NodeMgr instance to store resulting ast.
+ * @param err Error instance where all errors will be logged.
+ * @return ParserMgr instance.
  */
-NodeMgr *parser_init(TokenMgr *tok_mgr, SyTable *sy_table);
+ParserMgr *ParseMgr_init(TokenMgr *tok_mgr, SyTable *sy_table, NodeMgr *node_mgr, Error *err);
+
+/**
+ * @brief Perform parse on stream of tokens.
+ * 
+ * Function will use internal structs to store information. The internal
+ * structs may be filled using the init method see 
+ * ParserMgr_init(ParserMgr *par_mgr). Or simply manually assigned.
+ * 
+ * @param par_mgr instance of ParserMgr.
+ * return 
+ */
+Node *Parser_parse(ParserMgr *par_mgr);
 
 /**
  * @brief Iterate through tokens until specific token type is encountered.

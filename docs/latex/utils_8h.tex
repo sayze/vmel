@@ -21,7 +21,11 @@ int \mbox{\hyperlink{utils_8h_a3fc6a14a15a7932942d42a6132390f0d}{int\+\_\+to\+\_
 int \mbox{\hyperlink{utils_8h_a8edfae9606f62a482398940b1931293d}{string\+\_\+compare}} (char $\ast$str1, char $\ast$str2)
 \begin{DoxyCompactList}\small\item\em Shorthand for strcmp. \end{DoxyCompactList}\item 
 char $\ast$ \mbox{\hyperlink{utils_8h_a735abe73549c0fe822cdf2ec566187a2}{string\+\_\+map\+\_\+vars}} (const char $\ast$src, char $\ast$$\ast$vars, size\+\_\+t src\+\_\+len, size\+\_\+t vars\+\_\+len)
-\begin{DoxyCompactList}\small\item\em Replace all the variables in string with corresponding values. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Replace all the variables in string with corresponding values. \end{DoxyCompactList}\item 
+char $\ast$ \mbox{\hyperlink{utils_8h_a2d5c5a70ff357c67a97a511d291e60fa}{string\+\_\+dup}} (char $\ast$src)
+\begin{DoxyCompactList}\small\item\em Duplicate a string into malloc\textquotesingle{}ed space and returns pointer,. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{utils_8h_a55cbd7f55966ccd433d2e34215f840bd}{null\+\_\+check}} (char $\ast$obj)
+\begin{DoxyCompactList}\small\item\em Print null object error with name. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
@@ -81,6 +85,23 @@ Function take a input source and saves its contents in string format to specifie
 \begin{DoxyReturn}{Returns}
 number of chars (exl N\+U\+LL) if went successfully otherwise return negative; 
 \end{DoxyReturn}
+\mbox{\Hypertarget{utils_8h_a55cbd7f55966ccd433d2e34215f840bd}\label{utils_8h_a55cbd7f55966ccd433d2e34215f840bd}} 
+\index{utils.\+h@{utils.\+h}!null\+\_\+check@{null\+\_\+check}}
+\index{null\+\_\+check@{null\+\_\+check}!utils.\+h@{utils.\+h}}
+\subsubsection{\texorpdfstring{null\+\_\+check()}{null\_check()}}
+{\footnotesize\ttfamily void null\+\_\+check (\begin{DoxyParamCaption}\item[{char $\ast$}]{obj }\end{DoxyParamCaption})}
+
+
+
+Print null object error with name. 
+
+This is helpful for debugging purposes
+
+
+\begin{DoxyParams}{Parameters}
+{\em obj} & name of the object which gets printed. \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{utils_8h_a8edfae9606f62a482398940b1931293d}\label{utils_8h_a8edfae9606f62a482398940b1931293d}} 
 \index{utils.\+h@{utils.\+h}!string\+\_\+compare@{string\+\_\+compare}}
 \index{string\+\_\+compare@{string\+\_\+compare}!utils.\+h@{utils.\+h}}
@@ -102,6 +123,26 @@ Function will remove the need to check for 0 on performing strcmp. Assuming stri
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 1 if strings match, 0 if not match. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{utils_8h_a2d5c5a70ff357c67a97a511d291e60fa}\label{utils_8h_a2d5c5a70ff357c67a97a511d291e60fa}} 
+\index{utils.\+h@{utils.\+h}!string\+\_\+dup@{string\+\_\+dup}}
+\index{string\+\_\+dup@{string\+\_\+dup}!utils.\+h@{utils.\+h}}
+\subsubsection{\texorpdfstring{string\+\_\+dup()}{string\_dup()}}
+{\footnotesize\ttfamily char$\ast$ string\+\_\+dup (\begin{DoxyParamCaption}\item[{char $\ast$}]{src }\end{DoxyParamCaption})}
+
+
+
+Duplicate a string into malloc\textquotesingle{}ed space and returns pointer,. 
+
+The passed string is assumed to be null terminated. Could lead to undefined behaviour and/or leaks if terminator is not present. Also memory is allocated on heap so caller is responsible for freeing resource.
+
+
+\begin{DoxyParams}{Parameters}
+{\em src} & string to be duplicated. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a pointer to the new string or N\+U\+LL if failed. 
 \end{DoxyReturn}
 \mbox{\Hypertarget{utils_8h_a735abe73549c0fe822cdf2ec566187a2}\label{utils_8h_a735abe73549c0fe822cdf2ec566187a2}} 
 \index{utils.\+h@{utils.\+h}!string\+\_\+map\+\_\+vars@{string\+\_\+map\+\_\+vars}}

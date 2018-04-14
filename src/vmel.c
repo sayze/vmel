@@ -5,6 +5,7 @@
 #include "parser.h"
 #include "node.h"
 #include "nexec.h"
+#include "errors.h"
 #include "utils.h"
 
 #define CLI_BUFFER_LIMIT 50
@@ -21,6 +22,10 @@ int main(int argc, char *argv[]) {
 	NodeMgr *node_mgr = NULL;
 	// Symbol table.
 	SyTable *sy_table = NULL;
+	// Parser Manager.
+	ParserMgr *par_mgr = NULL;
+	// Error handler.
+	Error *err_handle = NULL;
 	// Executioner of AST.
 	NexecMgr *nexec_mgr = NULL;
 	// Error status.
@@ -36,16 +41,28 @@ int main(int argc, char *argv[]) {
 		return 0;
 	}
 
-	if (run_mode == PROG_SRC_MODE) {
-		buff_in = file_to_buffer(argv[1]);
+	buff_in = file_to_buffer(argv[1]);
+	tok_mgr = TokenMgr_new();		
+	err = TokenMgr_build_tokens(buff_in, tok_mgr);
 
-		tok_mgr = TokenMgr_new();		
-		err = TokenMgr_build_tokens(buff_in, tok_mgr);
+	// Tokenizer was successfull.
+	if (!err) {
+		
+		// Instantiate required structs.
+		sy_table = SyTable_new();
+		node_mgr = NodeMgr_new();
+		err_handle = Error_new();
 
-		// tokenizer was successfull.
-		if (!err) {
-			sy_table = SyTable_new();
-			node_mgr = parser_init(tok_mgr, sy_table);
+		// Initialise Parser with correct structs.
+		par_mgr = ParseMgr_init(tok_mgr, sy_table, node_mgr, err_handle);
+
+		// Parse tokens.
+		Parser_parse(par_mgr);
+		
+		// No errors then proceed to execute nodes.
+		if (err_handle->error_ctr == 0) {
+			
+			// Initialise NexecMgr.
 			nexec_mgr = Nexec_init(sy_table, node_mgr);
 
 			#ifdef DEBUG
@@ -53,28 +70,27 @@ int main(int argc, char *argv[]) {
 				printf("** Program Output **\n");
 				printf("--------------------------------------\n");
 			#endif
-	
+
 			// Iterate through nodes in generated ast and execute.
 			for (size_t i = 0; i < node_mgr->nodes_ctr; i++) {
 				Nexec_exec(nexec_mgr, node_mgr->nodes[i]);
 			}
 		}
-		
-		#ifdef DEBUG
-			SyTable_print_symbols(sy_table);
-			TokenMgr_print_tokens(tok_mgr);
-		#endif
+	}
 
-		NexecMgr_free(nexec_mgr);
-		SyTable_free(sy_table);
-		NodeMgr_free(node_mgr);
-		TokenMgr_free(tok_mgr);
-		free(buff_in);
-	}
-	else {
-		// Run cli mode.
-		printf("running cli mode\n");
-	}
+	#ifdef DEBUG
+		SyTable_print_symbols(sy_table);
+		TokenMgr_print_tokens(tok_mgr);
+	#endif
+
+	// Free all resources.
+	NexecMgr_free(nexec_mgr);
+	ParserMgr_free(par_mgr);
+	Error_free(err_handle);
+	SyTable_free(sy_table);
+	NodeMgr_free(node_mgr);
+	TokenMgr_free(tok_mgr);
+	free(buff_in);
 
 	return 0;
 }
