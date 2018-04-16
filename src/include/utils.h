@@ -8,6 +8,7 @@
 #define UTILS_H
 
 #include <string.h>
+#include "conf.h"
 
 /**
  * @brief Print help to cli.
@@ -99,6 +100,42 @@ char *string_map_vars(const char *src, char **vars, size_t src_len, size_t vars_
  * @returns a pointer to the new string or NULL if failed.
  */
 char *string_dup(char *src);
+
+/**
+ * Find all variables inside a c string.
+ * 
+ * Function will find all the variables present in
+ * string and return a malloc'ed char ** (2d array).
+ * It is responsibility of caller to free resources. Also
+ * the number of rows will be defined in the passed vlen argument.
+ * 
+ * @code
+ * char *phrase = "I have $num_pets pets";
+ * size_t len = 0;
+ * char **vars = string_find_var(phrase, '$', &len);
+ * // above will return
+ * len = 1
+ * vars = [ ["num_pets"] ] 
+ * 
+ * @endcode
+ * 
+ * @param hstack source string which will be searched and incremented.
+ * @param vprefix the prefix character which quailies string as variable.
+ * @param vlen length of variable excluding variable prefix.
+ * @return Pointer to all strings found inside hstack.
+ * 
+ */
+char **string_find_vars(char *hstack, char vprefix, size_t *vlen);
+
+/**
+ * @brief Determine if char is one of accepted identifiers.
+ * 
+ * Check to see if a character is deemed valid in the language syntax.
+ *
+ * @param id The char to get validated.
+ * @return 1 If it matches accepted identifiers or return 0 if it doesn't.
+ */	
+int is_valid_identifier(char id);
 
 /**
  * @brief Print null object error with name.

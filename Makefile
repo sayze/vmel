@@ -2,6 +2,9 @@
 SRCDIR = src
 INCDIR = $(SRCDIR)/include
 SRCFILES = node.c tokenizer.c utils.c parser.c errors.c sytable.c nexec.c vmel.c 
+LIBDIR = ./bin/debug/modules
+LIBFILES = vstring
+LIBS = $(addprefix $(LIBCDIR)/, $(LIBFILES))
 SRCS = $(addprefix $(SRCDIR)/, $(SRCFILES))
 OBJS = $(SRCFILES:.c=.o)
 OUT  = vmel
@@ -9,6 +12,7 @@ OUT  = vmel
 # Compiler generic flags.
 CC = gcc
 CFLAGS = -I$(INCDIR) -Wall -Werror -Wextra
+LFLAGS = -L()
 
 # Debug settings.
 DBGDIR = bin/debug
@@ -24,7 +28,7 @@ RELCFLAGS = -O3 -DNDEBUG
 
 # Debug Rules.
 $(DBGOUT): $(DBGOBJS)
-	$(CC) $(CFLAGS) $(DBGCFLAGS) -o $(DBGOUT) $^
+	$(CC) -L$(LIBDIR) -lvstring $(CFLAGS) $(DBGCFLAGS) -o $(DBGOUT) $^
 
 $(DBGDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) -c $(CFLAGS) $(DBGCFLAGS) -o $@ $<

@@ -123,6 +123,11 @@ Node *parse_string(ParserMgr *par_mgr) {
 	if (string_compare(par_mgr->curr_token->type, "STRING") || string_compare(par_mgr->curr_token->type, "MIXSTRING")) {
 		str = Node_new(0);
 		str->type = E_STRING_NODE;
+		
+		// Change type if mix string.
+		if (string_compare(par_mgr->curr_token->type, "MIXSTRING"))
+			str->type = E_MIXSTR_NODE;
+			
 		str->value = par_mgr->curr_token->value;
 		par_mgr_next(par_mgr);
 	}

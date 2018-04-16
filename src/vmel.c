@@ -1,19 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+// Custom includes.
 #include "tokenizer.h"
 #include "parser.h"
 #include "node.h"
 #include "nexec.h"
 #include "errors.h"
 #include "utils.h"
-
-#define CLI_BUFFER_LIMIT 50
-#define PROG_CLI_MODE 1
-#define PROG_SRC_MODE 2
+#include "conf.h"
+#include "../modules/include/vstring.h"
 
 int main(int argc, char *argv[]) {
-	
+	VString v = VString_new();
+	VString_free(&v);
 	// Input stream used for file.
 	char *buff_in = NULL;
 	// Hold parsed tokens/lexeme.
@@ -56,9 +57,10 @@ int main(int argc, char *argv[]) {
 		// Initialise Parser with correct structs.
 		par_mgr = ParseMgr_init(tok_mgr, sy_table, node_mgr, err_handle);
 
-		// Parse tokens.
 		Parser_parse(par_mgr);
-		
+		// Free since its no longer needed.
+		ParserMgr_free(par_mgr);
+
 		// No errors then proceed to execute nodes.
 		if (err_handle->error_ctr == 0) {
 			
@@ -85,7 +87,6 @@ int main(int argc, char *argv[]) {
 
 	// Free all resources.
 	NexecMgr_free(nexec_mgr);
-	ParserMgr_free(par_mgr);
 	Error_free(err_handle);
 	SyTable_free(sy_table);
 	NodeMgr_free(node_mgr);

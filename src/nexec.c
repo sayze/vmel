@@ -165,6 +165,13 @@ int Nexec_assignment_node(NexecMgr *nexec_mgr) {
 		// free original converted string.
 		free(conv);
 	}
+	// else if (asn_right_node->type == E_MIXSTR_NODE) {
+	// 	//TODO: Improve valid_idn function so that 
+	// 	// it checks to see if its dollar sign then returns
+	// 	// number of chars needing to be read.
+	// 	size_t pos = 0;
+	// 	char *var_full = string_find_vars(asn_right_node->value, VAR, &pos); 
+	// }
 
 	return 0;
 }

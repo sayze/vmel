@@ -8,6 +8,8 @@
 
 // Below are reserved keywords.
 // TODO: Move this to tokens.h ? or better manage this.
+#define KWORDS_SIZE 1
+
 static const char *R_Keywords[KWORDS_SIZE] = {"print"};
 
 //TODO: make below lexing more efficient and readable.
@@ -272,7 +274,7 @@ TokenMgr *TokenMgr_new(void) {
 	tok_mgr->toks_tail = NULL;
 	tok_mgr->toks_head = NULL;
 	tok_mgr->tok_ctr = 0;
-	tok_mgr->tok_cap = TOKMGR_TOKS_INIT_SIZE;
+	tok_mgr->tok_cap = INIT_TOKMGR_TOKS_SIZE;
 	tok_mgr->toks_curr = malloc(tok_mgr->tok_cap * sizeof(Token*));	
 	return tok_mgr;
 }
@@ -439,8 +441,4 @@ int is_valid_keyword(char *str) {
 		}
 	}
 	return ret;
-}
-
-int is_valid_identifier(char id) {
-	return (isalpha(id) || id == '_' || id == '-' || isdigit(id));
 }

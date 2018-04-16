@@ -47,6 +47,32 @@ int string_to_int(char *str, size_t len) {
 
 }
 
+// char **string_find_vars(char *hstack, char vprefix, size_t *vlen) {
+// 	if (!hstack || !vprefix)
+// 		return NULL;
+	
+// 	char *w_itr  = strchr(hstack, vprefix);
+// 	char *vfind = w_itr;
+
+// 	*vlen = 0;
+	
+// 	if (w_itr == NULL)
+// 		return NULL;
+	
+// 	while (w_itr != NULL) {
+// 		w_itr++;
+// 		vfind = w_itr;
+// 		while (is_valid_identifier(*w_itr)) {
+// 			*vlen = *vlen + 1;
+// 			w_itr++;
+// 		}
+// 		w_itr = NULL;
+// 	}
+	
+// 	return vfind;
+	
+// }
+
 char *string_map_vars(const char *src, char **vars, size_t src_len, size_t vars_len) {
 	if (src == NULL || vars == NULL)
 		return NULL;
@@ -135,3 +161,7 @@ int string_compare(char *str1, char *str2) {
 	else
 		return 0;
 }	
+
+int is_valid_identifier(char id) {
+	return (isalpha(id) || id == '_' || id == '-' || isdigit(id));
+}

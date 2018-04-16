@@ -3,8 +3,7 @@
 #include <unistd.h>
 #include "node.h"
 #include "utils.h"
-
-#define INIT_NODEMGR_SIZE 100
+#include "conf.h"
 
 NodeMgr *NodeMgr_new(void) {
 	NodeMgr *node_mgr = malloc(sizeof(NodeMgr)) ;  

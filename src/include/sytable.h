@@ -10,10 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 #include "tokenizer.h"
-
-#define INIT_SYTABLE_SIZE 7
 
 enum SyType {
 	E_GROUP_TYPE, E_IDN_TYPE, E_FUNC_TYPE

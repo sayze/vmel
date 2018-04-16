@@ -1,5 +1,6 @@
 #include "sytable.h"
 #include "utils.h"
+#include "conf.h"
 
 SyTable *SyTable_new() {
 	SyTable *sy_table = malloc(sizeof(SyTable));

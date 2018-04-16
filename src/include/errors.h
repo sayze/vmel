@@ -11,8 +11,6 @@
 
 #ifndef ERRORS_H
 #define ERRORS_H
-
-// Default max errors to show per parse.
 #define INIT_MAX_ERRORS 20
 
 #include <string.h>

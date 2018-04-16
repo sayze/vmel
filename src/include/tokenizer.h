@@ -7,12 +7,9 @@
 #ifndef TOKENIZER_H
 #define TOKENIZER_H
 
-#define KWORDS_SIZE 1
-#define TOKENTYPE_SIZE 20
-#define TOKMGR_TOKS_INIT_SIZE 40
-
 #include <string.h>
 #include "tokens.h"
+#include "conf.h"
 
 /**
  * @brief Represent a single token read from input.
@@ -184,15 +181,5 @@ Token *TokenMgr_current_token(TokenMgr *tok_mgr);
  * @return 1 if it is valid keyword otherwise return 0.
  */
 int is_valid_keyword(char *str);
-
-/**
- * @brief Determine if char is one of accepted identifiers.
- * 
- * Check to see if a character is deemed valid in the language syntax.
- *
- * @param id The char to get validated.
- * @return 1 If it matches accepted identifiers or return 0 if it doesn't.
- */	
-int is_valid_identifier(char id);
 
 #endif
