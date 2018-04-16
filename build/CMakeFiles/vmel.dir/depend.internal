@@ -61,4 +61,5 @@ CMakeFiles/vmel.dir/src/vmel.c.o
  ../include/tokenizer.h
  ../include/tokens.h
  ../include/utils.h
+ ../modules/include/vstring.h
  /Users/sayedsadeed/projects/vmel/src/vmel.c

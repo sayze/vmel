@@ -60,5 +60,6 @@ CMakeFiles/vmel.dir/src/vmel.c.o: ../include/sytable.h
 CMakeFiles/vmel.dir/src/vmel.c.o: ../include/tokenizer.h
 CMakeFiles/vmel.dir/src/vmel.c.o: ../include/tokens.h
 CMakeFiles/vmel.dir/src/vmel.c.o: ../include/utils.h
+CMakeFiles/vmel.dir/src/vmel.c.o: ../modules/include/vstring.h
 CMakeFiles/vmel.dir/src/vmel.c.o: ../src/vmel.c
 

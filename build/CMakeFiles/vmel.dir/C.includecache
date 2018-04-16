@@ -62,6 +62,10 @@ string.h
 conf.h
 ../include/conf.h
 
+../modules/include/vstring.h
+string.h
+-
+
 /Users/sayedsadeed/projects/vmel/src/errors.c
 stdio.h
 -
@@ -169,4 +173,6 @@ utils.h
 /Users/sayedsadeed/projects/vmel/src/utils.h
 conf.h
 /Users/sayedsadeed/projects/vmel/src/conf.h
+vstring.h
+/Users/sayedsadeed/projects/vmel/src/vstring.h
 
