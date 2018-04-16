@@ -4,7 +4,7 @@
 		{
 			"label": "build dbg",
 			"type": "shell",
-			"command": "make debug",
+			"command": "cd build && cmake -DCMAKE_BUILD_TYPE=Debug .. && make vmel",
 			"presentation": {
 				"echo": true,
 				"reveal": "always",
@@ -19,7 +19,7 @@
 		{
 			"label": "build rel",
 			"type": "shell",
-			"command": "make clean && make release",
+			"command": "cd build && cmake -DCMAKE_BUILD_TYPE=Release .. && make vmel",
 			"presentation": {
 				"echo": true,
 				"reveal": "always",
@@ -36,7 +36,7 @@
 				"--leak-check=full",
 				"--show-leak-kinds=all",
 				"--track-origins=yes",
-				"${workspaceRoot}/bin/release/vmel",
+				"${workspaceRoot}/build/vmel",
 				"test-data/run.vml"
 			],
 			"presentation": {

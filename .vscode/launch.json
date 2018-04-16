@@ -6,7 +6,7 @@
             "name": "Vmel DBG",
             "type": "lldb",
             "request": "launch",
-            "program": "${workspaceRoot}/bin/debug/vmel",
+            "program": "${workspaceRoot}/build/vmel",
             "preLaunchTask": "build dbg",
             "internalConsoleOptions": "openOnSessionStart",
             "args": ["test-data/run.vml"],

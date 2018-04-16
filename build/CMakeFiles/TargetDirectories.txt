@@ -1,0 +1,3 @@
+/Users/sayedsadeed/projects/vmel/build/CMakeFiles/rebuild_cache.dir
+/Users/sayedsadeed/projects/vmel/build/CMakeFiles/edit_cache.dir
+/Users/sayedsadeed/projects/vmel/build/CMakeFiles/vmel.dir

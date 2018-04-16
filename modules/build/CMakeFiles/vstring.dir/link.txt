@@ -1,0 +1,1 @@
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -dynamiclib -Wl,-headerpad_max_install_names  -o libvstring.dylib -install_name /Users/sayedsadeed/projects/vmel/modules/build/libvstring.dylib CMakeFiles/vstring.dir/src/vstring.c.o 

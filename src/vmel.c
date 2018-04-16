@@ -10,11 +10,9 @@
 #include "errors.h"
 #include "utils.h"
 #include "conf.h"
-#include "../modules/include/vstring.h"
 
 int main(int argc, char *argv[]) {
-	VString v = VString_new();
-	VString_free(&v);
+	
 	// Input stream used for file.
 	char *buff_in = NULL;
 	// Hold parsed tokens/lexeme.

@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/vstring.h
+string.h
+-
+
+/Users/sayedsadeed/projects/vmel/modules/src/vstring.c
+stdio.h
+-
+stdlib.h
+-
+vstring.h
+/Users/sayedsadeed/projects/vmel/modules/src/vstring.h
+

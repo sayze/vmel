@@ -1,0 +1,7 @@
+/Users/sayedsadeed/projects/vmel/modules/build/CMakeFiles/rebuild_cache.dir
+/Users/sayedsadeed/projects/vmel/modules/build/CMakeFiles/edit_cache.dir
+/Users/sayedsadeed/projects/vmel/modules/build/CMakeFiles/install/strip.dir
+/Users/sayedsadeed/projects/vmel/modules/build/CMakeFiles/install.dir
+/Users/sayedsadeed/projects/vmel/modules/build/CMakeFiles/list_install_components.dir
+/Users/sayedsadeed/projects/vmel/modules/build/CMakeFiles/install/local.dir
+/Users/sayedsadeed/projects/vmel/modules/build/CMakeFiles/vstring.dir
