@@ -1,14 +1,6 @@
-#Make required dirs.
-
-echo "Building shared libraries (modules)"
-
-cd modules 
-
-bash install.sh
+rm -rf build
 
 echo "Creating root build directory..."
-
-cd ..
 
 mkdir -p build
 
