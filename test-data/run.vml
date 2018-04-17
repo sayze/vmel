@@ -1,4 +1,4 @@
-$age = 12
+$age  d = 12
 $name = "sayed"
 $name = `I am $age years is $name`
 print $age + 12

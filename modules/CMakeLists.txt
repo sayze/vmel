@@ -31,7 +31,6 @@ message("Building: " ${CMAKE_BUILD_TYPE})
 # Then create library for that perticular file.
 foreach(source ${SOURCES})
 	string(REGEX REPLACE "\\.[^.]*$" "" sourcef ${source})
-	#Generate the shared library from the sources
 	add_library(${sourcef} ${BUILD_TYPE} ${PROJ_SRC_DIR}/${source})
 endforeach()
 

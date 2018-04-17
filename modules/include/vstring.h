@@ -7,8 +7,7 @@
 #ifndef VSTRING_H
 #define VSTRING_H
 
-#define INIT_STRING_SIZE 10
-#define SHRINK_TRIG_SIZE 30
+#define INIT_STRING_SIZE 15
 
 #include <string.h>
 

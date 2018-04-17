@@ -5,12 +5,15 @@
 #include "utils.h"
 #include "tokenizer.h"
 #include "tokens.h"
+#include "vstring.h"
 
 // Below are reserved keywords.
 // TODO: Move this to tokens.h ? or better manage this.
-#define KWORDS_SIZE 1
+#define KWORDS_SIZE 6
 
-static const char *R_Keywords[KWORDS_SIZE] = {"print"};
+static const char *R_Keywords[KWORDS_SIZE] = {
+	"print", "func", "if", "else", "for", "in"
+};
 
 //TODO: make below lexing more efficient and readable.
 // possibly create functions for each category and/or
@@ -23,12 +26,10 @@ int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr) {
 
 	// Each character in buffer.
 	char c;
-	// Reusable storage to hold strings. 
-	char store[100]; // TODO: Make dynamic incase someone has string longer than 100 chars.
+	// Reusable storage to hold chars. 
+	VString store = VString_new();
 	// Buff iterator.
 	int bidx = 0;
-	// Track storage size.
-	int stctr = 0;
 	// Error code.
 	int error = 0;
 	// Track line no.
@@ -43,7 +44,9 @@ int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr) {
 	// Iterate through all chars until terminator or error.
 	while (buff[bidx] != '\0' && !error) {
 		c = buff[bidx];
-
+		
+		VString_set(&store, "");
+		
 		if (c == COMMENT) {
 			while (c != NEWLINE && c != '\0') {
 				c = buff[++bidx];
@@ -59,18 +62,17 @@ int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr) {
 		else if (c == BTICK) {
 			c = buff[++bidx];
 			while (c != BTICK && c != '\0' && c != NEWLINE) {
-				store[stctr++] = c;
+				VString_pushc(&store, c);
 				c = buff[++bidx];
 			}
-			store[stctr] = '\0';
+			VString_pushc(&store, '\0');
 			
 			// Ensure last read char is closing quote.
 			if (c != BTICK) {
 				error = 1;
 				continue;
 			}
-			TokenMgr_add_token(tokmgr, "MIXSTRING", store, lineno);
-			stctr = 0;
+			TokenMgr_add_token(tokmgr, "MIXSTRING", store.str, lineno);
 			bidx++;
 		}
 		else if (c == BANG) {
@@ -164,98 +166,92 @@ int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr) {
 		else if (c == DQUOTE) {
 			c = buff[++bidx];
 			while (c != DQUOTE && c != '\0' && c != NEWLINE) {
-				store[stctr++] = c;
+				VString_pushc(&store, c);
 				c = buff[++bidx];
 			}
-			store[stctr] = '\0';
+			VString_pushc(&store, '\0');
 			
 			// Ensure last read char is closing quote.
 			if (c != DQUOTE) {
 				error = 1;
 				continue;
 			}
-			TokenMgr_add_token(tokmgr, "STRING", store, lineno);
-			stctr = 0;
+			TokenMgr_add_token(tokmgr, "STRING", store.str, lineno);
 			bidx++;
 		}
 		else if (c == VAR) {
 			c = buff[++bidx];
 			while (is_valid_identifier(c)) {
-				store[stctr++] = c;
+				VString_pushc(&store, c);
 				c = buff[++bidx];
 			}
-			store[stctr] = '\0';
+			VString_pushc(&store, '\0');
 			
 			// Prevent empty variables e.g $
-			if (strlen(store) < 2) {
+			if (store.str_size <= 1) {
 				error = 1;
 				bidx++;
 				continue;
 			}
 
-			TokenMgr_add_token(tokmgr, "IDENTIFIER", store, lineno);
-			stctr = 0;
-			
+			TokenMgr_add_token(tokmgr, "IDENTIFIER", store.str, lineno);
 		}
 		else if (isdigit(c)) {
 			while (isdigit(c)) {
-				store[stctr++] = c;
+				VString_pushc(&store, c);
 				c = buff[++bidx];
 			}
-			store[stctr] = '\0';
-			TokenMgr_add_token(tokmgr, "INTEGER", store, lineno);
-			stctr = 0;
+			VString_pushc(&store, '\0');
+			TokenMgr_add_token(tokmgr, "INTEGER", store.str, lineno);
 		}
 		else if (c == LBRACE) {
 			c = buff[++bidx];
 			
 			// Catch use cases where { NON-ALPHA }  
 			if (!is_valid_identifier(c)) {
-				store[stctr++] = c;
-				store[stctr] = '\0';
+				VString_pushc(&store, c);
+				VString_pushc(&store, '\0');
 				error = 1;
 				continue;
 			}
 
 			while (is_valid_identifier(c)) {
-				store[stctr++] = c;
+				VString_pushc(&store, c);
 				c = buff[++bidx];
 			}
 
-			store[stctr] = '\0';
+			VString_pushc(&store, '\0');
 			// Ensure last read char is right brace.
 			if (c != RBRACE) {
 				error = 1;
 				continue;
 			}
 
-			TokenMgr_add_token(tokmgr, "GROUP", store, lineno);
-			stctr = 0;
+			TokenMgr_add_token(tokmgr, "GROUP", store.str, lineno);
 			bidx++;
 		}
 		else if (isalpha(c)) {
 			while (is_valid_identifier(c)) {
-				store[stctr++] = c;
+				VString_pushc(&store, c);
 				c = (int) buff[++bidx];
 			}
-			store[stctr] = '\0';
-			if (is_valid_keyword(store)) {
-				TokenMgr_add_token(tokmgr, "KEYWORD", store, lineno);
+			VString_pushc(&store, '\0');
+			if (is_valid_keyword(store.str)) {
+				TokenMgr_add_token(tokmgr, "KEYWORD", store.str, lineno);
 			}
 			else {
 				error = 1;
 			}
-			stctr = 0;
 		}
 		else {
-			store[stctr++] = c;
+			VString_pushc(&store, c);
 			c = buff[++bidx];
 			while (c != COMMENT && c != LBRACE && c != RBRACE && c != '\0' \
 				&& c != DQUOTE && c != VAR & c != NEWLINE && c!= EQUAL) {
-				store[stctr++] = c;
+				VString_pushc(&store, c);
 				c = buff[++bidx];
 			}
-			store[stctr] = '\0';
+			VString_pushc(&store, '\0');
 			error = 1;
 		}
 	}
@@ -264,8 +260,9 @@ int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr) {
 	TokenMgr_add_token(tokmgr, "EOT", "EOT", 0);
 
 	if (error)
-		printf("Syntax error: unknown '%s' found in line %d\n", store, lineno);
+		printf("Syntax error: unknown '%s' found in line %d\n", store.str, lineno);
 
+	VString_free(&store);
 	return error;
 }
 

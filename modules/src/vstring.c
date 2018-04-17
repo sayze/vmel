@@ -13,9 +13,7 @@ static VString *VString_grow_str(VString *vstr, size_t factor) {
 
 // Determine if we need to grow/shrink.
 static int VString_needs_grow(VString *vstr, size_t n_size) {
-	return (n_size >= vstr->str_cap) 
-			|| (n_size < vstr->str_cap 
-			&& vstr->str_cap - n_size >= SHRINK_TRIG_SIZE);
+	return n_size >= vstr->str_cap;
 }
 
 VString VString_new(void) {
@@ -33,7 +31,8 @@ VString VString_create(char *str, size_t cap) {
 	vstr.str_size = 0;
 	vstr.str = malloc(vstr.str_cap * sizeof(char) + 1);
 	*vstr.str = '\0';
-	VString_pushs(&vstr, str);
+	if (str) 
+		VString_pushs(&vstr, str);
 	return vstr;
 }
 
@@ -57,14 +56,14 @@ VString *VString_pushc(VString *vstr, char c) {
 	if (!vstr)
 		return NULL;
 
-	size_t n_size = vstr->str_size + sizeof(char) - 1;
+	size_t n_size = vstr->str_size + sizeof(char);
 	
 	if (VString_needs_grow(vstr, n_size)) {
-		VString *n_vstr = VString_grow_str(vstr, n_size * 2);
+		VString *n_vstr = VString_grow_str(vstr, n_size * 8);
 		vstr = n_vstr;
 	}
 
-	vstr->str[n_size] = c;
+	vstr->str[n_size-1] = c;
 	vstr->str_size = n_size;
 	return vstr;
 }

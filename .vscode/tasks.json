@@ -11,6 +11,10 @@
 				"focus": false,
 				"panel": "shared"
 			},
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
 		},
 		{
 			"label": "build rel",
@@ -21,10 +25,6 @@
 				"reveal": "always",
 				"focus": false,
 				"panel": "shared"
-			},
-			"group": {
-				"kind": "build",
-				"isDefault": true
 			},
 			"problemMatcher": []
 		},
