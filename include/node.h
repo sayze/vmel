@@ -21,7 +21,7 @@ enum NodeType {
 	E_MIXSTR_NODE,
 	E_INTEGER_NODE, 
 	E_GROUP_NODE,
-	E_CMPSTMT_NODE,
+	E_FUNC_NODE,
 	E_IDENTIFIER_NODE,
 	E_ARRAY_NODE, 
 	E_EOF_NODE
@@ -60,7 +60,7 @@ union SyntaxNode {
 	} GroupNode;
 	struct {
 		Node *args;
-	} CmpStmtNode;
+	} FuncNode;
 	struct {
 		size_t dctr;
 		size_t dcap;

@@ -420,9 +420,9 @@ Node *parse_keyword(ParserMgr *par_mgr) {
 	// If args is valid then store.
 	if ((args = parse_expr(par_mgr)) || (args = parse_string(par_mgr))) {
 		stmt = Node_new(1);
-		stmt->type = E_CMPSTMT_NODE;
+		stmt->type = E_FUNC_NODE;
 		stmt->value = name->value;
-		stmt->data->CmpStmtNode.args = args;
+		stmt->data->FuncNode.args = args;
 	}
 	else {
 		ParserMgr_add_error(par_mgr->err_handle, TokenMgr_current_token(par_mgr->tok_mgr), ERR_UNEXPECTED);

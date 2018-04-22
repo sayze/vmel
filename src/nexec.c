@@ -6,7 +6,7 @@
 #define ERR_UNDEFINE_VAR 0
 
 static const char *Error_Templates[] = {
-	"Use of undefined variable '@0' near line [x]"
+	"Use of undefined variable '$@0' near @1"
 };
 
 // Execute a string node.
@@ -56,7 +56,7 @@ static VString exec_mixed_string(char *mstr, NexecMgr *nexec_mgr) {
 			
 			// Only replace if valid variable.
 			if (!var_val) {
-				NexecMgr_add_error(nexec_mgr->err_handle, buf.str);
+				NexecMgr_add_error(nexec_mgr->err_handle, buf.str+1, nexec_mgr->curr_node->value);
 			}
 			else {
 				VString_replace(&mixs, buf.str, var_val);
@@ -117,7 +117,7 @@ static char *expr_to_string(int src) {
 	return dest;
 }
 
-void NexecMgr_add_error(Error *err_handle, char *offender) {
+void NexecMgr_add_error(Error *err_handle, char *offender, char *hint) {
 	if (!err_handle || !offender)
 		return;
 	
@@ -127,11 +127,11 @@ void NexecMgr_add_error(Error *err_handle, char *offender) {
 	// The error template which is needed.
 	const char *template = Error_Templates[0];
 	// Array containing string of substitute values.
-	char *template_values[] = {offender};
+	char *template_values[] = {offender, hint};
 	// Final template error.
 	char *template_fmt = NULL;
 
-	template_fmt = string_map_vars(template, template_values, strlen(template), 1);
+	template_fmt = string_map_vars(template, template_values, strlen(template), 2);
 
 	err_handle->errors[err_handle->error_ctr] = template_fmt;
 	err_handle->error_ctr++;
@@ -163,31 +163,40 @@ int Nexec_func_node(NexecMgr *nexec_mgr) {
 		return -1;
 	}
 	
-	char *exp_var = NULL;
-	VString mixs;
-	int calc = 0;
+	// Current node in manager.
+	Node *curr_node = nexec_mgr->curr_node;
 
-	if (string_compare(nexec_mgr->curr_node->value, "print")) {
-		switch (nexec_mgr->curr_node->data->CmpStmtNode.args->type) {
+	if (string_compare(curr_node->value, "print")) {
+		
+		// Value of a variable.
+		char *var_val = NULL;
+		// VString for mix string types.
+		VString mixs;
+		// Result of arithmetic operations.
+		int calc = 0;
+		// Pointer to statement arguments.
+		Node *curr_args = curr_node->data->FuncNode.args;
+
+		switch (curr_args->type) {
 			case E_STRING_NODE:
 			case E_INTEGER_NODE:
-				printf("%s\n", exec_string(nexec_mgr->curr_node->data->CmpStmtNode.args));
+				printf("%s\n", exec_string(curr_args));
 				break;
 			case E_IDENTIFIER_NODE:
-				exp_var = expand_variable(nexec_mgr->sy_table, nexec_mgr->curr_node->data->CmpStmtNode.args->value);
-				if (exp_var)
-					printf("%s\n", exp_var);
+				var_val = expand_variable(nexec_mgr->sy_table, curr_args->value);
+				if (var_val)
+					printf("%s\n", var_val);
 				else
-					printf("Error: could not access undefined variable '$%s'\n", nexec_mgr->curr_node->data->CmpStmtNode.args->value);
+					NexecMgr_add_error(nexec_mgr->err_handle, curr_args->value, curr_node->value);
 				break;
 			case E_MIXSTR_NODE:
-				mixs = exec_mixed_string(nexec_mgr->curr_node->data->CmpStmtNode.args->value, nexec_mgr);
+				mixs = exec_mixed_string(curr_args->value, nexec_mgr);
 				printf("%s\n", mixs.str);
 				VString_free(&mixs);
 				break;
 			default:
 				// Derive final value from operation node.
-				calc = exec_expression(nexec_mgr, nexec_mgr->curr_node->data->CmpStmtNode.args);
+				calc = exec_expression(nexec_mgr, curr_args);
 				printf("%d\n", calc);
 				break;
 		} 
@@ -274,7 +283,7 @@ int Nexec_exec(NexecMgr *nexec_mgr, Node *node) {
 	
 	nexec_mgr->curr_node = node;
 	switch (node->type) {
-			case E_CMPSTMT_NODE:
+			case E_FUNC_NODE:
 				Nexec_func_node(nexec_mgr);
 				break;
 			case E_EQUAL_NODE:

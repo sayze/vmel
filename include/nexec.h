@@ -98,5 +98,6 @@ int Nexec_exec(NexecMgr *nexec_mgr, Node *node);
  * 
  * @param err_error Instance of Error.
  * @param offender offending variable name.
+ * @param hint additional information pertaining to error.
  */
-void NexecMgr_add_error(Error *err_handle, char *offender);
+void NexecMgr_add_error(Error *err_handle, char *offender, char *hint);

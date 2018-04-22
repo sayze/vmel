@@ -77,8 +77,8 @@ int NodeMgr_free(NodeMgr *node_mgr) {
                     free(prev);
 			    }
                 break;
-			case E_CMPSTMT_NODE:
-				node_free(root_node->data->CmpStmtNode.args);
+			case E_FUNC_NODE:
+				node_free(root_node->data->FuncNode.args);
 				break;
             default:
                 break;
