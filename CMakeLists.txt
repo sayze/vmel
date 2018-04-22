@@ -12,9 +12,6 @@ set(PROJ_SRC_DIR src)
 # Modules directory
 set(MOD_SRC_DIR modules/src)
 
-# Debug flag
-
-
 # Souce files for modules and main
 set(SOURCES errors.c nexec.c node.c parser.c sytable.c tokenizer.c utils.c vmel.c)
 set(MODSRC vstring.c)

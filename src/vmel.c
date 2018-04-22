@@ -67,7 +67,7 @@ int main(int argc, char *argv[]) {
 			// Initialise NexecMgr.
 			nexec_mgr = Nexec_init(sy_table, node_mgr, err_handle);
 
-			#ifdef DEBUG
+			#ifndef NDEBUG
 				printf("--------------------------------------\n");
 				printf("** Program Output **\n");
 				printf("--------------------------------------\n");
@@ -80,7 +80,7 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
-	#ifdef DEBUG
+	#ifndef NDEBUG
 		SyTable_print_symbols(sy_table);
 		TokenMgr_print_tokens(tok_mgr);
 	#endif
