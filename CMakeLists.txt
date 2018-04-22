@@ -13,7 +13,10 @@ set(PROJ_SRC_DIR src)
 set(MOD_SRC_DIR modules/src)
 
 # Souce files for modules and main
-set(SOURCES errors.c nexec.c node.c parser.c sytable.c tokenizer.c utils.c vmel.c)
+set(SOURCES errors.c nexec.c node.c 
+			parser.c sytable.c tokenizer.c 
+			utils.c tokens.c vmel.c)
+			
 set(MODSRC vstring.c)
 
 message("Building: " ${CMAKE_BUILD_TYPE})

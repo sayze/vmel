@@ -7,14 +7,6 @@
 #include "tokens.h"
 #include "vstring.h"
 
-// Below are reserved keywords.
-// TODO: Move this to tokens.h ? or better manage this.
-#define KWORDS_SIZE 6
-
-static const char *R_Keywords[KWORDS_SIZE] = {
-	"print", "func", "if", "else", "for", "in"
-};
-
 int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr) {
 	if (!buff || !tokmgr) {
 		null_check("Tokenizer build tokens");
@@ -418,20 +410,4 @@ Token **grow_curr_tokens(TokenMgr *tok_mgr) {
 	tok_mgr->tok_cap *= 2;
 	Token **toks_curr_new = realloc(tok_mgr->toks_curr, sizeof(Token *) * tok_mgr->tok_cap);		
 	return toks_curr_new;
-}
-
-int is_valid_keyword(char *str) {
-	int ret = 0;
-	
-	if (!str)
-		return ret;
-	
-	for (int x = 0; x < KWORDS_SIZE; x++) {
-		const char *t = R_Keywords[x];
-		if (strcmp(t, str) == 0) {
-			ret = 1;
-			break;
-		}
-	}
-	return ret;
 }

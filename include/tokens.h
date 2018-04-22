@@ -1,53 +1,46 @@
 /**
  * @file tokens.h
  * @author Sayed Sadeed
- * @brief File containing token definitions and enum types.
+ * @brief File containing token definitions and keywords.
  */
 
 #ifndef TOKENS_H
 #define TOKENS_H
 
-// Comment.
+// Below are language literalls.
 #define COMMENT '#'
-// Newline.
 #define NEWLINE '\n'
-// Double quotes.
 #define DQUOTE '"'
-// Equals operator.
 #define EQUAL '='
-// Left brace.
 #define LBRACE '{'
-// Right brace.
 #define RBRACE '}'
-// Var identifier.
 #define VAR '$'
-// Plus symbol.
 #define PLUS '+'
-// Minus symbol.
 #define MINUS '-'
-// Asterisk symbol.
 #define ASTERISK '*'
-// Forward slash/divide.
 #define FSLASH '/'
-// Left paranthesis.
 #define LPAREN '('
-// Right paranthesis.
 #define RPAREN ')'
-// Less than.
 #define LESSTHAN '<'
-// Greater than.
 #define GREATERTHAN '>'
-// Comma character.
 #define COMMA ','
-// Left bracket.
 #define LBRACKET '['
-// Right bracket.
 #define RBRACKET ']'
-// Exclamation.
 #define BANG '!'
-// Dot
 #define DOT '.'
-// Back Tick
 #define BTICK '`'
+
+#define KWORDS_SIZE 6
+
+/**
+ * @brief Determine if a string is a valid keyword.
+ * 
+ * This function checks against Keywords inside tokens.c
+ * to determine if it is a valid keyword or not.
+ * 
+ * @param str the string to check for.
+ * @return 1 if it is valid keyword otherwise return 0.
+ */
+int is_valid_keyword(char *str);
 
 #endif

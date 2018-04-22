@@ -10,7 +10,6 @@
 #include <string.h>
 #include "sytable.h"
 
-
 enum NodeType {
 	E_ADD_NODE, 
 	E_TIMES_NODE,
