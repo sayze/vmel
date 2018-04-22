@@ -183,6 +183,14 @@ Node *parse_term(ParserMgr *par_mgr) {
 		TokenMgr_next_token(par_mgr->tok_mgr);
 		bop->data->BinExpNode.left = res;
 		bop->data->BinExpNode.right = parse_factor(par_mgr);
+
+		// Ensure right operand.
+		if (!bop->data->BinExpNode.right) {
+			ParserMgr_add_error(par_mgr->err_handle, TokenMgr_prev_token(par_mgr->tok_mgr), ERR_UNEXPECTED);
+			TokenMgr_next_token(par_mgr->tok_mgr);
+			continue;
+		}
+
 		par_mgr->expr_depth++;
 		res = bop;
 	}
@@ -213,6 +221,14 @@ Node *parse_expr(ParserMgr *par_mgr) {
 		TokenMgr_next_token(par_mgr->tok_mgr);
 		bop->data->BinExpNode.left = res;
 		bop->data->BinExpNode.right = parse_term(par_mgr);
+		
+		// Ensure right operand.
+		if (!bop->data->BinExpNode.right) {
+			ParserMgr_add_error(par_mgr->err_handle, TokenMgr_prev_token(par_mgr->tok_mgr), ERR_UNEXPECTED);
+			TokenMgr_next_token(par_mgr->tok_mgr);
+			continue;
+		}
+
 		par_mgr->expr_depth++;
 		res = bop;
 	}
@@ -329,12 +345,12 @@ Node *parse_assignment(ParserMgr *par_mgr) {
 			ast->data->AsnStmtNode.right = expr;
 		}
 		else {
-			ParserMgr_add_error(par_mgr->err_handle, par_mgr->curr_token, ERR_UNEXPECTED);
+			ParserMgr_add_error(par_mgr->err_handle, TokenMgr_prev_token(par_mgr->tok_mgr), ERR_UNEXPECTED);
 			par_mgr_next(par_mgr);
 		}
 	}
 	else {
-		ParserMgr_add_error(par_mgr->err_handle, par_mgr->curr_token, ERR_UNEXPECTED);
+		ParserMgr_add_error(par_mgr->err_handle,TokenMgr_prev_token(par_mgr->tok_mgr), ERR_UNEXPECTED);
 		par_mgr_next(par_mgr);
 	}
 	return ast;
@@ -449,7 +465,7 @@ ParserMgr *ParseMgr_init(TokenMgr *tok_mgr, SyTable *sy_table, NodeMgr *node_mgr
 
 Node *Parser_parse(ParserMgr *par_mgr) {
 	if (!par_mgr) {
-		null_check("parser parser");
+		null_check("parser parse");
 		return NULL;
 	}
 

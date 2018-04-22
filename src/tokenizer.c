@@ -369,7 +369,9 @@ Token *TokenMgr_prev_token(TokenMgr *tok_mgr) {
 	}
 
 	tok_mgr->toks_curr--;
-	return *tok_mgr->toks_curr;
+	Token *prev = *tok_mgr->toks_curr;
+	tok_mgr->toks_curr++;
+	return prev;
 }
 
 int TokenMgr_is_last_token(TokenMgr *tok_mgr) {
