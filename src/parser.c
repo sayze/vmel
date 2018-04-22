@@ -18,10 +18,10 @@
 // These are the errors a parser may generate. They are mapped to the #DEFINE above.
 static const char *Error_Templates[] = {
 	"Syntax error : unexpected @0 found in line @1",
-	"Error : Duplicate definition {@0} already defined in line @1",
-	"Error : Empty group {@0} must contain commands in line @1",
+	"Notice : Duplicate definition {@0} already defined in line @1",
+	"Notice : Empty group {@0} must contain commands in line @1",
 	"Syntax error: Statement '@0' missing arguments in line @1",
-	"Error : Expected array item after comma but found NULL in line @1",
+	"Notice : Expected array item after comma but found NULL in line @1",
 	"Syntax error: No closing bracket found near '@0' in line @1"
 };
 

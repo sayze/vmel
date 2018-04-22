@@ -8,7 +8,9 @@
 		"node.h": "c",
 		"tokens.h": "c",
 		"sytable.h": "c",
-		"string.h": "c"
+		"string.h": "c",
+		"*.tcc": "c",
+		"cstring": "c"
 	},
 	"C_Cpp.dimInactiveRegions": false
 }

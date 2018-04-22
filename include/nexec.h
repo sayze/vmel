@@ -7,6 +7,7 @@
 #include "sytable.h"
 #include "node.h"
 #include "errors.h"
+#include "vstring.h"
 
 /**
  * @brief Maintain state between tree executions.
@@ -16,6 +17,7 @@ typedef struct {
 	Error *err_handle;
 	NodeMgr *node_mgr;
 	Node *curr_node;
+	VString buff;
 	unsigned int scope;
 } NexecMgr;
 
@@ -74,7 +76,7 @@ int Nexec_group_node(NexecMgr *nexec_mgr);
  * Will start iterating over all the nodes and performing
  * the appropriate command.
  */
-NexecMgr *Nexec_init(SyTable *sy_table, NodeMgr *node_mgr);
+NexecMgr *Nexec_init(SyTable *sy_table, NodeMgr *node_mgr, Error *err_handle);
 
 /**
  * @brief Provides the ability to execute individual nodes independant
@@ -85,3 +87,11 @@ NexecMgr *Nexec_init(SyTable *sy_table, NodeMgr *node_mgr);
  *  
  */
 int Nexec_exec(NexecMgr *nexec_mgr, Node *node);
+
+/**
+ * @brief Add a error string to the list of errors stored in Error.
+ * 
+ * @param err_error Instance of Error.
+ * @param msg String describing error.
+ */
+void NexecMgr_add_error(Error *err_handle, char *msg);

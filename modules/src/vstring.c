@@ -5,7 +5,7 @@
 // Implicit function to allocate more memory for string.
 static VString *VString_grow_str(VString *vstr, size_t factor) {
 	size_t str_cap = sizeof(char) * factor;
-	char *new_str = realloc(vstr->str, sizeof(char) * factor);
+	char *new_str = realloc(vstr->str, str_cap);
 	vstr->str = new_str;
 	vstr->str_cap = str_cap;
 	return vstr;
@@ -64,6 +64,7 @@ VString *VString_pushc(VString *vstr, char c) {
 	}
 
 	vstr->str[n_size-1] = c;
+	vstr->str[n_size] = '\0';
 	vstr->str_size = n_size;
 	return vstr;
 }
@@ -82,6 +83,84 @@ VString *VString_pushs(VString *vstr, char *str) {
 	strncat(vstr->str, str, strlen(str));
 	vstr->str_size = n_size;
 	return vstr;
+}
+
+int VString_replace(VString *vstr, char *find, char *replace) {
+	if (!vstr || !find || !replace)
+		return -1;
+	
+	// Length of find value (needle).
+	size_t len_find = strlen(find);
+
+	if (len_find < 1)
+		return 0;
+	
+	// Length of replace value.
+	size_t len_rep = strlen(replace);
+	// Number of occurrences in source/haystack.
+	int num_finds = 0;
+	// Iterator pointer.
+	char *itr = vstr->str;
+	// Pointer to original source.
+	char *hstack = vstr->str;
+	// Length of original source;
+	size_t len_hstack = vstr->str_size;
+	// Last word in string.
+	char *lword = itr + len_hstack - len_find;
+
+	for (num_finds = 0; (itr = strstr(itr, find)); num_finds++) {
+		itr += len_find;
+	}
+
+	// Find new size of string.
+	len_hstack = len_hstack - ((len_find - len_rep) * num_finds);
+
+	while (num_finds--) {
+		itr = strstr(hstack, find);
+
+		// A shrink.
+		if (len_find > len_rep) {
+			
+			// Only shift to the left if source is not last word.
+			// "Hello source" <--- no left shit required.
+			// "Hello source there" <--- left shift required.
+			if (itr != lword)
+				memmove((itr + len_find) - (len_find - len_rep), itr + len_find, vstr->str_size - len_find); 
+			
+			memmove(itr, replace, len_rep);
+		}
+		// A grow.
+		else if (len_find < len_rep) {
+			if (VString_needs_grow(vstr, len_hstack)) {
+				VString *n_vstr = VString_grow_str(vstr, len_hstack * 2);
+				
+				if (!n_vstr)
+					return -1;
+				
+				// After realloc reassign pointers.
+				vstr = n_vstr;
+				hstack = vstr->str;
+				itr = strstr(hstack, find);
+			}
+
+			// Only shift to the right if source is not last word.
+			// "Hello bigger source" <--- no right shit required.
+			// "Hello bigger source there" <--- right shift required.
+			if (itr != lword)
+				memmove(itr + len_rep, itr + len_find, vstr->str_size - len_find); 
+			
+			memmove(itr, replace, len_rep);
+		}
+		// A direct copy.
+		else if (len_find == len_rep) {
+			memmove(itr, replace, len_rep);
+		}
+	}
+
+	vstr->str_size = len_hstack;
+	vstr->str[len_hstack] = '\0';
+
+	return 0;
 }
 
 int VString_free(VString *vstr) {

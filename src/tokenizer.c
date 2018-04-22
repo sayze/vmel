@@ -15,9 +15,6 @@ static const char *R_Keywords[KWORDS_SIZE] = {
 	"print", "func", "if", "else", "for", "in"
 };
 
-//TODO: make below lexing more efficient and readable.
-// possibly create functions for each category and/or
-// add token only at once at the end of char read.
 int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr) {
 	if (!buff || !tokmgr) {
 		null_check("Tokenizer build tokens");
@@ -42,6 +39,7 @@ int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr) {
 	}
 
 	// Iterate through all chars until terminator or error.
+	// TODO: Clean up below iterations.
 	while (buff[bidx] != '\0' && !error) {
 		c = buff[bidx];
 		
@@ -52,7 +50,6 @@ int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr) {
 				c = buff[++bidx];
 			}
 			continue;
-
 		} 
 		else if (c == NEWLINE) {
 			lineno++;
@@ -90,7 +87,6 @@ int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr) {
 				c = buff[++bidx];
 			}
 			continue;
-
 		}
 		else if (c == LBRACKET) {
 			TokenMgr_add_token(tokmgr, "LBRACKET", "[", lineno);

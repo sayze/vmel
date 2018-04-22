@@ -79,7 +79,7 @@ int SyTable_update_symbol(SyTable *sy_table, char *sy_name, char *sy_n_value) {
 
 	Symbol *sy = SyTable_get_symbol(sy_table, sy_name);
 	
-	// Does the symbol exit.
+	// Does the symbol exist.
 	if (!sy)
 		return -1;
 	

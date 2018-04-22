@@ -3,16 +3,6 @@
 #include "nexec.h"
 #include "utils.h"
 
-NexecMgr *NexecMgr_new(void) {
-	NexecMgr *n = malloc(sizeof(NexecMgr));
-	n->err_handle = NULL;
-	n->node_mgr = NULL;
-	n->scope = 0;
-	n->sy_table = NULL;
-	n->curr_node = NULL;
-	return n;
-}
-
 // Execute a string node.
 static char *exec_string(Node *node) {
 	return node->value;
@@ -21,12 +11,57 @@ static char *exec_string(Node *node) {
 // Get the value of a variable stored in symbol table.
 // Return NULL if it doesn't exist or undefined.
 static char *expand_variable(SyTable *sy_table, char *name) {
+	if (!name)
+		return NULL;
+		
 	Symbol *sy = SyTable_get_symbol(sy_table, name);
 	
 	if (!sy)
 		return NULL;
 		
 	return sy->val;
+}
+
+// Expand a mixed string. 
+static VString exec_mixed_string(char *mstr, NexecMgr *nexec_mgr) {
+	VString mixs = VString_create(mstr, 0);
+
+	char *m_str_it = strchr(mstr, VAR);
+
+	// Proceed only if it has substitute char.
+	if (m_str_it) {
+
+		// Temp buffer for var names.
+		VString buf = VString_new();
+		// Expanded variable.
+		char *var_val;
+
+		while(m_str_it) {
+
+			// Add '$' to buffer and increment.	
+			VString_pushc(&buf, *m_str_it++);
+		
+			while(is_valid_identifier(*m_str_it)) {
+				VString_pushc(&buf, *m_str_it);
+				m_str_it++;
+			}
+
+			var_val = expand_variable(nexec_mgr->sy_table, buf.str+1);
+			
+			// Only replace if valid variable.
+			if (!var_val) {
+				NexecMgr_add_error(nexec_mgr->err_handle, "Undefined variable in mixed string");
+			}
+			else {
+				VString_replace(&mixs, buf.str, var_val);
+			}
+
+			VString_set(&buf, "");
+			m_str_it = strchr(m_str_it, VAR);
+		}
+		VString_free(&buf);
+	}
+	return mixs;
 }
 
 // Execute a expression node (3 + 4).
@@ -76,6 +111,28 @@ static char *expr_to_string(int src) {
 	return dest;
 }
 
+void NexecMgr_add_error(Error *err_handle, char *err) {
+	if (!err_handle || !err)
+		return;
+	
+	if (err_handle->error_cap == err_handle->error_ctr)
+		return;
+	
+	char *error  = malloc(sizeof(char) * strlen(err) + 1);
+	strcpy(error, err);
+	err_handle->errors[err_handle->error_ctr] = error;
+}	
+
+NexecMgr *NexecMgr_new(void) {
+	NexecMgr *n = malloc(sizeof(NexecMgr));
+	n->err_handle = NULL;
+	n->node_mgr = NULL;
+	n->scope = 0;
+	n->sy_table = NULL;
+	n->curr_node = NULL;
+	return n;
+}
+
 int NexecMgr_free(NexecMgr *nexec_mgr) {
 	if (!nexec_mgr) {
 		null_check("nexecmgr free");
@@ -93,6 +150,7 @@ int Nexec_func_node(NexecMgr *nexec_mgr) {
 	}
 	
 	char *exp_var = NULL;
+	VString mixs;
 	int calc = 0;
 
 	if (string_compare(nexec_mgr->curr_node->value, "print")) {
@@ -107,6 +165,11 @@ int Nexec_func_node(NexecMgr *nexec_mgr) {
 					printf("%s\n", exp_var);
 				else
 					printf("Error: could not access undefined variable '$%s'\n", nexec_mgr->curr_node->data->CmpStmtNode.args->value);
+				break;
+			case E_MIXSTR_NODE:
+				mixs = exec_mixed_string(nexec_mgr->curr_node->data->CmpStmtNode.args->value, nexec_mgr);
+				printf("%s\n", mixs.str);
+				VString_free(&mixs);
 				break;
 			default:
 				// Derive final value from operation node.
@@ -165,18 +228,16 @@ int Nexec_assignment_node(NexecMgr *nexec_mgr) {
 		// free original converted string.
 		free(conv);
 	}
-	// else if (asn_right_node->type == E_MIXSTR_NODE) {
-	// 	//TODO: Improve valid_idn function so that 
-	// 	// it checks to see if its dollar sign then returns
-	// 	// number of chars needing to be read.
-	// 	size_t pos = 0;
-	// 	char *var_full = string_find_vars(asn_right_node->value, VAR, &pos); 
-	// }
+	else if (asn_right_node->type == E_MIXSTR_NODE) {
+		VString mixs = exec_mixed_string(asn_right_node->value, nexec_mgr);
+		SyTable_update_symbol(nexec_mgr->sy_table, asn_left_node->value, mixs.str);
+		VString_free(&mixs);
+	}
 
 	return 0;
 }
 
-NexecMgr *Nexec_init(SyTable *sy_table, NodeMgr *node_mgr) {
+NexecMgr *Nexec_init(SyTable *sy_table, NodeMgr *node_mgr, Error *err_handle) {
 	if (!sy_table || !node_mgr) {
 		null_check("nexec init");
 		return NULL;
@@ -186,6 +247,7 @@ NexecMgr *Nexec_init(SyTable *sy_table, NodeMgr *node_mgr) {
 	NexecMgr *nexec_mgr = NexecMgr_new();
 	nexec_mgr->node_mgr = node_mgr;
 	nexec_mgr->sy_table = sy_table;
+	nexec_mgr->err_handle = err_handle;
 
 	return nexec_mgr;
 }

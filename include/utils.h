@@ -121,11 +121,11 @@ char *string_dup(char *src);
  * 
  * @param hstack source string which will be searched and incremented.
  * @param vprefix the prefix character which quailies string as variable.
- * @param vlen length of variable excluding variable prefix.
+ * @param rows number of rows after variable extraction.
  * @return Pointer to all strings found inside hstack.
  * 
  */
-char **string_find_vars(char *hstack, char vprefix, size_t *vlen);
+char *string_find_var(char *hstack, char vprefix);
 
 /**
  * @brief Determine if char is one of accepted identifiers.

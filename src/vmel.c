@@ -12,7 +12,7 @@
 #include "conf.h"
 
 int main(int argc, char *argv[]) {
-		
+
 	// Input stream used for file.
 	char *buff_in = NULL;
 	// Hold parsed tokens/lexeme.
@@ -43,7 +43,8 @@ int main(int argc, char *argv[]) {
 	buff_in = file_to_buffer(argv[1]);
 	tok_mgr = TokenMgr_new();		
 	err = TokenMgr_build_tokens(buff_in, tok_mgr);
-
+	free(buff_in);
+	
 	// Tokenizer was successfull.
 	if (!err) {
 		
@@ -56,6 +57,7 @@ int main(int argc, char *argv[]) {
 		par_mgr = ParseMgr_init(tok_mgr, sy_table, node_mgr, err_handle);
 
 		Parser_parse(par_mgr);
+
 		// Free since its no longer needed.
 		ParserMgr_free(par_mgr);
 
@@ -63,7 +65,7 @@ int main(int argc, char *argv[]) {
 		if (err_handle->error_ctr == 0) {
 			
 			// Initialise NexecMgr.
-			nexec_mgr = Nexec_init(sy_table, node_mgr);
+			nexec_mgr = Nexec_init(sy_table, node_mgr, err_handle);
 
 			#ifdef DEBUG
 				printf("--------------------------------------\n");
@@ -89,7 +91,6 @@ int main(int argc, char *argv[]) {
 	SyTable_free(sy_table);
 	NodeMgr_free(node_mgr);
 	TokenMgr_free(tok_mgr);
-	free(buff_in);
 
 	return 0;
 }

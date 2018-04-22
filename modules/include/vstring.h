@@ -88,6 +88,8 @@ VString *VString_pushs(VString *vstr, char *str);
  */
 VString VString_create(char *str, size_t cap); 
 
+int VString_replace(VString *vstr, char *find, char *replace);
+
 /**
  * @brief Free resources.
  * 
