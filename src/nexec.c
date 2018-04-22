@@ -3,6 +3,12 @@
 #include "nexec.h"
 #include "utils.h"
 
+#define ERR_UNDEFINE_VAR 0
+
+static const char *Error_Templates[] = {
+	"Use of undefined variable '@0' near line [x]"
+};
+
 // Execute a string node.
 static char *exec_string(Node *node) {
 	return node->value;
@@ -50,7 +56,7 @@ static VString exec_mixed_string(char *mstr, NexecMgr *nexec_mgr) {
 			
 			// Only replace if valid variable.
 			if (!var_val) {
-				NexecMgr_add_error(nexec_mgr->err_handle, "Undefined variable in mixed string");
+				NexecMgr_add_error(nexec_mgr->err_handle, buf.str);
 			}
 			else {
 				VString_replace(&mixs, buf.str, var_val);
@@ -111,16 +117,24 @@ static char *expr_to_string(int src) {
 	return dest;
 }
 
-void NexecMgr_add_error(Error *err_handle, char *err) {
-	if (!err_handle || !err)
+void NexecMgr_add_error(Error *err_handle, char *offender) {
+	if (!err_handle || !offender)
 		return;
 	
 	if (err_handle->error_cap == err_handle->error_ctr)
 		return;
 	
-	char *error  = malloc(sizeof(char) * strlen(err) + 1);
-	strcpy(error, err);
-	err_handle->errors[err_handle->error_ctr] = error;
+	// The error template which is needed.
+	const char *template = Error_Templates[0];
+	// Array containing string of substitute values.
+	char *template_values[] = {offender};
+	// Final template error.
+	char *template_fmt = NULL;
+
+	template_fmt = string_map_vars(template, template_values, strlen(template), 1);
+
+	err_handle->errors[err_handle->error_ctr] = template_fmt;
+	err_handle->error_ctr++;
 }	
 
 NexecMgr *NexecMgr_new(void) {
@@ -269,6 +283,7 @@ int Nexec_exec(NexecMgr *nexec_mgr, Node *node) {
 			default:
 				break;
 	}
-
+	
+	Error_print_all(nexec_mgr->err_handle);
 	return 0;
 }

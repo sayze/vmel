@@ -46,4 +46,13 @@ int Error_free(Error *err_handle);
  */
 void Error_print_all(Error *err_handle);
 
+/**
+ * @brief Add a single error to Error handle.
+ * 
+ * @param err_handle Error instance.
+ * @param err error message.
+ * @return 0 if success otherwise -1.
+ */
+int Error_add(Error *err_handle, char *err);
+
 #endif

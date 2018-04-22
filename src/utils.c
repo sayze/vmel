@@ -127,7 +127,9 @@ char *string_dup(char *src) {
 }
 
 void null_check(char *obj) {
-	printf("Severe Internal Error: object could not be accessed due to NULL value in '%s')\n", obj);
+	#ifndef NDEBUG
+		printf("Severe Internal Error: object could not be accessed due to NULL value in '%s')\n", obj);
+	#endif
 }
 
 int string_compare(char *str1, char *str2) {

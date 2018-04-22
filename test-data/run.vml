@@ -1,4 +1,1 @@
-$age = 12
-$name = `I am sayed and I am $age years old`
-print $age + 12
-print $name
+print `ss $name`

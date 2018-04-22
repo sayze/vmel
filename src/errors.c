@@ -10,6 +10,18 @@ Error *Error_new(void) {
 	return err_handle;
 }
 
+int Error_add(Error *err_handle, char *err) {
+	if (!err_handle || !err)
+		return -1;
+
+	if (err_handle->error_ctr == err_handle->error_cap)
+		return 0;
+
+	err_handle->errors[err_handle->error_ctr] = err;
+	err_handle->error_ctr++;
+	return 0;
+}
+
 int Error_free(Error *err_handle) {
 	if (!err_handle) {
 		null_check("errors free");

@@ -41,6 +41,11 @@ int main(int argc, char *argv[]) {
 	}
 
 	buff_in = file_to_buffer(argv[1]);
+	
+	// 0 size file.
+	if (!buff_in)
+		return 0;
+		
 	tok_mgr = TokenMgr_new();		
 	err = TokenMgr_build_tokens(buff_in, tok_mgr);
 	free(buff_in);

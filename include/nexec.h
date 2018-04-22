@@ -71,10 +71,15 @@ int Nexec_expr_node(NexecMgr *nexec_mgr);
 int Nexec_group_node(NexecMgr *nexec_mgr);
 
 /**
- * @brief Entry point to Node Execution.
+ * @brief Constructor for NexecMgr.
  * 
- * Will start iterating over all the nodes and performing
- * the appropriate command.
+ * Create a new instance of NexecMgr and assign required 
+ * structures.
+ * 
+ * @param sy_table instance of SyTable.
+ * @param node_mgr instance of NodeMgr.
+ * @param err_handle instance of Error.
+ * @return instance of NexecMgr.
  */
 NexecMgr *Nexec_init(SyTable *sy_table, NodeMgr *node_mgr, Error *err_handle);
 
@@ -89,9 +94,9 @@ NexecMgr *Nexec_init(SyTable *sy_table, NodeMgr *node_mgr, Error *err_handle);
 int Nexec_exec(NexecMgr *nexec_mgr, Node *node);
 
 /**
- * @brief Add a error string to the list of errors stored in Error.
+ * @brief Add a custom error string to the list of errors stored in Error.
  * 
  * @param err_error Instance of Error.
- * @param msg String describing error.
+ * @param offender offending variable name.
  */
-void NexecMgr_add_error(Error *err_handle, char *msg);
+void NexecMgr_add_error(Error *err_handle, char *offender);
