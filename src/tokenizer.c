@@ -242,12 +242,6 @@ int TokenMgr_build_tokens(char *buff, TokenMgr *tokmgr) {
 		}
 	}
 
-	// // Add tail token.
-	// if (!tokmgr->toks_tail) {
-	// 	TokenMgr_add_token(tokmgr, "EOT", "EOT", 0);
-	// 	tokmgr->toks_tail = tokmgr->toks_curr[tokmgr->tok_ctr-1];
-	// }
-
 	if (error)
 		printf("Syntax error: unknown '%s' found in line %d\n", store.str, lineno);
 
