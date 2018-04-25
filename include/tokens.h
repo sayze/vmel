@@ -30,7 +30,7 @@
 #define DOT '.'
 #define BTICK '`'
 
-#define KWORDS_SIZE 6
+#define KWORDS_SIZE 5
 
 /**
  * @brief Determine if a string is a valid keyword.

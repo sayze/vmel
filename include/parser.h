@@ -58,10 +58,19 @@ void ParserMgr_add_error(Error *err_handle, Token *offender, int err_type);
  * Group = string | string_list
  * 
  * @param par_mgr ParserMgr instance.
- * @param err_handle Error handler to capture any parsing errors.
  * @return Node generated from production.
  */
 Node *parse_group(ParserMgr *par_mgr);
+
+/**
+ * @brief Will consume a keyword based on grammar defintion.
+ * 
+ * Keyword = function (args)
+ * 
+ * @param par_mgr ParserMgr instance.
+ * @return Node generated from production.
+ */
+Node *parse_keyword(ParserMgr *par_mgr);
 
 /**
  * @brief Will consume assignment based on grammar.

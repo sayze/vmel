@@ -8,15 +8,6 @@
 #define CONF_H
 
 /**
- * Application level config.
- * 
- * PROG_CLI_MODE program is in cli mode.
- * PROG_SRC_MODE program executing script.
- */
-#define PROG_CLI_MODE 1
-#define PROG_SRC_MODE 2
-
-/**
  * Default/Initial structure sizing.
  * 
  * INIT_SYTABLE_SIZE initial size of symbol table.

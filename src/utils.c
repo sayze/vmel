@@ -4,7 +4,7 @@
 #include "utils.h"
 
 void print_usage(void) {
-	printf("Usage: vmel [script] OR vmel -c\n");
+	printf("Usage: vmel [script]\n");
 }
 
 char *file_to_buffer(const char *filename) {
@@ -126,10 +126,15 @@ char *string_dup(char *src) {
 	return new_str;
 }
 
-void null_check(char *obj) {
-	#ifndef NDEBUG
-		printf("Severe Internal Error: object could not be accessed due to NULL value in '%s')\n", obj);
-	#endif
+int null_check(void *obj,char *hint) {
+	if (obj == NULL) {
+		#ifndef NDEBUG
+			printf("**** Severe Internal Error: Attempt to access NULL value\n");
+			printf("--> With message : %s\n", hint);
+		#endif
+		return 1;
+	}
+	return 0;
 }
 
 int string_compare(char *str1, char *str2) {

@@ -37,10 +37,7 @@ static void par_mgr_next(ParserMgr *par_mgr) {
 
 // Allocate more memory for array node items.
 static Node **grow_arr_nodes(Node *arr_node) {
-	if (!arr_node) {
-		null_check("grow array nodes");
-		return NULL;
-	}
+	if (null_check(arr_node, "grow array nodes")) return NULL;
 
 	Node **new_items = NULL;
 	arr_node->data->ArrayNode.dcap = arr_node->data->ArrayNode.dcap * (arr_node->data->ArrayNode.dcap / 2);
@@ -71,10 +68,7 @@ ParserMgr *ParserMgr_new() {
 }
 
 int ParserMgr_free(ParserMgr *par_mgr) {
-	if (!par_mgr) {
-		null_check("parsermgr free");
-		return -1;
-	}
+	if (null_check(par_mgr, "parsermgr free")) return -1;
 		
 	par_mgr->curr_expr = NULL;
 	par_mgr->curr_token = NULL;
@@ -449,10 +443,7 @@ Node *parse_keyword(ParserMgr *par_mgr) {
 }
 
 ParserMgr *ParseMgr_init(TokenMgr *tok_mgr, SyTable *sy_table, NodeMgr *node_mgr, Error *err) {
-	if (!tok_mgr || !sy_table || !node_mgr || !err) {
-		null_check("parsermgr init");
-		return NULL;
-	}
+	if (!tok_mgr || !sy_table || !node_mgr || !err) return NULL;
 
 	ParserMgr *par_mgr = ParserMgr_new();
 	par_mgr->tok_mgr = tok_mgr;
@@ -464,10 +455,7 @@ ParserMgr *ParseMgr_init(TokenMgr *tok_mgr, SyTable *sy_table, NodeMgr *node_mgr
 }
 
 Node *Parser_parse(ParserMgr *par_mgr) {
-	if (!par_mgr) {
-		null_check("parser parse");
-		return NULL;
-	}
+	if (null_check(par_mgr, "parser parse")) return NULL;
 
 	if (string_compare(par_mgr->curr_token->value, "HEAD"))
 		par_mgr_next(par_mgr);	

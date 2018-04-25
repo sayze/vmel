@@ -1,1 +1,18 @@
-$n
+# Group definitions.
+{build_npm_packages}
+"cd ~/var/node_project/"
+"npm install"
+"npm run build"
+
+{update_local_repo}
+"cd ~/projects/vmel"
+"git checkout develop && git pull origin develop"
+
+{run_make}
+"cd ~/var/exec"
+"make -dDebug1"
+
+$vm_user = "sayed@root"
+$vm_pass = "124astroboy"
+
+print "ss"

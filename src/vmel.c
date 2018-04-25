@@ -9,10 +9,9 @@
 #include "nexec.h"
 #include "errors.h"
 #include "utils.h"
-#include "conf.h"
 
 int main(int argc, char *argv[]) {
-
+	
 	// Input stream used for file.
 	char *buff_in = NULL;
 	// Hold parsed tokens/lexeme.
@@ -33,9 +32,7 @@ int main(int argc, char *argv[]) {
 	int run_mode = 0;
 
 	// Determine which mode. CLI or Source file. 
-	if (argc >= 2) {
-		run_mode = string_compare(argv[1], "-c") ? PROG_CLI_MODE : PROG_SRC_MODE;
-	} else {
+	if (argc < 2) {
 		print_usage();
 		return 0;
 	}

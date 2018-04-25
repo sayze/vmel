@@ -51,10 +51,7 @@ static void node_free(Node *node) {
 }
 
 int NodeMgr_free(NodeMgr *node_mgr) {
-    if (!node_mgr) {
-		null_check("nodemgr free");
-		return -1;
-	}	
+    if (null_check(node_mgr,"nodemgr free")) return -1;
 
     Node *root_node = NULL;     
     Node *itr = NULL;
@@ -118,10 +115,7 @@ Node *Node_new(int wdata) {
 }
 
 Node **grow_nodes(NodeMgr *node_mgr) {
-    if (!node_mgr) {
-		null_check("nodemgr grow");
-		return NULL;
-	}
+    if (null_check(node_mgr, "nodemgr grow")) return NULL;
 
     node_mgr->nodes_cap *= 2;
     Node **nodes_new = realloc(node_mgr->nodes, sizeof(Node *) * node_mgr->nodes_cap);		
@@ -129,17 +123,14 @@ Node **grow_nodes(NodeMgr *node_mgr) {
 }
 
 int NodeMgr_add_node(NodeMgr *node_mgr, Node *node) {
-	if (!node_mgr) {
-		null_check("nodemgr add");
-		return -1;
-	}
+	if (null_check(node_mgr, "nodemgr add")) return -1;
 	
-    if (node_mgr->nodes_cap - node_mgr->nodes_ctr == 4)
-        node_mgr->nodes = grow_nodes(node_mgr);   
+    if (node_mgr->nodes_cap - node_mgr->nodes_ctr == 4) {
+		node_mgr->nodes = grow_nodes(node_mgr);   
+		
+		if (null_check(node_mgr->nodes, "add node regrow")) return -1;
+	}
 
-    if (!node_mgr->nodes) 
-		return -1;
-    
     node_mgr->nodes[node_mgr->nodes_ctr++] = node;
     return 0;
 }

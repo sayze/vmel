@@ -140,10 +140,13 @@ int is_valid_identifier(char id);
 /**
  * @brief Print null object error with name.
  * 
- * This is helpful for debugging purposes
+ * This is helpful for debugging purposes and to ensure unexpected
+ * NULL values are caught.
  * 
- * @param obj name of the object which gets printed.
+ * @param obj pointer to object.
+ * @param hint optional text to provide additional information.
+ * @return 0 if check passes otherwise 1.
  */
-void null_check(char *obj);
+int null_check(void *obj,char *hint);
 
 #endif

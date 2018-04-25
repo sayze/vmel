@@ -148,21 +148,14 @@ NexecMgr *NexecMgr_new(void) {
 }
 
 int NexecMgr_free(NexecMgr *nexec_mgr) {
-	if (!nexec_mgr) {
-		null_check("nexecmgr free");
-		return -1;
-	}
-
+	if (null_check(nexec_mgr, "nexecmgr free")) return -1;
 	free(nexec_mgr);
 	return 0;
 }
 
 int Nexec_func_node(NexecMgr *nexec_mgr) {
-	if (!nexec_mgr) {
-		null_check("nexec fun node");
-		return -1;
-	}
-	
+	if (null_check(nexec_mgr, "nexec func node")) return -1;
+
 	// Current node in manager.
 	Node *curr_node = nexec_mgr->curr_node;
 
@@ -206,19 +199,12 @@ int Nexec_func_node(NexecMgr *nexec_mgr) {
 }
 
 int Nexec_group_node(NexecMgr *nexec_mgr) {
-	if (!nexec_mgr) {
-		null_check("nexec group node");
-		return -1;
-	}
-
+	if (null_check(nexec_mgr, "nexec group node")) return -1;
 	return 0;
 }
 
 int Nexec_assignment_node(NexecMgr *nexec_mgr) {
-	if (!nexec_mgr) {
-		null_check("nexec assignment node");
-		return -1;
-	}
+	if (null_check(nexec_mgr, "nexec assignment node")) return -1;
 
 	// Left child node of assignment node.
 	Node *asn_left_node = nexec_mgr->curr_node->data->AsnStmtNode.left;
@@ -261,10 +247,7 @@ int Nexec_assignment_node(NexecMgr *nexec_mgr) {
 }
 
 NexecMgr *Nexec_init(SyTable *sy_table, NodeMgr *node_mgr, Error *err_handle) {
-	if (!sy_table || !node_mgr) {
-		null_check("nexec init");
-		return NULL;
-	}
+	if (null_check(sy_table, "nexec init") || null_check(node_mgr, "nexec init")) return NULL;
 
 	// Setup wrapper structs.
 	NexecMgr *nexec_mgr = NexecMgr_new();
@@ -276,10 +259,7 @@ NexecMgr *Nexec_init(SyTable *sy_table, NodeMgr *node_mgr, Error *err_handle) {
 }
 
 int Nexec_exec(NexecMgr *nexec_mgr, Node *node) {
-	if (!nexec_mgr || !node) {
-		null_check("nexec exec");
-		return -1;
-	}
+	if (null_check(node ,"nexec exec") || null_check(node ,"nexec exec")) return -1;
 	
 	nexec_mgr->curr_node = node;
 	switch (node->type) {
