@@ -75,8 +75,26 @@ static int exec_expression(NexecMgr *nexec_mgr, Node *node) {
 	int ret = 0;
 	
 	switch(node->type) {
+		case E_GREATERTHANEQ_NODE:
+			ret = exec_expression(nexec_mgr, node->data->BinExpNode.left) >= exec_expression(nexec_mgr, node->data->BinExpNode.right);
+			break;
+		case E_GREATERTHAN_NODE:
+			ret = exec_expression(nexec_mgr, node->data->BinExpNode.left) > exec_expression(nexec_mgr, node->data->BinExpNode.right);
+			break;
+		case E_LESSTHANEQ_NODE:
+			ret = exec_expression(nexec_mgr, node->data->BinExpNode.left) <= exec_expression(nexec_mgr, node->data->BinExpNode.right);
+			break;
+		case E_LESSTHAN_NODE:
+			ret = exec_expression(nexec_mgr, node->data->BinExpNode.left) < exec_expression(nexec_mgr, node->data->BinExpNode.right);
+			break;
+		case E_NEQUAL_NODE:
+			ret = exec_expression(nexec_mgr, node->data->BinExpNode.left) != exec_expression(nexec_mgr, node->data->BinExpNode.right);
+			break;
+		case E_EEQUAL_NODE:
+			ret = exec_expression(nexec_mgr, node->data->BinExpNode.left) == exec_expression(nexec_mgr, node->data->BinExpNode.right);
+			break;
 		case E_ADD_NODE:
-			ret += exec_expression(nexec_mgr, node->data->BinExpNode.left) +  exec_expression(nexec_mgr, node->data->BinExpNode.right);
+			ret += exec_expression(nexec_mgr, node->data->BinExpNode.left) + exec_expression(nexec_mgr, node->data->BinExpNode.right);
 			break;
 		case E_MINUS_NODE:
 			ret = exec_expression(nexec_mgr, node->data->BinExpNode.left) - exec_expression(nexec_mgr, node->data->BinExpNode.right);
@@ -222,20 +240,28 @@ int Nexec_assignment_node(NexecMgr *nexec_mgr) {
 		char *exp_val = expand_variable(nexec_mgr->sy_table, asn_right_node->value);
 		if (exp_val)
 			SyTable_update_symbol(nexec_mgr->sy_table, asn_left_node->value, exp_val);
-
 	}
-	else if (asn_right_node->type == E_ADD_NODE || asn_right_node->type == E_MINUS_NODE 
-		|| asn_right_node->type == E_DIV_NODE || asn_right_node->type == E_TIMES_NODE) {
+	else if (Node_is_binop(asn_right_node)) {
 		
 		// Derive final value from operation node.
 		int calc = exec_expression(nexec_mgr, asn_right_node); 
 		// Convert the integer to string.
 		char *conv = expr_to_string(calc);
-		
+
 		SyTable_update_symbol(nexec_mgr->sy_table, asn_left_node->value, conv);
 		
 		// free original converted string.
 		free(conv);
+	}
+	else if (Node_is_compare(asn_right_node)) {
+		
+		// Get result from comparison.
+		// TODO: At this point 0 maps to false and 1 maps to true. Will need modifications to handle ternary
+		int result = exec_expression(nexec_mgr, asn_right_node); 
+		// Convert the integer to string.
+		char *conv = result ? "true" : "false";
+
+		SyTable_update_symbol(nexec_mgr->sy_table, asn_left_node->value, conv);
 	}
 	else if (asn_right_node->type == E_MIXSTR_NODE) {
 		VString mixs = exec_mixed_string(asn_right_node->value, nexec_mgr);

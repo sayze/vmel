@@ -129,8 +129,7 @@ char *string_dup(char *src) {
 int null_check(void *obj,char *hint) {
 	if (obj == NULL) {
 		#ifndef NDEBUG
-			printf("**** Severe Internal Error: Attempt to access NULL value\n");
-			printf("--> With message : %s\n", hint);
+			printf("**** Severe Internal Error: Attempt to access NULL value, with message : %s\n", hint);
 		#endif
 		return 1;
 	}

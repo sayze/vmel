@@ -10,7 +10,8 @@
 		"sytable.h": "c",
 		"string.h": "c",
 		"*.tcc": "c",
-		"cstring": "c"
+		"cstring": "c",
+		"memory": "c"
 	},
 	"C_Cpp.dimInactiveRegions": false
 }

@@ -14,15 +14,19 @@
 #define ERR_EMPTY_STMT 3
 #define ERR_ARRAY_EMPTY 4
 #define ERR_ARRAY_CLOSING 5
+#define ERR_NAKED_VARIABLE 6
+#define ERR_INVALID_TYPES 7
 
 // These are the errors a parser may generate. They are mapped to the #DEFINE above.
 static const char *Error_Templates[] = {
-	"Syntax error : unexpected @0 found in line @1",
-	"Notice : Duplicate definition {@0} already defined in line @1",
-	"Notice : Empty group {@0} must contain commands in line @1",
-	"Syntax error: Statement '@0' missing arguments in line @1",
-	"Notice : Expected array item after comma but found NULL in line @1",
-	"Syntax error: No closing bracket found near '@0' in line @1"
+	"* Parsing error : unexpected @0 found in line @1",
+	"* Notice : Duplicate definition {@0} already defined in line @1",
+	"* Notice : Empty group {@0} must contain commands in line @1",
+	"* Parsing error: Statement '@0' missing arguments in line @1",
+	"* Parsing error : Expected array item after comma but found NULL near @0 in line @1",
+	"* Syntax error: No closing bracket found near '@0' in line @1",
+	"* Parsing error: '$@0' declaraion must be followed by valid assignment in line @1",
+	"* Cannot perform operation on incompatible types near @0",
 };
 
 // Sync ParserMgr internal token to be current token held by TokenMgr.
@@ -35,13 +39,50 @@ static void par_mgr_next(ParserMgr *par_mgr) {
 	par_mgr->curr_token = TokenMgr_next_token(par_mgr->tok_mgr);
 }
 
+// Check to make sure operation is one of (== != <= >= < >)
+static int is_compare_operator(char *op) {
+	return (string_compare(op, "!=") 
+			|| string_compare(op, "==") 
+			|| string_compare(op, "<") 
+			|| string_compare(op, "<=")
+			|| string_compare(op, ">")  
+			|| string_compare(op, ">=")
+			|| string_compare(op, "><"));
+}
+
+// Return the type of compare node based on token.
+static enum NodeType get_compare_type(char *op) {
+	if (string_compare(op, "==")) {
+		return E_EEQUAL_NODE;
+	}
+	else if (string_compare(op, "!=")) {
+		return E_NEQUAL_NODE;
+	}
+	else if (string_compare(op, "<")) {
+		return E_LESSTHAN_NODE;
+	}
+	else if (string_compare(op, "<=")) {
+		return E_LESSTHANEQ_NODE;
+	}
+	else if (string_compare(op, ">")) {
+		return E_GREATERTHAN_NODE;
+	}
+	else if (string_compare(op, ">=")) {
+		return E_GREATERTHANEQ_NODE;
+	}
+	else if (string_compare(op, "><")) {
+		return E_BETWEEN_NODE;
+	}
+
+	return E_EOF_NODE;
+}
+
 // Allocate more memory for array node items.
 static Node **grow_arr_nodes(Node *arr_node) {
 	if (null_check(arr_node, "grow array nodes")) return NULL;
-
 	Node **new_items = NULL;
 	arr_node->data->ArrayNode.dcap = arr_node->data->ArrayNode.dcap * (arr_node->data->ArrayNode.dcap / 2);
-	new_items = realloc(arr_node->data->ArrayNode.items, arr_node->data->ArrayNode.dcap *sizeof(Node *));
+	new_items = realloc(arr_node->data->ArrayNode.items, arr_node->data->ArrayNode.dcap * sizeof(Node *));
 	return new_items;
 }
 
@@ -59,7 +100,6 @@ static Node *node_new_array() {
 
 ParserMgr *ParserMgr_new() {
 	ParserMgr *ps = malloc(sizeof(ParserMgr));
-	ps->curr_expr = NULL;
 	ps->curr_token = NULL;
 	ps->node_mgr = NULL;
 	ps->tok_mgr = NULL;
@@ -70,7 +110,6 @@ ParserMgr *ParserMgr_new() {
 int ParserMgr_free(ParserMgr *par_mgr) {
 	if (null_check(par_mgr, "parsermgr free")) return -1;
 		
-	par_mgr->curr_expr = NULL;
 	par_mgr->curr_token = NULL;
 	par_mgr->err_handle = NULL;
 	par_mgr->tok_mgr = NULL;
@@ -156,9 +195,11 @@ Node *parse_factor(ParserMgr *par_mgr) {
 
 Node *parse_term(ParserMgr *par_mgr) {
 	Node *res = parse_factor(par_mgr);
-	while (!TokenMgr_is_last_token(par_mgr->tok_mgr) &&
-	(string_compare(par_mgr->curr_token->value, "*") || string_compare(par_mgr->curr_token->value, "/"))) {
-		// BinOP node.
+	while (!TokenMgr_is_last_token(par_mgr->tok_mgr) 
+		&& (string_compare(par_mgr->curr_token->value, "*")
+		|| string_compare(par_mgr->curr_token->value, "/"))){
+		
+		// Operation node.
 		Node *bop = Node_new(1);
 
 		if (strncmp(par_mgr->curr_token->value, "*", 1) == 0) {
@@ -194,31 +235,46 @@ Node *parse_term(ParserMgr *par_mgr) {
 
 Node *parse_expr(ParserMgr *par_mgr) {
 	Node *res = parse_term(par_mgr);
-	while (!TokenMgr_is_last_token(par_mgr->tok_mgr) &&
-	(string_compare(par_mgr->curr_token->value, "+") || string_compare(par_mgr->curr_token->value, "-"))) {
-		// BinOP node.
+	
+	while (!TokenMgr_is_last_token(par_mgr->tok_mgr) 
+		&&	(string_compare(par_mgr->curr_token->value, "+") 
+		|| string_compare(par_mgr->curr_token->value, "-")
+		|| is_compare_operator(par_mgr->curr_token->value))) {
+		
+		// Operation node.
 		Node *bop = Node_new(1);
 
-		if (strncmp(par_mgr->curr_token->value, "+", 1) == 0) {
+		if (strncmp(par_mgr->curr_token->value, "-", 1) == 0) {
+			bop->type = E_MINUS_NODE;
+			bop->value = "-"; 
+		}
+		else if (strncmp(par_mgr->curr_token->value, "+", 1) == 0){
 			bop->type = E_ADD_NODE;
 			bop->value = "+"; 
 		}
-		else if (strncmp(par_mgr->curr_token->value, "-", 1) == 0){
-			bop->type = E_MINUS_NODE;
-			bop->value = "-";
-		}
+		else if (is_compare_operator(par_mgr->curr_token->value)) {	
+			bop->value = par_mgr->curr_token->value;
+			bop->type = get_compare_type(bop->value);
+		} 
 		else {
 			ParserMgr_add_error(par_mgr->err_handle, par_mgr->curr_token, ERR_UNEXPECTED);
 			TokenMgr_next_token(par_mgr->tok_mgr);
 			continue;
 		}
+		
 		TokenMgr_next_token(par_mgr->tok_mgr);
 		bop->data->BinExpNode.left = res;
-		bop->data->BinExpNode.right = parse_term(par_mgr);
-		
+
+		// Set right node based on type.
+		if (is_compare_operator(par_mgr->curr_token->value))
+			bop->data->BinExpNode.right = parse_expr(par_mgr);
+		else 
+			bop->data->BinExpNode.right = parse_term(par_mgr);
+
 		// Ensure right operand.
 		if (!bop->data->BinExpNode.right) {
 			ParserMgr_add_error(par_mgr->err_handle, TokenMgr_prev_token(par_mgr->tok_mgr), ERR_UNEXPECTED);
+			ParserMgr_add_error(par_mgr->err_handle, TokenMgr_prev_token(par_mgr->tok_mgr), ERR_INVALID_TYPES);
 			TokenMgr_next_token(par_mgr->tok_mgr);
 			continue;
 		}
@@ -294,7 +350,7 @@ Node *parse_array(ParserMgr *par_mgr) {
 	}
 	
 	if (!string_compare(par_mgr->curr_token->type, "RBRACKET"))
-		ParserMgr_add_error(par_mgr->err_handle, par_mgr->curr_token, ERR_ARRAY_CLOSING);
+		ParserMgr_add_error(par_mgr->err_handle, TokenMgr_prev_token(par_mgr->tok_mgr), ERR_ARRAY_CLOSING);
 	else
 		par_mgr_next(par_mgr);
 	
@@ -318,7 +374,7 @@ Node *parse_assignment(ParserMgr *par_mgr) {
 	Node *lhand = NULL;
 
 	// Assert we can consume an EQUAL.
-	if (string_compare(par_mgr->curr_token->value, "=")) {
+	if (par_mgr->curr_token && string_compare(par_mgr->curr_token->value, "=")) {
 		par_mgr_next(par_mgr);
 		if ((expr = parse_string(par_mgr)) || (expr = parse_expr(par_mgr)) || (expr = parse_array(par_mgr))) {
 
@@ -344,7 +400,7 @@ Node *parse_assignment(ParserMgr *par_mgr) {
 		}
 	}
 	else {
-		ParserMgr_add_error(par_mgr->err_handle,TokenMgr_prev_token(par_mgr->tok_mgr), ERR_UNEXPECTED);
+		ParserMgr_add_error(par_mgr->err_handle,TokenMgr_prev_token(par_mgr->tok_mgr), ERR_NAKED_VARIABLE);
 		par_mgr_next(par_mgr);
 	}
 	return ast;
@@ -457,34 +513,34 @@ ParserMgr *ParseMgr_init(TokenMgr *tok_mgr, SyTable *sy_table, NodeMgr *node_mgr
 Node *Parser_parse(ParserMgr *par_mgr) {
 	if (null_check(par_mgr, "parser parse")) return NULL;
 
-	if (string_compare(par_mgr->curr_token->value, "HEAD"))
-		par_mgr_next(par_mgr);	
+	// Store resulting tree.
+	Node *ast = NULL;
 
 	while (!TokenMgr_is_last_token(par_mgr->tok_mgr)) {
 		if (strcmp(par_mgr->curr_token->type, "IDENTIFIER") == 0) {
-			par_mgr->curr_expr = parse_assignment(par_mgr);
+			ast = parse_assignment(par_mgr);
 		}
 		else if (strcmp(par_mgr->curr_token->type, "GROUP") == 0) {
-			par_mgr->curr_expr = parse_group(par_mgr);
+			ast = parse_group(par_mgr);
 		}
 		else if (strcmp(par_mgr->curr_token->type, "KEYWORD") == 0) {
-			par_mgr->curr_expr = parse_keyword(par_mgr);
+			ast = parse_keyword(par_mgr);
 		}
 		else {
 			ParserMgr_add_error(par_mgr->err_handle, par_mgr->curr_token, ERR_UNEXPECTED);
 			par_mgr_next(par_mgr);
 			continue;
 		}
-		
-		if (par_mgr->curr_expr != NULL) {
-			par_mgr->curr_expr->depth = par_mgr->expr_depth;
-			NodeMgr_add_node(par_mgr->node_mgr, par_mgr->curr_expr);
+
+		if (ast != NULL) {
+			ast->depth = par_mgr->expr_depth;
+			NodeMgr_add_node(par_mgr->node_mgr, ast);
 		}
 
 		par_mgr_sync(par_mgr);
 	}
-
+	
 	Error_print_all(par_mgr->err_handle);
 
-	return par_mgr->curr_expr;
+	return ast;
 }

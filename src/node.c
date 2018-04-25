@@ -13,9 +13,16 @@ NodeMgr *NodeMgr_new(void) {
     return node_mgr;
 }
 
-static int is_binop_node(Node *n) {
-	return 	n->type ==  E_ADD_NODE || n->type == E_MINUS_NODE || 
-			n->type == E_DIV_NODE || n->type == E_TIMES_NODE;
+int Node_is_compare(Node *n) {
+	return (n->type == E_EEQUAL_NODE || n->type == E_NEQUAL_NODE
+			||  n->type == E_GREATERTHAN_NODE || n->type == E_GREATERTHANEQ_NODE
+			||  n->type == E_LESSTHAN_NODE || n->type == E_LESSTHANEQ_NODE
+			||  n->type == E_BETWEEN_NODE);
+}
+
+int Node_is_binop(Node *n) {
+	return 	(n->type ==  E_ADD_NODE || n->type == E_MINUS_NODE 
+			|| n->type == E_DIV_NODE || n->type == E_TIMES_NODE);
 }
 
 static int is_array_node(Node *n) {
@@ -25,8 +32,13 @@ static int is_array_node(Node *n) {
 static void node_free(Node *node) {
 	if (!node) 
 		return;
-
-	if (is_array_node(node)) {
+	
+	if (Node_is_binop(node) || Node_is_compare(node)) {
+		node_free(node->data->BinExpNode.left);
+		node_free(node->data->BinExpNode.right);
+		free(node->data);
+	}
+	else if (is_array_node(node)) {
 		for (size_t i = 0; i < node->data->ArrayNode.dctr; i++) {
 			if (is_array_node(node->data->ArrayNode.items[i])) {
 				node_free(node->data->ArrayNode.items[i]);	
@@ -35,17 +47,10 @@ static void node_free(Node *node) {
 				free(node->data->ArrayNode.items[i]);
 			}
 		} 	
-		free(node->data->ArrayNode.items);
-	}
 
-	if (is_binop_node(node))
-		node_free(node->data->BinExpNode.left);
-		
-	if (is_binop_node(node))
-		node_free(node->data->BinExpNode.right);
-	
-	if (is_binop_node(node) || is_array_node(node))
-		free(node->data);
+		free(node->data->ArrayNode.items);
+		free(node->data);	
+	}
 	
 	free(node);
 }

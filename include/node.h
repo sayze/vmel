@@ -23,6 +23,13 @@ enum NodeType {
 	E_FUNC_NODE,
 	E_IDENTIFIER_NODE,
 	E_ARRAY_NODE, 
+	E_EEQUAL_NODE,
+	E_NEQUAL_NODE,
+	E_LESSTHAN_NODE,
+	E_LESSTHANEQ_NODE,
+	E_GREATERTHAN_NODE,
+	E_GREATERTHANEQ_NODE,
+	E_BETWEEN_NODE,
 	E_EOF_NODE
 };
 
@@ -130,5 +137,21 @@ NodeMgr *NodeMgr_new(void);
  * @return Newly allocated Node**.
  */
 Node **grow_nodes(NodeMgr *node_mgr);
+
+/**
+ * @brief Determine whether a node is of type comaprison operator.
+ * 
+ * @param n the node being checked.
+ * @return 1 if is valid type or 0.
+ */
+int Node_is_compare(Node *n);
+
+/**
+ * @brief Determine whether a node is of type arithmetic operator.
+ * 
+ * @param n the node being checked.
+ * @return 1 if is valid type or 0.
+ */
+int Node_is_binop(Node *n);
 
 #endif

@@ -19,7 +19,6 @@
  * structure which holds all the necessary information per parse.
  */
 typedef struct {
-	Node *curr_expr;
 	unsigned int expr_depth;
 	Token *curr_token;
 	NodeMgr *node_mgr;
