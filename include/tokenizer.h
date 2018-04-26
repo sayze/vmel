@@ -17,9 +17,8 @@
  * Struct will hold every identified token meta data. Is needed for parsing.
  */
 typedef struct {
-	char type[TOKENTYPE_SIZE];
+	TokenType type;
 	char *value;
-	size_t val_length;
 	int lineno;
 } Token;
 
@@ -82,7 +81,7 @@ TokenMgr *TokenMgr_new(void);
  * @param tok_lineno Line number in source file where token occurs.
  * @return int signifying status.
  */
-int TokenMgr_add_token(TokenMgr *tok_mgr, char tok_type[20], char *tok_val, int tok_lineno);
+int TokenMgr_add_token(TokenMgr *tok_mgr, TokenType tok_type, char *tok_val, int tok_lineno);
 
 /**
  * @brief Free tokens stored by token manager as well as token manager.

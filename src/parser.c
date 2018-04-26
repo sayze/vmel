@@ -13,7 +13,7 @@
 #define ERR_EMPTY_GROUP 2
 #define ERR_EMPTY_STMT 3
 #define ERR_ARRAY_EMPTY 4
-#define ERR_ARRAY_CLOSING 5
+#define ERR_NO_CLOSING 5
 #define ERR_NAKED_VARIABLE 6
 #define ERR_INVALID_TYPES 7
 
@@ -24,7 +24,7 @@ static const char *Error_Templates[] = {
 	"* Notice : Empty group {@0} must contain commands in line @1",
 	"* Parsing error: Statement '@0' missing arguments in line @1",
 	"* Parsing error : Expected array item after comma but found NULL near @0 in line @1",
-	"* Syntax error: No closing bracket found near '@0' in line @1",
+	"* Syntax error: Missing closing bracket near '@0' in line @1",
 	"* Parsing error: '$@0' declaraion must be followed by valid assignment in line @1",
 	"* Cannot perform operation on incompatible types near @0",
 };
@@ -40,14 +40,15 @@ static void par_mgr_next(ParserMgr *par_mgr) {
 }
 
 // Check to make sure operation is one of (== != <= >= < >)
-static int is_compare_operator(char *op) {
-	return (string_compare(op, "!=") 
-			|| string_compare(op, "==") 
-			|| string_compare(op, "<") 
-			|| string_compare(op, "<=")
-			|| string_compare(op, ">")  
-			|| string_compare(op, ">=")
-			|| string_compare(op, "><"));
+static int is_compare_operator(TokenType op) {
+	return (op == E_EQUAL_TOKEN
+			|| op == E_EEQUAL_TOKEN
+			|| op == E_NEQUAL_TOKEN 
+			|| op == E_LESSTHAN_TOKEN
+			|| op == E_LESSTHANEQ_TOKEN
+			|| op == E_GREATERTHAN_TOKEN
+			|| op == E_GREATERTHANEQ_TOKEN
+			|| op == E_BETWEEN_TOKEN);
 }
 
 // Return the type of compare node based on token.
@@ -153,12 +154,12 @@ void ParserMgr_skip_to(ParserMgr *par_mgr, char *type) {
 
 Node *parse_string(ParserMgr *par_mgr) {
 	Node *str = NULL;
-	if (string_compare(par_mgr->curr_token->type, "STRING") || string_compare(par_mgr->curr_token->type, "MIXSTRING")) {
+	if (par_mgr->curr_token->type == E_STRING_TOKEN || par_mgr->curr_token->type == E_MIXSTR_TOKEN) {
 		str = Node_new(0);
 		str->type = E_STRING_NODE;
 		
 		// Change type if mix string.
-		if (string_compare(par_mgr->curr_token->type, "MIXSTRING"))
+		if (par_mgr->curr_token->type == E_MIXSTR_TOKEN)
 			str->type = E_MIXSTR_NODE;
 			
 		str->value = par_mgr->curr_token->value;
@@ -170,25 +171,28 @@ Node *parse_string(ParserMgr *par_mgr) {
 Node *parse_factor(ParserMgr *par_mgr) {
 	par_mgr_sync(par_mgr);
 	Node *res = NULL;
-	 if (string_compare(par_mgr->curr_token->type, "INTEGER")) {
+	 if (par_mgr->curr_token->type == E_INTEGER_TOKEN) {
 		 res = Node_new(0);
 		 res->type = E_INTEGER_NODE;
 		 res->value = par_mgr->curr_token->value; 
 		 par_mgr_next(par_mgr);
 	 }
-	 else if (string_compare(par_mgr->curr_token->type, "IDENTIFIER")) {
+	 else if (par_mgr->curr_token->type == E_IDENTIFIER_TOKEN) {
 		 res = Node_new(0);
 		 res->type = E_IDENTIFIER_NODE;
 		 res->value = par_mgr->curr_token->value; 
 		 par_mgr_next(par_mgr);
 	 }
-	 else if (string_compare(par_mgr->curr_token->type, "LPAREN")) {
+	 else if (par_mgr->curr_token->type == E_LPAREN_TOKEN) {
 		 TokenMgr_next_token(par_mgr->tok_mgr);
 		 res = parse_expr(par_mgr);
 		 par_mgr_sync(par_mgr);
-		 if (string_compare(par_mgr->curr_token->type, "RPAREN")) {
-			par_mgr_next(par_mgr); 
-		 }
+		 
+		 // Should have closing paren.
+		 if (par_mgr->curr_token->type != E_RPAREN_TOKEN)
+			 ParserMgr_add_error(par_mgr->err_handle, TokenMgr_prev_token(par_mgr->tok_mgr), ERR_NO_CLOSING);
+		 
+		 par_mgr_next(par_mgr); 
 	 }
 	 return res;
 }
@@ -196,19 +200,18 @@ Node *parse_factor(ParserMgr *par_mgr) {
 Node *parse_term(ParserMgr *par_mgr) {
 	Node *res = parse_factor(par_mgr);
 	while (!TokenMgr_is_last_token(par_mgr->tok_mgr) 
-		&& (string_compare(par_mgr->curr_token->value, "*")
-		|| string_compare(par_mgr->curr_token->value, "/"))){
+		&& (par_mgr->curr_token->type == E_FSLASH_TOKEN 
+		|| par_mgr->curr_token->type == E_ASTERISK_TOKEN)) {
 		
 		// Operation node.
 		Node *bop = Node_new(1);
 
-		if (strncmp(par_mgr->curr_token->value, "*", 1) == 0) {
+		if (par_mgr->curr_token->type == E_ASTERISK_TOKEN) {
 			bop->type = E_TIMES_NODE;
 			bop->value = "*"; 
 		}
-		else if (strncmp(par_mgr->curr_token->value, "/", 1) == 0){
+		else if (par_mgr->curr_token->type == E_FSLASH_TOKEN) {
 			bop->type = E_DIV_NODE;
-			bop->value = "/"; 
 		}
 		else {
 			ParserMgr_add_error(par_mgr->err_handle, par_mgr->curr_token, ERR_UNEXPECTED);
@@ -237,22 +240,19 @@ Node *parse_expr(ParserMgr *par_mgr) {
 	Node *res = parse_term(par_mgr);
 	
 	while (!TokenMgr_is_last_token(par_mgr->tok_mgr) 
-		&&	(string_compare(par_mgr->curr_token->value, "+") 
-		|| string_compare(par_mgr->curr_token->value, "-")
-		|| is_compare_operator(par_mgr->curr_token->value))) {
+		&&	(par_mgr->curr_token->type == E_PLUS_TOKEN 
+		|| par_mgr->curr_token->type == E_MINUS_TOKEN
+		|| is_compare_operator(par_mgr->curr_token->type))) {
 		
 		// Operation node.
 		Node *bop = Node_new(1);
 
-		if (strncmp(par_mgr->curr_token->value, "-", 1) == 0) {
+		if (par_mgr->curr_token->type == E_MINUS_TOKEN) {
 			bop->type = E_MINUS_NODE;
-			bop->value = "-"; 
-		}
-		else if (strncmp(par_mgr->curr_token->value, "+", 1) == 0){
+		} else if (par_mgr->curr_token->type == E_PLUS_TOKEN) {
 			bop->type = E_ADD_NODE;
-			bop->value = "+"; 
 		}
-		else if (is_compare_operator(par_mgr->curr_token->value)) {	
+		else if (is_compare_operator(par_mgr->curr_token->type)) {	
 			bop->value = par_mgr->curr_token->value;
 			bop->type = get_compare_type(bop->value);
 		} 
@@ -264,13 +264,8 @@ Node *parse_expr(ParserMgr *par_mgr) {
 		
 		TokenMgr_next_token(par_mgr->tok_mgr);
 		bop->data->BinExpNode.left = res;
-
-		// Set right node based on type.
-		if (is_compare_operator(par_mgr->curr_token->value))
-			bop->data->BinExpNode.right = parse_expr(par_mgr);
-		else 
-			bop->data->BinExpNode.right = parse_term(par_mgr);
-
+		bop->data->BinExpNode.right = parse_expr(par_mgr);
+		
 		// Ensure right operand.
 		if (!bop->data->BinExpNode.right) {
 			ParserMgr_add_error(par_mgr->err_handle, TokenMgr_prev_token(par_mgr->tok_mgr), ERR_UNEXPECTED);
@@ -294,20 +289,20 @@ Node *parse_array(ParserMgr *par_mgr) {
 	Node *arr = NULL;
 
 	// Array must begin with '['
-	if (!string_compare(par_mgr->curr_token->type, "LBRACKET"))
+	if (par_mgr->curr_token->type != E_LBRACKET_TOKEN)
 		return NULL;
 
 	// Push token pointer forward.
 	par_mgr_next(par_mgr);	
 
 	// Handle first element.
-	if (string_compare(par_mgr->curr_token->type, "STRING")) {
+	if (par_mgr->curr_token->type == E_STRING_TOKEN) {
 		ret = parse_string(par_mgr);
 	}
-	else if (string_compare(par_mgr->curr_token->type, "INTEGER")) {
+	else if (par_mgr->curr_token->type == E_INTEGER_TOKEN) {
 		ret = parse_factor(par_mgr);
 	}
-	if (string_compare(par_mgr->curr_token->type, "LBRACKET")) {
+	else if (par_mgr->curr_token->type == E_LBRACKET_TOKEN) {
 		ret = parse_array(par_mgr);
 	}
 	
@@ -318,19 +313,18 @@ Node *parse_array(ParserMgr *par_mgr) {
 		arr->data->ArrayNode.items[arr->data->ArrayNode.dctr++] = ret;
 	
 	// Iterate using comma as delimiter.
-	while (!TokenMgr_is_last_token(par_mgr->tok_mgr) 
-		&& (string_compare(par_mgr->curr_token->type, "COMMA"))) {
+	while (!TokenMgr_is_last_token(par_mgr->tok_mgr) && par_mgr->curr_token->type == E_COMMA_TOKEN) {
 		
 		// Next token.
 		par_mgr_next(par_mgr);		
 
-		if (string_compare(par_mgr->curr_token->type, "INTEGER")) {
+		if (par_mgr->curr_token->type == E_INTEGER_TOKEN) {
 			ret = parse_factor(par_mgr);
 		}
-		else if (string_compare(par_mgr->curr_token->type, "STRING")) {
+		else if (par_mgr->curr_token->type == E_STRING_TOKEN) {
 			ret = parse_string(par_mgr);
 		}
-		else if (string_compare(par_mgr->curr_token->type, "LBRACKET")) {
+		else if (par_mgr->curr_token->type == E_LBRACKET_TOKEN) {
 			ret = parse_array(par_mgr);
 		}
 		else {
@@ -349,8 +343,8 @@ Node *parse_array(ParserMgr *par_mgr) {
 		arr->data->ArrayNode.items[arr->data->ArrayNode.dctr++] = ret;	
 	}
 	
-	if (!string_compare(par_mgr->curr_token->type, "RBRACKET"))
-		ParserMgr_add_error(par_mgr->err_handle, TokenMgr_prev_token(par_mgr->tok_mgr), ERR_ARRAY_CLOSING);
+	if (par_mgr->curr_token->type != E_RBRACKET_TOKEN)
+		ParserMgr_add_error(par_mgr->err_handle, TokenMgr_prev_token(par_mgr->tok_mgr), ERR_NO_CLOSING);
 	else
 		par_mgr_next(par_mgr);
 	
@@ -373,8 +367,8 @@ Node *parse_assignment(ParserMgr *par_mgr) {
 	// Leftmost node of root ast. 
 	Node *lhand = NULL;
 
-	// Assert we can consume an EQUAL.
-	if (par_mgr->curr_token && string_compare(par_mgr->curr_token->value, "=")) {
+	// Check we can consume an EQUAL.
+	if (par_mgr->curr_token && par_mgr->curr_token->type == E_EQUAL_TOKEN) {
 		par_mgr_next(par_mgr);
 		if ((expr = parse_string(par_mgr)) || (expr = parse_expr(par_mgr)) || (expr = parse_array(par_mgr))) {
 
@@ -390,7 +384,6 @@ Node *parse_assignment(ParserMgr *par_mgr) {
 			// Join to return ast from expression.
 			ast = Node_new(1); 
 			ast->type = E_EQUAL_NODE;
-			ast->value = "=";
 			ast->data->AsnStmtNode.left = lhand;
 			ast->data->AsnStmtNode.right = expr;
 		}
@@ -407,8 +400,10 @@ Node *parse_assignment(ParserMgr *par_mgr) {
 }
 
 Node *parse_group(ParserMgr *par_mgr) {
+	Token *peek = TokenMgr_peek_token(par_mgr->tok_mgr);
+
 	// If string isn't next then store error and move to next token.
-	if (!string_compare(TokenMgr_peek_token(par_mgr->tok_mgr)->type, "STRING")) {
+	if (peek->type != E_STRING_TOKEN) {
 		ParserMgr_add_error(par_mgr->err_handle, TokenMgr_current_token(par_mgr->tok_mgr), ERR_EMPTY_GROUP);
 		TokenMgr_next_token(par_mgr->tok_mgr);
 		return NULL;
@@ -443,7 +438,7 @@ Node *parse_group(ParserMgr *par_mgr) {
 
 	// Iterate through commands and append to group.
 	// Below will build a circular single linked list.
-	while (!TokenMgr_is_last_token(par_mgr->tok_mgr) && string_compare(par_mgr->curr_token->type, "STRING")) {
+	while (!TokenMgr_is_last_token(par_mgr->tok_mgr) && par_mgr->curr_token->type == E_STRING_TOKEN) {
 		curr = parse_string(par_mgr);
 		curr->data = malloc(sizeof(union SyntaxNode));
 		if (!prev)
@@ -465,10 +460,10 @@ Node *parse_keyword(ParserMgr *par_mgr) {
 	Token *peek = TokenMgr_peek_token(par_mgr->tok_mgr);
 
 	// If valid arg isn't next then store error and move to next token.
-	if (!string_compare(peek->type, "STRING")
-	&& !string_compare(peek->type, "MIXSTRING")
-		&& !string_compare(peek->type, "INTEGER")
-		&& !string_compare(peek->type, "IDENTIFIER")) {
+	if (peek->type != E_STRING_TOKEN
+		&& peek->type != E_MIXSTR_TOKEN
+		&& peek->type != E_INTEGER_TOKEN
+		&& peek->type != E_IDENTIFIER_TOKEN) {
 		ParserMgr_add_error(par_mgr->err_handle, TokenMgr_current_token(par_mgr->tok_mgr), ERR_EMPTY_STMT);
 		par_mgr_next(par_mgr);
 		return NULL;
@@ -515,15 +510,15 @@ Node *Parser_parse(ParserMgr *par_mgr) {
 
 	// Store resulting tree.
 	Node *ast = NULL;
-
+	
 	while (!TokenMgr_is_last_token(par_mgr->tok_mgr)) {
-		if (strcmp(par_mgr->curr_token->type, "IDENTIFIER") == 0) {
+		if (par_mgr->curr_token->type == E_IDENTIFIER_TOKEN) {
 			ast = parse_assignment(par_mgr);
 		}
-		else if (strcmp(par_mgr->curr_token->type, "GROUP") == 0) {
+		else if (par_mgr->curr_token->type == E_GROUP_TOKEN) {
 			ast = parse_group(par_mgr);
 		}
-		else if (strcmp(par_mgr->curr_token->type, "KEYWORD") == 0) {
+		else if (par_mgr->curr_token->type == E_KEYWORD_TOKEN) {
 			ast = parse_keyword(par_mgr);
 		}
 		else {

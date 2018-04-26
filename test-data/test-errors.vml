@@ -1,0 +1,17 @@
+# Unknown literals
+$name = ^ -
+@ ^ @ ~
+
+# Incomplete types
+$name = "sayed
+$ = `123
+$4566666 = wddsd
+
+# Parsing Errors
+$name = $name
+$age = [ 33
+$op = "name" + 456
+$s = 34 +
+$d = 34 + 1 / (2 - )
+$d = 34 + 1 / (2 - 1
+$movies = ["batman", "superman", []
