@@ -29,7 +29,7 @@
 			"problemMatcher": []
 		},
 		{
-			"label": "valgrind rel",
+			"label": "valgrind",
 			"type": "shell",
 			"command": "valgrind",
 			"args": [

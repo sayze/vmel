@@ -1,0 +1,4 @@
+# Author: Sayed Sadeed
+# Date: 24/04/2018
+# Purpose: This vmel script covers test cases for built in functions. The below testing assumes happy path and therefore no erroneous code should be placed here intentionally.
+# For error testing a separate file exists inside the errors directory. 

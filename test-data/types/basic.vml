@@ -1,0 +1,41 @@
+# Author: Sayed Sadeed
+# Date: 24/04/2018
+# Purpose: This vmel script covers test cases for language types. The below testing assumes happy path and therefore no erroneous code should be placed here intentionally.
+# For error testing a separate file exists inside the errors directory. 
+
+print "********* Test: Variable Assignments *********"
+$name = "sayed"
+$age = 33
+$hobbies = ["swimming", "soccer", "bball"]
+$hobbies_rating = [ "swimming", "soccer", "bball", [4, 1, 5] ]
+$description = `My name is $name and I am $age years old`
+
+assert($name == "sayed")
+assert($age == 33)
+
+print "******* Testing Arithmetic Operators *********"
+$monthly_salary = 4000
+$yearly_salary = $monthly_salary * 12
+$weekly_salary = $monthly_salary / 4
+
+assert($monthly_salary == 4000)
+assert($yearly_salary == 48000)
+assert($weekly_salary == 1000)
+
+print "******* Testing Compare Operators *********"
+$my_income = 4000
+$avg_income = 4320
+$is_avg = $my_income == $avg_income
+$is_not = $my_income != $avg_income
+$is_less = $my_income < $avg_income
+$is_less_eq = $my_income <= $avg_income
+$is_greater = $my_income > $avg_income
+$is_greater_eq = $my_income >= $avg_income
+
+assert($is_avg)
+assert(!$is_not)
+assert($is_less)
+assert($is_less_eq)
+assert(!$is_greater)
+assert($is_greater)eq
+

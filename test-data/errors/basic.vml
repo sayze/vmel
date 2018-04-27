@@ -1,3 +1,7 @@
+# Author: Sayed Sadeed
+# Date: 24/04/2018
+# Purpose: This vmel script covers test cases for erroneous code.
+
 # Unknown literals
 $name = ^ -
 @ ^ @ ~
