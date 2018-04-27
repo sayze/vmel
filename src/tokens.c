@@ -3,7 +3,7 @@
 #include "tokens.h"
 
 static const char *Keywords[] = {
-	"print", "func", "if", "else", "foreach"
+	"print", "func", "if", "else", "foreach", "assert"
 };
 
 int is_valid_keyword(char *str) {

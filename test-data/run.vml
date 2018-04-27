@@ -1,1 +1,1 @@
-print "My script is cool"
+$arr = ["sayed", "s", [1, 4], [3, 4, ["S"]]

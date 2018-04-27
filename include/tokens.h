@@ -30,7 +30,7 @@
 #define DOT '.'
 #define BTICK '`'
 
-#define KWORDS_SIZE 5
+#define KWORDS_SIZE 6
 
 /**
  * brief Token type in conjunction to the derived types.

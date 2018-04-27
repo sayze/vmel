@@ -185,7 +185,7 @@ int Nexec_func_node(NexecMgr *nexec_mgr) {
 		VString mixs;
 		// Result of arithmetic operations.
 		int calc = 0;
-		// Pointer to statement arguments.
+		// Pointer to function arguments.
 		Node *curr_args = curr_node->data->FuncNode.args;
 
 		switch (curr_args->type) {

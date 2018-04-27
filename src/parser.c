@@ -123,16 +123,11 @@ void ParserMgr_add_error(Error *err_handle, Token *offender, int err_type) {
 	// Don't exceed error limit.
 	if (err_handle->error_cap == err_handle->error_ctr)
 		return;
-	
-	// String representation of offending line number. 
+	 
 	char off_lineno[16]; // Assume that a source file won't exceed 9999,9999,9999,9999 lines ?
-	// Pointer to offending value.
 	char *off_value = offender->value;
-	// The error template which is needed.
 	const char *template = Error_Templates[err_type];
-	// Array containing string of substitute values.
 	char *template_values[] = {off_value, off_lineno};
-	// Final template error.
 	char *template_fmt = NULL;
 
 	// We can't convert line number to string so replace with undefined.	
@@ -288,47 +283,30 @@ Node *parse_array(ParserMgr *par_mgr) {
 	// Store final array node.
 	Node *arr = NULL;
 
-	// Array must begin with '['
 	if (par_mgr->curr_token->type != E_LBRACKET_TOKEN)
 		return NULL;
 
-	// Push token pointer forward.
-	par_mgr_next(par_mgr);	
-
-	// Handle first element.
-	if (par_mgr->curr_token->type == E_STRING_TOKEN) {
-		ret = parse_string(par_mgr);
-	}
-	else if (par_mgr->curr_token->type == E_INTEGER_TOKEN) {
-		ret = parse_factor(par_mgr);
-	}
-	else if (par_mgr->curr_token->type == E_LBRACKET_TOKEN) {
-		ret = parse_array(par_mgr);
-	}
-	
 	// Instansiate array node.
-	// Add node to array node if valid.
 	arr = node_new_array();
-	if (ret)
-		arr->data->ArrayNode.items[arr->data->ArrayNode.dctr++] = ret;
 	
-	// Iterate using comma as delimiter.
-	while (!TokenMgr_is_last_token(par_mgr->tok_mgr) && par_mgr->curr_token->type == E_COMMA_TOKEN) {
+	while (!TokenMgr_is_last_token(par_mgr->tok_mgr) && par_mgr->curr_token->type != E_RBRACKET_TOKEN) {
 		
 		// Next token.
 		par_mgr_next(par_mgr);		
 
-		if (par_mgr->curr_token->type == E_INTEGER_TOKEN) {
-			ret = parse_factor(par_mgr);
-		}
-		else if (par_mgr->curr_token->type == E_STRING_TOKEN) {
-			ret = parse_string(par_mgr);
-		}
-		else if (par_mgr->curr_token->type == E_LBRACKET_TOKEN) {
-			ret = parse_array(par_mgr);
-		}
-		else {
-			ret = NULL;
+		switch(par_mgr->curr_token->type) {
+			case E_INTEGER_TOKEN: 
+				ret = parse_factor(par_mgr);
+				break;
+			case E_STRING_TOKEN: 
+				ret = parse_string(par_mgr);
+				break;
+			case E_LBRACKET_TOKEN: 
+				ret = parse_array(par_mgr);
+				break;
+			default:
+				ret = NULL;
+				break;
 		}
 
 		// Ignore empty values after comma.
