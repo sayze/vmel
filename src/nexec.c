@@ -28,8 +28,8 @@ static char *expand_variable(SyTable *sy_table, char *name) {
 	return sy->val;
 }
 
-// Expand a mixed string. 
-static VString exec_mixed_string(char *mstr, NexecMgr *nexec_mgr) {
+// Expand a mixed string and return malloc'ed value. 
+static char *exec_mixed_string(char *mstr, NexecMgr *nexec_mgr) {
 	VString mixs = VString_create(mstr, 0);
 
 	char *m_str_it = strchr(mstr, VAR);
@@ -67,13 +67,15 @@ static VString exec_mixed_string(char *mstr, NexecMgr *nexec_mgr) {
 		}
 		VString_free(&buf);
 	}
-	return mixs;
+	return mixs.str;
 }
 
 // Execute a expression node (3 + 4).
 static int exec_expression(NexecMgr *nexec_mgr, Node *node) {
 	int ret = 0;
-	
+	char *vals;
+	Symbol *sy;
+
 	switch(node->type) {
 		case E_GREATERTHANEQ_NODE:
 			ret = exec_expression(nexec_mgr, node->data->BinExpNode.left) >= exec_expression(nexec_mgr, node->data->BinExpNode.right);
@@ -93,7 +95,7 @@ static int exec_expression(NexecMgr *nexec_mgr, Node *node) {
 		case E_EEQUAL_NODE:
 			ret = exec_expression(nexec_mgr, node->data->BinExpNode.left) == exec_expression(nexec_mgr, node->data->BinExpNode.right);
 			break;
-		case E_ADD_NODE:
+		case E_ADD_NODE: 
 			ret += exec_expression(nexec_mgr, node->data->BinExpNode.left) + exec_expression(nexec_mgr, node->data->BinExpNode.right);
 			break;
 		case E_MINUS_NODE:
@@ -104,18 +106,31 @@ static int exec_expression(NexecMgr *nexec_mgr, Node *node) {
 			break;
 		case E_TIMES_NODE:
 			ret = exec_expression(nexec_mgr, node->data->BinExpNode.left) *  exec_expression(nexec_mgr, node->data->BinExpNode.right);
-			break;	
+			break;
+		case E_INTEGER_NODE:
+			ret = string_to_int(node->value, strlen(node->value));
+			break;
+		case E_STRING_NODE:
+			ret = string_to_ascii(node->value);
+			break;
+		case E_MIXSTR_NODE:
+			vals = exec_mixed_string(node->value, nexec_mgr);
+			ret = string_to_ascii(vals);
+			break;
+		case E_IDENTIFIER_NODE:
+			sy = SyTable_get_symbol(nexec_mgr->sy_table, node->value);
+			// TODO: At the moment no way of telling if identifier node
+			// is a 'Number' string or 'Alpha	' string so we attempt to
+			// first convert to integer if fails then fallback to ascii encoding.
+			// A fix would be to include type information in the symbol table by
+			// deducing all identifiers prior to function execution. But is this double 
+			// handling ?
+			ret = string_to_int(sy->val, strlen(sy->val));
+			if (ret < 0) ret = string_to_ascii(sy->val);
+			break;
 		default:
-			if (node->type == E_IDENTIFIER_NODE) {
-				Symbol *sy = SyTable_get_symbol(nexec_mgr->sy_table, node->value);
-				ret = string_to_int(sy->val, strlen(sy->val));
-			}
-			else {
-				ret = string_to_int(node->value, strlen(node->value));
-			}
 			break;
 	}
-
 	return ret;
 }
 
@@ -176,17 +191,15 @@ int Nexec_func_node(NexecMgr *nexec_mgr) {
 
 	// Current node in manager.
 	Node *curr_node = nexec_mgr->curr_node;
-
+	// Value of a variable.
+	char *var_val = NULL;
+	// Pointer to function arguments.
+	Node *curr_args = curr_node->data->FuncNode.args;
+		
 	if (string_compare(curr_node->value, "print")) {
 		
-		// Value of a variable.
-		char *var_val = NULL;
-		// VString for mix string types.
-		VString mixs;
 		// Result of arithmetic operations.
 		int calc = 0;
-		// Pointer to function arguments.
-		Node *curr_args = curr_node->data->FuncNode.args;
 
 		switch (curr_args->type) {
 			case E_STRING_NODE:
@@ -201,9 +214,9 @@ int Nexec_func_node(NexecMgr *nexec_mgr) {
 					NexecMgr_add_error(nexec_mgr->err_handle, curr_args->value, curr_node->value);
 				break;
 			case E_MIXSTR_NODE:
-				mixs = exec_mixed_string(curr_args->value, nexec_mgr);
-				printf("%s\n", mixs.str);
-				VString_free(&mixs);
+				var_val = exec_mixed_string(curr_args->value, nexec_mgr);
+				printf("%s\n", var_val);
+				free(var_val);
 				break;
 			default:
 				// Derive final value from operation node.
@@ -212,7 +225,6 @@ int Nexec_func_node(NexecMgr *nexec_mgr) {
 				break;
 		} 
 	}
-
 	return 0;
 }
 
@@ -241,7 +253,8 @@ int Nexec_assignment_node(NexecMgr *nexec_mgr) {
 		if (exp_val)
 			SyTable_update_symbol(nexec_mgr->sy_table, asn_left_node->value, exp_val);
 	}
-	else if (Node_is_binop(asn_right_node)) {
+	//TODO: Since no concept of ternary operators we can group storage of below.
+	else if (Node_is_binop(asn_right_node)|| Node_is_compare(asn_right_node)) {
 		
 		// Derive final value from operation node.
 		int calc = exec_expression(nexec_mgr, asn_right_node); 
@@ -253,20 +266,10 @@ int Nexec_assignment_node(NexecMgr *nexec_mgr) {
 		// free original converted string.
 		free(conv);
 	}
-	else if (Node_is_compare(asn_right_node)) {
-		
-		// Get result from comparison.
-		// TODO: At this point 0 maps to false and 1 maps to true. Will need modifications to handle ternary
-		int result = exec_expression(nexec_mgr, asn_right_node); 
-		// Convert the integer to string.
-		char *conv = result ? "true" : "false";
-
-		SyTable_update_symbol(nexec_mgr->sy_table, asn_left_node->value, conv);
-	}
 	else if (asn_right_node->type == E_MIXSTR_NODE) {
-		VString mixs = exec_mixed_string(asn_right_node->value, nexec_mgr);
-		SyTable_update_symbol(nexec_mgr->sy_table, asn_left_node->value, mixs.str);
-		VString_free(&mixs);
+		char *mixs = exec_mixed_string(asn_right_node->value, nexec_mgr);
+		SyTable_update_symbol(nexec_mgr->sy_table, asn_left_node->value, mixs);
+		free(mixs);
 	}
 
 	return 0;

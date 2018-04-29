@@ -61,6 +61,7 @@ void ParserMgr_add_error(Error *err_handle, Token *offender, int err_type);
  */
 Node *parse_group(ParserMgr *par_mgr);
 
+Node *parse_compare(ParserMgr *par_mgr);
 /**
  * @brief Will consume a keyword based on grammar defintion.
  * 
@@ -135,6 +136,6 @@ Node *Parser_parse(ParserMgr *par_mgr);
  * @param par_mgr ParserMgr instance.
  * @param type The token type to skip to.
  */
-void ParserMgr_skip_to(ParserMgr *par_mgr, char *type);
+void ParserMgr_skip_to(ParserMgr *par_mgr, TokenType type);
 
 #endif

@@ -30,13 +30,13 @@
 #define DOT '.'
 #define BTICK '`'
 
-#define KWORDS_SIZE 6
+#define KWORDS_SIZE 7
 
 /**
  * brief Token type in conjunction to the derived types.
  */
 typedef enum {
-	E_GROUP_TOKEN,
+	E_EOF_TOKEN,
 	E_KEYWORD_TOKEN,
 	E_IDENTIFIER_TOKEN,
 	E_STRING_TOKEN,
@@ -61,8 +61,9 @@ typedef enum {
 	E_NOT_TOKEN,
 	E_NEQUAL_TOKEN,
 	E_COMMA_TOKEN,
+	E_STMT_TOKEN,
 	E_LBRACKET_TOKEN,
-	E_RBRACKET_TOKEN,
+	E_RBRACKET_TOKEN
 } TokenType;
 
 /**

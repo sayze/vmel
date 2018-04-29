@@ -110,6 +110,8 @@ Node *Node_new(int wdata);
  */
  int NodeMgr_add_node(NodeMgr *node_mgr, Node *node);
 
+ Node *NodeMgr_find_node(NodeMgr *node_mgr, char *value);
+
 /**
  * @brief Free all resources creates by node manager. Including node manager itself.
  *

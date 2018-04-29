@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdarg.h>
 #include "utils.h"	
 #include "parser.h"
 #include "tokenizer.h"   
@@ -10,23 +11,29 @@
 // Below are the errors which map to Error_Templates.
 #define ERR_UNEXPECTED 0
 #define ERR_GROUP_EXIST 1
-#define ERR_EMPTY_GROUP 2
+#define ERR_UNCLOSED_GROUP 2
 #define ERR_EMPTY_STMT 3
 #define ERR_ARRAY_EMPTY 4
-#define ERR_NO_CLOSING 5
-#define ERR_NAKED_VARIABLE 6
-#define ERR_INVALID_TYPES 7
+#define ERR_MISSING_BRACKET 5
+#define ERR_MISSING_BRACE 6
+#define ERR_MISSING_PAREN 7
+#define ERR_NAKED_VARIABLE 8
+#define ERR_INVALID_TYPES 9
+#define ERR_EMPTY_GROUP 10
 
 // These are the errors a parser may generate. They are mapped to the #DEFINE above.
 static const char *Error_Templates[] = {
-	"* Parsing error : unexpected @0 found in line @1",
-	"* Notice : Duplicate definition {@0} already defined in line @1",
-	"* Notice : Empty group {@0} must contain commands in line @1",
-	"* Parsing error: Statement '@0' missing arguments in line @1",
-	"* Parsing error : Expected array item after comma but found NULL near @0 in line @1",
-	"* Syntax error: Missing closing bracket near '@0' in line @1",
-	"* Parsing error: '$@0' declaraion must be followed by valid assignment in line @1",
-	"* Cannot perform operation on incompatible types near @0",
+	"Parsing error : unexpected @0 found in line @1",
+	"Parsing Error : Duplicate definition {@0} already defined in line @1",
+	"Syntax error : Group {@0} missing closing tag in line @1",
+	"Parsing error: Statement '@0' missing arguments in line @1",
+	"Parsing error : Expected array item after comma but found NULL near @0 in line @1",
+	"Syntax error: Missing closing ']' near '@0' in line @1",
+	"Syntax error: Missing closing '}' near '@0' in line @1",
+	"Syntax error: Missing closing ')' near '@0' in line @1",
+	"Parsing error: '$@0' declaraion must be followed by valid assignment in line @1",
+	"Parsing error: Operation on incompatible types near '@0' in line @1",
+	"Parsing error: Group {@0} must contain commands, in line @1",
 };
 
 // Sync ParserMgr internal token to be current token held by TokenMgr.
@@ -99,6 +106,25 @@ static Node *node_new_array() {
 	return arr;
 }
 
+static int parser_expects(ParserMgr *par_mgr, int err_code, int ct, ...) {
+	va_list ap;
+	int ret = 1;
+	int arg;
+	va_start(ap, ct);
+
+	for( int i = 0 ; i < ct; i++ ) {
+		arg = va_arg( ap, int);
+		if (par_mgr->curr_token->type != arg) {
+			ParserMgr_add_error(par_mgr->err_handle, par_mgr->curr_token, err_code);
+			par_mgr_next(par_mgr);
+			ret = 0;
+		}
+	}
+
+	va_end(ap);
+	return ret;
+}
+
 ParserMgr *ParserMgr_new() {
 	ParserMgr *ps = malloc(sizeof(ParserMgr));
 	ps->curr_token = NULL;
@@ -141,8 +167,8 @@ void ParserMgr_add_error(Error *err_handle, Token *offender, int err_type) {
 	err_handle->error_ctr++;
 }
 
-void ParserMgr_skip_to(ParserMgr *par_mgr, char *type) {
-	while (!TokenMgr_is_last_token(par_mgr->tok_mgr) && !string_compare(type, par_mgr->curr_token->value)) {
+void ParserMgr_skip_to(ParserMgr *par_mgr, TokenType type) {
+	while (!TokenMgr_is_last_token(par_mgr->tok_mgr) && par_mgr->curr_token->type != type) {
 		par_mgr_next(par_mgr);
 	}
 }
@@ -185,10 +211,12 @@ Node *parse_factor(ParserMgr *par_mgr) {
 		 
 		 // Should have closing paren.
 		 if (par_mgr->curr_token->type != E_RPAREN_TOKEN)
-			 ParserMgr_add_error(par_mgr->err_handle, TokenMgr_prev_token(par_mgr->tok_mgr), ERR_NO_CLOSING);
-		 
-		 par_mgr_next(par_mgr); 
+			 ParserMgr_add_error(par_mgr->err_handle, TokenMgr_prev_token(par_mgr->tok_mgr), ERR_MISSING_PAREN);
 	 }
+	 else {
+		 res = parse_string(par_mgr);
+	 }
+	 
 	 return res;
 }
 
@@ -203,7 +231,6 @@ Node *parse_term(ParserMgr *par_mgr) {
 
 		if (par_mgr->curr_token->type == E_ASTERISK_TOKEN) {
 			bop->type = E_TIMES_NODE;
-			bop->value = "*"; 
 		}
 		else if (par_mgr->curr_token->type == E_FSLASH_TOKEN) {
 			bop->type = E_DIV_NODE;
@@ -211,17 +238,15 @@ Node *parse_term(ParserMgr *par_mgr) {
 		else {
 			ParserMgr_add_error(par_mgr->err_handle, par_mgr->curr_token, ERR_UNEXPECTED);
 			TokenMgr_next_token(par_mgr->tok_mgr);
-			continue;
 		}
+
 		TokenMgr_next_token(par_mgr->tok_mgr);
 		bop->data->BinExpNode.left = res;
 		bop->data->BinExpNode.right = parse_factor(par_mgr);
 
-		// Ensure right operand.
-		if (!bop->data->BinExpNode.right) {
-			ParserMgr_add_error(par_mgr->err_handle, TokenMgr_prev_token(par_mgr->tok_mgr), ERR_UNEXPECTED);
+		if (!bop->data->BinExpNode.right || !bop->data->BinExpNode.left) {
+			ParserMgr_add_error(par_mgr->err_handle, TokenMgr_prev_token(par_mgr->tok_mgr), ERR_INVALID_TYPES);
 			TokenMgr_next_token(par_mgr->tok_mgr);
-			continue;
 		}
 
 		par_mgr->expr_depth++;
@@ -247,26 +272,21 @@ Node *parse_expr(ParserMgr *par_mgr) {
 		} else if (par_mgr->curr_token->type == E_PLUS_TOKEN) {
 			bop->type = E_ADD_NODE;
 		}
-		else if (is_compare_operator(par_mgr->curr_token->type)) {	
-			bop->value = par_mgr->curr_token->value;
-			bop->type = get_compare_type(bop->value);
-		} 
+		else if (is_compare_operator(par_mgr->curr_token->type)) {
+			bop->type = get_compare_type(par_mgr->curr_token->value);
+		}
 		else {
 			ParserMgr_add_error(par_mgr->err_handle, par_mgr->curr_token, ERR_UNEXPECTED);
 			TokenMgr_next_token(par_mgr->tok_mgr);
-			continue;
 		}
-		
-		TokenMgr_next_token(par_mgr->tok_mgr);
+
 		bop->data->BinExpNode.left = res;
-		bop->data->BinExpNode.right = parse_expr(par_mgr);
-		
-		// Ensure right operand.
-		if (!bop->data->BinExpNode.right) {
-			ParserMgr_add_error(par_mgr->err_handle, TokenMgr_prev_token(par_mgr->tok_mgr), ERR_UNEXPECTED);
+		TokenMgr_next_token(par_mgr->tok_mgr);
+		bop->data->BinExpNode.right = parse_term(par_mgr);
+
+		if (!bop->data->BinExpNode.right || !bop->data->BinExpNode.left) {
 			ParserMgr_add_error(par_mgr->err_handle, TokenMgr_prev_token(par_mgr->tok_mgr), ERR_INVALID_TYPES);
 			TokenMgr_next_token(par_mgr->tok_mgr);
-			continue;
 		}
 
 		par_mgr->expr_depth++;
@@ -322,7 +342,7 @@ Node *parse_array(ParserMgr *par_mgr) {
 	}
 	
 	if (par_mgr->curr_token->type != E_RBRACKET_TOKEN)
-		ParserMgr_add_error(par_mgr->err_handle, TokenMgr_prev_token(par_mgr->tok_mgr), ERR_NO_CLOSING);
+		ParserMgr_add_error(par_mgr->err_handle, TokenMgr_prev_token(par_mgr->tok_mgr), ERR_MISSING_BRACKET);
 	else
 		par_mgr_next(par_mgr);
 	
@@ -348,11 +368,11 @@ Node *parse_assignment(ParserMgr *par_mgr) {
 	// Check we can consume an EQUAL.
 	if (par_mgr->curr_token && par_mgr->curr_token->type == E_EQUAL_TOKEN) {
 		par_mgr_next(par_mgr);
-		if ((expr = parse_string(par_mgr)) || (expr = parse_expr(par_mgr)) || (expr = parse_array(par_mgr))) {
+		if ((expr = parse_expr(par_mgr)) || (expr = parse_array(par_mgr))) {
 
 			// Add symbol if not exits.
 			if (!SyTable_get_symbol(par_mgr->sy_table, tok_start_ptr->value))
-				SyTable_add_symbol(par_mgr->sy_table, tok_start_ptr, E_IDN_TYPE);
+				SyTable_add_symbol(par_mgr->sy_table, tok_start_ptr->value, NULL, tok_start_ptr->lineno ,E_IDN_TYPE);
 			
 			// Identifier.
 			lhand = Node_new(0); 
@@ -378,47 +398,42 @@ Node *parse_assignment(ParserMgr *par_mgr) {
 }
 
 Node *parse_group(ParserMgr *par_mgr) {
-	Token *peek = TokenMgr_peek_token(par_mgr->tok_mgr);
+	Token *grp = NULL;
 
-	// If string isn't next then store error and move to next token.
-	if (peek->type != E_STRING_TOKEN) {
-		ParserMgr_add_error(par_mgr->err_handle, TokenMgr_current_token(par_mgr->tok_mgr), ERR_EMPTY_GROUP);
-		TokenMgr_next_token(par_mgr->tok_mgr);
-		return NULL;
-	}
+	// Index group name token.
+	grp = TokenMgr_prev_token(par_mgr->tok_mgr);
 
-	// Check if group already defined. Add it to sytable if it doesn't.
-	// Otherwise store "duplicate group" error.
+	if (!parser_expects(par_mgr, ERR_UNEXPECTED, 1, E_LBRACE_TOKEN)) return NULL;
+
+	// Check if group already defined.
 	if (SyTable_get_symbol(par_mgr->sy_table, par_mgr->curr_token->value)) {
 		ParserMgr_add_error(par_mgr->err_handle, par_mgr->curr_token, ERR_GROUP_EXIST);
 		par_mgr_next(par_mgr);
 		return NULL;
 	}
 
+	par_mgr_next(par_mgr);
+
 	// Group node itself. i.e {some_group}.
 	Node *group = Node_new(1);
-	// Previously read command <string>.
+	// Previously read command.
 	Node *prev = NULL;
-	// Recently read command <string>
+	// Recently read command.
 	Node *curr = NULL;
-	
-	// Create group entry.
-	SyTable_add_symbol(par_mgr->sy_table, par_mgr->curr_token, E_GROUP_TYPE);
-	
-	par_mgr_sync(par_mgr);
-	
 	// Setup group node data.
-	group->value = par_mgr->curr_token->value;
+	group->value = grp->value;
+	group->data->GroupNode.next = NULL;
 	group->type = E_GROUP_NODE;
 
-	// Store next token in parser state.
-	par_mgr->curr_token =  TokenMgr_next_token(par_mgr->tok_mgr);
-
+	// Create group entry.
+	SyTable_add_symbol(par_mgr->sy_table, group->value, NULL, grp->lineno, E_GROUP_TYPE);
+	
 	// Iterate through commands and append to group.
 	// Below will build a circular single linked list.
 	while (!TokenMgr_is_last_token(par_mgr->tok_mgr) && par_mgr->curr_token->type == E_STRING_TOKEN) {
 		curr = parse_string(par_mgr);
 		curr->data = malloc(sizeof(union SyntaxNode));
+		
 		if (!prev)
 			group->data->GroupNode.next = curr;
 		else
@@ -426,16 +441,23 @@ Node *parse_group(ParserMgr *par_mgr) {
 		prev = curr;
 	}
 
-	// Point final command back to group node.
-	curr->data->GroupNode.next = group;
-	prev = NULL;
-	curr = NULL;
+	if (curr) curr->data->GroupNode.next = group;
+	
+	parser_expects(par_mgr, ERR_MISSING_BRACE, 1, E_RBRACE_TOKEN);
+	
+	par_mgr_next(par_mgr);
+	
 	return group;
 }
 
 Node *parse_keyword(ParserMgr *par_mgr) {
 	// Peek into the next token in TokenMgr.
 	Token *peek = TokenMgr_peek_token(par_mgr->tok_mgr);
+
+	if (peek->type == E_LBRACE_TOKEN) {
+		par_mgr_next(par_mgr);
+		return parse_group(par_mgr);
+	}
 
 	// If valid arg isn't next then store error and move to next token.
 	if (peek->type != E_STRING_TOKEN
@@ -457,6 +479,7 @@ Node *parse_keyword(ParserMgr *par_mgr) {
 	par_mgr_next(par_mgr);
 
 	// If args is valid then store.
+	// TODO: Consolidate below to one ?
 	if ((args = parse_expr(par_mgr)) || (args = parse_string(par_mgr))) {
 		stmt = Node_new(1);
 		stmt->type = E_FUNC_NODE;
@@ -489,12 +512,9 @@ Node *Parser_parse(ParserMgr *par_mgr) {
 	// Store resulting tree.
 	Node *ast = NULL;
 	
-	while (!TokenMgr_is_last_token(par_mgr->tok_mgr)) {
+	while (!TokenMgr_is_last_token(par_mgr->tok_mgr) && par_mgr->err_handle->error_ctr <= 1) {
 		if (par_mgr->curr_token->type == E_IDENTIFIER_TOKEN) {
 			ast = parse_assignment(par_mgr);
-		}
-		else if (par_mgr->curr_token->type == E_GROUP_TOKEN) {
-			ast = parse_group(par_mgr);
 		}
 		else if (par_mgr->curr_token->type == E_KEYWORD_TOKEN) {
 			ast = parse_keyword(par_mgr);
@@ -508,6 +528,9 @@ Node *Parser_parse(ParserMgr *par_mgr) {
 		if (ast != NULL) {
 			ast->depth = par_mgr->expr_depth;
 			NodeMgr_add_node(par_mgr->node_mgr, ast);
+		}
+		else {
+			ParserMgr_skip_to(par_mgr, E_IDENTIFIER_TOKEN);
 		}
 
 		par_mgr_sync(par_mgr);

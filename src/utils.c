@@ -37,10 +37,15 @@ char *file_to_buffer(const char *filename) {
 
 int string_to_int(char *str, size_t len) {
 	if (str == NULL)
-		return 0;
+		return -1;
 		
 	int dec = 0;
 	for(size_t i =0; i<len; i++){
+		if (!isdigit(str[i])) {
+			dec = -1;
+			break;
+		}
+		
 		dec = dec * 10 + ( str[i] - '0' );
 	}
 	return dec;
@@ -100,7 +105,7 @@ char *string_map_vars(const char *src, char **vars, size_t src_len, size_t vars_
 	new_str[new_str_i++] = '\0';
 	
 	// Resize memory if more than x amount.
-	if (new_str_i - upper_n >= 3) {
+	if (new_str_i - upper_n > 4) {
 		char *tmp =  realloc(new_str, new_str_i * sizeof(char));
 		// Successfull ?
 		if (tmp == NULL)
@@ -145,6 +150,15 @@ int string_compare(char *str1, char *str2) {
 	else
 		return 0;
 }	
+
+unsigned int string_to_ascii(char *str_rep) {
+	unsigned int asci = 0;
+	while(*str_rep) {
+		asci += (int) *str_rep;
+		str_rep++;
+	}	
+	return asci;
+}
 
 int is_valid_identifier(char id) {
 	return (isalpha(id) || id == '_' || id == '-' || isdigit(id));

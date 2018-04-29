@@ -149,4 +149,15 @@ int is_valid_identifier(char id);
  */
 int null_check(void *obj,char *hint);
 
+/**
+ * @brief convert a string to a ascii representation.
+ * 
+ * Function will convert each individual character to their
+ * respective ascii value aggregated. String is assumed to be null terminated.
+ * 
+ * @param str_rep String representation.
+ * @return Aggregated ascii representation.
+ */
+unsigned int string_to_ascii(char *str_rep);
+
 #endif

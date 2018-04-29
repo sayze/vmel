@@ -14,9 +14,11 @@ void SyTable_free(SyTable *sy_table) {
 	if (null_check(sy_table, "sytable free")) return;
 
 	for (size_t i = 0; i < sy_table->sym_ctr; i++) {
-		if (sy_table->symbols[i]->sy_type == E_IDN_TYPE && sy_table->symbols[i]->val) {
+		if (sy_table->symbols[i]->val) {
 			free(sy_table->symbols[i]->val);
+			
 		}
+		free(sy_table->symbols[i]->label);
 		free(sy_table->symbols[i]);
 	}
 	
@@ -34,7 +36,7 @@ Symbol *SyTable_get_symbol(SyTable *sy_table, char *sy_name) {
 	if (null_check(sy_table, "sytable free")) return NULL;
 		
 	for (size_t idx = 0; idx < sy_table->sym_ctr; idx++ ) {
-			if (strcmp(sy_table->symbols[idx]->sy_token->value, sy_name) == 0) {
+			if (strcmp(sy_table->symbols[idx]->label, sy_name) == 0) {
 				return sy_table->symbols[idx];
 			}
 	}
@@ -42,8 +44,8 @@ Symbol *SyTable_get_symbol(SyTable *sy_table, char *sy_name) {
 	return NULL;
 }
 
-int SyTable_add_symbol(SyTable *sy_table, Token *sy_tok, enum SyType sy_type) {
-	if (null_check(sy_table, "sytable add") || null_check(sy_tok, "sytable add")) 
+int SyTable_add_symbol(SyTable *sy_table, char *label, char *val, unsigned int lineno, enum SyType sy_type) {
+	if (null_check(sy_table, "sytable add")) 
 		return -1;
 
 	if (sy_table->sym_cap - sy_table->sym_ctr <= 5) {
@@ -56,7 +58,9 @@ int SyTable_add_symbol(SyTable *sy_table, Token *sy_tok, enum SyType sy_type) {
 	
 	// Add symbol and increment counter.
 	Symbol *sy = Symbol_new();
-	sy->sy_token = sy_tok;
+	sy->val = val ? string_dup(val) : NULL;
+	sy->lineno = lineno;
+	sy->label = string_dup(label);
 	sy->sy_type = sy_type;
 	sy_table->symbols[sy_table->sym_ctr++] = sy;
 	sy = NULL;
@@ -94,7 +98,7 @@ void SyTable_print_symbols(SyTable *sy_table) {
 		else
 			t = "Group Name";
 		char *sy_val = sy_table->symbols[i]->val ? sy_table->symbols[i]->val : "Undefined";
-		printf("--> Name : %s | Type: %s  | Value: %s \n", sy_table->symbols[i]->sy_token->value, t, sy_val);
+		printf("--> Name : %s | Type: %s  | Value: %s \n", sy_table->symbols[i]->label, t, sy_val);
 	}
 }
 

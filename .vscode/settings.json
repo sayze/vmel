@@ -11,7 +11,8 @@
 		"string.h": "c",
 		"*.tcc": "c",
 		"cstring": "c",
-		"memory": "c"
+		"memory": "c",
+		"exception": "c"
 	},
 	"C_Cpp.dimInactiveRegions": false
 }

@@ -11,27 +11,25 @@
 #include "utils.h"
 
 int main(int argc, char *argv[]) {
+
+	char *d = "sup my friends";
+	char *d2 = "sup my friends";
+	char *d4 = "supmy friends";
+	int asc = string_to_ascii(d);
+	int asc2 = string_to_ascii(d2);
+	int asc3 = string_to_ascii(d4);
+
 	
 	// Input stream used for file.
-	char *buff_in = NULL;
-	// Hold parsed tokens/lexeme.
-	TokenMgr *tok_mgr = NULL;
-	// Resulting ast from parsing.
-	NodeMgr *node_mgr = NULL;
-	// Symbol table.
-	SyTable *sy_table = NULL;
-	// Parser Manager.
-	ParserMgr *par_mgr = NULL;
-	// Error handler.
-	Error *err_handle = NULL;
-	// Executioner of AST.
-	NexecMgr *nexec_mgr = NULL;
-	// Error status.
 	int err = 0;
-	// Run type.
-	int run_mode = 0;
+	char *buff_in = NULL;
+	TokenMgr *tok_mgr = NULL;
+	NodeMgr *node_mgr = NULL;
+	SyTable *sy_table = NULL;
+	ParserMgr *par_mgr = NULL;
+	Error *err_handle = NULL;
+	NexecMgr *nexec_mgr = NULL;
 
-	// Determine which mode. CLI or Source file. 
 	if (argc < 2) {
 		print_usage();
 		return 0;
@@ -47,7 +45,6 @@ int main(int argc, char *argv[]) {
 	err = TokenMgr_build_tokens(buff_in, tok_mgr);
 	free(buff_in);
 	
-	// Tokenizer was successfull.
 	if (!err) {
 		
 		// Instantiate required structs.

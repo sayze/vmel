@@ -51,7 +51,7 @@ static void node_free(Node *node) {
 		free(node->data->ArrayNode.items);
 		free(node->data);	
 	}
-	
+
 	free(node);
 }
 
@@ -70,18 +70,18 @@ int NodeMgr_free(NodeMgr *node_mgr) {
 				free(root_node->data->AsnStmtNode.left);
 				node_free(itr);
                 break;
-            case E_GROUP_NODE:
+			case E_FUNC_NODE:
+				node_free(root_node->data->FuncNode.args);
+				break;
+			case E_GROUP_NODE:
                 itr = root_node->data->GroupNode.next;
-                while (itr != root_node) {
+				while (itr && itr != root_node) {
                     prev = itr;
                     itr = itr->data->GroupNode.next;
                     free(prev->data);
                     free(prev);
-			    }
+				}
                 break;
-			case E_FUNC_NODE:
-				node_free(root_node->data->FuncNode.args);
-				break;
             default:
                 break;
         }
@@ -138,4 +138,17 @@ int NodeMgr_add_node(NodeMgr *node_mgr, Node *node) {
 
     node_mgr->nodes[node_mgr->nodes_ctr++] = node;
     return 0;
+}
+
+Node *NodeMgr_find_node(NodeMgr *node_mgr, char *value) {
+	if (null_check(node_mgr, "nodemgr find")) return NULL;
+	
+	Node *itr = NULL;
+	
+	for (size_t i = 0; i < node_mgr->nodes_ctr; i++) {
+		if (string_compare(node_mgr->nodes[i]->value, value))
+			itr = node_mgr->nodes[i];
+	}
+
+	return itr;
 }
