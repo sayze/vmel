@@ -30,7 +30,7 @@ static char *expand_variable(SyTable *sy_table, char *name) {
 
 // Expand a mixed string and return malloc'ed value. 
 static char *exec_mixed_string(char *mstr, NexecMgr *nexec_mgr) {
-	VString mixs = VString_create(mstr, 0);
+	VString_set(&nexec_mgr->buff, mstr);
 
 	char *m_str_it = strchr(mstr, VAR);
 
@@ -59,7 +59,7 @@ static char *exec_mixed_string(char *mstr, NexecMgr *nexec_mgr) {
 				NexecMgr_add_error(nexec_mgr->err_handle, buf.str+1, nexec_mgr->curr_node->value);
 			}
 			else {
-				VString_replace(&mixs, buf.str, var_val);
+				VString_replace(&nexec_mgr->buff, buf.str, var_val);
 			}
 
 			VString_set(&buf, "");
@@ -67,13 +67,12 @@ static char *exec_mixed_string(char *mstr, NexecMgr *nexec_mgr) {
 		}
 		VString_free(&buf);
 	}
-	return mixs.str;
+	return nexec_mgr->buff.str;
 }
 
 // Execute a expression node (3 + 4).
 static int exec_expression(NexecMgr *nexec_mgr, Node *node) {
 	int ret = 0;
-	char *vals;
 	Symbol *sy;
 
 	switch(node->type) {
@@ -114,8 +113,8 @@ static int exec_expression(NexecMgr *nexec_mgr, Node *node) {
 			ret = string_to_ascii(node->value);
 			break;
 		case E_MIXSTR_NODE:
-			vals = exec_mixed_string(node->value, nexec_mgr);
-			ret = string_to_ascii(vals);
+			exec_mixed_string(node->value, nexec_mgr);
+			ret = string_to_ascii(nexec_mgr->buff.str);
 			break;
 		case E_IDENTIFIER_NODE:
 			sy = SyTable_get_symbol(nexec_mgr->sy_table, node->value);
@@ -135,7 +134,7 @@ static int exec_expression(NexecMgr *nexec_mgr, Node *node) {
 }
 
 // Helper to convert intger to malloc'ed string.
-static char *expr_to_string(int src) {
+static char *expr_to_string(NexecMgr *nexec_mgr, int src) {
 	char *dest = malloc(6 * sizeof(char));
 	char *out = NULL;
 	
@@ -147,7 +146,9 @@ static char *expr_to_string(int src) {
 		dest = out;
 	}
 
-	return dest;
+	VString_set(&nexec_mgr->buff, dest);
+	free (dest);
+	return nexec_mgr->buff.str;
 }
 
 void NexecMgr_add_error(Error *err_handle, char *offender, char *hint) {
@@ -182,6 +183,7 @@ NexecMgr *NexecMgr_new(void) {
 
 int NexecMgr_free(NexecMgr *nexec_mgr) {
 	if (null_check(nexec_mgr, "nexecmgr free")) return -1;
+	VString_free(&nexec_mgr->buff);
 	free(nexec_mgr);
 	return 0;
 }
@@ -191,8 +193,6 @@ int Nexec_func_node(NexecMgr *nexec_mgr) {
 
 	// Current node in manager.
 	Node *curr_node = nexec_mgr->curr_node;
-	// Value of a variable.
-	char *var_val = NULL;
 	// Pointer to function arguments.
 	Node *curr_args = curr_node->data->FuncNode.args;
 		
@@ -207,16 +207,15 @@ int Nexec_func_node(NexecMgr *nexec_mgr) {
 				printf("%s\n", exec_string(curr_args));
 				break;
 			case E_IDENTIFIER_NODE:
-				var_val = expand_variable(nexec_mgr->sy_table, curr_args->value);
-				if (var_val)
-					printf("%s\n", var_val);
+				VString_set(&nexec_mgr->buff, expand_variable(nexec_mgr->sy_table, curr_args->value));
+				if (nexec_mgr->buff.str)
+					printf("%s\n", nexec_mgr->buff.str);
 				else
 					NexecMgr_add_error(nexec_mgr->err_handle, curr_args->value, curr_node->value);
 				break;
 			case E_MIXSTR_NODE:
-				var_val = exec_mixed_string(curr_args->value, nexec_mgr);
-				printf("%s\n", var_val);
-				free(var_val);
+				VString_set(&nexec_mgr->buff, exec_mixed_string(curr_args->value, nexec_mgr));
+				printf("%s\n", nexec_mgr->buff.str);
 				break;
 			default:
 				// Derive final value from operation node.
@@ -249,9 +248,9 @@ int Nexec_assignment_node(NexecMgr *nexec_mgr) {
 	}
 	else if (asn_right_node->type == E_IDENTIFIER_NODE) {	
 		// First expand variable value from symbol table.
-		char *exp_val = expand_variable(nexec_mgr->sy_table, asn_right_node->value);
-		if (exp_val)
-			SyTable_update_symbol(nexec_mgr->sy_table, asn_left_node->value, exp_val);
+		VString_set(&nexec_mgr->buff, expand_variable(nexec_mgr->sy_table, asn_right_node->value));
+		if (nexec_mgr->buff.str)
+			SyTable_update_symbol(nexec_mgr->sy_table, asn_left_node->value, nexec_mgr->buff.str);
 	}
 	//TODO: Since no concept of ternary operators we can group storage of below.
 	else if (Node_is_binop(asn_right_node)|| Node_is_compare(asn_right_node)) {
@@ -259,17 +258,12 @@ int Nexec_assignment_node(NexecMgr *nexec_mgr) {
 		// Derive final value from operation node.
 		int calc = exec_expression(nexec_mgr, asn_right_node); 
 		// Convert the integer to string.
-		char *conv = expr_to_string(calc);
-
-		SyTable_update_symbol(nexec_mgr->sy_table, asn_left_node->value, conv);
-		
-		// free original converted string.
-		free(conv);
+		expr_to_string(nexec_mgr, calc);
+		SyTable_update_symbol(nexec_mgr->sy_table, asn_left_node->value, nexec_mgr->buff.str);
 	}
 	else if (asn_right_node->type == E_MIXSTR_NODE) {
-		char *mixs = exec_mixed_string(asn_right_node->value, nexec_mgr);
-		SyTable_update_symbol(nexec_mgr->sy_table, asn_left_node->value, mixs);
-		free(mixs);
+		exec_mixed_string(asn_right_node->value, nexec_mgr);
+		SyTable_update_symbol(nexec_mgr->sy_table, asn_left_node->value, nexec_mgr->buff.str);
 	}
 
 	return 0;
@@ -283,6 +277,7 @@ NexecMgr *Nexec_init(SyTable *sy_table, NodeMgr *node_mgr, Error *err_handle) {
 	nexec_mgr->node_mgr = node_mgr;
 	nexec_mgr->sy_table = sy_table;
 	nexec_mgr->err_handle = err_handle;
+	nexec_mgr->buff = VString_new();
 
 	return nexec_mgr;
 }
