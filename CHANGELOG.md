@@ -26,8 +26,8 @@
 * Comparison operators for string, integers and mixstring with ascii encoding for string
 * Introduced print function
 * Node execution module cleaned up
-  - Uses a single VString to temp string storage (in most places)
-  - Handles more operators with different types
+	* Uses a single VString to temp string storage (in most places)
+	* Handles more operators with different types
 * Tokenizer refactored to use VString in build token process
 * Changed syntactic structure of groups to be more consistent with functions
 * Group commands can be denoted as strings or simply word sequence, delimited by newline
