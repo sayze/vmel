@@ -12,14 +12,6 @@
 
 int main(int argc, char *argv[]) {
 
-	char *d = "sup my friends";
-	char *d2 = "sup my friends";
-	char *d4 = "supmy friends";
-	int asc = string_to_ascii(d);
-	int asc2 = string_to_ascii(d2);
-	int asc3 = string_to_ascii(d4);
-
-	
 	// Input stream used for file.
 	int err = 0;
 	char *buff_in = NULL;
